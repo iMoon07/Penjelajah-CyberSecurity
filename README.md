@@ -1,8 +1,4 @@
-[English](#english) | [Bahasa Indonesia](#bahasa-indonesia)
-
----
-
-<h1 id="english">Penjelajah-CyberSecurity</h1>
+# Penjelajah-CyberSecurity
 
 ![Cyberpunk Banner](https://raw.githubusercontent.com/iMoon07/imoon07.github.io/main/assets/cyberpunk-text-banner.png)
 
@@ -28,25 +24,22 @@ To publish a new article to the website:
 All materials provided in this repository are strictly for educational and research purposes. MIT License.
 
 ---
-<br><br>
 
-<h1 id="bahasa-indonesia">Penjelajah-CyberSecurity</h1>
-
-![Cyberpunk Banner](https://raw.githubusercontent.com/iMoon07/imoon07.github.io/main/assets/cyberpunk-text-banner.png)
+<details>
+<summary>🇮🇩 <b>Baca versi Bahasa Indonesia</b></summary>
+<br>
 
 Repositori ini berfungsi sebagai tempat penyimpanan terpusat untuk catatan, dokumentasi lab, dan riset Cyber Security saya.
 
 Semua dokumen ditulis dalam format Markdown (`.md`). File-file ini nantinya akan ditarik dan ditampilkan pada website utama saya: [imoon07.github.io](https://github.com/iMoon07/imoon07.github.io).
 
 ## Struktur Repositori
-
 Dokumentasi disusun berdasarkan kategori berikut:
 - **Architect/**: Infrastruktur, systems engineering, dan panduan setup lab.
 - **Teaming/**: Penetration testing (Red) dan strategi pertahanan (Blue/Purple).
 - **Malware/**: Analisis exploit dan riset malware.
 
 ## Cara Publikasi ke Frontend
-
 Untuk menerbitkan artikel baru ke website:
 1. Buat file markdown dan push ke dalam folder yang sesuai di repositori ini.
 2. Buka file tersebut di GitHub dan klik tombol "Raw" untuk mendapatkan URL mentahnya (`https://raw.githubusercontent.com/...`).
@@ -54,3 +47,4 @@ Untuk menerbitkan artikel baru ke website:
 
 ## Lisensi & Disclaimer
 Semua materi di repositori ini murni ditujukan untuk keperluan edukasi dan pembelajaran. MIT License.
+</details>
