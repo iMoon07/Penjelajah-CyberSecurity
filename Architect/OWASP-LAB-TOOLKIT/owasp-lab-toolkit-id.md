@@ -2,7 +2,7 @@
 
 [🇬🇧 Read in English](owasp-lab-toolkit-en.md)
 
-Hallo sobat Penjelajah CyberSecurity, apakabar semuanya salam kenal ya ini merupakan tulisan pertama saya di blog ini. Web Blog ini nantinya akan berisi catatan-catatan saya saat explorasi dan eksplorasi saya secara dalam dunia hacking dan cybersecurity. Semoga bermanfaat untuk kita semua dalam belajar dan berkembang bersama.
+Hallo sobat Penjelajah CyberSecurity, apakabar semuanya salam kenal ya ini merupakan tulisan pertama saya di blog ini. Web Blog ini nantinya akan berisi catatan-catatan saya saat melakukan eksplorasi dan mendalami dunia hacking dan cybersecurity. Semoga bermanfaat untuk kita semua dalam belajar dan berkembang bersama.
 
 Saya ingin berbagi sebuah tools yang lumayan bermanfaat bagi temen-temen yang sedang belajar web application pentesting. Tools ini adalah OWASP Lab Toolkit, sebuah tools yang memudahkan kita dalam membuat lab web application untuk belajar hacking dan cybersecurity.
 
