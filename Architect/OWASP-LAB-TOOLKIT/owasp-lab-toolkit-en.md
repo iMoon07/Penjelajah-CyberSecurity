@@ -1,6 +1,6 @@
 # Build Your Own Hacking Dojo: OWASP Lab Toolkit
 
-[🇮🇩 Baca dalam Bahasa Indonesia](read.html?url=OWASP-LAB-TOOLKIT/owasp-lab-toolkit-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)
 
 Hello Cybersecurity Explorers, how is everyone doing? Nice to meet you, this is my very first post on this blog. Moving forward, this Web Blog will contain my notes as I explore and dive deep into the world of hacking and cybersecurity. I hope this can be useful for all of us to learn and grow together.
 
