@@ -4,6 +4,8 @@
 
 <h1 id="english">Penjelajah-CyberSecurity</h1>
 
+![Cyberpunk Banner](https://raw.githubusercontent.com/iMoon07/imoon07.github.io/main/assets/cyberpunk-text-banner.png)
+
 This repository serves as a centralized location for my cybersecurity notes, lab documentations, and research write-ups.
 
 All files are written in Markdown (`.md`). These files are fetched and displayed dynamically on my main website: [imoon07.github.io](https://github.com/iMoon07/imoon07.github.io).
@@ -29,6 +31,8 @@ All materials provided in this repository are strictly for educational and resea
 <br><br>
 
 <h1 id="bahasa-indonesia">Penjelajah-CyberSecurity</h1>
+
+![Cyberpunk Banner](https://raw.githubusercontent.com/iMoon07/imoon07.github.io/main/assets/cyberpunk-text-banner.png)
 
 Repositori ini berfungsi sebagai tempat penyimpanan terpusat untuk catatan, dokumentasi lab, dan riset Cyber Security saya.
 
