@@ -1,72 +1,56 @@
-[🇬🇧 English](#english) | [🇮🇩 Bahasa Indonesia](#bahasa-indonesia)
+[English](#english) | [Bahasa Indonesia](#bahasa-indonesia)
 
 ---
 
-<h1 id="english">🇬🇧 Penjelajah-CyberSecurity 📚</h1>
+<h1 id="english">Penjelajah-CyberSecurity</h1>
 
-This repository serves as the **Database / Content Backend** for my cybersecurity write-ups, lab explorations, and research. 
+This repository serves as the Content Backend (Database) for my cybersecurity lab documentations, write-ups, and research. 
 
-> **Where is the actual Website?**
-> This repo only contains raw `.md` files. The beautiful website that dynamically reads and displays these files is located here: [imoon07.github.io](https://github.com/iMoon07/imoon07.github.io)
+This repository only stores raw Markdown (`.md`) files. The frontend engine that dynamically fetches and renders these files is located at: [imoon07.github.io](https://github.com/iMoon07/imoon07.github.io)
 
-## 🛠️ How This Works (For Fellow Tinkerers)
+## How It Connects to The Frontend
 
-If you followed the guide from my [Portfolio Engine Repo](https://github.com/iMoon07/imoon07.github.io) and want to replicate this 2-repo setup, here is how you manage the content side of things.
+We use GitHub as a Headless CMS. The workflow is manual, but it guarantees zero backend vulnerabilities.
 
-### The "Complicated but Cool" Workflow xD
-Because we don't use a traditional CMS dashboard (like WordPress), writing a new article requires a true hacker workflow:
+1. **Write the Article:** Create your Markdown file inside the relevant category folder (e.g., `Architect/`). For bilingual support, create `-en.md` and `-id.md` versions.
+2. **Push to GitHub:** Commit and push your files to this repository.
+3. **Get the Raw URL:** Navigate to your `.md` file on GitHub and click the "Raw" button. Copy the `https://raw.githubusercontent.com/...` link.
+4. **Inject to Frontend:** Open `data.js` in your Frontend repository (`yourusername.github.io`) and create a new JSON object for your article, pasting the Raw URL into the `rawUrl` field.
 
-1. **Create Folders:** Organize your topics neatly (e.g., `Architect/`, `Teaming/`).
-2. **Write Markdown:** Create your article. (Pro tip: Create an English `-en.md` and Indonesian `-id.md` version if you want bilingual support).
-3. **Get the Raw Link:** After pushing your new article to GitHub, click the "Raw" button on your `.md` file to get the `https://raw.githubusercontent.com/...` link.
-4. **Link it to the Frontend:** Copy that raw link, jump over to your Frontend Repository, and paste it into the `data.js` file so your website knows it exists!
-
-Is it a bit manual? Yes. Is it cool because you're using Git as a Headless CMS? Absolutely. 😎
+A bit complicated just for publishing a single post? Yes. But using Git as your database is peak engineering xD.
 
 ## Repository Structure
-- **Architect/**: Infrastructure, Lab Setups, and Systems Engineering.
-- **Teaming/**: Penetration Testing (Red) & Defensive Strategies (Blue/Purple).
-- **Malware/**: Exploit and Malware analysis.
+- **Architect/**: Infrastructure, Systems Engineering, and Lab Setups.
+- **Teaming/**: Penetration Testing (Red Teaming) and Defense (Blue/Purple Teaming).
+- **Malware/**: Exploit Analysis and Malware Reverse Engineering.
 
-## Legal & Disclaimer
-All research, write-ups, and toolkits provided in this repository are for educational and research purposes only. The author is not responsible for any misuse of the information provided.
-
-## License
-MIT License - see the LICENSE file for details.
+## License & Disclaimer
+Educational purposes only. MIT License.
 
 ---
-
 <br><br>
 
-<h1 id="bahasa-indonesia">🇮🇩 Penjelajah-CyberSecurity 📚</h1>
+<h1 id="bahasa-indonesia">Penjelajah-CyberSecurity</h1>
 
-Repositori ini berfungsi sebagai **Database / Content Backend** untuk menyimpan semua tulisan, *write-ups*, dokumentasi ngelab, dan *research* Cyber Security gue.
+Repositori ini berfungsi sebagai Content Backend (Database) untuk menyimpan seluruh dokumentasi ngelab, write-up, dan riset Cyber Security gue.
 
-> **Terus Website aslinya di mana?**
-> Repo ini *pure* cuma buat nyimpen file mentahan `.md`. Web estetik yang kerjanya ngebaca dan nampilin file-file ini ada di sini: [imoon07.github.io](https://github.com/iMoon07/imoon07.github.io)
+Repositori ini murni cuma nyimpen file mentahan Markdown (`.md`). Mesin frontend yang bertugas narik dan nge-render file-file ini ada di sini: [imoon07.github.io](https://github.com/iMoon07/imoon07.github.io)
 
-## 🛠️ Cara Kerjanya (Buat Sesama Tukang Ngoprek)
+## Cara Integrasi ke Frontend
 
-Kalau lu udah ngikutin tutorial dari [Repo Mesin Portfolio](https://github.com/iMoon07/imoon07.github.io) gue dan mau niru arsitektur 2-repo ini, di sini adalah tempat lu ngatur kontennya.
+Kita pakai GitHub sebagai Headless CMS. Workflow-nya manual, tapi ini ngejamin web lu 100% kebal dari serangan sisi server.
 
-### Alur Kerja "Ribet Tapi Keren" xD
-Karena kita nggak pakai *Dashboard CMS* manja kayak WordPress, nulis artikel baru di sini butuh *workflow hacker* sejati:
+1. **Tulis Artikel:** Bikin file Markdown lu di folder kategori yang pas (misal `Architect/`). Kalau mau bilingual, bikin versi `-en.md` dan `-id.md`.
+2. **Push ke GitHub:** Commit dan push file lu ke repositori ini.
+3. **Ambil Raw URL:** Buka file `.md` lu di GitHub, klik tombol "Raw". Copy link `https://raw.githubusercontent.com/...` tersebut.
+4. **Suntik ke Frontend:** Buka file `data.js` di repositori Frontend lu (`username.github.io`), bikin objek JSON baru, dan paste link Raw tadi ke bagian `rawUrl`.
 
-1. **Bikin Folder:** Rapihin topik lu (Contoh: `Architect/`, `Teaming/`).
-2. **Nulis Markdown:** Bikin artikel lu. (Pro tip: Bikin dua versi, `-en.md` buat Inggris dan `-id.md` buat Indo kalau mau *support* dua bahasa).
-3. **Ambil Link Mentahan (Raw):** Setelah artikel lu di-*push* ke GitHub, klik tombol "Raw" di file `.md` lu buat dapetin link `https://raw.githubusercontent.com/...`
-4. **Sambungin ke Frontend:** Copy link *Raw* tadi, balik ke Repositori Frontend lu, dan *paste* ke dalem file `data.js` biar web lu tahu artikel itu eksis!
-
-Manual banget ya? Iya. Tapi keren kan nulis blog berasa lagi ngoding dan pakai Git sebagai *Headless CMS*? Jelas dong. 😎
+Agak ribet cuma buat rilis satu artikel doang? Iya. Tapi pamerin kalau lu nulis blog pakai Git sebagai database itu nilai plus tersendiri xD.
 
 ## Struktur Repositori
-Semua dokumentasi dan riset disusun rapi berdasarkan domain Cyber Security:
-- **Architect/**: Infrastruktur, Setup Lab, dan Systems Engineering.
-- **Teaming/**: Penetration Testing (Red) & Strategi Pertahanan (Blue/Purple).
-- **Malware/**: Analisis Exploit dan Malware.
+- **Architect/**: Infrastruktur, Systems Engineering, dan Setup Lab.
+- **Teaming/**: Penetration Testing (Red Teaming) dan Pertahanan (Blue/Purple Teaming).
+- **Malware/**: Analisis Exploit dan Reverse Engineering Malware.
 
-## Disclaimer Hukum
-Semua riset, *write-ups*, dan *tools* di repo ini murni untuk tujuan edukasi dan riset (*Educational Purposes Only*). Gue nggak bertanggung jawab kalau ilmu di sini disalahgunakan buat hal yang aneh-aneh.
-
-## Lisensi
-Projek ini berlisensi MIT - silakan baca file LICENSE untuk detailnya.
+## Lisensi & Disclaimer
+Murni untuk edukasi. MIT License.
