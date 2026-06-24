@@ -2,13 +2,13 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)
 
-Hello Cybersecurity Explorers, how is everyone doing? Nice to meet you, this is my very first post on this blog. Moving forward, this Web Blog will contain my notes as I explore and dive deep into the world of hacking and cybersecurity. I hope this can be useful for all of us to learn and grow together.
+Welcome to Penjelajah CyberSecurity! This is my very first post here. Moving forward, this blog will serve as a central hub for my notes, lab documentations, and deep dives into the world of hacking and cybersecurity. I hope these write-ups can help us learn and grow together.
 
-I want to share a tool that's quite useful for friends who are currently learning web application pentesting. This tool is the OWASP Lab Toolkit, a tool that makes it easy for us to create a web application lab for hacking and cybersecurity learning.
+Today, I want to share a highly practical tool for anyone learning web application penetration testing: the **OWASP Lab Toolkit**. This toolkit simplifies the process of setting up a local web application lab for cybersecurity training.
 
-I built this tool using several famous references and resources that are used in the Cyber Security Industry as training grounds (I call it *like a dojo hacking*).
+I built this toolkit by aggregating several well-known vulnerable applications used across the cybersecurity industry as training grounds—what I like to call a "hacking dojo."
 
-Here are the vulnerable apps (*vulnerable apps*) and supporting *tools* that I integrated into the OWASP Lab Toolkit:
+Here are the vulnerable apps and supporting tools currently integrated into the OWASP Lab Toolkit:
 
 - OWASP Juice Shop - [owasp.org/www-project-juice-shop](https://owasp.org/www-project-juice-shop/)
 - OWASP Mutillidae II - [owasp.org/www-project-mutillidae-ii](https://owasp.org/www-project-mutillidae-ii/)
@@ -18,21 +18,23 @@ Here are the vulnerable apps (*vulnerable apps*) and supporting *tools* that I i
 - XVWA (Xtreme Vulnerable Web Application) - [github.com/s4n7h0/xvwa](https://github.com/s4n7h0/xvwa)
 - VWA (Vulnerable Web Application) - [github.com/hummingbirdscyber/Vulnerable-Web-Application](https://github.com/hummingbirdscyber/Vulnerable-Web-Application)
 
-So what is required to be able to do labs and practice?
+### Prerequisites
 
-- VMware Workstation Pro (You can also use VirtualBox)
-- Operating System Ubuntu 24.04 LTS (Currently the tool still supports the Ubuntu Linux based ecosystem, in the future it will be updated for other OS)
-- Specifications RAM 2GB - 1vCPU - Disk 20GB
-- Notepad (Used to write the hosts file if on Windows)
-- Tools OWASP Lab Toolkit - https://github.com/iMoon07/OWASP-Lab-Toolkit
+What do you need to get this lab up and running?
+
+- VMware Workstation Pro (VirtualBox works too)
+- Ubuntu 24.04 LTS (Currently, the toolkit only supports Ubuntu/Debian-based systems. Support for other OS will be added in future updates)
+- Minimum Specs: 2GB RAM - 1 vCPU - 20GB Disk Space
+- Notepad (To edit the hosts file if you are on Windows)
+- The OWASP Lab Toolkit - https://github.com/iMoon07/OWASP-Lab-Toolkit
 
 ### Installation & Setup Guide
 
-The installation process is super easy since everything is already automated using a *bash script*. Just follow these steps:
+The installation process is seamless because everything is automated via a bash script. Follow these steps:
 
 #### 1. Clone the Repository
 
-Open the terminal on your Ubuntu Server machine, then run this command to download the *toolkit*:
+Open the terminal on your Ubuntu Server and run the following commands to download the toolkit:
 ```bash
 git clone https://github.com/iMoon07/OWASP-Lab-Toolkit.git
 cd OWASP-Lab-Toolkit
@@ -41,17 +43,17 @@ chmod +x *.sh
 
 #### 2. Run the Installer
 
-Run the main *script* using `sudo` access. This *script* will take a few minutes because it installs all the components (Web Server, Database, Node.js, Java) and clones the applications automatically.
+Execute the main script with `sudo` privileges. This process will take a few minutes as it automatically installs all necessary dependencies (Web Server, Database, Node.js, Java) and clones the applications.
 ```bash
 sudo ./install-owasp-lab.sh
 ```
 
 #### 3. Configure the Hosts File
 
-So we can access the lab using cool local domains (like `dvwa.owasp.hacking`), we must route those domains to our Ubuntu Server's IP Address.
+To access the labs using clean local domains (e.g., `dvwa.owasp.hacking`), you need to route those domains to your Ubuntu Server's IP address.
 - On Windows, open **Notepad** as an *Administrator*.
-- Open the file at this path: `C:\Windows\System32\drivers\etc\hosts`.
-- Add the following line at the very bottom (Replace the IP Address `[IP_ADDRESS]` with your Ubuntu Server's IP):
+- Open the file located at: `C:\Windows\System32\drivers\etc\hosts`.
+- Add the following line at the very bottom (Replace `[IP_ADDRESS]` with your Ubuntu Server's actual IP):
 ```text
 [IP_ADDRESS] dvwa.owasp.hacking bwapp.owasp.hacking juiceshop.owasp.hacking
 ```
@@ -60,22 +62,22 @@ So we can access the lab using cool local domains (like `dvwa.owasp.hacking`), w
 
 #### 4. Verify Lab Status
 
-To make sure all services are running normally (HTTP 200 OK), use the built-in *health checker script*:
+To ensure all services are running properly (HTTP 200 OK), use the built-in health checker script:
 ```bash
 sudo ./check-owasp-lab.sh
 ```
-Choose option 1 to check HTTP connections. Make sure everything is colored green (NORMAL).
+Select option `1` to check HTTP connections. Make sure all endpoints return a green `NORMAL` status.
 
 ![Endpoints UP Status](Endpoints-UP.png)
 
 ### Start Exploring!
 
-Once all the statuses are green, you can directly open the browser on your main machine and start learning *penetration testing*!
+Once all statuses are green, open the browser on your host machine and start hacking!
 
 ![Application Overview](Overview.png)
 
-Enjoy learning and get safe hacking !
+Happy hacking and stay safe!
 
-Enjoy *labbing* and growing together! If this *toolkit* is deemed useful to accompany your *cybersecurity* journey, don't hesitate to drop by my GitHub and leave a ⭐ (Star)!
+If you find this toolkit helpful for your cybersecurity journey, don't hesitate to drop by my GitHub and leave a ⭐ (Star)!
 
-If there are any obstacles during installation, getting an *error*, or wanting to *request* other vulnerable apps for the next *update*, you are free to discuss and ask questions in the comments column below. Let's learn together! 👇
+If you run into any installation issues, encounter errors, or want to request other vulnerable apps for future updates, feel free to drop a comment in the discussion section below. Let's learn together! 👇
