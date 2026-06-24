@@ -11,7 +11,7 @@ Saya membangun tools ini dengan menggunakan beberapa referensi dan resource terk
 Berikut adalah *resource* aplikasi rentan (*vulnerable apps*) dan *tools* pendukung yang saya integrasikan ke dalam OWASP Lab Toolkit:
 
 - OWASP Juice Shop - [owasp.org/www-project-juice-shop](https://owasp.org/www-project-juice-shop/)
-- OWASP Mutillidae II - [owasp.org/www-project-mutillidae](https://owasp.org/www-project-mutillidae/)
+- OWASP Mutillidae II - [itsecgames.com](http://itsecgames.com/)
 - OWASP WebGoat & WebWolf - [owasp.org/www-project-webgoat](https://owasp.org/www-project-webgoat/)
 - DVWA (Damn Vulnerable Web App) - [github.com/digininja/DVWA](https://github.com/digininja/DVWA)
 - bWAPP (buggy web application) - [itsecbbq.org/bwapp](http://www.itsecbbq.org/bwapp/)
