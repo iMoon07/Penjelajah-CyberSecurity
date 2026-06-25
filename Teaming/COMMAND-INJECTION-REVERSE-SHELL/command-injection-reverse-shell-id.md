@@ -1,5 +1,7 @@
 # Reverse Shell: ONE-LIN3R
 
+[🇬🇧 Read in English](command-injection-reverse-shell-en.md)
+
 Hai Friend,
 
 Sedikit menulis tentang pengalaman baru saya explorasi reverse shell. Salah satu teknik umum yang digunakan pada saat pengujian penetrasi (Penetration Testing) setelah masuk ke sistem melalui celah web aplikasi dengan membuat sebuah backdoor network (koneksi balik) melalui command yang bisa dijalankan di operating system.
