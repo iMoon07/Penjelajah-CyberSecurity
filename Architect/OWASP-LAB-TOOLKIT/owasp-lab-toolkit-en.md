@@ -1,12 +1,12 @@
-# Build Your Own Hacking Dojo: OWASP Lab Toolkit
+# Build Your Own Web Security Lab with OWASP Lab Toolkit
 
 [🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)
 
-Welcome to Penjelajah CyberSecurity! This is my very first post here. Moving forward, this blog will serve as a central hub for my notes, lab documentations, and deep dives into the world of hacking and cybersecurity. I hope these write-ups can help us learn and grow together.
+Welcome to Penjelajah CyberSecurity! This is the first article on my blog, where I'll be documenting my learning journey through offensive security, defensive security, and everything in between. I'll be sharing lab setups, hands-on experiments, and technical write-ups that I hope other learners will also find useful.
 
-Today, I want to share a highly practical tool for anyone learning web application penetration testing: the **OWASP Lab Toolkit**. This toolkit simplifies the process of setting up a local web application lab for cybersecurity training.
+If you're building a local security lab, this toolkit might save you quite a bit of time. The toolkit automates most of the setup process, allowing you to deploy several intentionally vulnerable web applications with just a few commands.
 
-I built this toolkit by aggregating several well-known vulnerable applications used across the cybersecurity industry as training grounds—what I like to call a "hacking dojo."
+This project bundles together several well-known intentionally vulnerable web applications into a single installation toolkit, providing a perfect "hacking dojo" for cybersecurity training.
 
 Here are the vulnerable apps and supporting tools currently integrated into the OWASP Lab Toolkit:
 
