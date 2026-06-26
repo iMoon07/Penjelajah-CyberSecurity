@@ -150,6 +150,7 @@ That question will be the starting point for the next article, where I plan to e
 ## Learning Resources & References
 
 **Tools & Utilities:**
+
 - [tcpdump](https://www.tcpdump.org) — Network packet capture and analysis
 - [ss](https://man7.org/linux/man-pages/man8/ss.8.html) — Display active socket connections
 - [ps](https://man7.org/linux/man-pages/man1/ps.1.html) — Process monitoring
@@ -157,11 +158,13 @@ That question will be the starting point for the next article, where I plan to e
 - [grep](https://man7.org/linux/man-pages/man1/grep.1.html) — Filter process and log output
 
 **Official Documentation:**
+
 - [Nginx Documentation: Access Log](https://nginx.org/en/docs/http/ngx_http_log_module.html)
 - [Python Documentation: socket module](https://docs.python.org/3/library/socket.html)
 - [Python Documentation: pty module](https://docs.python.org/3/library/pty.html)
 
 **MITRE ATT&CK:**
+
 - [T1059: Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059/)
 - [T1059.006: Python](https://attack.mitre.org/techniques/T1059/006/)
 - [T1071: Application Layer Protocol](https://attack.mitre.org/techniques/T1071/)
