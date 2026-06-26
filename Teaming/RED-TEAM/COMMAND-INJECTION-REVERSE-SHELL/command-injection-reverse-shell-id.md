@@ -82,4 +82,4 @@ Aplikasi sederhana seperti one-lin3r ini sangat membantu selama proses penetrati
 
 Terima kasih sudah mampir dan membaca tulisan ini! 
 
-Jika ada pertanyaan, feedback, atau hal yang ingin didiskusikan terkait reverse shell, silakan open discussion atau buka Issue di repository ini. Oh iya, jangan lupa tinggalkan ⭐ (Star) ya! Hahaha.
+Jika ada pertanyaan, feedback, atau hal yang ingin didiskusikan terkait reverse shell, silakan [open discussion](https://github.com/iMoon07/Penjelajah-CyberSecurity/discussions) atau buka [Issue](https://github.com/iMoon07/Penjelajah-CyberSecurity/issues) di repository ini. Oh iya, jangan lupa tinggalkan ⭐ (Star) ya! Hahaha.
