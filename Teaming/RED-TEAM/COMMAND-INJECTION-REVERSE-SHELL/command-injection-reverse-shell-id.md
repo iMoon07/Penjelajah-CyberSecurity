@@ -80,6 +80,4 @@ Aplikasi sederhana seperti one-lin3r ini sangat membantu selama proses penetrati
 * **offseckit** [reverse shell cheatsheet](https://offseckit.com/blog/reverse-shell-cheat-sheet)
 * **PayloadAllTheThings:** [Reverse Shell Cheat Sheet](https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-reverse-cheatsheet/)
 
-Terima kasih sudah mampir dan membaca tulisan ini! 
-
-Jika ada pertanyaan, feedback, atau hal yang ingin didiskusikan terkait reverse shell, silakan [open discussion](https://github.com/iMoon07/Penjelajah-CyberSecurity/discussions) atau buka [Issue](https://github.com/iMoon07/Penjelajah-CyberSecurity/issues) di repository ini. Oh iya, jangan lupa tinggalkan ⭐ (Star) ya! Hahaha.
+Terima kasih sudah mampir dan membaca tulisan ini!

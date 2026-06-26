@@ -171,6 +171,4 @@ That question will be the starting point for the next article, where I plan to e
 
 Thank you for reading!
 
-If you have any questions, feedback, or would like to discuss reverse shells or investigation techniques, feel free to open a discussion or create an issue in this repository.
-
 Happy learning! 🔥

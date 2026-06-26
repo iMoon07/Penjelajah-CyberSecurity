@@ -95,6 +95,4 @@ In the next article, I will switch perspectives and investigate what happens on 
 * **offseckit** [reverse shell cheatsheet](https://offseckit.com/blog/reverse-shell-cheat-sheet)
 * **PayloadAllTheThings:** [Reverse Shell Cheat Sheet](https://swisskyrepo.github.io/InternalAllTheThings/cheatsheets/shell-reverse-cheatsheet/)
 
-Thank you for reading! 
-
-If you have any questions, feedback, or anything you'd like to discuss regarding reverse shells, feel free to [open a discussion](https://github.com/iMoon07/Penjelajah-CyberSecurity/discussions) or create an [issue](https://github.com/iMoon07/Penjelajah-CyberSecurity/issues) in this repository. Also, don't forget to drop a ⭐ (Star)! Hahaha.
+Thank you for reading!

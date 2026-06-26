@@ -145,5 +145,3 @@ Proses investigasi sederhana ini mengajarkan saya banyak hal. Saya bisa melihat 
 - [T1071: Application Layer Protocol](https://attack.mitre.org/techniques/T1071/)
 
 Terima kasih membaca tulisan ini!
-
-Jika ada pertanyaan, feedback, atau hal yang ingin didiskusikan terkait reverse shell maupun teknik investigasi, silakan [open discussion](https://github.com/iMoon07/Penjelajah-CyberSecurity/discussions) atau buka [Issue](https://github.com/iMoon07/Penjelajah-CyberSecurity/issues) di repository ini. Enjoy Learning! 🔥
