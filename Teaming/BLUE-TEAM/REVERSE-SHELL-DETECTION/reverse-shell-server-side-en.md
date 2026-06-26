@@ -2,7 +2,7 @@
 
 [🇮🇩 Read in Indonesian](reverse-shell-server-side.md)
 
-In the previous article, I demonstrated how a reverse shell can be executed from the attacker's perspective (Red Team). In this article, I want to look at the same attack from the server's point of view. Instead of focusing on how the shell is obtained, I want to understand what happens inside the server after the attack succeeds.
+[In the previous article](https://imoon07.github.io/read.html?post=command-injection-reverse-shell&lang=en), I demonstrated how a reverse shell can be executed from the attacker's perspective (Red Team). In this article, I want to look at the same attack from the server's point of view. Instead of focusing on how the shell is obtained, I want to understand what happens inside the server after the attack succeeds.
 
 This article documents a simple lab experiment to observe the artifacts left behind by a reverse shell. My goal is to answer a few basic questions:
 
