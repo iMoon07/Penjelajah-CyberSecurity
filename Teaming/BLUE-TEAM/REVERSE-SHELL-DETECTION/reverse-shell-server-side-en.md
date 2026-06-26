@@ -46,7 +46,7 @@ ps aux | grep -E 'python'
 
 **Lab Output:**
 
-![Proses dari user www-data](../proses-from-user-www-data.png)
+![Proses dari user www-data](proses-from-user-www-data.png)
 
 ```text
 root         874  0.0  1.1 109688 23292 ?        Ssl  11:57   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
@@ -65,7 +65,7 @@ This confirms that the Command Injection vulnerability successfully executed a P
 
 Every request received by Nginx is recorded in the access log. Reviewing these logs helps identify which endpoint was targeted during the attack.
 
-![Command Injection Web](../Command-injection.png)
+![Command Injection Web](Command-injection.png)
 
 ```bash
 # Monitor incoming HTTP requests
@@ -74,7 +74,7 @@ tail -f /var/log/nginx/access.log
 
 **Lab Output:**
 
-![Log Nginx](../log-nginx.png)
+![Log Nginx](log-nginx.png)
 
 ```text
 10.10.10.149 - - [26/Jun/2026:16:10:05 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8771 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
@@ -97,7 +97,7 @@ ss -tnp
 
 **Lab Output:**
 
-![State Active Open Port](../state-active-open-port.png)
+![State Active Open Port](state-active-open-port.png)
 
 ```text
 State         Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process
@@ -117,7 +117,7 @@ sudo tcpdump -i any port 9001 -nn -A -l
 
 **Lab Output:**
 
-![Network tcpdump](../network-tcpdump.png)
+![Network tcpdump](network-tcpdump.png)
 
 ```text
 16:13:15.687717 ens33 Out IP 10.10.10.2.49342 > 10.10.10.149.9001: Flags [P.], seq 1:49, ack 1, win 502, options [nop,nop,TS val 1701540689 ecr 1928400169], length 48
