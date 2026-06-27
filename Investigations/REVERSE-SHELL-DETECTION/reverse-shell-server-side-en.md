@@ -167,7 +167,6 @@ That question will be the starting point for the next article, where I plan to e
 
 - [T1059: Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059/)
 - [T1059.006: Python](https://attack.mitre.org/techniques/T1059/006/)
-- [T1071: Application Layer Protocol](https://attack.mitre.org/techniques/T1071/)
 
 Thank you for reading!
 
