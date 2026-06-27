@@ -142,6 +142,5 @@ Proses investigasi sederhana ini mengajarkan saya banyak hal. Saya bisa melihat 
 **Klasifikasi MITRE ATT&CK:**
 - [T1059: Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059/)
 - [T1059.006: Python](https://attack.mitre.org/techniques/T1059/006/)
-- [T1071: Application Layer Protocol](https://attack.mitre.org/techniques/T1071/)
 
 Terima kasih membaca tulisan ini!
