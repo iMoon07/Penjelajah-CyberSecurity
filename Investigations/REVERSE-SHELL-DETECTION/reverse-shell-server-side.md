@@ -44,7 +44,7 @@ Ketika serangan sedang berjalan, kita bisa melihat proses mencurigakan yang diek
 ps aux | grep -E 'python'
 ```
 
-**Output dari Lab:**
+**Output**
 
 ![Proses dari user www-data](proses-from-user-www-data.png)
 ```text
@@ -54,7 +54,7 @@ www-data    3868  0.0  0.5  18648 11736 ?        S    16:13   0:00 python3 -c im
 root        3886  0.0  0.1   6544  2328 pts/4    S+   16:18   0:00 grep --color=auto -E python
 ```
 
-*Analisa:* Terlihat jelas *user* `www-data` (yang seharusnya hanya menjalankan *service* web) malah menjalankan perintah mencurigakan: `nslookup google.com; python3 -c 'import os,pty...`. Hal ini mengonfirmasi adanya eksekusi *Command Injection* yang dilanjutkan dengan membuka *reverse shell* ke IP `10.10.10.149` port `9001` (PID 3861 & 3868). Ini adalah *red flag* besar.
+Terlihat jelas *user* `www-data` (yang seharusnya hanya menjalankan *service* web) malah menjalankan perintah mencurigakan: `nslookup google.com; python3 -c 'import os,pty...`. Hal ini mengonfirmasi adanya eksekusi *Command Injection* yang dilanjutkan dengan membuka *reverse shell* ke IP `10.10.10.149` port `9001` (PID 3861 & 3868). Ini adalah *red flag* besar.
 
 ### Log
 
@@ -67,7 +67,7 @@ Setiap request yang masuk ke Nginx pasti tercatat di `access.log`. Kita bisa mem
 tail -f /var/log/nginx/access.log
 ```
 
-**Output dari Lab:**
+**Output**
 
 ![Log Nginx](log-nginx.png)
 ```text
@@ -76,7 +76,7 @@ tail -f /var/log/nginx/access.log
 10.10.10.149 - - [26/Jun/2026:16:14:15 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 504 176 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
 ```
 
-*Analisa:* Log ini menunjukkan ada *request* POST berulang kali ke halaman `/index.php?page=dns-lookup.php` dari IP *attacker* (`10.10.10.149`). Hal ini sangat sinkron dengan log proses sebelumnya, di mana *attacker* menyalahgunakan fitur *DNS Lookup* (terlihat dari kata `nslookup google.com` pada payload) untuk menyisipkan *Command Injection*.
+Log ini menunjukkan ada *request* POST berulang kali ke halaman `/index.php?page=dns-lookup.php` dari IP *attacker* (`10.10.10.149`). Hal ini sangat sinkron dengan log proses sebelumnya, di mana *attacker* menyalahgunakan fitur *DNS Lookup* (terlihat dari kata `nslookup google.com` pada payload) untuk menyisipkan *Command Injection*.
 
 ### Network
 
@@ -87,7 +87,7 @@ Karakteristik paling kuat dari *reverse shell* adalah koneksi jaringan yang kelu
 ss -tnp
 ```
 
-**Output dari Lab:**
+**Output**
 
 ![State Active Open Port](state-active-open-port.png)
 ```text
@@ -97,14 +97,14 @@ ESTAB         0         0               10.10.10.2:49342       10.10.10.149:9001
 ...
 ```
 
-*Analisa:* Terlihat koneksi yang berstatus `ESTAB` (Established) dari IP server kita (`10.10.10.2`) menuju IP Attacker di port `9001`. Koneksi ilegal ini diinisiasi oleh proses `python3` (PID 3868), persis seperti temuan pada pengecekan log proses di tahap awal.
+Terlihat koneksi yang berstatus `ESTAB` (Established) dari IP server kita (`10.10.10.2`) menuju IP Attacker di port `9001`. Koneksi ilegal ini diinisiasi oleh proses `python3` (PID 3868), persis seperti temuan pada pengecekan log proses di tahap awal.
 
 ```bash
 # Capture traffic saat serangan
 sudo tcpdump -i any port 9001 -nn -A -l
 ```
 
-**Output dari Lab:**
+**Output**
 
 ![Network tcpdump](network-tcpdump.png)
 ```text
@@ -119,13 +119,13 @@ E..d..@.@..5
 eksQr..)www-data@server01:/var/www/hack/mutillidae/src$
 ```
 
-*Analisa:* Karena traffic *shell* ini berjalan polos tanpa enkripsi, kita bisa membaca komunikasi data secara *plaintext* lewat *packet capture*. Di atas terlihat jelas muncul *shell prompt* `www-data@server01:/var/www/hack/mutillidae/src$`, membuktikan bahwa *attacker* telah sukses mendapatkan akses terminal secara interaktif di dalam server.
+Karena traffic *shell* ini berjalan polos tanpa enkripsi, kita bisa membaca komunikasi data secara *plaintext* lewat *packet capture*. Di atas terlihat jelas muncul *shell prompt* `www-data@server01:/var/www/hack/mutillidae/src$`, membuktikan bahwa *attacker* telah sukses mendapatkan akses terminal secara interaktif di dalam server.
 
 ---
 
 Proses investigasi sederhana ini mengajarkan saya banyak hal. Saya bisa melihat langsung *flow* dari proses apa saja yang dieksekusi, log apa yang terekam di sistem, hingga wujud koneksi *traffic* di server target. Hal ini membuat saya semakin penasaran untuk bereksplorasi lebih dalam lagi di sisi pertahanan (*defense*).
 
-## Referensi Belajar & Investigasi
+## Referensi
 
 **Tools & Utility:**
 - [tcpdump](https://www.tcpdump.org) — Network packet capture & analysis
