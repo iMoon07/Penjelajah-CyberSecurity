@@ -109,6 +109,8 @@ Bot ini dikendalikan menggunakan *command* khusus di grup Telegram:
 
 **Enjoy exploring and build your own AI assistant!**
 
+🎥 [Tonton di YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
+
 Selamat ngoprek dan bereksperimen! Jika *moon-toolkit* ini dirasa bermanfaat untuk menemani *workflow cybersecurity* dan *engineering* kalian, jangan ragu untuk mampir ke GitHub saya dan tinggalkan jejak ⭐ (Star)!
 
 Kalau ada kendala saat *setup* LLM lokal, dapet *error* pas jalanin bot-nya, atau mau diskusi ide fitur buat *update* selanjutnya, kalian bebas tanya-tanya di kolom komentar di bawah ini ya. Mari kita bedah bareng! 👇
