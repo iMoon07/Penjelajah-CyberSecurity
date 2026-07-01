@@ -12,6 +12,7 @@ Disini saya menginstall beberapa kebutuhan:
 - Telegram Bot (API)
 - Modul python (openai, aiogram, kurigram, py-tgcalls, edge-tts, SpeechRecognition, pydub, pytesseract, python-dotenv)
 - Telegram Number (untuk voice group)
+- Repo publik saya https://github.com/iMoon07/MoonAI-Toolkit
 
 Spesifikasi yang saya gunakan:
 
