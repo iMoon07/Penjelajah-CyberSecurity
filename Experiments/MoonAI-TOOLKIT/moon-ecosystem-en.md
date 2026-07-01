@@ -27,6 +27,7 @@ To build this project, I used the following components:
   - pytesseract
   - python-dotenv
 - A Telegram account dedicated to the voice assistant
+- My public Repo https://github.com/iMoon07/MoonAI-Toolkit
 
 ## Hardware
 
