@@ -159,10 +159,10 @@ Available commands include:
 
 ## Final Thoughts
 
+🎥 [Watch on YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
+
 Building a personal AI assistant has been a fun and rewarding project. It has become part of my daily workflow for cybersecurity research, programming, and general brainstorming.
 
-If you're interested in running your own local AI assistant, feel free to explore the project on GitHub. If you find it useful, consider leaving a ⭐ to support the project.
-
-If you run into any issues while setting up the local LLM, encounter bugs, or have ideas for future features, feel free to leave a comment below. I'd be happy to discuss and improve the project together.
+If you're interested in running your own local AI assistant, feel free to explore the project on GitHub. If you find it useful, consider leaving a ⭐ to support the project. If you run into any issues while setting up the local LLM, encounter bugs, or have ideas for future features, feel free to leave a comment below. I'd be happy to discuss and improve the project together.
 
 Happy hacking, and enjoy building your own AI assistant! 🚀
