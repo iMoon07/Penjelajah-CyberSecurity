@@ -15,6 +15,7 @@ Disini saya menginstall beberapa kebutuhan:
 
 Spesifikasi yang saya gunakan:
 
+- Microsoft Windows 11 Pro
 - AMD Ryzen 5 5600
 - RAM 16GB
 - vCPU 12
