@@ -90,7 +90,7 @@ The assistant runs locally using **Gemma 4 12B QAT** inside **LM Studio**.
 
 Gemma is based on Google's Unified Design architecture, making it a multimodal model capable of understanding both text and images. It also provides strong reasoning capabilities and supports tool use, making it well suited for technical workflows.
 
-![LM Studio API Integration](LM Studio-api-llm.png)
+![LM Studio API Integration](<LM-Studio-api-llm.png>)
 
 ![Interface](interface.png)
 
