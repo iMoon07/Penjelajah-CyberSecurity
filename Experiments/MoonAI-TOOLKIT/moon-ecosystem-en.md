@@ -85,9 +85,9 @@ A voice assistant for Telegram Voice Chats. It allows users to communicate with 
 
 The assistant runs locally using **Gemma 4 12B QAT** inside **LM Studio**.
 
-Gemma is based on Google's Unified Design architecture, making it a multimodal model capable of understanding both text and images. It also provides strong reasoning capabilities and supports tool use, making it well suited for technical workflows.
-
 ![LM Studio API Integration](<LM-Studio-api-llm.png>)
+
+Gemma is based on Google's Unified Design architecture, making it a multimodal model capable of understanding both text and images. It also provides strong reasoning capabilities and supports tool use, making it well suited for technical workflows.
 
 ![Interface](interface.png)
 
