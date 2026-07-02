@@ -2,7 +2,7 @@
 
 [🇬🇧 Read in English](moon-ecosystem-en.md)
 
-Yoo, Senang sekali guys disini saya berhasil setup asisten AI untuk brainstroming tentang Cybersecurity, Technology, Programming dengan model yang saya adopsi Gemma 4 12B QAT secara local di PC. Ditulisan sini saya bagikan secara preview hasil dokumentasi yang telah saya kerjakan. Saya membangun tools juga dengan saya beri nama moon-toolkit kalian bisa akses tools ini secara open-source di github pribadi saya.
+Yoo, Senang sekali guys disini saya berhasil setup asisten AI untuk brainstroming tentang Cybersecurity, Technology, Programming dengan model yang saya adopsi Gemma 4 12B QAT secara local di PC. Ditulisan sini saya bagikan secara preview hasil dokumentasi yang telah saya kerjakan.
 
 Disini saya menginstall beberapa kebutuhan:
 
@@ -12,7 +12,6 @@ Disini saya menginstall beberapa kebutuhan:
 - Telegram Bot (API)
 - Modul python (openai, aiogram, kurigram, py-tgcalls, edge-tts, SpeechRecognition, pydub, pytesseract, python-dotenv)
 - Telegram Number (untuk voice group)
-- Repo publik saya https://github.com/iMoon07/MoonAI-Toolkit
 
 Spesifikasi yang saya gunakan:
 
@@ -59,7 +58,7 @@ Fungsi dari 3 bagian ini:
 
 ![Gemma 4-12b QAT](Gemma-4-12b-qat.png)
 
-Disini saya memanfaatkan model Gemma-4-12b-qat dengan menjalankan LM Studio di local. Model ini sedniri menggunakan arsitektur Unified Design dari Google DeepMind yang sudah mendukung input teks maupun gambar (multi-modal) dan juga memiliki kemampuan reasoning dan tool use kuat.
+Disini saya memanfaatkan model Gemma-4-12b-qat dengan menjalankan LM Studio di local. Model ini sendiri menggunakan arsitektur Unified Design dari Google DeepMind yang sudah mendukung input teks maupun gambar (multi-modal) dan juga memiliki kemampuan reasoning dan tool use kuat. 
 
 ![LM Studio API Integration](<LM-Studio-api-llm.png>)
 
@@ -110,7 +109,3 @@ Bot ini dikendalikan menggunakan *command* khusus di grup Telegram:
 **Enjoy exploring and build your own AI assistant!**
 
 🎥 [Tonton di YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
-
-Selamat ngoprek dan bereksperimen! Jika *moon-toolkit* ini dirasa bermanfaat untuk menemani *workflow cybersecurity* dan *engineering* kalian, jangan ragu untuk mampir ke GitHub saya dan tinggalkan jejak ⭐ (Star)!
-
-Kalau ada kendala saat *setup* LLM lokal, dapet *error* pas jalanin bot-nya, atau mau diskusi ide fitur buat *update* selanjutnya, kalian bebas tanya-tanya di kolom komentar di bawah ini ya. Mari kita bedah bareng! 👇
