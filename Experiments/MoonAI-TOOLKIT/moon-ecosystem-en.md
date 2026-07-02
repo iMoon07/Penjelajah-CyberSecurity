@@ -1,12 +1,10 @@
-# Build Your Assistant AI: 🌙Moon Toolkit
+# My Assistant AI-Local 🌙Moon Toolkit
 
 [🇮🇩 Baca dalam Bahasa Indonesia](moon-ecosystem-id.md)
 
 Hey everyone!
 
 I recently finished building my own local AI assistant for brainstorming topics related to cybersecurity, technology, and programming. The project runs entirely on my personal computer using **Gemma 4 12B QAT**, and in this post I'd like to share an overview of how it works.
-
-Along the way, I also created an open-source project called **Moon Toolkit**, which is available on my GitHub.
 
 ## Requirements
 
@@ -27,7 +25,6 @@ To build this project, I used the following components:
   - pytesseract
   - python-dotenv
 - A Telegram account dedicated to the voice assistant
-- My public Repo https://github.com/iMoon07/MoonAI-Toolkit
 
 ## Hardware
 
@@ -162,7 +159,3 @@ Available commands include:
 🎥 [Watch on YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
 
 Building a personal AI assistant has been a fun and rewarding project. It has become part of my daily workflow for cybersecurity research, programming, and general brainstorming.
-
-If you're interested in running your own local AI assistant, feel free to explore the project on GitHub. If you find it useful, consider leaving a ⭐ to support the project. If you run into any issues while setting up the local LLM, encounter bugs, or have ideas for future features, feel free to leave a comment below. I'd be happy to discuss and improve the project together.
-
-Happy hacking, and enjoy building your own AI assistant! 🚀
