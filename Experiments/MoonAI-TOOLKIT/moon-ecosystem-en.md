@@ -30,6 +30,7 @@ To build this project, I used the following components:
 
 This is the hardware I used during development:
 
+- Microsoft Windows 11 Pro
 - AMD Ryzen 5 5600
 - 16 GB RAM
 - 12 vCPUs
