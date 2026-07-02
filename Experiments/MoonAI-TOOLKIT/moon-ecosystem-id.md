@@ -61,7 +61,7 @@ Fungsi dari 3 bagian ini:
 
 Disini saya memanfaatkan model Gemma-4-12b-qat dengan menjalankan LM Studio di local. Model ini sedniri menggunakan arsitektur Unified Design dari Google DeepMind yang sudah mendukung input teks maupun gambar (multi-modal) dan juga memiliki kemampuan reasoning dan tool use kuat.
 
-![LM Studio API Integration](<LM Studio-api-llm.png>)
+![LM Studio API Integration](<LM-Studio-api-llm.png>)
 
 ![Interface](interface.png)
 
