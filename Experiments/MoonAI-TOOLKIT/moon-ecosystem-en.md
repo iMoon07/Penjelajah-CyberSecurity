@@ -157,6 +157,7 @@ Available commands include:
 
 ## Final Thoughts
 
-🎥 [Watch on YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
+Video 🎥 [Tonton di YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
+Github 🌙 [The MoonAI-Toolkit](https://github.com/iMoon07/MoonAI-Toolkit)
 
 Building a personal AI assistant has been a fun and rewarding project. It has become part of my daily workflow for cybersecurity research, programming, and general brainstorming.
