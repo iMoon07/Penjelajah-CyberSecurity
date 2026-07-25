@@ -109,4 +109,5 @@ Bot ini dikendalikan menggunakan *command* khusus di grup Telegram:
 
 **Enjoy exploring and build your own AI assistant!**
 
-🎥 [Tonton di YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
+Video 🎥 [Tonton di YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
+Github 🌙 [The MoonAI-Toolkit](https://github.com/iMoon07/MoonAI-Toolkit)
