@@ -269,6 +269,27 @@ Although this demonstration was performed in a controlled lab environment, the s
 
 ---
 
+## Learning Path
+
+- ✅ **[Reverse Shell with One-Lin3r: Crafting a Reverse Shell Payload in a Single Command](https://imoon07.github.io/read.html?post=command-injection-reverse-shell&lang=en)**
+- ✅ **[Linux Enumeration: Basic System Information](https://imoon07.github.io/read.html?post=post-exploitation-enum&lang=en)**
+- ✅ **[Linux Post-Exploitation: File System Exploration](https://imoon07.github.io/read.html?post=post-exploitation-filesystemexplore&lang=en)**
+- ✅ **[Linux Privilege Enumeration](https://imoon07.github.io/read.html?post=post-exploitation-priv-enum&lang=en)**
+- ✅ **[Linux Privilege Escalation](https://imoon07.github.io/read.html?post=post-exploitation-priv-esca-copyfail&lang=en)**
+- ✅ **[Linux Persistence](https://imoon07.github.io/read.html?post=post-exploitation-persistence-panix&lang=en)**
+- ✅ **[Linux Pivoting](https://imoon07.github.io/read.html?post=post-exploitation-pivoting&lang=en)**
+- ✅ **[Linux Lateral Movement](https://imoon07.github.io/read.html?post=post-exploitation-lateral-movement&lang=en)**
+
+---
+
+## Related Reading
+
+See how a Reverse Shell is obtained before analyzing it from the defender's perspective:
+
+- 🔍 **[Reverse Shell with One-Lin3r: Crafting a Reverse Shell Payload in a Single Command](https://imoon07.github.io/read.html?post=command-injection-reverse-shell&lang=en)**
+
+---
+
 # References
 
 - MITRE ATT&CK – T1059: Command and Scripting Interpreter  
@@ -277,11 +298,8 @@ Although this demonstration was performed in a controlled lab environment, the s
 - Nginx Documentation – Access Log  
   https://nginx.org/en/docs/http/ngx_http_log_module.html
 
-- Linux Manual Pages  
+- Linux Manual Pages Project  
   https://man7.org/linux/man-pages/
-
-- tcpdump Documentation  
-  https://www.tcpdump.org/
 
 ---
 
