@@ -228,6 +228,27 @@ Bagi seorang pentester, tool seperti One-Lin3r dapat mempercepat proses pengujia
 
 ---
 
+## Learning Path
+
+- ➡️ **[Reverse Shell dengan One-Lin3r](https://imoon07.github.io/read.html?post=command-injection-reverse-shell)** *(artikel ini)*
+- ✅ [Linux Enumeration: Basic System Information](https://imoon07.github.io/read.html?post=post-exploitation-enum)
+- ✅ [Linux Post-Exploitation: File System Exploration](https://imoon07.github.io/read.html?post=post-exploitation-filesystemexplore)
+- ✅ [Linux Privilege Enumeration](https://imoon07.github.io/read.html?post=post-exploitation-priv-enum)
+- ✅ [Linux Privilege Escalation](https://imoon07.github.io/read.html?post=post-exploitation-priv-esca-copyfail)
+- ✅ [Linux Persistence](https://imoon07.github.io/read.html?post=post-exploitation-persistence-panix)
+- ✅ [Linux Pivoting](https://imoon07.github.io/read.html?post=post-exploitation-pivoting)
+- ✅ [Linux Lateral Movement](https://imoon07.github.io/read.html?post=post-exploitation-lateral-movement)
+
+---
+
+## Related Reading
+
+Melihat aktivitas Reverse Shell dari perspektif defender:
+
+- 🔍 [Reverse Shell: Process, Log, and Network Analysis](https://imoon07.github.io/read.html?post=reverse-shell-server-side)
+
+---
+
 # Referensi
 
 - **One-Lin3r (GitHub)**  
