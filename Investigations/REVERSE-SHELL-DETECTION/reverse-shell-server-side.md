@@ -268,15 +268,39 @@ Meskipun demonstrasi ini dilakukan pada lingkungan lab yang sederhana, pendekata
 
 ---
 
+---
+
+## Learning Path
+
+- ✅ [Reverse Shell dengan One-Lin3r](https://imoon07.github.io/read.html?post=command-injection-reverse-shell)
+- ➡️ **[Reverse Shell: Process, Log, and Network Analysis](https://imoon07.github.io/read.html?post=reverse-shell-server-side)** *(artikel ini)*
+- ✅ [Linux Enumeration: Basic System Information](https://imoon07.github.io/read.html?post=post-exploitation-enum)
+- ✅ [Linux Post-Exploitation: File System Exploration](https://imoon07.github.io/read.html?post=post-exploitation-filesystemexplore)
+- ✅ [Linux Privilege Enumeration](https://imoon07.github.io/read.html?post=post-exploitation-priv-enum)
+- ✅ [Linux Privilege Escalation](https://imoon07.github.io/read.html?post=post-exploitation-priv-esca-copyfail)
+- ✅ [Linux Persistence](https://imoon07.github.io/read.html?post=post-exploitation-persistence-panix)
+- ✅ [Linux Pivoting](https://imoon07.github.io/read.html?post=post-exploitation-pivoting)
+- ✅ [Linux Lateral Movement](https://imoon07.github.io/read.html?post=post-exploitation-lateral-movement)
+
+---
+
+## Related Reading
+
+Pelajari terlebih dahulu bagaimana Reverse Shell diperoleh melalui **Command Injection** sebelum menganalisis artefaknya dari sisi server.
+
+- 🔍 [Reverse Shell dengan One-Lin3r: Membuat Payload Reverse Shell dalam Satu Baris](https://imoon07.github.io/read.html?post=command-injection-reverse-shell)
+
+---
+
 # Referensi
 
 - MITRE ATT&CK – T1059: Command and Scripting Interpreter  
   https://attack.mitre.org/techniques/T1059/
 
-- Nginx Documentation – Access Log  
+- NGINX Documentation – Access Log  
   https://nginx.org/en/docs/http/ngx_http_log_module.html
 
-- Linux Manual Pages  
+- Linux Manual Pages Project  
   https://man7.org/linux/man-pages/
 
 - tcpdump Documentation  
