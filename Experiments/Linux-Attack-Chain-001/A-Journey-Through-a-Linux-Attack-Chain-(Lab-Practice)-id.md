@@ -2,6 +2,8 @@
 
 [🇬🇧 Read in English](A-Journey-Through-a-Linux-Attack-Chain-(Lab-Practice)-en.md)
 
+﷽
+
 Ini adalah rangkaian praktik yang saya buat di lab pribadi. Tujuannya untuk melatih pattern recognition dan memahami flow bagaimana satu akses awal bisa berkembang menjadi rantai serangan yang utuh. Beberapa bagian lab (Copy.Fail 2026 dan Samba CVE 2026) sengaja saya siapkan rentan untuk keperluan uji coba.
 
 **Topologi lab:**
