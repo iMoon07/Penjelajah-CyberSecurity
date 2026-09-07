@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](A-Journey-Through-a-Linux-Attack-Chain-%28Lab-Practice%29-id.md)
 
+﷽
+
 This is a practical attack chain I built in my personal lab. The goal was to practice pattern recognition and understand how a single initial access can develop into a complete attack chain. Some parts of the lab (Copy.Fail and the Samba CVE) were intentionally configured to be vulnerable for testing purposes.
 
 **Lab Topology:**
