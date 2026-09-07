@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)
 
+﷽
+
 Welcome to Penjelajah CyberSecurity! This is the first article on my blog, where I'll be documenting my learning journey through offensive security, defensive security, and everything in between. I'll be sharing lab setups, hands-on experiments, and technical write-ups that I hope other learners will also find useful.
 
 If you're building a local security lab, this toolkit might save you quite a bit of time. The toolkit automates most of the setup process, allowing you to deploy several intentionally vulnerable web applications with just a few commands.
