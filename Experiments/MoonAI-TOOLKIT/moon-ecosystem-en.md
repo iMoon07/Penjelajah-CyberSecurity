@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](moon-ecosystem-id.md)
 
+﷽
+
 Hey everyone!
 
 I recently finished building my own local AI assistant for brainstorming topics related to cybersecurity, technology, and programming. The project runs entirely on my personal computer using **Gemma 4 12B QAT**, and in this post I'd like to share an overview of how it works.
