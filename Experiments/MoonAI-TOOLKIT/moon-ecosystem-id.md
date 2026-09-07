@@ -2,6 +2,8 @@
 
 [🇬🇧 Read in English](moon-ecosystem-en.md)
 
+﷽
+
 Yoo, Senang sekali guys disini saya berhasil setup asisten AI untuk brainstroming tentang Cybersecurity, Technology, Programming dengan model yang saya adopsi Gemma 4 12B QAT secara local di PC. Ditulisan sini saya ingin membagikan beberapa dokumentasi saat saya menggunakan Assistant local saya.
 
 Disini saya menginstall beberapa kebutuhan:
