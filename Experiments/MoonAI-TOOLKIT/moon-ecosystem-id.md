@@ -228,7 +228,7 @@ Secara konteks sama tapi memang lebih singkat padat jelas yang VScode.
 
 Gambar sewaktu di balik layar dan error log bisa kalian explorasi untuk trace log, bagaimana token nya bergerak.
 
-![lm mcp](trace-log.png)
+![lm mcp](Trace-log.png)
 
 Sewaktu bagian LM Studio chat juga.
 
