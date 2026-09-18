@@ -234,7 +234,41 @@ Sewaktu bagian LM Studio chat juga.
 
 ![lm mcp](trace-log2.png)
 
-Seru juga tapi memang kalau untuk hal seperti ini perlu banyak tenaga saya sudah coba perform ke Burpsuite untuk scanning butuh 30K tapi itu saja membuat kewalahan dan panel kontrol LM Studio Crash.
+Oke ini confing untuk konteks di setingan VSCode
+
+![vs code context](vscode-context.png)
+
+Secara capability untuk awal memang model menyediakan 2 untuk perform seperti tools dan vision.
+
+![vs code context](vscode-context2.png)
+
+Dibawah ini code untuk json model dari input max yang kita dapat masuk, dan output yang kita inginkan untuk keluar.
+
+Ini dapat di atur sesuai kebutuhan jika mau ngoding maka konteks lebih baik banyak jika bener bener mau LLM replace code atau untuk menulis juga bisa seperti merapikan dan lain-nya ini cukup memakan waktu untuk GPU bekerja dan thinking.
+
+```json
+[
+	{
+		"name": "Custom Endpoint",
+		"vendor": "customendpoint",
+		"apiKey": "${input:chat.lm.secret.4d800258}",
+		"apiType": "chat-completions",
+		"models": [
+			{
+				"id": "ID_MODEL_LM_STUDIO",
+				"name": "Gemma 4 12b",
+				"url": "http://127.0.0.1:1234",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 262144, // 16384 jika ingin cepat - fokus deep 262144
+				"maxOutputTokens": 8192 // 8192
+			}
+		]
+	}
+]
+```
+
+Oke ini Seru juga tapi memang kalau untuk hal seperti ini perlu banyak tenaga saya sudah coba perform ke Burpsuite untuk scanning butuh 30K tapi itu saja membuat kewalahan dan panel kontrol LM Studio Crash.
 
 Nah saya juga pernah nyoba untuk menghubungkan dengan WSL jadi saya ada linux VSCode membaca linux saya dan di linux saya ada Man disitu saya menggunakan mansplain untuk menjelaskan perintah linux.
 
@@ -267,5 +301,3 @@ Walaupun saya sudah coba tapi setidak nya saya tau ini membutuhkan effort dan ja
 **Enjoy exploring and build your own AI assistant!**
 
 Github 🌙 [The MoonAI-Toolkit](https://github.com/iMoon07/MoonAI-Toolkit)
-YouTube 🎥 [Watch on YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
-
