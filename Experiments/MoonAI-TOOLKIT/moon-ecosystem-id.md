@@ -301,3 +301,4 @@ Walaupun saya sudah coba tapi setidak nya saya tau ini membutuhkan effort dan ja
 **Enjoy exploring and build your own AI assistant!**
 
 Github 🌙 [The MoonAI-Toolkit](https://github.com/iMoon07/MoonAI-Toolkit)
+Youtube [Record](https://www.youtube.com/watch?v=nlhn60OoRW8)
