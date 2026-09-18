@@ -1,6 +1,6 @@
 # My Assistant AI-Local 🌙Moon Toolkit
 
-[🇬🇧 Read in English](moon-ecosystem-en.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](moon-ecosystem-id.md)
 
 ﷽
 
@@ -272,7 +272,7 @@ In terms of context, they are the same, but VSCode is indeed shorter and more co
 
 The images showing what happens behind the scenes and the error logs can be explored to trace the logs and see how the tokens move.
 
-![lm mcp]\(trace-log.png\)
+![lm mcp]\(Trace-log.png\)
 
 Also during the LM Studio chat section.
 
