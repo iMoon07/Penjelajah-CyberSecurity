@@ -239,6 +239,40 @@ During the LM Studio chat section as well.
 
 ![lm mcp](trace-log2.png)
 
+Okay, this is the config for the context in the VS Code settings.
+
+![vs code context](vscode-context.png)
+
+In terms of capability, for the initial setup the model provides 2 capabilities for performance, such as tools and vision.
+
+![vs code context](vscode-context2.png)
+
+Below is the JSON code for the model, showing the maximum input we can provide and the output we want it to generate.
+
+This can be adjusted according to your needs. If you want to code, then having a larger context is better, especially if you really want the LLM to replace code or for writing tasks such as organizing and so on. However, this can take quite a lot of time for the GPU to process and for thinking.
+
+```json
+[
+	{
+		"name": "Custom Endpoint",
+		"vendor": "customendpoint",
+		"apiKey": "${input:chat.lm.secret.4d800258}",
+		"apiType": "chat-completions",
+		"models": [
+			{
+				"id": "ID_MODEL_LM_STUDIO",
+				"name": "Gemma 4 12b",
+				"url": "http://127.0.0.1:1234",
+				"toolCalling": true,
+				"vision": true,
+				"maxInputTokens": 262144, // 16384 jika ingin cepat - fokus deep 262144
+				"maxOutputTokens": 8192 // 8192
+			}
+		]
+	}
+]
+```
+
 It's also fun, but for something like this, it requires a lot of effort. I already tried performing a scan with Burp Suite, which required 30K, but that alone overwhelmed it and caused the LM Studio control panel to crash.
 
 I also once tried connecting it with WSL, so I had Linux in VSCode reading my Linux environment, and in Linux I had Man. There I used mansplain to explain Linux commands.
@@ -272,4 +306,3 @@ Even though I have already tried it, at least I know that this requires effort a
 **Enjoy exploring and build your own AI assistant!**
 
 Github 🌙 [The MoonAI-Toolkit](https://github.com/iMoon07/MoonAI-Toolkit)
-YouTube 🎥 [Watch on YouTube](https://www.youtube.com/watch?v=nlhn60OoRW8)
