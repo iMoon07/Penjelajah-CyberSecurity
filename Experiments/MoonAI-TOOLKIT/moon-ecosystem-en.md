@@ -13,29 +13,22 @@ Okay, we all know LLM - AI has become very popular. I also use it in my daily li
 I usually use:
 
 * ChatGPT website
-
 * Antigravity, the model used is Claude Sonnet 4.6 (But this was the last one I used for coding 🌙Moon Toolkit)
-
 * Grok Website
-
+  
 From here, I tried another version, which is a local LLM, because I had enough capacity to start trying it on my computer.
 
 I installed several things that were needed, such as:
 
 * LM Studio
-
 * Gemma 4 12B QAT Model
 
 The specifications I used:
 
 * Microsoft Windows 11 Pro
-
 * AMD Ryzen 5 5600
-
 * RAM 16GB
-
 * vCPU 12
-
 * NVIDIA GEFORCE RTX 3060
 
 What was my reason for using LM Studio? Actually, I tried it because of a suggestion from ChatGPT. I wanted to see the system structure from the operational side while using it and also understand a little about its direction and flow.
@@ -51,7 +44,6 @@ Okay, I will also discuss the direction as I mentioned. I have explored quite a 
 Okay, according to the README.
 
 ```text
-
 Gemma 4 12B QAT is the Quantization-Aware Training version of Gemma 4 12B. Its purpose is to keep the quality close to bfloat16 while using much less memory to load the model.
 
 Gemma 4 is a family of open multimodal models from Google DeepMind. The model supports text and image input, text output, reasoning, long context, system prompts, and built-in tool use.
@@ -73,9 +65,7 @@ The idea of my tool is a little different because I made a lot of unnecessary th
 The 🌙Moon Toolkit tool was built with the Python Language. I chose this language consciously because it has many needs for the development context and is strong operationally, such as the need to clarify images and take text from images that may not be very visible. Then there is also a voice system that uses tokens and a number through the Telegram API panel. This tool runs in three modes.
 
 * Terminal / CLI
-
 * Telegram
-
 * Telegram with voice (this is quite funny because I made it with a voice system using a second account, which has to have a bot, and only then can it contribute voice, and it is very complicated.)
 
 <a href="https://www.youtube.com/watch?v=nlhn60OoRW8">
@@ -163,21 +153,13 @@ At first, it was quite complicated. I encountered problems such as connection is
 Oh yeah, it seemed to clash with the LLM, so the connection couldn't handle it.
 
 ```bash
-
-*2026-09-18* 13:27:05.136 [info] Starting server burp
-
-*2026-09-18* 13:27:05.136 [info] Connection state: Starting
-
-*2026-09-18* 13:27:05.136 [info] Starting server from LocalProcess extension host
-
-*2026-09-18* 13:27:05.137 [info] Connection state: Running
-
-*2026-09-18* 13:27:05.154 [info] 400 status sending message to [http://127.0.0.1:9876/](http://127.0.0.1:9876/), will attempt to fall back to legacy SSE
-
-*2026-09-18* 13:27:05.197 [error] Failed to set MCP server log level: Error: MPC -32601: Server does not support logging/setLevel
-
-*2026-09-18* 13:27:05.199 [info] Discovered 27 tools
-
+2026-09-18 13:27:05.136 [info] Starting server burp
+2026-09-18 13:27:05.136 [info] Connection state: Starting
+2026-09-18 13:27:05.136 [info] Starting server from LocalProcess extension host
+2026-09-18 13:27:05.137 [info] Connection state: Running
+2026-09-18 13:27:05.154 [info] 400 status sending message to [http://127.0.0.1:9876/](http://127.0.0.1:9876/), will attempt to fall back to legacy SSE
+2026-09-18 13:27:05.197 [error] Failed to set MCP server log level: Error: MPC -32601: Server does not support logging/setLevel
+2026-09-18 13:27:05.199 [info] Discovered 27 tools
 ```
 
 But actually, it discovered 27 tools, including in LM Studio.
@@ -189,25 +171,17 @@ I asked = Are you ready for Burp Suite MCP?
 VSCode AI answered = Optimized tool selection. Yes, I am ready to help you with Burp Suite MCP. I have access to various tools that allow me to interact with Burp Suite, such as:
 
 * **Proxy History:** Viewing HTTP/WebSocket request history.
-
 * **Repeater:** Creating and sending HTTP requests manually.
-
 * **Intruder:** Sending requests with varying payloads.
-
 * **Scanner:** Viewing issues found by the scanner.
-
 * **Collaborator:** Managing payloads for **out-of-band** (OOB) testing.
-
 * **Organizer & Options:** Managing project configuration and user options.
 
 Please let me know what you want to do, for example:
 
 1. "Show the last 10 requests from proxy history."
-
 2. "Create a new Repeater tab for this request [insert request]."
-
 3. "Check whether there are any interactions from Burp Collaborator."
-
 4. "Show issues found by the scanner."
 
 What can I help you with first?
@@ -229,17 +203,11 @@ Based on the system configuration I have access to, here is the status of the ma
 All core functions (Core Tools) are already **Ready** and active. The system detects configuration for:
 
 * **Proxy:** Active (with a listener on port 8080).
-
 * **Repeater:** Ready for request manipulation.
-
 * **Scanner:** Ready for vulnerability scanning.
-
 * **Sequencer:** Ready for token analysis.
-
 * **Target:** Ready for site mapping.
-
 * **Logger:** Active for recording request/response activity.
-
 * **Organizer:** Ready for item management.
 
 ### 2. Detected Tools List
@@ -265,7 +233,7 @@ In terms of context, they are the same, but VSCode is indeed shorter and more co
 
 The images showing what happens behind the scenes and the error logs can be explored to trace the logs and see how the tokens move.
 
-![lm mcp](trace-log.png)
+![lm mcp](Trace-log.png)
 
 During the LM Studio chat section as well.
 
