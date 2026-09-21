@@ -31,7 +31,10 @@ The specifications I used:
 * vCPU 12
 * NVIDIA GEFORCE RTX 3060
 
-What was my reason for using LM Studio? Actually, I tried it because of a suggestion from ChatGPT. I wanted to see the system structure from the operational side while using it and also understand a little about its direction and flow.
+<details>
+<summary>Windows Notes — Click to open</summary>
+
+hat was my reason for using LM Studio? Actually, I tried it because of a suggestion from ChatGPT. I wanted to see the system structure from the operational side while using it and also understand a little about its direction and flow.
 
 Okay, before discussing the direction and flow, here is why I chose the Gemma 4 12B QAT Model. Actually, it just appeared by default, and I didn't choose much. I directly used it.
 
@@ -300,6 +303,269 @@ But regarding the Agentic AI context, I haven't explored it very much yet, altho
 But again, AI like that, if the right and optimal tooling is in place and maximized, is ready for battle. (As long as the resources are there hahahah)
 
 Even though I have already tried it, at least I know that this requires effort and hours of experience, so I am trying to study it a lot first. Right now, I don't need to create an advanced system. I'll just study it first, like, "ohh, so this is what happens behind the scenes," so that I can know how it works. It seems good enough for a beginning.
+
+</details>
+
+</details>
+
+<details>
+<summary>Linux Notes - Click to open</summary>
+
+Specifications I used:
+
+![specs](spesifikasi.png)
+
+## NVIDIA Error for LM Studio + LLM Gemma 4 12B Setup
+
+The NVIDIA RTX 3060 was detected, but the kernel was using `nouveau`, not the NVIDIA proprietary driver.
+
+```bash
+┌──(moon㉿moon)-[/tmp]
+└─$ nvidia-smi
+NVIDIA-SMI has failed because it couldn't communicate with the NVIDIA driver. Make sure that the latest NVIDIA driver is installed and running.
+```
+
+```bash
+┌──(moon㉿moon)-[/tmp]
+└─$ lspci -nnk | grep -A 4 -Ei 'NVIDIA|VGA|3D'
+08:00.0 VGA compatible controller [0300]: NVIDIA Corporation GA106 [GeForce RTX 3060 Lite Hash Rate] [10de:2504] (rev a1)
+    Subsystem: NVIDIA Corporation GA106 [GeForce RTX 3060 Lite Hash Rate] [10de:2504]
+    Kernel driver in use: nouveau
+    Kernel modules: nvidia
+```
+
+```bash
+┌──(moon㉿moon)-[/tmp]
+└─$ lsmod | grep -E 'nouveau|nvidia'
+nouveau              3379200  56
+mxm_wmi                12288  1 nouveau
+drm_gpuvm              57344  1 nouveau
+gpu_sched              69632  1 nouveau
+drm_ttm_helper         20480  2 nouveau
+ttm                   135168  2 drm_ttm_helper,nouveau
+drm_exec               12288  2 drm_gpuvm,nouveau
+i2c_algo_bit           16384  1 nouveau
+drm_display_helper    294912  1 nouveau
+drm_client_lib         16384  1 nouveau
+drm_kms_helper        249856  4 drm_display_helper,drm_ttm_helper,drm_client_lib,nouveau
+drm                   880640  42 gpu_sched,drm_kms_helper,drm_exec,drm_gpuvm,drm_display_helper,drm_ttm_helper,drm_client_lib,ttm,nouveau
+video                  81920  2 asus_wmi,nouveau
+button                 28672  1 nouveau
+wmi                    28672  5 video,asus_wmi,wmi_bmof,mxm_wmi,nouveau
+```
+
+```bash
+┌──(moon㉿moon)-[/tmp]
+└─$ ls -l /dev/nvidia\*
+ls: cannot access '/dev/nvidia\*': No such file or directory
+```
+
+The GPU was detected, but `nouveau` was active, so `nvidia-smi` could not communicate with the NVIDIA driver and `/dev/nvidia*` was not yet available.
+
+### NVIDIA 550 + Kernel 6.19
+
+Kernel:
+
+```bash
+┌──(moon㉿moon)-[/tmp]
+└─$ uname -r
+6.19.14+kali-amd64
+```
+
+NVIDIA DKMS initially:
+
+```bash
+┌──(moon㉿moon)-[/tmp]
+└─$ dkms status
+nvidia-current/550.163.01, 7.1.5+kali-amd64, x86_64: installed
+```
+
+After the kernel headers and `linux-kbuild` were available, the NVIDIA 550 module was successfully built:
+
+```text
+Autoinstall of module nvidia-current/550.163.01 for kernel 6.19.14+kali-amd64 (x86_64)
+Building module(s).............. done.
+Autoinstall on 6.19.14+kali-amd64 succeeded for module(s) nvidia-current.
+```
+
+However, NVIDIA 550.163.01 had an issue on kernel 6.19 related to `nvidia_drm` and `drm_gem_lock`, which could cause crashes/black screens in the graphical session. This issue is documented in Kali Bug #9746. ([Kali Linux Bug Tracker][1])
+
+### Replacing NVIDIA 550 with 580.173.02
+
+`nouveau` was then blacklisted:
+
+```bash
+sudo tee /etc/modprobe.d/blacklist-nouveau.conf >/dev/null <<'EOF'
+blacklist nouveau
+options nouveau modeset=0
+EOF
+sudo update-initramfs -u -k "$(uname -r)"
+```
+
+The driver was then replaced with **NVIDIA 580.173.02**. This is an official NVIDIA Linux driver released in June 2026.
+
+### NVIDIA Verification
+
+![success](success.png)
+
+```bash
+┌──(moon㉿moon)-[~]
+└─$ modinfo nvidia
+filename:       /lib/modules/6.19.14+kali-amd64/updates/dkms/nvidia.ko
+version:        580.173.02
+firmware:       nvidia/580.173.02/gsp_tu10x.bin
+firmware:       nvidia/580.173.02/gsp_ga10x.bin
+depends:        drm
+name:           nvidia
+vermagic:       6.19.14+kali-amd64 SMP preempt mod_unload
+```
+
+```bash
+┌──(moon㉿moon)-[~]
+└─$ lsmod | grep nvidia
+nvidia_uvm           2260992  4
+nvidia_drm            151552  58
+nvidia_modeset       2260992  17 nvidia_drm
+nvidia              15884288  542 nvidia_uvm,nvidia_modeset
+drm_ttm_helper         20480  2 nvidia_drm
+drm_client_lib         16384  1 nvidia_drm
+drm_kms_helper        249856  3 drm_ttm_helper,nvidia_drm,drm_client_lib
+video                  81920  2 asus_wmi,nvidia_modeset
+drm                   880640  37 drm_kms_helper,nvidia,drm_ttm_helper,nvidia_drm,drm_client_lib,ttm
+```
+
+```bash
+┌──(moon㉿moon)-[~]
+└─$ lsmod | grep nouveau
+```
+
+Empty output means `nouveau` is no longer active.
+
+```bash
+┌──(moon㉿moon)-[~]
+└─$ dkms status
+nvidia/580.173.02, 6.19.14+kali-amd64, x86_64: installed
+```
+
+NVIDIA devices are also available:
+
+```text
+/dev/nvidia0
+/dev/nvidiactl
+/dev/nvidia-modeset
+/dev/nvidia-uvm
+/dev/nvidia-uvm-tools
+```
+
+### LM Studio + Gemma 4 12B
+
+Model:
+
+```text
+/home/moon/.lmstudio/models
+└── lmstudio-community
+    └── gemma-4-12B-it-GGUF
+        ├── gemma-4-12B-it-Q4_K_M.gguf
+        └── mmproj-gemma-4-12B-it-BF16.gguf
+```
+
+After the NVIDIA proprietary driver was active, LM Studio could use CUDA and `llama-server` used the GPU VRAM.
+
+```text
+RTX 3060
+    ↓
+NVIDIA proprietary driver 580.173.02
+    ↓
+nvidia_drm / nvidia_modeset / nvidia_uvm
+    ↓
+/dev/nvidia0
+    ↓
+CUDA
+    ↓
+LM Studio
+    ↓
+Gemma 4 12B
+    ↓
+llama-server
+    ↓
+GPU VRAM
+```
+
+The active driver was changed from `nouveau` to the NVIDIA proprietary driver.
+
+NVIDIA 550.163.01 had an `nvidia_drm`/`drm_gem_lock` issue on kernel 6.19 that could cause graphical session crashes/black screens. This setup uses NVIDIA **580.173.02**. ([Kali Linux Bug Tracker][1])
+
+**References:**
+
+* Kali Linux Bug #9746 — NVIDIA 550.163.01 + kernel 6.19: [Kali Bug #9746]([https://bugs.kali.org/view.php?id=9746]%28https://bugs.kali.org/view.php?id=9746%29)
+* NVIDIA Linux 580.173.02: [NVIDIA 580.173.02]([https://download.nvidia.com/XFree86/Linux-x86_64/580.173.02/README/selectdriver.html]%28https://download.nvidia.com/XFree86/Linux-x86_64/580.173.02/README/selectdriver.html%29)
+* Kali Linux Bug Tracker — `0009746: nvidia 550.163.01 causes kernel NULL pointer dereference in drm_gem_lock on kernel 6.19.11`: [0009746]([https://bugs.kali.org/view.php?id=9746]%28https://bugs.kali.org/view.php?id=9746%29)
+
+### LM Studio Configuration & Testing
+
+After the NVIDIA driver and CUDA were successfully configured, I configured LM Studio and tested Gemma 4 12B using the GPU.
+
+![setting1](setting1.png)
+
+Gemma 4 12B model configuration used in LM Studio.
+
+![setting2](setting2.png)
+
+Model parameter settings before inference.
+
+![runtime](runtime.png)
+
+Selecting the **CUDA** runtime to run the model using the NVIDIA GPU.
+
+![api configuration](api-configuration-engine.png)
+
+LM Studio API configuration for accessing the model through the local endpoint.
+
+![instance](load-instances.png)
+
+Displaying the Gemma 4 12B instance being loaded before being used for inference. (This process is important because it is required for the engine and API to connect.)
+
+![lm studio](lm-studio-play.png)
+
+Gemma 4 12B inference test after the configuration was completed.
+
+### VS Code Configuration & Testing
+
+![custom endpoint](buat-custom-endpoint.png)
+
+Creating a **Custom Endpoint** in VS Code to connect VS Code with LM Studio.
+
+![custom endpoint](custom-endpoint-enter.png)
+
+Entering the endpoint configuration that will be used by VS Code.
+
+![api type](typeapiadalahchatcompletions.png)
+
+Setting the API type to **Chat Completions** for communication with the LM Studio endpoint.
+
+![api key](value-api-key-wajib-setelah-custom-endpoint.png)
+
+Entering the **API Key** required after creating the Custom Endpoint.
+
+![model identifier](isi-custom-endpointdari-modelidentifier-gemma-bukanapilocallmstudio.png)
+
+Setting the **Model Identifier** for Gemma 4 12B so VS Code uses the model running through LM Studio.
+
+![user json](tempatconfiguserjsonmcpllmvscode.png)
+
+Showing the **User JSON** configuration location for configuring the Custom Endpoint and model.
+
+![tools](bydefault-tools-saatini-yang-tersedia.png)
+
+Showing the tools currently available in the VS Code configuration.
+
+![test result](hasil-pengujian.png)
+
+Result of testing the connection and use of the Gemma 4 12B model through VS Code.
+
+</details>
+
+
 
 ---
 
