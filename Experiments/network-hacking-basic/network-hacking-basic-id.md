@@ -1,5 +1,7 @@
 # Socket Programming Experiments with Python
 
+[🇬🇧 Read in English](network-hacking-basic-en.md)
+
 Semalam saya membaca **Black Hat Python, 2nd Edition** karya Justin Seitz dan Tim Arnold. Pada bagian awal buku, saya menemukan pembahasan tentang network programming: TCP, UDP, socket, dan Netcat sederhana menggunakan Python.
 
 ![books](books.png)
