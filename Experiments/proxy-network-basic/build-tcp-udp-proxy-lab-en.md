@@ -340,13 +340,25 @@ server → proxy → client
 
 ## Conclusion
 
-This lab demonstrates how a network proxy works: accepting connections from a client, forwarding data to a server, receiving the server response, and sending that response back to the client.
+This lab proves that the proxy accepts connections from clients, creates new connections to destination servers, and forwards TCP or UDP traffic between them.
 
-TCP and UDP testing proves that the proxy supports two transport protocols.
+During FTP testing, the proxy successfully forwarded the server banner, the `USER`, `PASS`, `SYST`, and `QUIT` commands, and the responses from the FTP server.
 
-FTP testing is used to view actual TCP communication contents. The proxy successfully captures the FTP banner, the `USER`, `PASS`, `SYST`, and `QUIT` commands, as well as the server responses.
+When tracing with TShark, two TCP connections can be observed:
 
-An important finding during FTP testing is that FTP commands must end with `CRLF` (`0D 0A`). Therefore, `nc -C` is used instead of regular `nc`.
+```text
+Client → Kali Proxy :9000
+Kali Proxy → FTP Server :2121
+```
+
+| Insight | Result |
+|---|---|
+| Forwarding | FTP traffic is forwarded through the proxy |
+| TCP | Commands and `CRLF` can be sent in separate TCP packets |
+| Connection close | The connection is closed with `FIN, ACK` |
+| Security | FTP traffic is visible as plaintext because TLS is not used |
+
+FTP commands must end with `CRLF` (`0D 0A`), which is why `nc -C` is used.
 
 ## References
 
