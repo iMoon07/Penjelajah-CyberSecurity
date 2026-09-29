@@ -284,6 +284,59 @@ USER anonymous
 PASS test@test.com
 50 41 53 53 20 74 65 73 74 40 74 65 73 74 2E 63 6F 6D 0D 0A
 ```
+## What Was Learned from the Source Code
+
+The proxy is built with Python to receive data from a client, display the data in a hex dump, and forward it to the server.
+
+```text
+TCP:
+client → proxy → server
+server → proxy → client
+
+UDP:
+client → proxy → server
+server → proxy → client
+```
+
+## Source Code Components
+
+### `echo_server.py`
+
+| Component | Function |
+|---|---|
+| `socket.AF_INET` | Uses IPv4 addresses |
+| `socket.SOCK_STREAM` | Creates the TCP echo server |
+| `socket.SOCK_DGRAM` | Creates the UDP echo server |
+| `bind()` | Binds the server to `0.0.0.0:9999` |
+| `listen()` | Waits for TCP connections |
+| `accept()` | Accepts TCP connections from clients |
+| `recv()` | Receives TCP data |
+| `sendall()` | Sends TCP responses |
+| `recvfrom()` | Receives UDP data and the client address |
+| `sendto()` | Sends UDP responses |
+| `threading.Thread()` | Runs the UDP server and TCP handlers separately |
+
+### `proxy.py`
+
+| Component | Function |
+|---|---|
+| `argparse` | Reads proxy mode, host, port, and timeout from command-line arguments |
+| `socket.AF_INET` | Uses IPv4 addresses |
+| `socket.SOCK_STREAM` | Creates the TCP proxy |
+| `socket.SOCK_DGRAM` | Creates the UDP proxy |
+| `create_connection()` | Connects the TCP proxy to the remote server |
+| `bind()` | Binds the proxy to the local IP address and port |
+| `listen()` | Waits for TCP client connections |
+| `accept()` | Accepts TCP client connections |
+| `recv()` | Receives TCP data from the client or server |
+| `sendall()` | Forwards TCP data |
+| `recvfrom()` | Receives UDP data from the client |
+| `send()` | Sends UDP data to the remote server |
+| `sendto()` | Sends UDP responses back to the client |
+| `select.select()` | Waits for TCP data from the client or server |
+| `threading.Thread()` | Handles TCP connections and UDP requests separately |
+| `hexdump()` | Displays payload data in hexadecimal and ASCII |
+| `--receive-first` | Receives the FTP banner before the client sends a command |
 
 ## Conclusion
 
