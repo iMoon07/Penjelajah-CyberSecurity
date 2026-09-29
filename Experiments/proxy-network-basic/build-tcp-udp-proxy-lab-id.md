@@ -340,13 +340,25 @@ server → proxy → client
 
 ## Kesimpulan
 
-Lab ini melatih cara kerja proxy jaringan: menerima koneksi dari client, meneruskan data ke server, menerima respons server, lalu mengirimkannya kembali ke client.
+Lab ini membuktikan bahwa proxy menerima koneksi dari client, membuat koneksi baru ke server tujuan, lalu meneruskan traffic TCP atau UDP di antara keduanya.
 
-Testing TCP dan UDP digunakan untuk membuktikan bahwa proxy mendukung dua jenis transport protocol.
+Pada testing FTP, proxy berhasil meneruskan banner server, command `USER`, `PASS`, `SYST`, dan `QUIT`, serta respons dari FTP server.
 
-Testing FTP digunakan untuk melihat isi komunikasi TCP secara nyata. Proxy berhasil menangkap banner FTP, command `USER`, `PASS`, `SYST`, `QUIT`, serta respons server.
+Jika tracing dilakukan menggunakan TShark, terlihat bahwa terdapat dua koneksi TCP:
 
-Hal penting yang ditemukan saat testing FTP adalah command FTP harus diakhiri dengan `CRLF` (`0D 0A`). Karena itu digunakan `nc -C`, bukan `nc` biasa.
+```text
+Client → Kali Proxy :9000
+Kali Proxy → FTP Server :2121
+```
+
+| Insight | Hasil |
+|---|---|
+| Forwarding | Traffic FTP diteruskan melalui proxy |
+| TCP | Command dan `CRLF` dapat terkirim dalam packet terpisah |
+| Penutupan | Koneksi ditutup dengan `FIN, ACK` |
+| Security | FTP terlihat sebagai plaintext karena tidak menggunakan TLS |
+
+Command FTP harus diakhiri dengan `CRLF` (`0D 0A`), sehingga digunakan `nc -C`.
 
 ## Referensi
 
