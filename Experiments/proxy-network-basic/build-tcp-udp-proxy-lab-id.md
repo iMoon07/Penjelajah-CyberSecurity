@@ -285,6 +285,59 @@ PASS test@test.com
 50 41 53 53 20 74 65 73 74 40 74 65 73 74 2E 63 6F 6D 0D 0A
 ```
 
+## Yang Dipelajari dari Source Code
+
+Proxy dibuat dengan Python untuk menerima data dari client, menampilkan data dalam hex dump, lalu meneruskannya ke server.
+
+```text
+TCP:
+client → proxy → server
+server → proxy → client
+
+UDP:
+client → proxy → server
+server → proxy → client
+```
+## Komponen Source Code
+
+### `echo_server.py`
+
+| Komponen | Fungsi |
+|---|---|
+| `socket.AF_INET` | Menggunakan alamat IPv4 |
+| `socket.SOCK_STREAM` | Membuat echo server TCP |
+| `socket.SOCK_DGRAM` | Membuat echo server UDP |
+| `bind()` | Menempelkan server ke `0.0.0.0:9999` |
+| `listen()` | Menunggu koneksi TCP |
+| `accept()` | Menerima koneksi TCP dari client |
+| `recv()` | Menerima data TCP |
+| `sendall()` | Mengirim respons TCP |
+| `recvfrom()` | Menerima data UDP dan alamat client |
+| `sendto()` | Mengirim respons UDP |
+| `threading.Thread()` | Menjalankan UDP server dan handler TCP secara terpisah |
+
+### `proxy.py`
+
+| Komponen | Fungsi |
+|---|---|
+| `argparse` | Membaca mode proxy, host, port, dan timeout dari command line |
+| `socket.AF_INET` | Menggunakan alamat IPv4 |
+| `socket.SOCK_STREAM` | Membuat proxy TCP |
+| `socket.SOCK_DGRAM` | Membuat proxy UDP |
+| `create_connection()` | Menghubungkan proxy TCP ke remote server |
+| `bind()` | Menempelkan proxy ke IP dan port lokal |
+| `listen()` | Menunggu koneksi TCP dari client |
+| `accept()` | Menerima koneksi TCP dari client |
+| `recv()` | Menerima data TCP dari client atau server |
+| `sendall()` | Meneruskan data TCP |
+| `recvfrom()` | Menerima data UDP dari client |
+| `send()` | Mengirim data UDP ke remote server |
+| `sendto()` | Mengirim respons UDP kembali ke client |
+| `select.select()` | Menunggu data TCP dari sisi client atau server |
+| `threading.Thread()` | Menangani koneksi TCP dan request UDP secara terpisah |
+| `hexdump()` | Menampilkan payload dalam hexadecimal dan ASCII |
+| `--receive-first` | Menerima banner FTP sebelum client mengirim command |
+
 ## Kesimpulan
 
 Lab ini melatih cara kerja proxy jaringan: menerima koneksi dari client, meneruskan data ke server, menerima respons server, lalu mengirimkannya kembali ke client.
