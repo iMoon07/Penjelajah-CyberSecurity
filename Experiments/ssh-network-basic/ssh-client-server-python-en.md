@@ -58,7 +58,7 @@ The client successfully connected to `10.10.10.2` on port `22`, ran the `id` com
 
 The second test uses `ssh_rcmd.py`. Unlike the previous script, the connection remains open so multiple commands can be executed in a single SSH session.
 
-![ssh])(testing-interactive-ssh.png)
+![ssh](testing-interactive-ssh.png)
 
 After the connection is established, commands can be sent through the shell. The server side runs `ssh_server.py` on port `2222`.
 
