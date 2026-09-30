@@ -58,7 +58,7 @@ Client berhasil terhubung ke `10.10.10.2` pada port `22`, menjalankan command `i
 
 Pengujian kedua menggunakan `ssh_rcmd.py`. Berbeda dengan script sebelumnya, koneksi tetap terbuka sehingga command dapat dijalankan beberapa kali dalam satu sesi dengan syarat mempunyai rsa key.
 
-![ssh])(testing-interactive-ssh.png)
+![ssh](testing-interactive-ssh.png)
 
 Setelah berhasil terhubung, command dapat dikirim melalui shell. Sisi server dijalankan menggunakan `ssh_server.py` pada port `2222`.
 
