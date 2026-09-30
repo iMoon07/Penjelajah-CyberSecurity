@@ -117,5 +117,5 @@ SSH dapat melindungi isi komunikasi, tetapi tidak menyembunyikan keberadaan kone
 
 ## Referensi
 
-- Paramiko Documentation: `[https://docs.paramiko.org/en/stable/]`
-- Source Code: `[https://github.com/iMoon07/OWASP-Lab-Toolkit/tree/main/network-hacking-basic-code]`
+- [Paramiko Documentation](https://docs.paramiko.org/en/stable/)
+- [Source Code](https://github.com/iMoon07/OWASP-Lab-Toolkit/tree/main/network-hacking-basic-code)
