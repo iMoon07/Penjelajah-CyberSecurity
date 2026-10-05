@@ -1,6 +1,6 @@
 # Linux: Execution, History, and Timeline Analysis
 
-[🇮🇩 Baca dalam Bahasa Indonesia](linux-enumeration-investigation.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](linux-enumeration-investigation-id.md)
 
 This time, we look at the activity that occurred on a Linux system from the server side.
 
