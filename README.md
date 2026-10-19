@@ -1,6 +1,12 @@
 # Penjelajah-CyberSecurity
 
-Cybersecurity notes, lab documentation, and experiments.
+<p align="center">
+  <img src="logos.png" alt="iMoon07" width="1000">
+</p>
+
+# Welcome to the source code of my personal blog.
+
+notes, lab documentation, and experiments.
 
 [iMoon07](https://imoon07.github.io/)
 
