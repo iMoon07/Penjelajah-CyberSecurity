@@ -4,80 +4,148 @@
 
 ﷽
 
-Hallo sobat Penjelajah CyberSecurity, apakabar semuanya salam kenal ya ini merupakan tulisan pertama saya di blog ini. Web Blog ini nantinya akan berisi catatan-catatan saya saat melakukan eksplorasi dan mendalami dunia hacking dan cybersecurity. Semoga bermanfaat untuk kita semua dalam belajar dan berkembang bersama.
+Ini adalah tulisan pertama di blog saya, tempat saya mendokumentasikan eksplorasi, eksperimen, dan pengembangan di bidang cybersecurity.
 
-Saya ingin berbagi sebuah tools yang lumayan bermanfaat bagi temen-temen yang sedang belajar web application pentesting. Tools ini adalah OWASP Lab Toolkit, sebuah tools yang memudahkan kita dalam membuat lab web application untuk belajar hacking dan cybersecurity.
+![Skull](skull.jpg)
 
-Saya membangun tools ini dengan menggunakan beberapa referensi dan resource terkenal yang di gunakan di Industri Cyber Security sebagai tempat latihan (saya menyebut like a dojo hacking).
+Kali ini, saya membagikan **OWASP Lab Toolkit**, sebuah toolkit berbasis Bash untuk menyiapkan lingkungan web application security testing secara otomatis. Toolkit ini mengintegrasikan berbagai aplikasi web yang sengaja dibuat rentan ke dalam satu lab, sehingga proses instalasi dan pengelolaannya lebih praktis.
 
-Berikut adalah *resource* aplikasi rentan (*vulnerable apps*) dan *tools* pendukung yang saya integrasikan ke dalam OWASP Lab Toolkit:
+## Komponen Lab
 
-- OWASP Juice Shop - [owasp.org/www-project-juice-shop](https://owasp.org/www-project-juice-shop/)
-- OWASP Mutillidae II - [owasp.org/www-project-mutillidae-ii](https://owasp.org/www-project-mutillidae-ii/)
-- OWASP WebGoat & WebWolf - [owasp.org/www-project-webgoat](https://owasp.org/www-project-webgoat/)
-- DVWA (Damn Vulnerable Web App) - [github.com/digininja/DVWA](https://github.com/digininja/DVWA)
-- bWAPP (buggy web application) - [itsecgames.com](http://www.itsecgames.com/)
-- XVWA (Xtreme Vulnerable Web Application) - [github.com/s4n7h0/xvwa](https://github.com/s4n7h0/xvwa)
-- VWA (Vulnerable Web Application) - [github.com/hummingbirdscyber/Vulnerable-Web-Application](https://github.com/hummingbirdscyber/Vulnerable-Web-Application)
+Toolkit ini mengintegrasikan sejumlah aplikasi dan layanan untuk pengujian keamanan web:
 
-Jadi diperlukan apa saja untuk bisa ngelabs dan latihan?
+- [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/)
+- [OWASP Mutillidae II](https://owasp.org/www-project-mutillidae-ii/)
+- [OWASP WebGoat & WebWolf](https://owasp.org/www-project-webgoat/)
+- [DVWA](https://github.com/digininja/DVWA)
+- [bWAPP](http://www.itsecgames.com/)
+- [XVWA](https://github.com/s4n7h0/xvwa)
+- [VWA](https://github.com/hummingbirdscyber/Vulnerable-Web-Application)
 
-- VMware Workstation Pro (Bisa juga menggunakan VirtualBox)
-- Operating System Ubuntu 24.04 LTS (Saat ini tools masih support di ekosistem Linux based Ubuntu, kedepannya akan di update untuk OS lain)
-- Spesifikasi Ram 2GB - 1vCPU - Disk 20GB
-- Notepad (Digunakan untuk menulis hosts file jika di Windows)
-- Tools OWASP Lab Toolkit - https://github.com/imoon07/OWASP-Lab-Toolkit
+Selain aplikasi tersebut, toolkit menyediakan layanan pendukung seperti web server dan database, termasuk antarmuka administrasi database sesuai konfigurasi instalasi.
 
-### Cara Instalasi & Setup OWASP Lab Toolkit
+## Persyaratan
 
-Proses instalasinya sangat mudah karena semuanya sudah diotomatisasi menggunakan *bash script*. Ikuti langkah-langkah berikut:
+- **Virtualisasi:** VMware Workstation Pro atau VirtualBox.
+- **Sistem operasi:** Ubuntu Server 24.04 LTS.
+- **Spesifikasi minimum yang ditargetkan:** RAM 2 GB, 1 vCPU, dan disk 20 GB.
+- **Akses lab:** browser pada mesin klien dan konfigurasi file `hosts`.
+- **Toolkit:** [OWASP Lab Toolkit](https://github.com/iMoon07/OWASP-Lab-Toolkit).
 
-#### 1. Clone Repositori
+Dukungan sistem operasi saat ini berfokus pada lingkungan Linux berbasis Ubuntu.
 
-Buka terminal di mesin Ubuntu Server kalian, lalu jalankan perintah ini untuk mengunduh *toolkit*:
+## Instalasi dan Konfigurasi
+
+### 1. Clone repositori
+
+Jalankan perintah berikut di terminal Ubuntu Server:
+
 ```bash
 git clone https://github.com/iMoon07/OWASP-Lab-Toolkit.git
 cd OWASP-Lab-Toolkit
 chmod +x *.sh
 ```
 
-#### 2. Jalankan Installer
+### 2. Jalankan installer
 
-Jalankan *script* utama menggunakan akses `sudo`. *Script* ini akan memakan waktu beberapa menit karena menginstal seluruh komponen (Web Server, Database, Node.js, Java) dan mengkloning aplikasinya secara otomatis.
 ```bash
 sudo ./install-owasp-lab.sh
 ```
 
-#### 3. Konfigurasi File Hosts
+Installer akan menyiapkan komponen yang diperlukan dan mengunduh aplikasi sesuai konfigurasi toolkit. Waktu instalasi bergantung pada koneksi internet dan sumber daya mesin.
 
-Agar kita bisa mengakses lab menggunakan domain lokal yang keren (seperti `dvwa.owasp.hacking`), kita wajib mengarahkan domain tersebut ke IP Address Ubuntu Server kita.
-- Di Windows, buka **Notepad** sebagai *Administrator*.
-- Buka file di path ini: `C:\Windows\System32\drivers\etc\hosts`.
-- Tambahkan baris berikut di bagian paling bawah (Ganti IP Address `[IP_ADDRESS]` dengan IP Ubuntu Server kalian):
-```text
-[IP_ADDRESS] dvwa.owasp.hacking bwapp.owasp.hacking juiceshop.owasp.hacking
+### 3. Konfigurasi file `hosts`
+
+Agar setiap aplikasi dapat diakses menggunakan domain lokal, arahkan domain-domain lab ke IP Ubuntu Server.
+
+Dalam contoh ini, IP server adalah `10.10.10.2`. Pastikan IP tersebut memang digunakan oleh server dan dapat dijangkau dari mesin klien.
+
+**Linux**
+
+Buka file hosts:
+
+```bash
+sudo nano /etc/hosts
 ```
+
+Tambahkan baris berikut:
+
+```text
+10.10.10.2 owasp.hacking
+10.10.10.2 mutillidae.owasp.hacking
+10.10.10.2 dvwa.owasp.hacking
+10.10.10.2 bwapp.owasp.hacking
+10.10.10.2 xvwa.owasp.hacking
+10.10.10.2 vwa.owasp.hacking
+10.10.10.2 adminer.owasp.hacking
+10.10.10.2 phpmyadmin.owasp.hacking
+10.10.10.2 juiceshop.owasp.hacking
+10.10.10.2 webgoat.owasp.hacking
+10.10.10.2 webwolf.owasp.hacking
+10.10.10.2 tomcat.owasp.hacking
+10.10.10.2 upload.owasp.hacking
+10.10.10.2 example.owasp.hacking
+```
+
+Simpan dengan `Ctrl + O`, tekan `Enter`, lalu keluar menggunakan `Ctrl + X`.
+
+**Windows 10**
+
+1. Cari Notepad, lalu pilih **Run as administrator**.
+2. Buka file berikut:
+
+   `C:\Windows\System32\drivers\etc\hosts`
+
+3. Ubah filter berkas menjadi *All Files* jika file `hosts` tidak terlihat.
+4. Tambahkan daftar domain yang sama seperti konfigurasi Linux di atas.
+5. Simpan file tanpa ekstensi tambahan.
 
 ![Konfigurasi File Hosts Windows](Input%20Hosts.png)
 
-#### 4. Verifikasi Status Lab
+**Menambahkan domain baru**
 
-Untuk memastikan semua layanan berjalan normal (HTTP 200 OK), gunakan *script health checker* bawaan:
+Jika nantinya ada aplikasi baru, tambahkan domainnya dengan format:
+
+```text
+10.10.10.2 nama-aplikasi.owasp.hacking
+```
+
+Contohnya, jika ingin menambahkan `newlab.owasp.hacking`:
+
+```text
+10.10.10.2 newlab.owasp.hacking
+```
+
+Simpan perubahan pada file `hosts`. Tidak perlu membuat entri baru jika domain tersebut sudah terdaftar.
+
+> **Catatan:** Daftar `hosts` hanya mengarahkan nama domain ke IP server. Setiap domain tetap harus didukung oleh konfigurasi virtual host, reverse proxy, atau mekanisme routing yang sesuai. Pastikan juga port aplikasi telah dikonfigurasi dengan benar. Domain yang belum tersedia pada server tidak otomatis menjadi aplikasi yang dapat diakses.
+
+### 4. Verifikasi layanan
+
+Setelah instalasi selesai, jalankan health checker:
+
 ```bash
 sudo ./check-owasp-lab.sh
 ```
-Pilih opsi 1 untuk mengecek koneksi HTTP. Pastikan semuanya berwarna hijau (NORMAL).
+
+Pilih opsi `1` untuk memeriksa koneksi HTTP. Pastikan endpoint yang diharapkan aktif menunjukkan status normal.
 
 ![Status Endpoints UP](Endpoints-UP.png)
 
-### Mulai Eksplorasi!
-
-Setelah semua statusnya hijau, kalian bisa langsung membuka browser di mesin utama dan mulai belajar *penetration testing*!
+## Mulai Eksplorasi
 
 ![Overview Aplikasi](Overview.png)
 
-Enjoy learning and get safe hacking !
+Setelah layanan siap, buka browser dari mesin klien dan akses aplikasi melalui domain yang telah dikonfigurasi. Setiap aplikasi menyediakan lingkungan tersendiri untuk menguji perilaku dan kelemahan keamanan web.
 
-Selamat *ngelabs* dan berkembang bersama! Jika *toolkit* ini dirasa bermanfaat untuk menemani perjalanan *cybersecurity* kalian, jangan ragu untuk mampir ke GitHub saya dan tinggalkan jejak ⭐ (Star)!
+Gunakan lab ini pada lingkungan yang Anda kendalikan, bukan pada sistem pihak lain tanpa izin.
 
-Kalau ada kendala saat instalasi, dapet *error*, atau mau *request* aplikasi rentan lain buat *update* selanjutnya, kalian bebas diskusi dan tanya-tanya di kolom komentar di bawah ini ya. Mari kita belajar bareng! 👇
+## Penutup
+
+OWASP Lab Toolkit saya kembangkan untuk menyederhanakan proses menyiapkan lingkungan pengujian keamanan aplikasi web. Masukan, laporan bug, dan usulan integrasi aplikasi lainnya sangat terbuka.
+
+Repositori: [iMoon07/OWASP-Lab-Toolkit](https://github.com/iMoon07/OWASP-Lab-Toolkit)
+
+Jika menemukan kendala instalasi atau ingin mengusulkan pengembangan berikutnya, silakan buka *issue* atau diskusikan melalui kolom komentar.
+
+Selamat bereksperimen.
