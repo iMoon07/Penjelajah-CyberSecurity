@@ -1,6 +1,6 @@
 # Build Your Own Hacking Dojo: OWASP Lab Toolkit
 
-[🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)
 
 ﷽
 
