@@ -1,85 +1,151 @@
-# Build Your Own Web Security Lab with OWASP Lab Toolkit
+# Build Your Own Hacking Dojo: OWASP Lab Toolkit
 
-[🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit.md)
 
 ﷽
 
-Welcome to Penjelajah CyberSecurity! This is the first article on my blog, where I'll be documenting my learning journey through offensive security, defensive security, and everything in between. I'll be sharing lab setups, hands-on experiments, and technical write-ups that I hope other learners will also find useful.
+This is the first post on my blog, where I document my explorations, experiments, and projects in cybersecurity.
 
-If you're building a local security lab, this toolkit might save you quite a bit of time. The toolkit automates most of the setup process, allowing you to deploy several intentionally vulnerable web applications with just a few commands.
+![Skull](skull.jpg)
 
-This project bundles together several well-known intentionally vulnerable web applications into a single installation toolkit, providing a perfect "hacking dojo" for cybersecurity training.
+Today, I'm introducing **OWASP Lab Toolkit**, a Bash-based toolkit that automates the setup of a web application security testing lab. It brings together multiple intentionally vulnerable web applications in one environment, making installation and lab management more straightforward.
 
-Here are the vulnerable apps and supporting tools currently integrated into the OWASP Lab Toolkit:
+## Lab Components
 
-- OWASP Juice Shop - [owasp.org/www-project-juice-shop](https://owasp.org/www-project-juice-shop/)
-- OWASP Mutillidae II - [owasp.org/www-project-mutillidae-ii](https://owasp.org/www-project-mutillidae-ii/)
-- OWASP WebGoat & WebWolf - [owasp.org/www-project-webgoat](https://owasp.org/www-project-webgoat/)
-- DVWA (Damn Vulnerable Web App) - [github.com/digininja/DVWA](https://github.com/digininja/DVWA)
-- bWAPP (buggy web application) - [itsecgames.com](http://www.itsecgames.com/)
-- XVWA (Xtreme Vulnerable Web Application) - [github.com/s4n7h0/xvwa](https://github.com/s4n7h0/xvwa)
-- VWA (Vulnerable Web Application) - [github.com/hummingbirdscyber/Vulnerable-Web-Application](https://github.com/hummingbirdscyber/Vulnerable-Web-Application)
+The toolkit brings together several applications and services for web security testing:
 
-### Prerequisites
+- [OWASP Juice Shop](https://owasp.org/www-project-juice-shop/)
+- [OWASP Mutillidae II](https://owasp.org/www-project-mutillidae-ii/)
+- [OWASP WebGoat & WebWolf](https://owasp.org/www-project-webgoat/)
+- [DVWA](https://github.com/digininja/DVWA)
+- [bWAPP](http://www.itsecgames.com/)
+- [XVWA](https://github.com/s4n7h0/xvwa)
+- [VWA](https://github.com/hummingbirdscyber/Vulnerable-Web-Application)
 
-What do you need to get this lab up and running?
+The toolkit also provides supporting services, including a web server, database, and database administration interfaces, depending on the installation configuration.
 
-- VMware Workstation Pro (VirtualBox works too)
-- Ubuntu 24.04 LTS (Currently, the toolkit only supports Ubuntu/Debian-based systems. Support for other OS will be added in future updates)
-- Minimum Specs: 2GB RAM - 1 vCPU - 20GB Disk Space
-- Notepad (To edit the hosts file if you are on Windows)
-- The OWASP Lab Toolkit - https://github.com/iMoon07/OWASP-Lab-Toolkit
+## Requirements
 
-### Installation & Setup Guide
+- **Virtualization:** VMware Workstation Pro or VirtualBox.
+- **Operating system:** Ubuntu Server 24.04 LTS.
+- **Target minimum specifications:** 2 GB RAM, 1 vCPU, and 20 GB of disk space.
+- **Lab access:** A browser on the client machine and appropriate `hosts` file entries.
+- **Toolkit:** [OWASP Lab Toolkit](https://github.com/iMoon07/OWASP-Lab-Toolkit).
 
-The installation process is seamless because everything is automated via a bash script. Follow these steps:
+Currently, the toolkit focuses on Ubuntu-based Linux environments.
 
-#### 1. Clone the Repository
+## Installation and Configuration
 
-Open the terminal on your Ubuntu Server and run the following commands to download the toolkit:
+### 1. Clone the Repository
+
+Open a terminal on your Ubuntu Server and run:
+
 ```bash
 git clone https://github.com/iMoon07/OWASP-Lab-Toolkit.git
 cd OWASP-Lab-Toolkit
 chmod +x *.sh
 ```
 
-#### 2. Run the Installer
+### 2. Run the Installer
 
-Execute the main script with `sudo` privileges. This process will take a few minutes as it automatically installs all necessary dependencies (Web Server, Database, Node.js, Java) and clones the applications.
 ```bash
 sudo ./install-owasp-lab.sh
 ```
 
-#### 3. Configure the Hosts File
+The installer sets up the required components and downloads the applications defined in the toolkit's configuration. Installation time depends on your internet connection and available system resources.
 
-To access the labs using clean local domains (e.g., `dvwa.owasp.hacking`), you need to route those domains to your Ubuntu Server's IP address.
-- On Windows, open **Notepad** as an *Administrator*.
-- Open the file located at: `C:\Windows\System32\drivers\etc\hosts`.
-- Add the following line at the very bottom (Replace `[IP_ADDRESS]` with your Ubuntu Server's actual IP):
-```text
-[IP_ADDRESS] dvwa.owasp.hacking bwapp.owasp.hacking juiceshop.owasp.hacking
+### 3. Configure the `hosts` File
+
+To access each application through a local domain, map the lab domains to your Ubuntu Server's IP address.
+
+In this example, the server uses `10.10.10.2`. Make sure this address is assigned to your server and reachable from the client machine.
+
+**Linux**
+
+Open the hosts file:
+
+```bash
+sudo nano /etc/hosts
 ```
+
+Add the following entries:
+
+```text
+10.10.10.2 owasp.hacking
+10.10.10.2 mutillidae.owasp.hacking
+10.10.10.2 dvwa.owasp.hacking
+10.10.10.2 bwapp.owasp.hacking
+10.10.10.2 xvwa.owasp.hacking
+10.10.10.2 vwa.owasp.hacking
+10.10.10.2 adminer.owasp.hacking
+10.10.10.2 phpmyadmin.owasp.hacking
+10.10.10.2 juiceshop.owasp.hacking
+10.10.10.2 webgoat.owasp.hacking
+10.10.10.2 webwolf.owasp.hacking
+10.10.10.2 tomcat.owasp.hacking
+10.10.10.2 upload.owasp.hacking
+10.10.10.2 example.owasp.hacking
+```
+
+Save with `Ctrl + O`, press `Enter`, then exit with `Ctrl + X`.
+
+**Windows 10**
+
+1. Search for Notepad and select **Run as administrator**.
+2. Open the following file:
+
+   `C:\Windows\System32\drivers\etc\hosts`
+
+3. Change the file filter to *All Files* if the `hosts` file is not visible.
+4. Add the same domain entries listed above.
+5. Save the file without adding a file extension.
 
 ![Windows Hosts File Configuration](Input%20Hosts.png)
 
-#### 4. Verify Lab Status
+**Adding New Domains**
 
-To ensure all services are running properly (HTTP 200 OK), use the built-in health checker script:
+If you add another application to the lab, use this format:
+
+```text
+10.10.10.2 app-name.owasp.hacking
+```
+
+For example, to add `newlab.owasp.hacking`:
+
+```text
+10.10.10.2 newlab.owasp.hacking
+```
+
+Save the changes to the `hosts` file. You don't need to add another entry if the domain is already listed.
+
+> **Note:** The `hosts` file only maps domain names to IP addresses. Each domain must also be configured on the server through a virtual host, reverse proxy, or another appropriate routing mechanism. The relevant application ports must be configured as well. Adding a domain to the `hosts` file alone does not make an application available.
+
+### 4. Verify the Lab
+
+Once installation is complete, run the built-in health checker:
+
 ```bash
 sudo ./check-owasp-lab.sh
 ```
-Select option `1` to check HTTP connections. Make sure all endpoints return a green `NORMAL` status.
 
-![Endpoints UP Status](Endpoints-UP.png)
+Select option `1` to check HTTP connectivity. Make sure the expected endpoints report a healthy status.
 
-### Start Exploring!
+![Endpoints Up](Endpoints-UP.png)
 
-Once all statuses are green, open the browser on your host machine and start hacking!
+## Start Exploring
 
 ![Application Overview](Overview.png)
 
-Happy hacking and stay safe!
+Once the services are running, open a browser on your client machine and access the applications through their configured domains. Each application provides its own environment for exploring web vulnerabilities and testing security concepts.
 
-If you find this toolkit helpful for your cybersecurity journey, don't hesitate to drop by my GitHub and leave a ⭐ (Star)!
+Keep your testing within environments you own or have explicit permission to assess.
 
-If you run into any installation issues, encounter errors, or want to request other vulnerable apps for future updates, feel free to drop a comment in the discussion section below. Let's learn together! 👇
+## Closing Notes
+
+I built OWASP Lab Toolkit to simplify the process of setting up a web application security testing environment. Feedback, bug reports, and suggestions for additional applications are always welcome.
+
+Repository: [iMoon07/OWASP-Lab-Toolkit](https://github.com/iMoon07/OWASP-Lab-Toolkit)
+
+If you run into installation issues or have ideas for future improvements, feel free to open an issue or join the discussion in the comments.
+
+Happy hacking!
