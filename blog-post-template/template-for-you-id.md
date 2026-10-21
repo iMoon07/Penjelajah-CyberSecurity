@@ -396,6 +396,7 @@ Di layar sempit, wide table seharusnya memakai responsive strategy yang disengaj
 
 ### External links
 
+- [My GitHub Pages blog](https://github.com/iMoon07/imoon07.github.io/)
 - [Example Domain](https://example.com)
 - [GitHub](https://github.com)
 - [MDN Web Docs](https://developer.mozilla.org)
