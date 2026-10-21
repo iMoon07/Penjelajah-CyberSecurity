@@ -36,6 +36,7 @@ Anggap saja ini checklist visual:
 - Apakah list, table, dan callout tampil rapi?
 - Apakah code block punya syntax highlighting, line number, dan tombol copy?
 - Apakah gambar, caption, dan link bekerja dengan baik?
+- Apakah YouTube bisa tampil sebagai media yang interaktif?
 - Apakah footnote, math, diagram, dan elemen HTML tetap aman?
 - Apakah tampilannya tetap masuk akal di mobile?
 
@@ -54,9 +55,10 @@ Jadi ya, artikel ini tidak terlalu serius. Ini tempat saya ngetes blog sambil te
 - Code block dengan syntax highlighting, line number, hover, selection, dan copy.
 - Long line, whitespace, dan source integrity.
 - Reading progress.
-- Image, caption, external media, dan fallback.
+- Local image, external image, caption, dan fallback.
 - Table biasa dan wide table.
 - External link, internal anchor, autolink, dan reference link.
+- Media biasa dan YouTube media.
 - Footnote, math, diagram, dan HTML dasar.
 - Responsive behavior di desktop, tablet, dan mobile.
 - Accessibility dan interaksi keyboard/touch.
@@ -424,13 +426,90 @@ Kembali ke [Reading Experience](#01--reading-experience).
 
 Internal links seharusnya membawa pembaca ke heading artikel yang benar. Anchor generation harus stabil untuk heading berulang dan heading yang mengandung tanda baca atau karakter non-Inggris.
 
-## 12 — Technical Media dan Embedding
+## 12 — Media Biasa dan YouTube
 
-Beberapa artikel butuh lebih dari image dan source code. Renderer harus diuji untuk diagram, terminal recording, video embed, dan visualisasi interaktif yang didukung.
+Beberapa artikel butuh lebih dari image dan source code. Renderer harus bisa membedakan **media biasa** dan **media YouTube**.
 
-### YouTube video
+Ada dua perilaku yang diuji:
+
+1. **Media biasa** — link eksternal normal yang tetap tampil sebagai link.
+2. **YouTube media** — link YouTube yang bisa dideteksi, di-fetch, dan ditampilkan sebagai video card interaktif.
+
+### Media biasa
+
+Link media biasa seharusnya tetap sederhana, accessible, dan predictable. Renderer tidak perlu mengubah setiap URL eksternal menjadi embed.
+
+- [Example website](https://example.com)
+- [GitHub repository](https://github.com)
+- [MDN Web Docs](https://developer.mozilla.org)
+- [Shiki documentation](https://shiki.style)
+
+External links seharusnya punya styling yang dikenali, focus state yang usable, dan penanganan yang tepat untuk link yang membuka tab baru.
+
+Link biasa tidak boleh otomatis berubah menjadi embed. Ia tetap link normal, kecuali renderer punya aturan khusus untuk domain tertentu.
+
+### YouTube media
+
+Link YouTube adalah kasus khusus. Renderer seharusnya bisa mendeteksi URL YouTube, mengambil video ID, fetch metadata publik, lalu menampilkan video card interaktif.
+
+Link berikut seharusnya dikenali sebagai YouTube video:
 
 [Tonton di YouTube](https://www.youtube.com/watch?v=8rkiwXkEA8M&list=PLsOgFqR0cppAEuYATcmAxyHeSTkWM4ZWj)
+
+Expected renderer behavior:
+
+- Deteksi URL YouTube.
+- Extract video ID: `8rkiwXkEA8M`.
+- Fetch metadata publik melalui backend yang aman.
+- Tampilkan judul video, nama channel, dan thumbnail berkualitas.
+- Tampilkan tombol play atau preview interaktif.
+- Load iframe YouTube hanya setelah pembaca menekan play.
+- Sediakan fallback link langsung kalau fetching atau embedding gagal.
+
+Renderer seharusnya menyimpan cache metadata agar tidak request YouTube setiap kali halaman dibuka.
+
+### YouTube thumbnail dengan tombol play
+
+Kalau interactive fetching belum tersedia, versi ini tetap harus tampil dengan baik: thumbnail YouTube dengan tombol play di tengah.
+
+<a
+  href="https://www.youtube.com/watch?v=8rkiwXkEA8M&list=PLsOgFqR0cppAEuYATcmAxyHeSTkWM4ZWj"
+  target="_blank"
+  rel="noopener noreferrer"
+  style="position: relative; display: block; max-width: 800px; margin: 0 auto;"
+>
+  <img
+    src="https://img.youtube.com/vi/8rkiwXkEA8M/hqdefault.jpg"
+    alt="Tonton video di YouTube"
+    style="width: 100%; height: auto; display: block; border-radius: 12px;"
+  />
+
+  <span
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      background: rgba(0, 0, 0, 0.65);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 28px;
+    "
+  >
+    ▶
+  </span>
+</a>
+
+*Caption: YouTube thumbnail dengan tombol play. Klik gambar untuk membuka video.*
+
+### YouTube embed fallback
+
+Kalau renderer mendukung iframe YouTube, video seharusnya bisa dirender langsung.
 
 <iframe
   width="100%"
@@ -445,6 +524,8 @@ Beberapa artikel butuh lebih dari image dan source code. Renderer harus diuji un
 Setiap jenis media seharusnya punya fallback yang jelas. Kalau external embed tidak bisa load, pembaca tetap harus bisa mengakses penjelasan di sekitarnya dan direct link kalau tersedia.
 
 Jangan mengeksekusi script arbitrer dari Markdown. HTML, embeds, SVG, dan konten eksternal harus mengikuti sanitization dan security policy aplikasi.
+
+Metadata eksternal seharusnya di-fetch melalui backend yang terkontrol, dengan request timeout, response-size limit, caching, dan validasi domain yang diizinkan.
 
 ## 13 — Responsive Reading
 
@@ -628,6 +709,9 @@ Ini adalah x^2^.
 - [ ] Wide tables tetap usable di mobile.
 - [ ] Images punya fallback yang sesuai.
 - [ ] External links, internal anchors, autolinks, dan reference links bekerja.
+- [ ] Media biasa tetap tampil sebagai link.
+- [ ] YouTube thumbnail dengan tombol play tampil dengan benar.
+- [ ] YouTube embed atau fetching metadata berjalan sesuai kemampuan renderer.
 - [ ] Footnotes, math, diagrams, dan HTML elements dirender dengan aman.
 - [ ] Keyboard dan touch interactions bekerja.
 - [ ] Browser zoom tidak menyembunyikan konten.
@@ -639,7 +723,7 @@ Ini adalah x^2^.
 
 Artikel ini tetap sebuah eksperimen, tetapi tujuannya sederhana: memastikan blog saya bisa menampilkan Markdown dengan rapi, nyaman dibaca, dan tetap menyenangkan—baik untuk tulisan santai maupun tulisan teknis.
 
-Pembaca seharusnya bisa mengikuti tulisan, melihat code block dengan jelas, navigasi artikel panjang, membuka gambar, membaca footnote, melihat diagram, lalu kembali ke bagian yang sedang dibaca.
+Pembaca seharusnya bisa mengikuti tulisan, melihat code block dengan jelas, navigasi artikel panjang, membuka gambar, membaca footnote, melihat diagram, membuka media biasa, dan menonton YouTube lewat thumbnail atau embed.
 
 Renderer seharusnya menambahkan tampilan dan interaksi yang bagus tanpa mengubah Markdown asli atau membuat konten menghilang.
 
