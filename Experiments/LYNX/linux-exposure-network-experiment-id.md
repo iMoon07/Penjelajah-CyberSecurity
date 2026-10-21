@@ -1,5 +1,9 @@
 # LYNX — Linux eXposure & Network eXperiment
 
+﷽
+
+[🇬🇧 Read in English](linux-exposure-network-experiment-en.md)
+
 Single-layer stack untuk kebutuhan Anda membangun server Web Application berbasis Linux, Apache, MariaDB, dan PHP, dengan bantuan external source OWASP CRS & ModSecurity sebagai WAF single stack, serta Anubis untuk Bot Mitigation.
 
 Beralaskan QEMU-KVM sebagai platform virtualisasi yang akan menjalankan distro Linux pilihan saya, yaitu Ubuntu.
