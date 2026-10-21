@@ -1,4 +1,3 @@
-```md
 # Write for Fun, Build for Enjoy
 
 ![Explore, Write, Build, Enjoy](./explore-write-build-enjoy.png)
@@ -729,4 +728,3 @@ Readers should be able to follow the text, inspect code blocks clearly, navigate
 The renderer should add good presentation and interaction without changing the original Markdown source or making content disappear.
 
 The final goal is simple: a blog that is comfortable to read, clean, responsive, and still feels like a place where I write for fun.
-```
