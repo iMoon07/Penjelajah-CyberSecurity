@@ -1,29 +1,35 @@
 # Write for Fun, Build for Enjoy
 
+![Explore, Write, Build, Enjoy](./explore-write-build-enjoy.png)
+
 [🇬🇧 Read in English](template-for-you-en.md)
 
 Halo, selamat datang di blog saya.
 
 Blog ini adalah ruang eksplorasi saya. Tempat untuk menulis hal-hal yang sedang saya pelajari, mencoba ide baru, menyimpan eksperimen, dan membangun sesuatu hanya karena terasa menyenangkan.
 
-Saya belum tahu semua hal, dan saya tidak ingin terlihat seperti tahu semuanya. Saya lebih suka mulai dari rasa penasaran: mencoba, salah, memperbaiki, lalu mencoba lagi.
+Saya belum tahu semua hal, dan saya tidak ingin pura-pura tahu semuanya. Saya lebih suka mulai dari rasa penasaran: coba, salah, bingung, googling, salah lagi, lalu akhirnya jalan juga.
 
 Anggap saja ini mantra saya:
 
 > **Explore. Write. Build. Enjoy. Repeat.**
 
+Kalau diterjemahkan bebas: jelajahi, tulis, bangun, nikmati, ulangi. Kalau versi jujurnya: buka laptop, pusing, minum air, coba lagi.
+
 ## Kenapa artikel ini ada?
 
 Artikel ini adalah **testing post** untuk blog saya.
 
-Saya baru saja mendesain ulang tampilan blog, terutama bagian typography, spacing, heading, list, table, image, link, dan code block. Jadi saya butuh satu artikel panjang yang berisi hampir semua sintaks Markdown untuk menguji apakah semuanya tampil dengan baik.
+Baru-baru ini saya mendesain ulang tampilan blog, terutama bagian typography, spacing, heading, list, table, image, link, dan code block. Lalu saya sadar satu hal: membuat desainnya itu satu hal, tapi memastikan semua tulisan tetap tampil rapi itu hal lain.
+
+Jadi artikel ini ibarat tempat latihan. Semua sintaks Markdown saya lempar ke sini, lalu saya lihat mana yang tampil bagus dan mana yang bikin saya mikir, “kok bisa begini?”
 
 Artikel ini dibuat untuk dua jenis tulisan:
 
 - **Tulisan non-teknis**, seperti catatan harian, opini, refleksi, dan cerita eksplorasi.
 - **Tulisan teknis**, seperti tutorial, catatan belajar, dokumentasi, dan eksperimen.
 
-Anggap saja ini seperti checklist visual:
+Anggap saja ini checklist visual:
 
 - Apakah heading hierarchy-nya enak dibaca?
 - Apakah paragrafnya nyaman untuk dibaca lama?
@@ -33,9 +39,9 @@ Anggap saja ini seperti checklist visual:
 - Apakah footnote, math, diagram, dan elemen HTML tetap aman?
 - Apakah tampilannya tetap masuk akal di mobile?
 
-Jadi ya, artikel ini bukan artikel yang serius-serius amat. Ini tempat saya ngetes blog sambil tetap menulis dengan santai.
+Jadi ya, artikel ini tidak terlalu serius. Ini tempat saya ngetes blog sambil tetap menulis dengan santai.
 
-> **Note:** Kalau ada yang terlihat aneh, berarti memang sedang diuji.
+> **Note:** Kalau ada yang terlihat aneh, berarti memang sedang diuji. Bukan kamu yang salah, kemungkinan besar saya yang belum menemukan bug-nya.
 
 ## Apa yang diuji?
 
@@ -60,138 +66,138 @@ Jadi ya, artikel ini bukan artikel yang serius-serius amat. Ini tempat saya nget
 
 ## 01 — Reading Experience
 
-### A comfortable reading rhythm
+### Ritme membaca yang nyaman
 
-Technical writing often alternates between explanation, commands, output, and interpretation. The transition between these elements should feel natural.
+Tulisan teknis biasanya berganti-ganti antara penjelasan, perintah, output, dan interpretasi. Transisinya seharusnya terasa natural, bukan seperti naik roller coaster tanpa sabuk pengaman.
 
-The body text should have a readable line length, generous but controlled line-height, and clear paragraph spacing. Headings should establish hierarchy without overwhelming the article. Inline code should be distinguishable from prose without creating excessive visual noise.
+Teks utama seharusnya punya panjang baris yang nyaman, line-height yang cukup, dan jarak antarparagraf yang jelas. Heading harus membantu pembaca memahami struktur, bukan membuat halaman terlihat seperti rapat kantor.
 
-A reader should be able to scan the article quickly, stop at an important paragraph, inspect a code example, and return to the explanation without losing their place.
+Pembaca idealnya bisa scan artikel dengan cepat, berhenti di paragraf penting, melihat code block, lalu kembali membaca tanpa kehilangan posisi.
 
-Consider these common terms: `Content-Security-Policy`, `X-Forwarded-For`, `application/json`, `0xDEADBEEF`, `snake_case`, `camelCase`, `__init__()`, and `user_id`.
+Perhatikan istilah-istilah ini: `Content-Security-Policy`, `X-Forwarded-For`, `application/json`, `0xDEADBEEF`, `snake_case`, `camelCase`, `__init__()`, dan `user_id`.
 
-They should remain legible within normal sentences and wrap correctly when the viewport becomes narrow.
+Semuanya harus tetap terbaca di dalam kalimat normal dan wrap dengan baik saat layar makin sempit.
 
 ### Text formatting
 
-This is **bold text**, *italic text*, and ~~strikethrough text~~.
+Ini adalah **teks bold**, *teks italic*, dan ~~teks strikethrough~~.
 
-You can also combine **bold emphasis** with `inline code`, reference an [external resource](https://example.com), or use an ordinary internal article anchor.
+Kamu juga bisa menggabungkan **bold** dengan `inline code`, mereferensikan [tautan eksternal](https://example.com), atau memakai anchor internal artikel.
 
-The styling should preserve readability without making every sentence look like a collection of separate cards.
+Styling-nya harus tetap enak dibaca, bukan membuat setiap kalimat terlihat seperti kumpulan kartu warna-warni.
 
 ### Heading hierarchy
 
-#### Third-level heading
+#### Heading level tiga
 
-##### Fourth-level heading
+##### Heading level empat
 
-###### Sixth-level heading
+###### Heading level enam
 
-These headings exist to test hierarchy and anchor generation. The table of contents should follow the renderer's configured heading-depth rules, avoid duplicate IDs, and maintain stable links.
+Heading-heading ini ada untuk menguji hierarchy dan pembuatan anchor. Table of contents harus mengikuti aturan heading depth yang dikonfigurasi, menghindari ID duplikat, dan menjaga link tetap stabil.
 
-## 02 — Article Metadata and Editorial Layout
+## 02 — Metadata Artikel dan Layout Editorial
 
-The article header should accommodate:
+Header artikel seharusnya bisa menampung:
 
-- A prominent title and optional subtitle.
-- Author avatar, name, and profile link.
-- Publication date and optional update date.
-- Estimated reading time.
-- Categories, tags, and language selection.
-- A short introduction or summary.
-- Optional cover image.
+- Judul utama dan subtitle opsional.
+- Avatar penulis, nama, dan link profil.
+- Tanggal publikasi dan tanggal update opsional.
+- Estimasi waktu baca.
+- Kategori, tags, dan pilihan bahasa.
+- Pengantar atau ringkasan singkat.
+- Cover image opsional.
 
-Metadata should remain visually secondary to the article title. Long titles, multiple tags, missing avatars, and translated titles must not break the layout.
+Metadata seharusnya tetap terlihat sekunder dibanding judul artikel. Judul panjang, banyak tags, avatar hilang, atau judul hasil terjemahan tidak boleh merusak layout.
 
-On mobile, metadata should wrap naturally rather than overflow horizontally.
+Di mobile, metadata seharusnya wrap secara natural, bukan meluber ke kanan sampai pembaca harus scroll horizontal seperti sedang membaca surat kabar dari tahun 1998.
 
-## 03 — Lists, Steps, and Technical Notes
+## 03 — List, Langkah, dan Catatan Teknis
 
-### Investigation workflow
+### Alur investigasi
 
-1. Establish the scope and objectives.
-2. Prepare the testing environment.
-3. Identify the relevant application components.
-4. Execute the planned checks.
-5. Record observations and supporting evidence.
-6. Verify the findings.
-7. Document conclusions and limitations.
+1. Tentukan scope dan tujuan.
+2. Siapkan environment testing.
+3. Identifikasi komponen aplikasi yang relevan.
+4. Jalankan pemeriksaan yang direncanakan.
+5. Catat observasi dan bukti pendukung.
+6. Verifikasi temuan.
+7. Dokumentasikan kesimpulan dan keterbatasan.
 
-### Nested procedures
+### Prosedur bertingkat
 
-1. **Environment preparation**
-   - Verify system requirements.
-   - Confirm network connectivity.
-   - Check application dependencies.
+1. **Persiapan environment**
+   - Periksa system requirements.
+   - Pastikan koneksi jaringan berjalan.
+   - Cek dependency aplikasi.
 
 2. **Testing**
-   - Capture requests and responses.
-   - Inspect relevant application behavior.
-   - Compare observations with expected results.
+   - Capture request dan response.
+   - Inspect behavior aplikasi yang relevan.
+   - Bandingkan hasil dengan ekspektasi.
 
 3. **Reporting**
-   - Summarize the evidence.
-   - Explain the impact.
-   - Document remediation options.
+   - Rangkum bukti.
+   - Jelaskan dampaknya.
+   - Dokumentasikan opsi remediasi.
 
 ### Checklist
 
-- [ ] Test environment documented.
-- [ ] Application endpoints identified.
-- [ ] All observations independently verified.
-- [ ] Final report reviewed.
+- [ ] Environment testing sudah didokumentasikan.
+- [ ] Endpoint aplikasi sudah diidentifikasi.
+- [ ] Semua observasi sudah diverifikasi secara independen.
+- [ ] Laporan akhir sudah direview.
 
-### Editorial callouts
+### Callout editorial
 
-> **Note:** Use callouts to provide supporting context without interrupting the main explanation.
+> **Note:** Gunakan callout untuk memberi konteks tambahan tanpa memutus alur penjelasan utama.
 
-> **Warning:** A warning should communicate a genuine risk. Do not use warning styling for ordinary information.
+> **Warning:** Warning seharusnya menyampaikan risiko yang benar-benar ada. Jangan pakai styling warning untuk informasi biasa.
 
-> **Important:** This article is only a rendering test. Nothing here needs to be taken too seriously.
+> **Important:** Artikel ini hanya testing rendering. Tidak perlu terlalu serius.
 
-These elements use standard Markdown blockquotes. If the renderer supports richer callouts, their presentation should be derived from a documented convention or existing metadata, not from fragile visual guesses.
+Elemen-elemen ini memakai blockquote Markdown standar. Kalau renderer mendukung callout yang lebih kaya, presentasinya seharusnya berasal dari konvensi atau metadata yang jelas, bukan dari tebakan visual yang rapuh.
 
 ## 04 — Inline Technical Content
 
-Inline code should work inside paragraphs, lists, tables, and links.
+Inline code harus bekerja di dalam paragraf, list, table, dan link.
 
-For example, the command `sudo ./check-blog.sh` can be discussed in the same sentence as the expected HTTP status, an `application/json` response, or a configuration value such as `timeout_ms`.
+Misalnya, perintah `sudo ./check-blog.sh` bisa dibahas dalam kalimat yang sama dengan expected HTTP status, response `application/json`, atau configuration value seperti `timeout_ms`.
 
-Identifiers that differ only in capitalization must remain distinguishable: `ContentType`, `contentType`, `content_type`, and `CONTENT_TYPE`.
+Identifier yang hanya berbeda huruf kapital harus tetap terlihat berbeda: `ContentType`, `contentType`, `content_type`, dan `CONTENT_TYPE`.
 
-Special characters should survive parsing and rendering: `<`, `>`, `&`, quotes, backslashes, dollar signs, braces, brackets, and Unicode characters.
+Karakter khusus harus tetap selamat setelah parsing dan rendering: `<`, `>`, `&`, tanda kutip, backslash, dollar sign, curly braces, brackets, dan karakter Unicode.
 
-International text: Indonesia, 日本語, العربية, Español, Ελληνικά, and 🔐.
+Teks internasional: Indonesia, 日本語, العربية, Español, Ελληνικά, dan 🔐.
 
-The renderer must not confuse literal code characters with HTML markup or Markdown syntax.
+Renderer tidak boleh mengira karakter code literal adalah HTML markup atau sintaks Markdown.
 
 ## 05 — Interactive Code Playground
 
-This section tests the article renderer's primary code presentation feature.
+Bagian ini menguji fitur utama renderer artikel: code presentation.
 
-The desired interface is one interactive playground with a language selector, rather than a separate UI card for every programming language. The reader should be able to choose a supported language and inspect its syntax highlighting while keeping the code panel, line numbers, controls, and reading position consistent.
+Interface yang diinginkan adalah satu interactive playground dengan language selector, bukan kartu UI terpisah untuk setiap bahasa. Pembaca harus bisa memilih bahasa yang didukung, melihat syntax highlighting, sambil panel code, line number, kontrol, dan posisi baca tetap konsisten.
 
-### Playground requirements
+### Kebutuhan playground
 
-- A searchable language selector when the number of available languages warrants it.
-- Broad grammar support, including aliases and less common languages.
-- Extensible language registration.
-- Accurate line numbers and syntax highlighting.
-- Line hover and a distinct active or selected line.
-- Copy code without copying line numbers.
-- Optional line wrapping.
-- Horizontal scrolling for long source lines.
-- Keyboard-accessible controls.
-- A mobile-friendly selector and touch interactions.
-- A readable plain-text fallback for unknown languages.
-- No loss or mutation of the original source.
+- Language selector yang searchable kalau jumlah bahasanya banyak.
+- Dukungan grammar yang luas, termasuk alias dan bahasa yang kurang umum.
+- Registrasi bahasa yang extensible.
+- Line number dan syntax highlighting yang akurat.
+- Line hover dan status active/selected yang berbeda.
+- Copy code tanpa ikut menyalin line number.
+- Line wrapping opsional.
+- Horizontal scroll untuk source line yang panjang.
+- Kontrol yang bisa diakses pakai keyboard.
+- Selector dan touch interaction yang mobile-friendly.
+- Plain-text fallback yang tetap terbaca untuk bahasa yang tidak dikenal.
+- Tidak ada kehilangan atau perubahan pada source asli.
 
-The language selector must not be presented as a built-in Markdown feature. Standard fenced Markdown identifies a code block and may identify its language, but a multi-language playground requires renderer-level functionality.
+Language selector tidak boleh dianggap sebagai fitur bawaan Markdown. Fenced Markdown standar memang bisa menandai code block dan bahasanya, tetapi multi-language playground membutuhkan fungsi di level renderer.
 
 ### Primary source fixture
 
-The following is the single canonical code sample in this document. It deliberately contains enough lines, indentation, comments, strings, and nested structures to test the main code presentation.
+Berikut adalah satu code sample utama di dokumen ini. Sengaja dibuat cukup panjang, ada indentation, comment, string, dan struktur bersarang untuk menguji tampilan code.
 
 ```javascript
 /**
@@ -260,112 +266,118 @@ console.log(summarizeNotes(exampleNotes));
 
 ### Code interaction behavior
 
-When the pointer moves across the source, the current line should receive a subtle highlight. The line-number gutter should remain aligned with the code, including when the code panel scrolls horizontally.
+Saat pointer bergerak di atas source, baris saat ini seharusnya mendapat highlight halus. Line-number gutter harus tetap sejajar dengan code, termasuk saat code panel scroll horizontal.
 
-A selected line or range should have a separate visual state from hover. The interaction must not prevent ordinary text selection, keyboard navigation, or copying.
+Line atau range yang selected harus punya visual state berbeda dari hover. Interaksi ini tidak boleh mengganggu text selection biasa, keyboard navigation, atau copy.
 
-The copy button should provide visible and accessible feedback. If clipboard access fails, the reader should receive an appropriate fallback instead of a false success state.
+Tombol copy harus memberi feedback yang terlihat dan accessible. Kalau akses clipboard gagal, pembaca harus mendapat fallback yang jelas, bukan status “Copied!” palsu.
 
-For large snippets, the interface may offer expand and collapse controls. Collapsing must never destroy the source content, and all hidden content must remain accessible through a clear interaction.
+Untuk snippet besar, interface boleh menyediakan kontrol expand dan collapse. Collapse tidak boleh menghapus source content, dan semua konten tersembunyi harus tetap bisa diakses lewat interaksi yang jelas.
 
 ### Language support policy
 
-The selector should expose the languages available through the chosen syntax-highlighting engine and any registered extensions.
+Selector seharusnya menampilkan bahasa yang tersedia dari syntax-highlighting engine yang dipakai, termasuk extension yang sudah didaftarkan.
 
-The implementation must not rely on a hardcoded short list as its permanent language boundary. It should support language aliases, optional grammar loading, and graceful fallback when a grammar is unavailable.
+Implementasi tidak boleh bergantung pada hardcoded short list sebagai batas permanen. Harus mendukung language alias, optional grammar loading, dan graceful fallback saat grammar tidak tersedia.
 
-A new language should be addable without redesigning the article page. Unknown languages must remain readable as plain text.
+Bahasa baru seharusnya bisa ditambahkan tanpa mendesain ulang halaman artikel. Bahasa yang tidak dikenal harus tetap terbaca sebagai plain text.
 
-The source sample above is the canonical Markdown code fixture. Testing actual syntax across every supported grammar should be automated using a separate language corpus, rather than duplicating dozens of code blocks in this article.
+Code sample di atas adalah canonical Markdown code fixture. Testing syntax untuk setiap grammar yang didukung sebaiknya diotomatisasi memakai language corpus terpisah, bukan dengan menduplikasi puluhan code block di artikel ini.
 
-## 06 — Long Lines, Whitespace, and Source Integrity
+## 06 — Long Lines, Whitespace, dan Source Integrity
 
-Long source lines should remain accessible without forcing the entire page to become wider than the viewport.
+Source line yang panjang harus tetap bisa diakses tanpa memaksa seluruh halaman menjadi lebih lebar dari viewport.
 
-The renderer should offer horizontal scrolling by default for code where wrapping would damage alignment or meaning. If soft wrapping is available, line numbers must remain understandable even when one source line occupies several visual rows.
+Renderer seharusnya menawarkan horizontal scrolling secara default untuk code yang wrapping-nya bisa merusak alignment atau makna. Kalau soft wrapping tersedia, line number tetap harus masuk akal meskipun satu source line menempati beberapa visual row.
 
-Whitespace matters. Indentation, blank lines, tabs, trailing newlines, and Unicode characters should be preserved according to the source and renderer's documented behavior.
+Whitespace itu penting. Indentation, blank line, tab, trailing newline, dan karakter Unicode harus dipertahankan sesuai source dan behavior renderer.
 
-A source line such as `if (response.status !== 200) {` must remain intact. Operators such as `===`, `!==`, `=>`, `->`, `::`, and `&&` must not be replaced by typographic lookalikes.
+Source line seperti `if (response.status !== 200) {` harus tetap utuh. Operator seperti `===`, `!==`, `=>`, `->`, `::`, dan `&&` tidak boleh diganti jadi karakter typographic yang mirip tapi salah.
 
-Line highlighting and line-number anchors should reference source lines, not merely the current visual rows.
+Line highlighting dan line-number anchor harus merujuk ke source line, bukan sekadar visual row saat ini.
 
 ## 07 — Reading Progress
 
-The reading progress indicator should reflect the reader's actual position in the article.
+Reading progress indicator seharusnya mencerminkan posisi pembaca yang sebenarnya.
 
-It should:
+Ia harus:
 
-- Update smoothly during scrolling.
-- Remain unobtrusive.
-- Handle short and long articles.
-- Account for the article's actual content boundaries.
-- Remain accurate when images finish loading.
-- Avoid reporting completion while substantial article content remains unread.
-- Respect reduced-motion preferences.
+- Update dengan halus saat scrolling.
+- Tetap tidak mengganggu.
+- Bisa menangani artikel pendek dan panjang.
+- Menghitung batas konten artikel yang sebenarnya.
+- Tetap akurat saat gambar selesai loading.
+- Tidak mengklaim selesai saat masih ada konten yang belum dibaca.
+- Menghormati preferensi reduced motion.
 
-The progress indicator should complement the reading experience, not become a competing animation.
+Progress indicator seharusnya melengkapi pengalaman membaca, bukan menjadi animasi yang lebih menarik daripada artikelnya sendiri.
 
 ## 08 — Table of Contents
 
-The table of contents should be generated from eligible headings in the rendered Markdown.
+Table of contents seharusnya dibuat dari heading yang eligible di Markdown yang sudah dirender.
 
 Expected behavior:
 
-- Nested heading structure.
-- Stable heading anchors.
-- An active section indicator.
-- Smooth navigation when appropriate.
-- Sticky navigation on desktop where space permits.
-- A compact drawer, dropdown, or equivalent on mobile.
-- Correct behavior for duplicate headings.
-- No overlap with fixed headers or reading progress.
-- No broken navigation when media changes document height.
+- Struktur heading bertingkat.
+- Heading anchor yang stabil.
+- Indikator section aktif.
+- Smooth navigation kalau sesuai.
+- Sticky navigation di desktop kalau ada ruang.
+- Drawer, dropdown, atau padanannya yang compact di mobile.
+- Behavior yang benar untuk heading duplikat.
+- Tidak overlap dengan fixed header atau reading progress.
+- Tidak rusak saat media mengubah tinggi dokumen.
 
-TOC generation must use the same heading IDs as the actual rendered article.
+TOC generation harus memakai heading ID yang sama dengan artikel yang benar-benar dirender.
 
-## 09 — Images and External Media
+## 09 — Images dan External Media
+
+### Local cover image
+
+![Explore, Write, Build, Enjoy](./explore-write-build-enjoy.png)
+
+*Caption: local image test untuk cover rendering, responsive sizing, dan fallback behavior.*
 
 ### Landscape image
 
-![Landscape placeholder for article media testing](https://placehold.co/1600x900?text=Landscape+Image)
+![Landscape placeholder untuk testing media artikel](https://placehold.co/1600x900?text=Landscape+Image)
 
-*Caption: test image for responsive sizing, loading behavior, aspect ratio, and caption typography.*
+*Caption: test image untuk responsive sizing, loading behavior, aspect ratio, dan typography caption.*
 
 ### Additional image
 
 ![Technology hardware detail](https://placehold.co/1200x800?text=Technology+Detail)
 
-*Caption: a second image for testing repeated media, spacing, and gallery transitions.*
+*Caption: image kedua untuk testing media berulang, spacing, dan gallery transition.*
 
 ### Media behavior
 
-Test the following through ordinary Markdown images and supported links:
+Test hal-hal berikut melalui image Markdown biasa dan link yang didukung:
 
-- Local images and externally hosted images.
-- Portrait, landscape, and square aspect ratios.
-- Alt text and captions.
-- Lazy loading and reserved image dimensions.
-- Image zoom or lightbox where supported.
-- Broken URLs and unavailable media.
-- Redirects, slow responses, and unsupported formats.
-- Video and third-party embeds where the renderer explicitly supports them.
+- Local images dan externally hosted images.
+- Aspect ratio portrait, landscape, dan square.
+- Alt text dan captions.
+- Lazy loading dan reserved image dimensions.
+- Image zoom atau lightbox kalau didukung.
+- Broken URLs dan media yang tidak tersedia.
+- Redirects, slow responses, dan unsupported formats.
+- Video dan third-party embeds kalau renderer memang mendukung.
 
-External image URLs should not be assumed to be universally fetchable. Browser restrictions, CORS, authentication, hotlink protection, and remote server failures can prevent access.
+External image URLs tidak boleh dianggap selalu bisa di-fetch. Browser restriction, CORS, authentication, hotlink protection, dan remote server failure bisa membuat akses gagal.
 
-A failed image must not remove neighboring text, shift the reader unexpectedly, or break the TOC.
+Image yang gagal tidak boleh menghapus teks di sekitarnya, menggeser pembaca secara tiba-tiba, atau merusak TOC.
 
-## 10 — Tables and Structured Data
+## 10 — Tables dan Structured Data
 
 | Feature | Expected behavior | Priority |
 | --- | --- | --- |
-| Syntax highlighting | Clear language-specific colors | Critical |
-| Line numbers | Stable source-line alignment | Critical |
-| Copy action | Copies source without the gutter | Critical |
-| Reading progress | Accurate article position | High |
-| Table of contents | Stable navigation and active section | High |
-| Image lightbox | Accessible media enlargement | Medium |
-| Related articles | Relevant navigation after the article | Medium |
+| Syntax highlighting | Warna spesifik per bahasa | Critical |
+| Line numbers | Alignment source line yang stabil | Critical |
+| Copy action | Menyalin source tanpa gutter | Critical |
+| Reading progress | Posisi artikel yang akurat | High |
+| Table of contents | Navigasi stabil dan active section | High |
+| Image lightbox | Pembesaran media yang accessible | Medium |
+| Related articles | Navigasi relevan setelah artikel | Medium |
 
 ### Wide technical table
 
@@ -376,9 +388,9 @@ A failed image must not remove neighboring text, shift the reader unexpectedly, 
 | `/api/notes/export` | `POST` | Required | `application/json` | `202 Accepted` | Start export |
 | `/api/notes/status` | `GET` | Required | `application/json` | `200 OK` | Check export status |
 
-On narrow screens, a wide table should use a deliberate responsive strategy. Local horizontal scrolling is preferable to shrinking text until the table becomes unreadable.
+Di layar sempit, wide table seharusnya memakai responsive strategy yang disengaja. Local horizontal scrolling lebih baik daripada mengecilkan teks sampai pembaca perlu kaca pembesar.
 
-## 11 — Links and References
+## 11 — Links dan References
 
 ### External links
 
@@ -388,11 +400,11 @@ On narrow screens, a wide table should use a deliberate responsive strategy. Loc
 - [Shiki documentation](https://shiki.style)
 - [Rehype Pretty Code](https://rehype-pretty.pages.dev/)
 
-External links should have recognizable styling, usable focus states, and appropriate handling for links that open a new tab.
+External links seharusnya punya styling yang dikenali, focus state yang usable, dan penanganan yang tepat untuk link yang membuka tab baru.
 
-### Link with title
+### Link dengan title
 
-[GitHub with title](https://github.com "Visit GitHub")
+[GitHub dengan title](https://github.com "Kunjungi GitHub")
 
 ### Autolinks
 
@@ -402,82 +414,96 @@ https://example.com
 
 ### Reference links
 
-This is a [reference link][gh].
+Ini adalah [reference link][gh].
 
 [gh]: https://github.com "GitHub"
 
 ### Internal anchor
 
-Jump back to [Reading Experience](#01--reading-experience).
+Kembali ke [Reading Experience](#01--reading-experience).
 
-Internal links should navigate to the correct article heading. Anchor generation must remain stable for repeated headings and headings containing punctuation or non-English characters.
+Internal links seharusnya membawa pembaca ke heading artikel yang benar. Anchor generation harus stabil untuk heading berulang dan heading yang mengandung tanda baca atau karakter non-Inggris.
 
-## 12 — Technical Media and Embedding
+## 12 — Technical Media dan Embedding
 
-Some articles need more than images and source code. The renderer should be evaluated for any supported diagrams, terminal recordings, video embeds, and interactive visualizations.
+Beberapa artikel butuh lebih dari image dan source code. Renderer harus diuji untuk diagram, terminal recording, video embed, dan visualisasi interaktif yang didukung.
 
-Each media type should have a clear fallback. If an external embed cannot load, the reader should still have access to the surrounding explanation and a direct link where appropriate.
+### YouTube video
 
-Do not execute arbitrary scripts from Markdown. HTML, embeds, SVG, and externally supplied content must follow the application's sanitization and security policy.
+[Tonton di YouTube](https://www.youtube.com/watch?v=8rkiwXkEA8M&list=PLsOgFqR0cppAEuYATcmAxyHeSTkWM4ZWj)
+
+<iframe
+  width="100%"
+  height="480"
+  src="https://www.youtube.com/embed/8rkiwXkEA8M"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  allowfullscreen>
+</iframe>
+
+Setiap jenis media seharusnya punya fallback yang jelas. Kalau external embed tidak bisa load, pembaca tetap harus bisa mengakses penjelasan di sekitarnya dan direct link kalau tersedia.
+
+Jangan mengeksekusi script arbitrer dari Markdown. HTML, embeds, SVG, dan konten eksternal harus mengikuti sanitization dan security policy aplikasi.
 
 ## 13 — Responsive Reading
 
-Evaluate the same article at desktop, tablet, and mobile widths.
+Evaluasi artikel yang sama di lebar desktop, tablet, dan mobile.
 
 ### Desktop
 
-The article should have a comfortable prose column, with wider code panels where appropriate. A sticky TOC may occupy the side column if sufficient space exists.
+Artikel seharusnya punya prose column yang nyaman, dengan code panel yang lebih lebar kalau perlu. Sticky TOC boleh menempati side column kalau ruangnya cukup.
 
 ### Tablet
 
-The article should retain readable text and code. Secondary navigation may become more compact, and code controls should not compete for horizontal space.
+Artikel seharusnya tetap punya teks dan code yang terbaca. Secondary navigation boleh jadi lebih compact, dan code controls tidak boleh berebut ruang horizontal.
 
 ### Mobile
 
-The article should prioritize the text and keep interactive controls usable with touch. Code blocks may scroll horizontally within their own boundaries. Tables should remain accessible, images should scale correctly, and sticky elements must not obscure the content.
+Artikel seharusnya memprioritaskan teks dan menjaga interactive controls tetap usable dengan touch. Code blocks boleh scroll horizontal di dalam batasnya sendiri. Tables harus tetap accessible, images harus scale dengan benar, dan sticky elements tidak boleh menutupi konten.
 
-Test both portrait and landscape orientation, browser zoom, and increased text size.
+Test orientation portrait dan landscape, browser zoom, serta peningkatan ukuran teks.
 
-## 14 — Accessibility and Interaction
+## 14 — Accessibility dan Interaction
 
-All essential interactions must work without a mouse.
+Semua interaksi penting harus bekerja tanpa mouse.
 
-- Keyboard-accessible language selection.
-- Clear focus indicators.
-- Accessible copy feedback.
-- Screen-reader-friendly line-number behavior.
-- Sufficient contrast in light and dark themes.
+- Language selection yang keyboard-accessible.
+- Focus indicator yang jelas.
+- Copy feedback yang accessible.
+- Line-number behavior yang screen-reader-friendly.
+- Kontras yang cukup di light dan dark theme.
 - Reduced-motion support.
-- Touch alternatives to hover interactions.
-- Meaningful image alt text.
-- Semantic headings, lists, tables, and links.
+- Alternatif touch untuk interaksi hover.
+- Image alt text yang bermakna.
+- Headings, lists, tables, dan links yang semantic.
 
-Syntax colors must not be the only way to communicate important information. Hover effects should remain subtle and must not interfere with text selection.
+Syntax colors tidak boleh menjadi satu-satunya cara menyampaikan informasi penting. Hover effects seharusnya halus dan tidak mengganggu text selection.
 
 ## 15 — Long-Form Content Integrity
 
-This fixture should also be combined with generated stress-test documents.
+Fixture ini juga seharusnya dikombinasikan dengan stress-test documents yang dibuat secara terpisah.
 
-Test progressively larger Markdown documents, for example 10 KB, 100 KB, 1 MB, and larger sizes appropriate to the application.
+Test Markdown documents yang makin besar, misalnya 10 KB, 100 KB, 1 MB, dan ukuran yang sesuai dengan aplikasi.
 
-Include repeated paragraphs, nested headings, large lists, wide tables, remote images, and code samples containing thousands of lines.
+Sertakan paragraf berulang, nested headings, large lists, wide tables, remote images, dan code samples yang berisi ribuan baris.
 
-Verify that:
+Verifikasi bahwa:
 
-- Every source paragraph remains accessible.
-- No source lines disappear.
-- Character encoding and indentation remain correct.
-- Headings and anchors remain valid.
-- Copy actions return the intended source.
-- Rendering does not duplicate content.
-- Media failures do not erase unrelated sections.
-- The page does not acquire unwanted horizontal overflow.
-- Memory usage and rendering latency are measured.
-- Resource limits are handled explicitly rather than through silent truncation.
+- Setiap source paragraph tetap accessible.
+- Tidak ada source line yang hilang.
+- Character encoding dan indentation tetap benar.
+- Headings dan anchors tetap valid.
+- Copy action mengembalikan source yang dimaksud.
+- Rendering tidak menduplikasi konten.
+- Media failure tidak menghapus section lain.
+- Halaman tidak mendapat horizontal overflow yang tidak diinginkan.
+- Memory usage dan rendering latency diukur.
+- Resource limits ditangani secara eksplisit, bukan lewat silent truncation.
 
-Do not claim mathematical unlimitedness. The requirement is to avoid arbitrary content-length limits and ensure that large documents have a defined, tested performance strategy.
+Jangan mengklaim unlimited secara matematis. Requirement-nya adalah menghindari content-length limit yang arbitrer dan memastikan dokumen besar punya strategi performa yang jelas serta teruji.
 
-If progressive rendering or virtualization is needed, preserve search, selection, source-line numbering, anchor navigation, and access to the complete article.
+Kalau progressive rendering atau virtualization dibutuhkan, tetap pertahankan search, selection, source-line numbering, anchor navigation, dan akses ke artikel lengkap.
 
 ## 16 — Extended Markdown Coverage
 
@@ -485,67 +511,67 @@ Bagian ini menguji sintaks tambahan yang sering dipakai untuk tulisan teknis mau
 
 ### Line breaks
 
-This is the first line.  
-This is the second line using two trailing spaces.
+Ini baris pertama.  
+Ini baris kedua memakai dua spasi di akhir baris.
 
-This is another line using a backslash.\
-This should also break.
+Ini baris lain memakai backslash.\
+Ini juga seharusnya pindah baris.
 
 ### Escaping
 
-\*This should not become italic.\*
+\*Ini seharusnya tidak menjadi italic.\*
 
-\# This should not become a heading.
+\# Ini seharusnya tidak menjadi heading.
 
-\`This should not become inline code.\`
+\`Ini seharusnya tidak menjadi inline code.\`
 
 ### Nested blockquote
 
-> First level
+> Level pertama
 >
-> > Second level
+> > Level kedua
 > >
-> > > Third level
+> > > Level ketiga
 
 ### Footnotes
 
-This sentence has a footnote.[^1]
+Kalimat ini punya footnote.[^1]
 
-[^1]: This is the footnote content.
+[^1]: Ini adalah isi footnote-nya.
 
-### Ordered list with custom start
+### Ordered list dengan custom start
 
-3. Third item
-4. Fourth item
-5. Fifth item
+3. Item ketiga
+4. Item keempat
+5. Item kelima
 
 ### Emphasis nesting
 
 ***Bold italic text***
 
-**Bold with *nested italic* text**
+**Bold dengan *italic bersarang***
 
-*Italic with **nested bold** text*
+*Italic dengan **bold bersarang***
 
-### Code block without language
+### Code block tanpa bahasa
 
 ```
-This is plain text.
-No syntax highlighting expected.
+Ini plain text.
+Tidak ada syntax highlighting yang diharapkan.
 ```
 
 ### HTML-based elements
 
 <details>
-  <summary>Click to expand</summary>
+  <summary>Klik untuk expand</summary>
 
-  This content is inside a collapsible section.
+  Konten ini berada di dalam collapsible section.
 
 </details>
 
-Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.
+Tekan <kbd>Ctrl</kbd> + <kbd>C</kbd> untuk copy.
 
-<mark>Highlighted text</mark>
+<mark>Teks yang di-highlight</mark>
 
 ### Math
 
@@ -561,53 +587,53 @@ $$
 
 ```mermaid
 flowchart TD
-  A[Write Markdown] --> B[Render Blog]
-  B --> C{Looks good?}
-  C -- Yes --> D[Publish]
-  C -- No --> E[Fix CSS]
+  A[Tulis Markdown] --> B[Render Blog]
+  B --> C{Tampilannya bagus?}
+  C -- Ya --> D[Publish]
+  C -- Tidak --> E[Perbaiki CSS]
   E --> B
 ```
 
 ### Definition list
 
-Term
-: Definition of the term.
+Istilah
+: Penjelasan dari istilah tersebut.
 
-Another term
-: Another definition.
+Istilah lain
+: Penjelasan lainnya.
 
-### Highlight, subscript, and superscript
+### Highlight, subscript, dan superscript
 
-This is ==highlighted text==.
+Ini adalah ==teks yang di-highlight==.
 
-Water is H~2~O.
+Air adalah H~2~O.
 
-This is x^2^.
+Ini adalah x^2^.
 
-> **Note:** `footnotes`, `math`, `mermaid`, `==highlight==`, `~subscript~`, dan `^superscript^` bergantung pada extension renderer. Kalau tidak tampil, itu bukan berarti Markdown dasarnya salah.
+> **Note:** `footnotes`, `math`, `mermaid`, `==highlight==`, `~subscript~`, dan `^superscript^` bergantung pada extension renderer. Kalau tidak tampil, bukan berarti Markdown dasarnya salah.
 
 ## 17 — Final Verification Checklist
 
-- [ ] Markdown content remains intact.
-- [ ] Typography is comfortable for long reading sessions.
-- [ ] Heading hierarchy and TOC agree.
-- [ ] Reading progress follows the actual article.
-- [ ] The code playground supports all registered grammars.
-- [ ] Unknown languages fall back gracefully.
-- [ ] Line numbers correspond to source lines.
-- [ ] Hover does not interfere with selection.
-- [ ] Copy excludes presentation-only line numbers.
-- [ ] Long code lines do not overflow the entire page.
-- [ ] Whitespace and Unicode characters are preserved.
-- [ ] Wide tables remain usable on mobile.
-- [ ] Images have appropriate fallbacks.
-- [ ] External links, internal anchors, autolinks, and reference links work.
-- [ ] Footnotes, math, diagrams, and HTML elements render safely.
-- [ ] Keyboard and touch interactions work.
-- [ ] Browser zoom does not hide content.
-- [ ] Large documents are tested for performance.
-- [ ] No arbitrary character limit silently truncates the article.
-- [ ] The existing Discuss feature remains functional.
+- [ ] Konten Markdown tetap utuh.
+- [ ] Typography nyaman untuk sesi membaca panjang.
+- [ ] Heading hierarchy dan TOC sesuai.
+- [ ] Reading progress mengikuti artikel secara akurat.
+- [ ] Code playground mendukung semua grammar yang terdaftar.
+- [ ] Bahasa yang tidak dikenal fallback dengan baik.
+- [ ] Line numbers sesuai dengan source lines.
+- [ ] Hover tidak mengganggu selection.
+- [ ] Copy tidak menyertakan line number presentational.
+- [ ] Long code lines tidak membuat seluruh halaman overflow.
+- [ ] Whitespace dan Unicode characters tetap dipertahankan.
+- [ ] Wide tables tetap usable di mobile.
+- [ ] Images punya fallback yang sesuai.
+- [ ] External links, internal anchors, autolinks, dan reference links bekerja.
+- [ ] Footnotes, math, diagrams, dan HTML elements dirender dengan aman.
+- [ ] Keyboard dan touch interactions bekerja.
+- [ ] Browser zoom tidak menyembunyikan konten.
+- [ ] Large documents diuji untuk performa.
+- [ ] Tidak ada character limit arbitrer yang memotong artikel secara diam-diam.
+- [ ] Fitur Discuss yang sudah ada tetap berfungsi.
 
 ## Conclusion
 
