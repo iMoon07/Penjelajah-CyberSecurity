@@ -2,7 +2,6 @@
 
 [🇬🇧 Read in English](hardening-single-tier-stack-en.md)  
 [🇮🇩 Baca dalam Bahasa Indonesia](hardening-single-tier-stack-id.md)
-[🇬🇧 Read in English](hardening-single-tier-stack-en.md)
 [🇵🇭 Basahin sa Tagalog](hardening-single-tier-stack-tl.md)
 
 ﷽
