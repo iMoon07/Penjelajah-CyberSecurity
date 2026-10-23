@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](hidden-cost-ai-generated-code-en.md)
 [🇲🇾 Baca dalam Bahasa Melayu](hidden-cost-ai-generated-code-ms.md)
 
+﷽
+
 Ito ay tungkol sa **nakatagong gastos ng code na gawa ng AI**: maaaring pabilisin ng AI ang paglikha ng software, ngunit ang paggawa ng software at ang pagpapanatili nito ay dalawang magkaibang problema.
 
 ![Hidden cost of AI-generated code](hidden-cost-ai-generated-code.png)

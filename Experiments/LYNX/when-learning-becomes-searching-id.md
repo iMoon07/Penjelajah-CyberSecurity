@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](when-learning-becomes-searching-ms.md)
 [🇵🇭 Basahin sa Tagalog](when-learning-becomes-searching-tl.md)
 
+﷽
+
 **When learning becomes searching** adalah kondisi ketika tujuan belajar berubah menjadi mengejar kepastian: satu pertanyaan membuka pertanyaan lain, satu sumber menggantikan sumber lain, dan proses belajar berhenti sebelum sempat dipraktikkan.
 
 Ini membahas **biaya tersembunyi dari pembelajaran digital**: digital learning bukan otomatis membuatmu lebih produktif. Ia bisa mempercepat belajar, tetapi juga bisa memicu digital burnout, rabbit hole, oververification, dan distraksi—terutama kalau LLM dipakai tanpa konteks, batas, dan sistem verifikasi.

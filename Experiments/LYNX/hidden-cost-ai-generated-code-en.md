@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](hidden-cost-ai-generated-code-ms.md)
 [🇵🇭 Basahin sa Tagalog](hidden-cost-ai-generated-code-tl.md)
 
+﷽
+
 This discusses **the hidden cost of AI-generated code**: AI can accelerate software creation, but building software and maintaining software are two different problems.
 
 ![Hidden cost of AI-generated code](hidden-cost-ai-generated-code.png)

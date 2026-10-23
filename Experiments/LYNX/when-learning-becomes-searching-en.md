@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](when-learning-becomes-searching-ms.md)
 [🇵🇭 Basahin sa Tagalog](when-learning-becomes-searching-tl.md)
 
+﷽
+
 **When learning becomes searching** is the condition when the goal of learning turns into chasing certainty: one question opens another question, one source replaces another source, and the learning process stops before it is ever practiced.
 
 This discusses **the hidden cost of digital learning**: digital learning is not automatically productive. It can accelerate learning, but it can also trigger digital burnout, rabbit holes, oververification, and distraction—especially when LLMs are used without context, direction, and verification systems.

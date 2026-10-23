@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](hidden-cost-ai-generated-code-ms.md)
 [🇵🇭 Basahin sa Tagalog](hidden-cost-ai-generated-code-tl.md)
 
+﷽
+
 Ini membahas **biaya tersembunyi dari kode yang dihasilkan AI**: Program AI bisa mempercepat pembuatan program, tetapi membuat program dan memelihara program adalah dua persoalan berbeda.
 
 ![Hidden cost of AI-generated code](hidden-cost-ai-generated-code.png)
