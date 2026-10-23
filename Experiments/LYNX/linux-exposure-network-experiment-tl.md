@@ -68,25 +68,68 @@ Ang layunin ay maunawaan:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Relational SQL database | Malakas at tugma sa .NET. Libre ang Express edition, pero may limits. | May limits ang Express sa RAM at database size, depende sa version. Pinakaangkop sa Windows. Sa Linux, mas karaniwan ang MariaDB at PostgreSQL sa labs. | Gamitin lang para sa .NET single-tier stack. |
 | **[Redis](https://redis.io/)** | In-memory key-value store | Napakabilis para sa cache at sessions. Magaan at madaling gamitin. Maaaring bawasan ang database load. | Nasa RAM ang data, kaya kailangan ng persistence kung gusto mong i-save. Hindi replacement para sa relational database. Kailangang i-set ang `maxmemory` at eviction policy. Tingnan ang license ng version na ginamit. | Optional. Napak useful para sa applications na maraming reads, caching, o sessions. Hindi required. |
 
-## 6. Open-Source Security para sa Single-Tier
+## 6. Open Source para sa Production: Mga Bentahe, Risiko, at Responsibilidad
 
-| Komponent | Ano ang ginagawa nito | Mga bentahe | Mga disbentahe | Kailan gagamitin |
-|---|---|---|---|---|
-| **[ModSecurity](https://github.com/owasp-modsecurity/ModSecurity)** | WAF engine, version 3 | Kayang i-inspect ang HTTP requests at responses. Maaaring ikonekta sa Apache o Nginx. Gumagamit ng SecLang rules. | Kailangan ng tuning. Maaaring mag-block ng normal requests nang mali. Bumababa ang performance kapag masyadong aggressive ang rules. Maaaring ma-block ang totoong users dahil sa maling configuration. | Relevant kung gusto mong matutunan ang application-layer filtering sa single-tier setup. |
-| **[OWASP CRS](https://coreruleset.org/)** | Rules para sa ModSecurity o Coraza | Industry standard. Sakop ang maraming common attacks. Open source, auditable, at actively developed. | Kailangang i-tune para sa application mo. Maraming false positives sa simula. Walang 100% protection nang walang configuration. | Halos required kung gagamit ka ng ModSecurity para sa practice. Magsimula sa `DetectionOnly`. |
-| **[Coraza](https://coraza.io/)** | Alternative WAF engine na nakasulat sa Go | Magaan at portable. Compatible sa SecLang. Maaaring ikonekta sa maraming proxies at applications. Maganda para sa modern setups. | Nakadepende sa web server o proxy ang integration. Mas kaunti ang tutorials kumpara sa ModSecurity. | Magandang alternative para sa single-tier, lalo na kung gusto mong subukan ang iba maliban sa ModSecurity. |
-| **[OpenSSL](https://www.openssl.org/)** | TLS at cryptography | Foundation ng TLS. Maraming cipher options. Available sa halos lahat ng Linux distributions. | Delikado ang bad TLS configuration, tulad ng weak protocols o ciphers. Hindi automatic ang security. Kailangan ng modern hardening. Maaaring may bagong vulnerabilities sa bawat version. | Required para sa HTTPS. I-configure nang maingat. |
-| **[Certbot with Let's Encrypt](https://certbot.eff.org/)** | Automatic TLS certificates | Libre. Automatic ang certificate renewal. Napakakaraniwan. Tumutulong gumamit ng HTTPS nang libre. | Kailangan ng access sa port 80 o 443 para sa HTTP-01 validation. Kailangan ng DNS access para sa DNS-01. Maaaring mag-expire ang certificate kapag nabigo ang renewal. Nakadepende sa availability ng Let's Encrypt. | Practical para sa lab na may public domain. Para sa local-only use, maaaring gumamit ng self-signed certificate. |
-| **[Fail2ban](https://github.com/fail2ban/fail2ban)** | Nagba-block ng IPs gamit ang logs | Awtomatikong nagba-block ng IPs pagkatapos ng repeated failed logins sa SSH, auth, o web logs. Magaan at madaling i-set up. | Tumutulong lang sa login o log-based attacks. Hindi kayang makahanap ng complex application exploits. Maaaring mag-block ng maling IP kung mali ang pagbasa ng logs. Hindi replacement para sa WAF. | Maganda bilang basic extra protection layer para sa SSH at service logins. |
-| **Host firewall: [ufw](https://help.ubuntu.com/community/UFW), [firewalld](https://firewalld.org/), [nftables](https://wiki.nftables.org/), [pf](https://www.openbsd.org/faq/pf/)** | Network filtering | Kinokontrol ang incoming at outgoing ports. Binabawasan ang exposure. Available sa maraming operating systems. | Maaaring ma-lock out ka dahil sa maling rule. Hindi nito ini-inspect ang HTTP content. Magkaiba ang configuration sa bawat firewall at OS. | Required. Buksan lamang ang mga port na talagang kailangan mo. |
-| **Hardening at monitoring: [auditd](https://linux.die.net/man/8/auditd), [journald](https://www.freedesktop.org/software/systemd/man/latest/systemd-journald.service.html), [logrotate](https://linux.die.net/man/8/logrotate)** | Logging at auditing | Tumutulong i-track ang changes, makadetect ng unusual activity nang maaga, maiwasan ang punong disk dahil sa logs, at mag-investigate ng problems. | Kailangang regular na basahin ang logs. Medyo dagdag na resources. Kailangan ng normal baseline para malaman kung ano ang kakaiba. | Napaka-relevant para sa practice tulad ng “find the cause,” na layunin ng experiment na ito. |
+**Pangunahing bentahe:**
+1. **Transparency/audit** — maaaring suriin ang implementasyon ng auth, permission, encryption, secret handling; nagpapadali ng security review & compliance.
+2. **Portability** — maaaring lipat ng provider nang walang rewrite; flexibility sa migrasyon.
+3. **Customization** — patches, integrations, features ayon sa pangangailangan.
+4. **Ecosystem** — dokumentasyon, bug reports, komunidad; karaniwang isyu maaaring naiayos na ng iba.
+5. **Kontrol sa data/infra** — self-hosted: lokasyon ng data, access, log retention, backup ayon sa policy.
+6. **Gastos** — walang lisensya per core/user/instance; ngunit may gastos sa engineer, infra, support, audit.
+7. **Reproducibility** — i-pin ang dependency versions, automate ang builds, staging na malapit sa production.
 
-**Bakit maganda ang open source para sa practice:**  
-Mababasa mo ang buong configuration. Mache-check mo ang rules. Matututuhan mo kung paano ito gumagana line by line. Maaari mo itong gawing muli nang walang license. Ginagawa rin nitong nauunawaan mo ang proseso, hindi lang ang pag-click ng buttons sa UI.
+**Tunay na risiko:**
+- **Hindi awtomatikong secure** — Snyk 2023: 40% respondents hindi gumagamit ng SCA/SAST, 96% supply chain handling ad hoc. Open source ≠ audited.
+- **Ketergantungan sa maintainer** — maaaring nakasalalay ang proyekto sa iilang maintainer; suriin ang release history, activity, responsible disclosure, bilang ng maintainer.
+- **Supply chain** — event-stream (2018), ua-parser-js (2021), XZ Utils (2024) nagpapakita na maaaring masusupi ang dependencies. Gumamit ng lockfile, artifact verification, SBOM, build isolation.
+- **PHP CVE 2026** — CVE-2026-109618/109619 (RCE nang walang auth) sa PHP 8.5.12/8.4.27/8.3.36/8.2.35. Patch kinakailangan; ang impact ay nakadepende sa process config. Ref: [PHP Security Advisory](https://www.php.net/archive/2026.php), [NCSC UK](https://www.ncsc.gov.uk/news/critical-security-issue-affecting-php).
+- **Patch vs downtime** — pag-delay ng patch = mananatiling vulnerable; update nang walang test = errors/downtime. Kailangan ng patch management: tukuyin → risk assessment → test → staged deploy → i-verify → rollback.
+- **Compatibility** — musl (Alpine) vs glibc; maaaring mabigo ang PHP/Python native/Node.js extensions. Pumili ng OS batay sa pangangailangan ng app, i-pin ang versions, test sa environment na malapit sa production.
+- **Lisensya** — hindi awtomatikong pinipilit ng GPL/AGPL ang pag-open source ng buong codebase; nakadepende sa paggamit/distribusyon. Black Duck 2026: 87% codebase may ≥1 vulnerability (audit sample, hindi universal). Lisensya inventory + legal review para sa commercial.
+- **Dokumentasyon/suporta** — maliliit na proyekto: iilang maintainer, mabagal na respons. Para sa critical systems, isaalang-alang ang commercial support.
 
-Maganda ito para sa pag-aaral ng security mula sa basics.
+**Risiko vs kontrol:**
 
-Pero **ang open source ay hindi awtomatikong secure**. Kailangan mo pa ring mag-audit, mag-update, at mag-configure nang tama.
+| Risiko | Kontrol |
+|---|---|
+| Vulnerability | SCA, official advisories, patch management, testing |
+| Supply-chain | Lockfile, provenance, artifact verification, build isolation |
+| Hindi napananatili ang proyekto | Project health eval, support plan, migration alternatives |
+| Downtime dahil sa upgrade | Staging, integration test, staged deploy, recovery plan |
+| Non-compliance sa lisensya | SBOM, license scanning, legal review |
+| Data leak | Least privilege, secret management, encryption, monitoring |
+| Pagkabigo ng recovery | Hiwalay na backup, restore test, recovery documentation |
+
+Karamihan sa mga risikong ito ay mayroon din sa proprietary software. Ang pagkakaiba: access model, distribution, support, at pagbahagi ng responsibilidad.
+
+**Production readiness checklist:**
+- Seguridad: may security advisory, mekanismo para sa vulnerability reporting, traceable update process.
+- Maintenance: sapat na ebidensya ng pagpapanatili, responsible maintainer, fix path.
+- Dependency: direct & transitive na maaaring i-inventory, i-scan, i-pin ang version.
+- Integrity ng distribution: signature, checksum, o provenance na available.
+- Compatibility: OS, runtime, extension, library versions na tumugma sa target environment.
+- Lisensya: lahat ng lisensya ng komponente ay kilala at nasuri ang mga obligasyon.
+- Operasyon: monitoring, logging, backup, deployment docs, recovery procedures.
+- Sustainability: maintenance cost, support needs, migration options na katanggap-tanggap.
+
+Ref: [OpenSSF Concise Guide](https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software.html), [OpenSSF Project Security Baseline](https://baseline.openssf.org/versions/2026-08-28).
+
+**Estrategiya ng deployment (single-tier):**
+1. **Pagpili & inventory** — pumili ng software, i-inventory ang versions & licenses, tukuyin ang dependencies, italaga ang owner.
+2. **Hardening & testing** — minimal config, least privilege, pagbabawas ng ingress/egress, proteksyon ng secret, compatibility test bago deploy.
+3. **Monitoring & patch management** — subaybayan ang bagong vulnerabilities, processes, pagbabago ng file, auth, connections, kalusugan ng service. I-prioritize ang patches batay sa risk.
+4. **Recovery & incident response** — hiwalay na backup, restore test, idokumento ang credential rotation, maghanda ng isolation & rebuild procedures.
+
+Sa single-tier, lahat ng komponente ay nasa isang makina. Ang kompromiso ng isang runtime/process na may mataas na privilege ay maaaring magbanta sa iba pang komponente. Ang open source ay hindi nag-aalis ng risikong ito; ang pagbabawas ng privilege, network controls, at paghihiwalay ng backup ay kinakailangan pa rin.
+
+**Konklusyon:** Ang open source ay lubos na angkop para sa production kapag kailangan ng organisasyon ang transparency, flexibility, portability, kontrol sa infrastruktura, at kakayahang i-customize ang mga sistema. Ang pinakamalaking bentahe: mas maraming pagpili at kontrol — maaaring suriin ang implementasyon, pumili ng deployment method, i-audit ang dependencies, i-customize ang config, at magplano ng migrasyon. Ngunit ang kontrol ay may kasamang responsibilidad: siguraduhing napananatili ang software, hinaharap ang vulnerabilities, pinagkakatiwalaan ang dependencies, nasusunod ang licenses, nasubok ang updates, at maaaring maibalik ang mga sistema.
+
+- Open source nang walang pamamahala = nakatagong source ng risk.
+- Open source nang may maayos na pamamahala = mataas na halaga ng transparency at kontrol.
+- Ang proprietary software ay nangangailangan pa rin ng security management; ang vendor support ay hindi nag-aalis ng responsibilidad ng organisasyon.
+
+Ang layunin ay hindi ang pumili ng open source dahil laging mas mabuti, kundi pumili ng software batay sa pangangailangan, risk, operational capability, at kinakailangang antas ng kontrol.
 
 ## 7. Online Access: Domain, DNS, Tunnel, Mga Bentahe at Disbentahe
 
@@ -106,6 +149,25 @@ Pero **ang open source ay hindi awtomatikong secure**. Kailangan mo pa ring mag-
 - **Maaaring magdagdag ng network filtering ang Cloudflare proxy**, pero target pa rin ang origin server. Kapag down ang origin, hindi kayang gawing gumana ng Cloudflare ang application mo.  
 - **Dependencies:** Home lab + Tunnel ay nakadepende sa power, ISP, server, at Cloudflare. VPS + Tunnel o Proxy ay nakadepende sa VPS, provider, at Cloudflare. Mas maraming middle services, mas maraming possible failure points.  
 - **Para sa practice,** mas mahalagang maunawaan ang trade-offs na ito kaysa simply gawing reachable ang app.
+
+## 8. Operations & Maintenance (Single-Tier)
+
+| Aspeto | Gagawin | Bakit |
+|---|---|---|
+| Lokal na monitoring | Subaybayan ang CPU, RAM, disk, status ng service (systemd), error logs (journald) | Makadetect ng isyu bago mapansin ng mga user |
+| Uptime check | Gumamit ng Uptime Kuma o Healthchecks para mag-ping ng endpoint nang periodiko | Malalaman kung down ang server |
+| Simpleng alerting | Magpadala ng notifikasi (email/Telegram) kung down ang service o puno ang disk | Mabilis na respons nang walang complex dashboard |
+| Backup | Regular na pg_dump/mysqldump, restic/borg sa offsite storage (S3/R2/B2) | Mababawi mula sa disk failure o human error |
+| Restore test | Subukan ang restore sa hiwalay na VM/container nang periodiko | Ang hindi natesting backup ay hindi napatunayang magagamit |
+| Pamamahala ng log | Persistent journald + logrotate, retention ayon sa pangangailangan | Imbestigasyon ng insidente & pagtipid ng disk |
+| Sizing at gastos | Pumili ng minimal VPS spec (RAM/CPU/disk) ayon sa stack; i-upgrade kung bottleneck | Makatipid, mag-scale kung kinakailangan |
+| Kailan lalabas sa single-tier | Indicators: mataas na trafik, malaking DB, risk ng SPOF, pangangailangan ng horizontal scaling | Malalaman kung kailan hindi na sapat ang single-tier |
+
+**Simpleng praktis:**
+- Cron para sa daily backup, ipadala offsite.
+- Systemd para sa auto-restart ng service.
+- `df -h` at `free -h` para sa routine resource check.
+- Idokumento ang credentials at rebuild steps.
 
 ## Architecture: Single-Tier
 

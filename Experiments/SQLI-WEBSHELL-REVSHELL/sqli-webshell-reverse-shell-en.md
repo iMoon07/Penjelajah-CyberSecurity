@@ -1,6 +1,7 @@
 # SQLi: From Injection to Webshell and Reverse Shell
 
 [🇮🇩 Read in Indonesia](sqli-webshell-reverse-shell-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](sqli-webshell-reverse-shell-id.md)
 
 # What is SQL Injection?
 

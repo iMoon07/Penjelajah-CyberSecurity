@@ -1,6 +1,7 @@
 # A Journey Through a Linux Attack Chain (Lab Practice)
 
 [🇮🇩 Baca dalam Bahasa Indonesia](A-Journey-Through-a-Linux-Attack-Chain-%28Lab-Practice%29-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](A-Journey-Through-a-Linux-Attack-Chain-(Lab-Practice)-id.md)
 
 ﷽
 

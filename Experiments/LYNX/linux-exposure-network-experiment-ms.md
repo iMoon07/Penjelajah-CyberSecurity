@@ -68,25 +68,68 @@ Tujuannya adalah memahami:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Database hubungan SQL | Kukuh dan serasi dengan .NET. Edisi Express percuma, tetapi ada had. | Express mempunyai had RAM dan saiz database, bergantung pada versi. Paling sesuai untuk Windows. Di Linux, MariaDB dan PostgreSQL lebih umum dalam makmal. | Gunakan hanya untuk stack single-tier berasaskan .NET. |
 | **[Redis](https://redis.io/)** | Key-value store dalam memory | Sangat pantas untuk cache dan session. Ringan dan mudah digunakan. Boleh mengurangkan beban database. | Data berada dalam RAM, jadi perlukan persistence jika mahu disimpan. Bukan pengganti database hubungan. Anda perlu menetapkan `maxmemory` dan eviction policy. Semak lesen versi yang digunakan. | Pilihan. Sangat berguna untuk aplikasi dengan banyak pembacaan, cache, atau session. Tidak wajib. |
 
-## 6. Keselamatan Open-Source untuk Single-Tier
+## 6. Open Source untuk Production: Kelebihan, Risiko, dan Tanggungjawab
 
-| Komponen | Fungsinya | Kelebihan | Kekurangan | Bila digunakan |
-|---|---|---|---|---|
-| **[ModSecurity](https://github.com/owasp-modsecurity/ModSecurity)** | WAF engine versi 3 | Boleh memeriksa HTTP request dan response. Boleh disambungkan ke Apache atau Nginx. Menggunakan peraturan SecLang. | Perlu tuning. Boleh menyekat request normal secara salah. Prestasi boleh menurun jika peraturan terlalu ketat. Konfigurasi salah boleh menyekat pengguna sebenar. | Relevan jika anda mahu mempelajari penapisan pada layer aplikasi dalam single-tier. |
-| **[OWASP CRS](https://coreruleset.org/)** | Peraturan untuk ModSecurity atau Coraza | Standard industri. Meliputi banyak jenis serangan biasa. Open source, boleh diaudit, dan terus dibangunkan. | Perlu disetel untuk aplikasi anda. Pada awalnya boleh menghasilkan banyak false positive. Tidak memberi perlindungan 100% tanpa konfigurasi. | Hampir wajib jika anda menggunakan ModSecurity untuk latihan. Mulakan dengan `DetectionOnly`. |
-| **[Coraza](https://coraza.io/)** | WAF engine alternatif yang ditulis menggunakan Go | Ringan dan mudah alih. Serasi dengan SecLang. Boleh disambungkan ke banyak proxy dan aplikasi. Bagus untuk setup moden. | Integrasi bergantung pada web server atau proxy yang digunakan. Tutorial lebih sedikit berbanding ModSecurity. | Alternatif baik untuk single-tier, terutamanya jika mahu mencuba selain ModSecurity. |
-| **[OpenSSL](https://www.openssl.org/)** | TLS dan kriptografi | Asas kepada TLS. Mempunyai banyak pilihan cipher. Tersedia di hampir semua distro Linux. | Tetapan TLS yang lemah boleh berbahaya, contohnya protocol atau cipher lemah. Tidak selamat secara automatik. Perlu hardening moden. Kerentanan baharu boleh muncul pada setiap versi. | Wajib untuk HTTPS. Konfigurasikan dengan berhati-hati. |
-| **[Certbot dengan Let's Encrypt](https://certbot.eff.org/)** | Sertifikat TLS automatik | Percuma. Memperbaharui sertifikat secara automatik. Sangat umum digunakan. Membantu anda menggunakan HTTPS tanpa kos. | Validasi HTTP-01 memerlukan akses ke port 80 atau 443. DNS-01 memerlukan akses DNS. Jika pembaharuan gagal, sertifikat boleh tamat tempoh. Bergantung pada ketersediaan Let's Encrypt. | Praktikal untuk makmal dengan domain awam. Untuk penggunaan setempat, anda boleh menggunakan self-signed certificate. |
-| **[Fail2ban](https://github.com/fail2ban/fail2ban)** | Menyekat IP berdasarkan log | Menyekat IP secara automatik selepas kegagalan log masuk berulang dalam log SSH, auth, atau web. Ringan dan mudah disediakan. | Hanya membantu serangan berasaskan log masuk atau log. Tidak dapat mengesan exploit aplikasi yang kompleks. Boleh menyekat IP yang salah jika log dibaca secara salah. Tidak menggantikan WAF. | Bagus sebagai lapisan perlindungan asas tambahan untuk SSH dan log masuk service. |
-| **Firewall host: [ufw](https://help.ubuntu.com/community/UFW), [firewalld](https://firewalld.org/), [nftables](https://wiki.nftables.org/), [pf](https://www.openbsd.org/faq/pf/)** | Penapisan rangkaian | Mengawal port masuk dan keluar. Mengurangkan exposure. Tersedia pada banyak sistem operasi. | Peraturan yang salah boleh mengunci diri sendiri. Tidak memeriksa kandungan HTTP. Konfigurasi berbeza bagi setiap firewall dan OS. | Wajib. Buka hanya port yang benar-benar diperlukan. |
-| **Hardening dan monitoring: [auditd](https://linux.die.net/man/8/auditd), [journald](https://www.freedesktop.org/software/systemd/man/latest/systemd-journald.service.html), [logrotate](https://linux.die.net/man/8/logrotate)** | Logging dan audit | Membantu menjejak perubahan, mengesan aktiviti pelik lebih awal, menghalang log memenuhi disk, dan menyiasat masalah. | Anda perlu membaca log secara berkala. Menggunakan sedikit resource tambahan. Memerlukan baseline normal untuk mengetahui mana yang pelik. | Sangat relevan untuk latihan seperti “mencari punca masalah,” selaras dengan matlamat eksperimen ini. |
+**Kelebihan utama:**
+1. **Transparansi/audit** — boleh periksa implementasi autentikasi, permission, enkripsi, pengurusan secret; memudahkan security review & compliance.
+2. **Portabiliti** — boleh pindah penyedia tanpa rewrite; fleksibiliti migrasi.
+3. **Penyesuaian** — patch, integrasi, fitur tambahan mengikut keperluan.
+4. **Ekosistem** — dokumentasi, laporan bug, komuniti; masalah umum mungkin sudah diperbaiki orang lain.
+5. **Kawalan data/infra** — self-hosted: lokasi data, akses, retensi log, backup mengikut polisi.
+6. **Kos** — tanpa lesen per core/user/instance; tetapi kos engineer, infra, support, audit tetap ada.
+7. **Reproducibility** — kunci versi dependency, automatik build, staging mendekati production.
 
-**Kenapa open source bagus untuk latihan:**  
-Anda boleh membaca keseluruhan konfigurasi. Anda boleh menyemak peraturannya. Anda boleh mempelajari cara kerjanya baris demi baris. Anda boleh menciptanya semula tanpa lesen. Ia juga membuat anda memahami prosesnya, bukan hanya menekan butang dalam UI.
+**Risiko nyata:**
+- **Tidak automatik selamat** — Snyk 2023: 40% responden belum guna SCA/SAST, 96% penanganan supply chain ad hoc. Open source ≠ audited.
+- **Ketergantungan maintainer** — projek boleh bergantung pada sedikit maintainer; semak sejarah rilis, aktiviti, responsible disclosure, bilangan maintainer.
+- **Supply chain** — event-stream (2018), ua-parser-js (2021), XZ Utils (2024) menunjukkan dependency boleh disusupi. Gunakan lockfile, verifikasi artefak, SBOM, build isolation.
+- **PHP CVE 2026** — CVE-2026-109618/109619 (RCE tanpa auth) dalam PHP 8.5.12/8.4.27/8.3.36/8.2.35. Patch wajib; impak bergantung konfigurasi process. Rujukan: [PHP Security Advisory](https://www.php.net/archive/2026.php), [NCSC UK](https://www.ncsc.gov.uk/news/critical-security-issue-affecting-php).
+- **Patch vs downtime** — menangguh patch = kekal rentan; update tanpa uji = error/downtime. Perlukan patch management: kenal pasti → penilaian risiko → uji → deploy berperingkat → sahkan → rollback.
+- **Kompatibiliti** — musl (Alpine) vs glibc; extension PHP/Python native/Node.js boleh gagal. Pilih OS berdasarkan keperluan app, kunci versi, uji dalam persekitaran mendekati production.
+- **Lesen** — GPL/AGPL tidak automatik memaksa open source seluruh codebase; bergantung cara penggunaan/distribusi. Black Duck 2026: 87% codebase punya ≥1 vulnerability (sampel audit, bukan universal). Inventori lesen + semakan hukum untuk commercial.
+- **Dokumentasi/sokongan** — projek kecil: sedikit maintainer, respons lambat. Untuk sistem kritikal, pertimbangkan sokongan komersial.
 
-Ini bagus untuk mempelajari keselamatan daripada asas.
+**Risiko vs kawalan:**
 
-Tetapi **open source tidak bermakna automatik selamat**. Anda masih perlu melakukan audit, kemas kini, dan konfigurasi dengan betul.
+| Risiko | Kawalan |
+|---|---|
+| Vulnerability | SCA, advisori rasmi, patch management, pengujian |
+| Supply-chain | Lockfile, provenance, verifikasi artefak, build isolation |
+| Projek tidak terpelihara | Penilaian kesihatan projek, pelan sokongan, alternatif migrasi |
+| Downtime akibat upgrade | Staging, integration test, deploy berperingkat, pelan pemulihan |
+| Ketidakpatuhan lesen | SBOM, license scanning, semakan hukum |
+| Kebocoran data | Least privilege, secret management, enkripsi, monitoring |
+| Kegagalan pemulihan | Backup berasingan, ujian restore, dokumentasi pemulihan |
+
+Sebahagian besar risiko ini juga ada pada proprietary software. Yang berbeza: model akses, distribusi, sokongan, dan pembahagian tanggungjawab.
+
+**Checklist production readiness:**
+- Keselamatan: ada security advisory, mekanisme pelaporan vulnerability, proses pembaruan yang dapat ditelusuri.
+- Penyelenggaraan: bukti pemeliharaan memadai, maintainer bertanggungjawab, jalur perbaikan.
+- Dependency: langsung & transitif boleh diinventori, dipindai, dikunci versinya.
+- Integriti distribusi: signature, checksum, atau provenance yang sesuai.
+- Kompatibiliti: versi OS, runtime, extension, library sesuai persekitaran sasaran.
+- Lesen: lesen seluruh komponen diketahui dan kewajibannya ditinjau.
+- Operasi: monitoring, logging, backup, dokumentasi deployment, prosedur recovery.
+- Kelestarian: kos penyelenggaraan, keperluan support, opsi migrasi boleh diterima.
+
+Rujukan: [OpenSSF Concise Guide](https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software.html), [OpenSSF Project Security Baseline](https://baseline.openssf.org/versions/2026-08-28).
+
+**Strategi penerapan (single-tier):**
+1. **Pemilihan & inventori** — pilih software, inventori versi & lesen, kenal pasti dependency, tentukan penanggung jawab.
+2. **Hardening & pengujian** — konfigurasi minimum, least privilege, pembatasan ingress/egress, perlindungan secret, uji kompatibiliti sebelum deploy.
+3. **Monitoring & patch management** — pantau vulnerability baru, proses, perubahan fail, autentikasi, sambungan, kesihatan perkhidmatan. Prioritikan patch berdasarkan risiko.
+4. **Pemulihan & respons insiden** — backup berasingan, uji restore, dokumentasikan cara ganti credential, sediakan prosedur pengasingan & rebuild.
+
+Pada single-tier, semua komponen berada pada satu mesin. Kompromi terhadap satu runtime/proses dengan privilege tinggi boleh mengancam komponen lain. Open source tidak menghilangkan risiko ini; pembatasan privilege, kawalan jaringan, dan pemisahan backup tetap diperlukan.
+
+**Kesimpulan:** Open source sangat layak untuk production apabila organisasi memerlukan transparansi, fleksibiliti, portabiliti, kawalan infrastruktur, dan keupayaan menyesuaikan sistem. Kelebihan utamanya: pilihan dan kawalan lebih besar — boleh periksa implementasi, pilih cara deployment, audit dependency, sesuaikan konfigurasi, rancang migrasi. Tetapi kawalan itu datang bersama tanggungjawab: memastikan software dipelihara, vulnerability ditangani, dependency dipercayai, lesen dipatuhi, pembaruan diuji, sistem boleh dipulihkan.
+
+- Open source tanpa pengurusan = sumber risiko yang tidak kelihatan.
+- Open source dengan pengurusan yang baik = transparansi dan kawalan bernilai tinggi.
+- Proprietary software pun masih memerlukan pengurusan keselamatan; sokongan vendor tidak menghapus tanggungjawab organisasi.
+
+Tujuannya bukan memilih open source kerana dianggap selalu lebih baik, tetapi memilih software berdasarkan keperluan, risiko, keupayaan operasi, dan tahap kawalan yang diperlukan.
 
 ## 7. Akses Dalam Talian: Domain, DNS, Tunnel, Kelebihan dan Kekurangan
 
@@ -106,6 +149,25 @@ Tetapi **open source tidak bermakna automatik selamat**. Anda masih perlu melaku
 - **Proxy Cloudflare boleh menambah penapisan rangkaian**, tetapi origin server masih menjadi sasaran. Jika origin mati, Cloudflare tidak boleh membuat aplikasi anda berfungsi.  
 - **Kebergantungan:** Home lab + Tunnel bergantung pada elektrik, ISP, server, dan Cloudflare. VPS + Tunnel atau Proxy bergantung pada VPS, provider, dan Cloudflare. Semakin banyak service perantara, semakin banyak titik kegagalan.  
 - **Untuk latihan,** lebih penting memahami trade-off ini daripada hanya memastikan aplikasi boleh diakses.
+
+## 8. Operasi & Penyelenggaraan (Single-Tier)
+
+| Aspek | Yang perlu dilakukan | Sebab |
+|---|---|---|
+| Pemantauan setempat | Pantau CPU, RAM, disk, status service (systemd), log ralat (journald) | Mengesan masalah sebelum pengguna perasan |
+| Uptime check | Gunakan Uptime Kuma atau Healthchecks untuk ping endpoint secara berkala | Tahu jika server down |
+| Amaran ringkas | Hantar notifikasi (email/Telegram) jika service down atau disk penuh | Respons pantas tanpa dashboard kompleks |
+| Backup | pg_dump/mysqldump berkala, restic/borg ke storan luar (S3/R2/B2) | Pulih daripada kegagalan disk atau kesilapan manusia |
+| Ujian restore | Uji restore dalam VM/container berasingan secara berkala | Backup yang tidak diuji tidak terbukti boleh digunakan |
+| Pengurusan log | journald persistent + logrotate, retensi mengikut keperluan | Siasatan insiden & penjimatan disk |
+| Saiz & kos | Pilih spec VPS minimum (RAM/CPU/disk) mengikut stack; naik taraf jika bottleneck | Jimat kos, skala bila perlu |
+| Bila perlu tinggalkan single-tier | Indikator: trafik tinggi, DB besar, risiko SPOF, keperluan penskalaan mendatar | Tahu bila single-tier tidak mencukupi |
+
+**Amalan mudah:**
+- Cron untuk backup harian, hantar offsite.
+- Systemd untuk auto-restart service.
+- `df -h` dan `free -h` untuk semakan rutin resource.
+- Dokumentasikan credential dan langkah rebuild.
 
 ## Seni Bina: Single-Tier
 

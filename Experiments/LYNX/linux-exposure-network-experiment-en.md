@@ -70,25 +70,69 @@ The goal is to understand:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Relational SQL database | Strong and works well with .NET. The Express edition is free, but it has limits. | Express has limits for RAM and database size, depending on the version. It fits Windows best. On Linux, MariaDB and PostgreSQL are more common in labs. | Use it only for a .NET single-tier stack. |
 | **[Redis](https://redis.io/)** | In-memory key-value store | Very fast for cache and sessions. It is light and easy to use. It can reduce database load. | Data is in RAM, so you need persistence if you want to save it. It is not a replacement for a relational database. You must set `maxmemory` and an eviction policy. Check the license for your version. | Optional. Very useful for apps with lots of reading, caching, or sessions. It is not required. |
 
-## 6. Open-Source Security for Single-Tier
+## 6. Open Source for Production: Strengths, Risks, and Responsibility
 
-| Component | What it does | Good points | Bad points | When to use it |
-|---|---|---|---|---|
-| **[ModSecurity](https://github.com/owasp-modsecurity/ModSecurity)** | WAF engine, version 3 | It can check HTTP requests and responses. It connects to Apache or Nginx. It uses SecLang rules. | It needs tuning. It can block normal requests by mistake. Performance can go down if rules are too strong. Wrong settings can block real users. | Relevant if you want to learn application-layer filtering in a single-tier setup. |
-| **[OWASP CRS](https://coreruleset.org/)** | Rules for ModSecurity or Coraza | It is an industry standard. It covers many common attacks. It is open source, can be checked, and is actively developed. | You must tune it for your app. It can create many false positives at first. It does not give 100% protection without configuration. | Almost required if you use ModSecurity for practice. Start with `DetectionOnly`. |
-| **[Coraza](https://coraza.io/)** | Alternative WAF engine written in Go | Light and portable. It works with SecLang. It can connect to many proxies and apps. Good for modern setups. | Integration depends on your web server or proxy. There are fewer tutorials than for ModSecurity. | A good alternative for single-tier, especially if you want something other than ModSecurity. |
-| **[OpenSSL](https://www.openssl.org/)** | TLS and cryptography | It is the base for TLS. It has many cipher options. It is available on almost every Linux distribution. | Bad TLS settings can be dangerous, such as weak protocols or ciphers. It is not secure automatically. You need modern hardening. New vulnerabilities can appear in each version. | Required for HTTPS. Configure it carefully. |
-| **[Certbot with Let's Encrypt](https://certbot.eff.org/)** | Automatic TLS certificates | Free. It renews certificates automatically. It is very common. It helps you use HTTPS for free. | HTTP-01 validation needs access to port 80 or 443. DNS-01 needs DNS access. If renewal fails, the certificate can expire. It depends on Let's Encrypt being available. | Practical for a lab with a public domain. For local-only use, you can use a self-signed certificate. |
-| **[Fail2ban](https://github.com/fail2ban/fail2ban)** | Blocks IPs using logs | It automatically blocks IPs after repeated failed logins in SSH, auth, or web logs. It is light and easy to set up. | It only helps with login or log-based attacks. It cannot find complex app exploits. It can block the wrong IP if logs are read incorrectly. It does not replace a WAF. | Good as a basic extra protection layer for SSH and service logins. |
-| **Host firewall: [ufw](https://help.ubuntu.com/community/UFW), [firewalld](https://firewalld.org/), [nftables](https://wiki.nftables.org/), [pf](https://www.openbsd.org/faq/pf/)** | Network filtering | It controls incoming and outgoing ports. It reduces exposure. It is available on many operating systems. | A wrong rule can lock you out. It does not inspect HTTP content. Configuration is different for each firewall and OS. | Required. Open only the ports you really need. |
-| **Hardening and monitoring: [auditd](https://linux.die.net/man/8/auditd), [journald](https://www.freedesktop.org/software/systemd/man/latest/systemd-journald.service.html), [logrotate](https://linux.die.net/man/8/logrotate)** | Logging and auditing | It helps you track changes, find strange activity early, stop logs from filling the disk, and investigate problems. | You need to read logs regularly. It uses a little more resources. You need a normal baseline to know what is strange. | Very relevant for practice like “find the cause,” which is the goal of this experiment. |
+**Key strengths:**
+1. **Transparency/audit** — inspect auth, permissions, encryption, secret handling; eases security review & compliance.
+2. **Portability** — move providers without rewrite; migration flexibility.
+3. **Customization** — patches, integrations, features as needed.
+4. **Ecosystem** — docs, bug reports, community; common issues often already fixed.
+5. **Data/infra control** — self-hosted: data location, access, log retention, backup per policy.
+6. **Cost** — no per-core/user/instance license; but engineer, infra, support, audit costs remain.
+7. **Reproducibility** — pin dependency versions, automate builds, staging close to production.
 
-**Why open source is good for practice:**  
-You can read the full configuration. You can check the rules. You can learn how it works line by line. You can recreate it without a license. It also makes you understand the process, not just click buttons in a UI.
+**Real risks:**
+- **Not auto-secure** — Snyk 2023: 40% respondents not using SCA/SAST, 96% supply chain handling ad hoc. Open source ≠ audited.
+- **Maintainer dependency** — project may rely on few maintainers; check release history, activity, responsible disclosure, maintainer count.
+- **Supply chain** — event-stream (2018), ua-parser-js (2021), XZ Utils (2024) show dependencies can be compromised. Use lockfile, artifact verification, SBOM, build isolation.
+- **PHP CVE 2026** — CVE-2026-109618/109619 (RCE without auth) in PHP 8.5.12/8.4.27/8.3.36/8.2.35. Patch required; impact depends on process config. Ref: [PHP Security Advisory](https://www.php.net/archive/2026.php), [NCSC UK](https://www.ncsc.gov.uk/news/critical-security-issue-affecting-php).
+- **Patch vs downtime** — delaying patch = stays vulnerable; updating without testing = errors/downtime. Need patch management: identify → risk assess → test → staged deploy → verify → rollback.
+- **Compatibility** — musl (Alpine) vs glibc; PHP/Python native/Node.js extensions may fail. Choose OS based on app needs, pin versions, test in near-production env.
+- **Licensing** — GPL/AGPL doesn't auto-force open-sourcing entire codebase; depends on usage/distribution. Black Duck 2026: 87% codebases have ≥1 vulnerability (audit sample, not universal). License inventory + legal review for commercial.
+- **Docs/support** — small projects: few maintainers, slow response. For critical systems, consider commercial support.
+- **Performance & tuning** — default config rarely optimal; nginx/apache/php-fpm need manual tuning for production load.
 
-This is good for learning security from the basics.
+**Risk vs control:**
 
-But **open source does not mean secure by default**. You still need to audit it, update it, and configure it correctly.
+| Risk | Control |
+|---|---|
+| Vulnerability | SCA, official advisories, patch management, testing |
+| Supply-chain | Lockfile, provenance, artifact verification, build isolation |
+| Unmaintained project | Project health eval, support plan, migration alternatives |
+| Downtime from upgrade | Staging, integration test, staged deploy, recovery plan |
+| License non-compliance | SBOM, license scanning, legal review |
+| Data leak | Least privilege, secret management, encryption, monitoring |
+| Recovery failure | Separate backup, restore test, recovery documentation |
+
+Most risks also exist in proprietary software. Difference: access model, distribution, support, responsibility split.
+
+**Production readiness checklist:**
+- Security: security advisory exists, vulnerability reporting mechanism, traceable update process.
+- Maintenance: adequate maintenance evidence, responsible maintainer, fix path.
+- Dependency: direct & transitive can be inventoried, scanned, version-pinned.
+- Distribution integrity: signature, checksum, or provenance available.
+- Compatibility: OS, runtime, extension, library versions match target env.
+- License: all component licenses known and obligations reviewed.
+- Operational: monitoring, logging, backup, deployment docs, recovery procedures.
+- Sustainability: maintenance cost, support needs, migration options acceptable.
+
+Ref: [OpenSSF Concise Guide](https://best.openssf.org/Concise-Guide-for-Evaluating-Open-Source-Software.html), [OpenSSF Project Security Baseline](https://baseline.openssf.org/versions/2026-08-28).
+
+**Deployment strategy (single-tier):**
+1. **Selection & inventory** — choose software, inventory versions & licenses, identify dependencies, assign owners.
+2. **Hardening & testing** — minimal config, least privilege, ingress/egress limits, secret protection, compatibility test before deploy.
+3. **Monitoring & patch management** — monitor new vulnerabilities, processes, file changes, auth, connections, service health. Prioritize patches by risk.
+4. **Recovery & incident response** — separate backup, restore test, document credential rotation, prepare isolation & rebuild procedures.
+
+In single-tier, all components share one machine. Compromise of one runtime/process with high privilege can threaten others. Open source doesn't remove this risk; privilege limits, network controls, and backup separation remain necessary.
+
+**Conclusion:** Open source is highly suitable for production when organizations need transparency, flexibility, portability, infrastructure control, and ability to tailor systems. Its greatest advantage: more choice and control — inspect implementation, choose deployment method, audit dependencies, customize config, plan migration. But control comes with responsibility: ensure software is maintained, vulnerabilities handled, dependencies trusted, licenses complied, updates tested, systems recoverable.
+
+- Unmanaged open source = hidden risk source.
+- Well-managed open source = high-value transparency and control.
+- Proprietary software also requires security management; vendor support doesn't remove organizational responsibility.
+
+Goal is not choosing open source because it's always better, but choosing software based on needs, risks, operational capability, and required control level.
 
 ## 7. Online Access: Domain, DNS, Tunnel, Pros and Cons
 
@@ -108,6 +152,25 @@ But **open source does not mean secure by default**. You still need to audit it,
 - **Cloudflare proxy can add network filtering**, but your origin server is still a target. If the origin is down, Cloudflare cannot make your app work.  
 - **Dependencies:** Home lab + Tunnel depends on power, ISP, server, and Cloudflare. VPS + Tunnel or Proxy depends on the VPS, provider, and Cloudflare. More middle services mean more possible failure points.  
 - **For practice,** it is more important to understand these trade-offs than simply to make the app reachable.
+
+## 8. Operations & Maintenance (Single-Tier)
+
+| Aspect | What to do | Why |
+|---|---|---|
+| Local monitoring | Monitor CPU, RAM, disk, service status (systemd), error logs (journald) | Detect issues before users notice |
+| Uptime check | Use Uptime Kuma or Healthchecks to ping endpoint periodically | Know if server is down |
+| Simple alerting | Send notification (email/Telegram) if service down or disk full | Fast response without complex dashboard |
+| Backup | Regular pg_dump/mysqldump, restic/borg to offsite storage (S3/R2/B2) | Recover from disk failure or human error |
+| Restore test | Test restore in separate VM/container periodically | Untested backup is not proven usable |
+| Log management | Persistent journald + logrotate, retention per needs | Incident investigation & disk savings |
+| Sizing & cost | Choose minimal VPS spec (RAM/CPU/disk) per stack; upgrade if bottleneck | Save cost, scale when needed |
+| When to leave single-tier | Indicators: high traffic, large DB, SPOF risk, horizontal scaling need | Know when single-tier is no longer enough |
+
+**Simple practices:**
+- Cron for daily backup, send offsite.
+- Systemd for auto-restart service.
+- `df -h` and `free -h` for routine resource check.
+- Document credentials and rebuild steps.
 
 ## Architecture: Single-Tier
 

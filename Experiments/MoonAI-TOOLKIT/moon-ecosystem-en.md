@@ -1,6 +1,7 @@
 # My Assistant AI-Local 🌙Moon Toolkit
 
 [🇮🇩 Read in Indonesian](moon-ecosystem-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](moon-ecosystem-id.md)
 
 ﷽
 
