@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](hidden-cost-ai-generated-code-en.md)
 [🇵🇭 Basahin sa Tagalog](hidden-cost-ai-generated-code-tl.md)
 
+﷽
+
 Ini membincangkan **kos tersembunyi kod yang dihasilkan AI**: AI boleh mempercepatkan penciptaan perisian, tetapi membina perisian dan menyelenggaranya adalah dua masalah berbeza.
 
 ![Hidden cost of AI-generated code](hidden-cost-ai-generated-code.png)
