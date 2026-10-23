@@ -4,6 +4,8 @@
 
 This is about a **Single-Tier Server for Web Apps**. It is a setup where the web server, server-side runtime, database, and optional cache are all on **one machine**.
 
+![]
+
 The goal is to understand:
 - Which stack you can choose
 - The good and bad points of each choice

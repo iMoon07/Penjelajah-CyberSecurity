@@ -4,6 +4,8 @@
 
 Ini membahas **Server Single-Tier untuk Web Apps**. Artinya, web server, server-side runtime, database, dan cache opsional semuanya berada di **satu mesin**.
 
+![Server single tier](linux-exposure-network-experiment.png)
+
 Tujuannya adalah memahami:
 - Stack apa saja yang bisa dipilih
 - Kelebihan dan kekurangan setiap pilihan
