@@ -8,7 +8,7 @@
 
 Ini membahas **hardening single-tier stack**: semua layer (web server, runtime, database, cache) berjalan di satu mesin yang sama, dan kita akan mengamankannya dari dasar—bukan instalasi dari nol, melainkan konfigurasi keamanan tiap layer.
 
-![Hardening single tier stack](linux-exposure-network-experiment.png)
+![Hardening single tier stack](hardening-single-tier-stack.png)
 
 Tujuannya adalah memahami:
 - Urutan hardening yang masuk akal

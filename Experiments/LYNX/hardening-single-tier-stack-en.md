@@ -8,7 +8,7 @@
 
 This covers **hardening a single-tier stack**: all layers (web server, runtime, database, cache) run on one machine, secured from the ground up—not installation from scratch, but security configuration for each layer.
 
-![Hardening single tier stack](linux-exposure-network-experiment.png)
+![Hardening single tier stack](hardening-single-tier-stack.png)
 
 Goals:
 - A sensible hardening order

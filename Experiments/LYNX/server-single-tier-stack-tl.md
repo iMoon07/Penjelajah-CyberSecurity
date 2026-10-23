@@ -1,8 +1,12 @@
 # Server Single-Tier Stack
 
-[🇬🇧 Read in English](linux-exposure-network-experiment-en.md)  
-[🇮🇩 Baca dalam Bahasa Indonesia](linux-exposure-network-experiment-id.md)  
-[🇲🇾 Baca dalam Bahasa Melayu](linux-exposure-network-experiment-ms.md)
+[🇬🇧 Read in English](server-single-tier-stack-en.md)  
+[🇮🇩 Baca dalam Bahasa Indonesia](server-single-tier-stack-id.md)  
+[🇲🇾 Baca dalam Bahasa Melayu](server-single-tier-stack-ms.md)
+
+﷽
+
+![Server single tier](single-tier-stack.png)
 
 Tinalakay sa artikulong ito ang **Single-Tier Server para sa Web Apps**. Ibig sabihin, ang web server, server-side runtime, database, at optional cache ay nasa **iisang makina** lamang.
 

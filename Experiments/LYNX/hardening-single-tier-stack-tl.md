@@ -8,7 +8,7 @@
 
 Tinalakay ng artikulong ito ang **hardening ng single-tier stack**: lahat ng layer (web server, runtime, database, cache) ay tumatakbo sa isang makina, at aataman natin ito mula sa simula—hindi pag-install mula sa simula, kundi security configuration para sa bawat layer.
 
-![Hardening single tier stack](linux-exposure-network-experiment.png)
+![Hardening single tier stack](hardening-single-tier-stack.png)
 
 Layunin:
 - Maayos na pagkakasunud-sunod ng hardening
