@@ -1,8 +1,10 @@
-# Bina Dojo Hacking Anda Sendiri: OWASP Lab Toolkit
+# Build Your Own Hacking Dojo: OWASP Lab Toolkit
 
 [🇬🇧 Read in English](owasp-lab-toolkit-en.md)  
 [🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)  
 [🇵🇭 Basahin sa Tagalog](owasp-lab-toolkit-tl.md)
+
+﷽
 
 Ini ialah tulisan pertama dalam blog saya, tempat saya mendokumentasikan penerokaan, eksperimen, dan pembangunan dalam bidang cybersecurity.
 

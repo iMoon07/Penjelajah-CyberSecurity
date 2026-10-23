@@ -1,6 +1,8 @@
 # Server Single-Tier Stack
 
 [🇬🇧 Read in English](linux-exposure-network-experiment-en.md)
+[🇲🇾 Baca dalam Bahasa Melayu](linux-exposure-network-experiment-ms.md)
+[🇵🇭 Basahin sa Tagalog](linux-exposure-network-experiment-tl.md)
 
 Ini membahas **Server Single-Tier untuk Web Apps**. Artinya, web server, server-side runtime, database, dan cache opsional semuanya berada di **satu mesin**.
 

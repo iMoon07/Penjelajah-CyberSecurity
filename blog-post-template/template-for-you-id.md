@@ -3,6 +3,10 @@
 ![Explore, Write, Build, Enjoy](./explore-write-build-enjoy.png)
 
 [🇬🇧 Read in English](template-for-you-en.md)
+[🇲🇾 Baca dalam Bahasa Melayu](template-for-you-ms.md)
+[🇵🇭 Basahin sa Tagalog](template-for-you-tl.md)
+
+﷽
 
 Halo, selamat datang di blog saya.
 

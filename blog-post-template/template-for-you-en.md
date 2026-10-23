@@ -2,7 +2,11 @@
 
 ![Explore, Write, Build, Enjoy](./explore-write-build-enjoy.png)
 
-[🇮🇩 Baca versi Indonesia](template-for-you-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](template-for-you-id.md)
+[🇲🇾 Baca dalam Bahasa Melayu](template-for-you-ms.md)
+[🇵🇭 Basahin sa Tagalog](template-for-you-tl.md)
+
+﷽
 
 Hello, and welcome to my blog.
 

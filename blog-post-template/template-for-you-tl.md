@@ -6,6 +6,8 @@
 [🇮🇩 Baca dalam Bahasa Indonesia](template-for-you-id.md)  
 [🇲🇾 Baca dalam Bahasa Melayu](template-for-you-ms.md)
 
+﷽
+
 Kumusta, welcome sa blog ko.
 
 Ang blog na ito ay espasyo para sa exploration ko. Dito ako nagsusulat ng mga bagay na pinagaaralan ko, sinusubukan ang mga bagong idea, nag-iimbak ng experiments, at gumagawa ng mga bagay dahil masaya lang.

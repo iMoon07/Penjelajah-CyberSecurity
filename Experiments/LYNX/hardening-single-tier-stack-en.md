@@ -1,6 +1,11 @@
 # Hardening Single-Tier Stack
 
 [🇮🇩 Read in Indonesian](hardening-single-tier-stack-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](hardening-single-tier-stack-id.md)
+[🇲🇾 Baca dalam Bahasa Melayu](hardening-single-tier-stack-ms.md)
+[🇵🇭 Basahin sa Tagalog](hardening-single-tier-stack-tl.md)
+
+﷽
 
 This covers **hardening a single-tier stack**. That means all layers—web server, runtime, database, cache—live on one machine, secured from the ground up without covering installation from scratch.
 

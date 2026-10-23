@@ -3,8 +3,9 @@
 [🇬🇧 Read in English](hardening-single-tier-stack-en.md)  
 [🇮🇩 Baca dalam Bahasa Indonesia](hardening-single-tier-stack-id.md)
 [🇬🇧 Read in English](hardening-single-tier-stack-en.md)
-[🇮🇩 Baca dalam Bahasa Indonesia](hardening-single-tier-stack-id.md)  
 [🇵🇭 Basahin sa Tagalog](hardening-single-tier-stack-tl.md)
+
+﷽
 
 Artikel ini membincangkan **hardening single-tier stack**. Maksudnya, semua layer—web server, runtime, database, dan cache—berada pada satu server, dan kita akan mengamankannya daripada asas tanpa perlu membincangkan pemasangan dari kosong.
 

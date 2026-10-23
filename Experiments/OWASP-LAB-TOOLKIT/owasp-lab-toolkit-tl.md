@@ -4,6 +4,8 @@
 [🇮🇩 Baca dalam Bahasa Indonesia](owasp-lab-toolkit-id.md)  
 [🇲🇾 Baca dalam Bahasa Melayu](owasp-lab-toolkit-ms.md)
 
+﷽
+
 Ito ang unang artikulo sa blog ko, kung saan dinodokumento ko ang mga exploration, experiment, at development ko sa field ng cybersecurity.
 
 ![Skull](skull.jpg)

@@ -6,6 +6,8 @@
 [🇮🇩 Baca dalam Bahasa Indonesia](template-for-you-id.md)  
 [🇵🇭 Basahin sa Tagalog](template-for-you-tl.md)
 
+﷽
+
 Hai, selamat datang ke blog saya.
 
 Blog ini ialah ruang penerokaan saya. Tempat untuk menulis perkara yang sedang saya pelajari, mencuba idea baharu, menyimpan eksperimen, dan membina sesuatu hanya kerana ia terasa menyeronokkan.

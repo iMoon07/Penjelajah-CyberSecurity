@@ -6,8 +6,6 @@
 
 Tinalakay sa artikulong ito ang **Single-Tier Server para sa Web Apps**. Ibig sabihin, ang web server, server-side runtime, database, at optional cache ay nasa **iisang makina** lamang.
 
-
-
 Ang layunin ay maunawaan:
 - Kung anong mga stack ang maaaring piliin
 - Ang mga bentahe at disbentahe ng bawat pagpipilian

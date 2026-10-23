@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](hardening-single-tier-stack-en.md)
 [🇲🇾 Baca dalam Bahasa Melayu](hardening-single-tier-stack-ms.md)
 
+﷽
+
 Tinalakay ng artikulong ito ang **hardening ng single-tier stack**. Ibig sabihin, lahat ng layer—web server, runtime, database, cache—ay nasa isang makina, at aataman natin ito mula sa simula nang hindi na kailangang talakayin ang pag-install mula sa simula.
 
 ![Hardening single tier stack](linux-exposure-network-experiment.png)

@@ -6,8 +6,6 @@
 
 Artikel ini membincangkan **Single-Tier Server untuk Web Apps**. Maksudnya, web server, server-side runtime, database, dan cache pilihan semuanya berada pada **satu server**.
 
-
-
 Tujuannya adalah memahami:
 - Stack apa yang boleh dipilih
 - Kelebihan dan kekurangan setiap pilihan
