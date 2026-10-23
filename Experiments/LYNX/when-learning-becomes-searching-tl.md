@@ -20,13 +20,13 @@ Layunin:
 - Paano inaabala ng digital na distraksiyon ang pokus
 - Paano gamitin ang LLM nang may malinaw na hangganan
 
-## 1. Hindi Awtomatikong Produktibo ang Digital Learning
+##  Hindi Awtomatikong Produktibo ang Digital Learning
 
 Maaaring pabilisin ng digital learning ang pag-access ng impormasyon, ngunit ang bilis ng input ay hindi kapareho ng pag-unawa. Kapag madali ang impormasyon, ang panganib ay hindi kakulangan ng impormasyon, kundi **sobra-sobrang impormasyon** at **kalituhan**.
 
 Kadalasang lumilitaw ang digital burnout mula sa information overload at patuloy na kognitibong pangangailangan. Natuklasan ng isang pag-aaral sa 566 na mag-aaral na ang pagkakalantad sa impormasyon ng AI ay positibong nauugnay sa digital burnout; lumilitaw ang emosyonal at kognitibong pagkapagod kapag sobra ang impormasyon at patuloy ang kognitibong pangangailangan. [Frontiers in Psychology](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1897395/pdf)
 
-## 2. Rabbit Holes at Burnout
+##  Rabbit Holes at Burnout
 
 Kadalasang nangyayari ang rabbit hole dahil ang isang tanong ay nagbubukas ng isa pa:
 
@@ -34,7 +34,7 @@ Kadalasang nangyayari ang rabbit hole dahil ang isang tanong ay nagbubukas ng is
 
 Maaari itong maging kapaki-pakinabang para sa imbestigasyon, ngunit mapanganib kung walang **stopping rule**. Ang pag-aaral ay hindi paghabol ng 100% katiyakan bago magsimula; ang pag-aaral ay paggawa ng pinakamahusay na desisyon gamit ang sapat na ebidensya, pagkatapos ay subukan at pagbutihin ito.
 
-## 3. Kapag ang Pagpapabuti ay Nagiging Pag-uulit
+##  Kapag ang Pagpapabuti ay Nagiging Pag-uulit
 
 Hindi laging nagsisimula ang rabbit hole mula sa paghahanap ng bagong impormasyon. Minsan, lumilitaw ito mula sa pagnanais na ayusin ang isang bagay na sapat na ang ganda.
 
@@ -61,7 +61,7 @@ Kung walang malinaw na kakulangan, hindi lahat ng posibleng pagpapabuti ang kail
 
 **Ang layunin ay hindi ang huminto sa pagpapabuti, kundi huminto kapag ang benepisyo ng pagbabago ay hindi na katumbas ng gastos nito.**
 
-## 4. Kapag ang Pagduda ay Nagiging Rabbit Hole
+##  Kapag ang Pagduda ay Nagiging Rabbit Hole
 
 Natuklasan ng pananaliksik ng Microsoft Research at Carnegie Mellon University sa 319 na knowledge worker at 936 na halimbawa ng paggamit ng AI na ang mas mataas na tiwala sa GenAI ay nauugnay sa mas mababang pagsisikap ng critical thinking na inulat. Sa kabilang banda, ang mga mas nagtitiwala sa sariling kakayahan ay mas kritikal sa pagsuri ng output ng AI. [Microsoft Research](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
 
@@ -77,7 +77,7 @@ Tatlong karaniwang trigger:
 
 Kapag ang beripikasyon ay hindi na nakakatulong sa paggawa ng desisyon, ang proseso ay maaari pang magdagdag ng pagduda. Maaari tayong patuloy na tanungin ang impormasyong sinusuportahan na ng ebidensya, habang ang mga maling sagot ay nakakalusot dahil tila makatuwiran o tumutugma sa paunang palagay.
 
-## 5. Paano Ito Haharapin
+##  Paano Ito Haharapin
 
 Gumamit ng simpleng prinsipyo: **isang layunin, isang pangunahing pinagmulan, isang hangganan ng beripikasyon.**
 
@@ -91,7 +91,7 @@ Gumamit ng simpleng prinsipyo: **isang layunin, isang pangunahing pinagmulan, is
 
 Magsimula sa isang layunin ng pag-aaral, pumili ng isang pinagkakatiwalaang pangunahing pinagmulan, pagkatapos ay tukuyin ang hangganan ng beripikasyon ayon sa antas ng panganib ng pahayag. Magdagdag ng independiyenteng pinagmulan kung ang pahayag ay mahalaga, kontrobersyal, o hindi pa malinaw.
 
-## 6. Mga Limitasyon ng Data
+##  Mga Limitasyon ng Data
 
 Ang mga pahayag ay dapat kasing lakas ng kanilang pamamaraan ng data:
 
@@ -105,7 +105,7 @@ Ang mga pahayag ay dapat kasing lakas ng kanilang pamamaraan ng data:
 - Ang pag-aaral ng Frontiers ay cross-sectional, hindi causal.
 - Ang isa sa mga eksperimentong sinuri ay nag-ulat ng mga iskor ng post-test na 15–30% mas mababa sa ilalim ng ilang kondisyon ng distraksiyon kumpara sa kontrol.
 
-## 7. Konklusyon
+##  Konklusyon
 
 Ang pagduda at beripikasyon ay malusog; ang hindi malusog ay ang beripikasyon nang walang hangganan at pag-aaral nang walang layunin. Ang AI ay dapat bigyan ng konteksto at direksyon, habang dapat mayroon kang sistema para matukoy kung kailan titigil sa paghahanap at magsimulang magpraktis.
 

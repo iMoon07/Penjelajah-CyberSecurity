@@ -16,7 +16,7 @@ The goal is to understand:
 - Security things to think about
 - How to use this for practice
 
-## 1. Deployment (Bare Metal, VM, Container)
+##  Deployment (Bare Metal, VM, Container)
 
 | Method | What it does | Good points | Bad points | When to use it |
 |---|---|---|---|---|
@@ -26,7 +26,7 @@ The goal is to understand:
 
 > **Note:** For a single-tier setup, a VM or container can hold the whole stack: web server, runtime, and database. Because everything is on one machine or host, this is a **Single Point of Failure (SPOF)**. If that machine stops, the website, app, and database all stop too.
 
-## 2. Operating System
+##  Operating System
 
 | OS | Package manager | Good points | Bad points | When to use it |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ The goal is to understand:
 | **FreeBSD** | pkg / Ports | It has Jails, the built-in `pf` firewall, and good documentation in the Handbook. It is stable for services. It is not Linux. | Many web-app guides assume Linux. Some PHP modules or packages must be built with Ports, which can take longer. Some tools have a smaller ecosystem. | Good for exploring a BSD-based single-tier setup. It takes more work to follow Linux guides. |
 | **OpenBSD** | pkg_add / Ports | Very focused on security. It is secure by default and uses tools like privsep, pledge, and unveil. It is very minimal. | Fewer packages are available. Many web apps need different setup steps. The web-stack community is much smaller than Linux. | Good for learning security hardening and minimal systems. Not the most practical choice for normal web apps. |
 
-## 3. Web Server
+##  Web Server
 
 | Web server | Type | Good points | Bad points | When to use it |
 |---|---|---|---|---|
@@ -51,7 +51,7 @@ The goal is to understand:
 | **[Caddy](https://caddyserver.com/)** | Event-driven with a built-in reverse proxy | Very simple configuration. It can get HTTPS certificates automatically with ACME. The syntax is easy. Reverse proxy setup is simple. | It has fewer modules than Apache or Nginx. Some special uses need plugins. TLS depends on ACME and DNS. | Good for a fast lab with automatic HTTPS. You still need to understand its settings and limits. |
 | **[IIS](https://www.iis.net/)** | Integrated with Windows | Works naturally with Windows. It has a graphical admin tool. It connects well with .NET and ASP.NET. | It only runs on Windows. It uses more resources. It is less flexible for non-.NET stacks. It is less common with Linux open-source tools. | Use it only if your stack is really based on Windows or .NET. |
 
-## 4. Server-Side Runtime
+##  Server-Side Runtime
 
 | Runtime | What it does | Good points | Bad points | When to use it |
 |---|---|---|---|---|
@@ -61,7 +61,7 @@ The goal is to understand:
 | **[Java](https://openjdk.org/)** with Tomcat, Jetty, or Undertow | JVM runtime | Stable and strong for complex apps. Garbage collection can be tuned. | It uses more memory, especially on a small server. It starts more slowly. JVM settings need attention. | Good for Java or Jakarta EE apps. Not the best choice for a small VM or small resources. |
 | **[.NET](https://dotnet.microsoft.com/)** with Kestrel and a reverse proxy | .NET runtime | Good performance. It works on Linux and Windows. It has modern integration. | The .NET runtime version must match the app. On Linux, people often put Nginx or Apache in front of Kestrel. Resource use needs attention. | Good if your app is built with .NET. It can still be used in a single-tier Linux setup. |
 
-## 5. Database and Cache for Single-Tier
+##  Database and Cache for Single-Tier
 
 | Component | Type | Good points | Bad points | When to use it |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ The goal is to understand:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Relational SQL database | Strong and works well with .NET. The Express edition is free, but it has limits. | Express has limits for RAM and database size, depending on the version. It fits Windows best. On Linux, MariaDB and PostgreSQL are more common in labs. | Use it only for a .NET single-tier stack. |
 | **[Redis](https://redis.io/)** | In-memory key-value store | Very fast for cache and sessions. It is light and easy to use. It can reduce database load. | Data is in RAM, so you need persistence if you want to save it. It is not a replacement for a relational database. You must set `maxmemory` and an eviction policy. Check the license for your version. | Optional. Very useful for apps with lots of reading, caching, or sessions. It is not required. |
 
-## 6. Open Source for Production: Strengths, Risks, and Responsibility
+##  Open Source for Production: Strengths, Risks, and Responsibility
 
 **Key strengths:**
 1. **Transparency/audit** — inspect auth, permissions, encryption, secret handling; eases security review & compliance.
@@ -136,7 +136,7 @@ In single-tier, all components share one machine. Compromise of one runtime/proc
 
 Goal is not choosing open source because it's always better, but choosing software based on needs, risks, operational capability, and required control level.
 
-## 7. Online Access: Domain, DNS, Tunnel, Pros and Cons
+##  Online Access: Domain, DNS, Tunnel, Pros and Cons
 
 | Access method | What you need | Good points | Bad points and risks | When to use it |
 |---|---|---|---|---|
@@ -155,7 +155,7 @@ Goal is not choosing open source because it's always better, but choosing softwa
 - **Dependencies:** Home lab + Tunnel depends on power, ISP, server, and Cloudflare. VPS + Tunnel or Proxy depends on the VPS, provider, and Cloudflare. More middle services mean more possible failure points.  
 - **For practice,** it is more important to understand these trade-offs than simply to make the app reachable.
 
-## 8. Operations & Maintenance (Single-Tier)
+##  Operations & Maintenance (Single-Tier)
 
 | Aspect | What to do | Why |
 |---|---|---|

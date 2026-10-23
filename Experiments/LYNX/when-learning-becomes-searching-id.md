@@ -20,13 +20,13 @@ Tujuannya adalah memahami:
 - Bagaimana distraksi digital mengganggu fokus
 - Cara memakai LLM dengan batas yang jelas
 
-## 1. Digital Learning Bukan Otomatis Produktif
+##  Digital Learning Bukan Otomatis Produktif
 
 Digital learning dapat mempercepat akses informasi, tetapi kecepatan input tidak sama dengan pemahaman. Ketika informasi mudah didapat, risiko yang muncul bukan kekurangan informasi, melainkan **kelebihan informasi** dan **kebingungan**.
 
 Burnout digital sering muncul dari information overload dan tuntutan kognitif yang terus-menerus. Studi terhadap 566 mahasiswa menemukan bahwa paparan informasi AI berkorelasi positif dengan digital burnout; kelelahan emosional dan kognitif muncul ketika informasi terlalu banyak dan tuntutan kognitif berlangsung terus. [Frontiers in Psychology](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1897395/pdf)
 
-## 2. Rabbit Hole dan Burnout
+##  Rabbit Hole dan Burnout
 
 Rabbit hole biasanya terjadi karena satu pertanyaan membuka pertanyaan lain:
 
@@ -34,7 +34,7 @@ Rabbit hole biasanya terjadi karena satu pertanyaan membuka pertanyaan lain:
 
 Itu bisa berguna untuk investigasi, tetapi merusak kalau tidak ada **stopping rule**. Belajar bukan mengejar kepastian 100% sebelum mulai; belajar adalah membuat keputusan terbaik dengan bukti yang cukup, lalu menguji dan memperbaikinya.
 
-## 3. Ketika Perbaikan Menjadi Pengulangan
+##  Ketika Perbaikan Menjadi Pengulangan
 
 Rabbit hole tidak selalu dimulai dari mencari informasi baru. Kadang, ia muncul dari keinginan memperbaiki sesuatu yang sebenarnya sudah cukup baik.
 
@@ -61,7 +61,7 @@ Jika tidak ada kekurangan yang jelas, tidak semua kemungkinan perbaikan perlu di
 
 **Tujuannya bukan berhenti memperbaiki, melainkan berhenti ketika manfaat perubahan tidak lagi sebanding dengan biayanya.**
 
-## 4. Ketika Ragu Berubah Menjadi Rabbit Hole
+##  Ketika Ragu Berubah Menjadi Rabbit Hole
 
 Riset Microsoft Research dan Carnegie Mellon University terhadap 319 knowledge worker dan 936 contoh penggunaan AI menemukan bahwa semakin tinggi kepercayaan seseorang pada GenAI, semakin rendah usaha critical thinking yang dilaporkan. Sebaliknya, orang yang lebih percaya pada kemampuan dirinya cenderung lebih kritis memeriksa output AI. [Microsoft Research](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
 
@@ -77,7 +77,7 @@ Ada tiga pemicu umum:
 
 Ketika verifikasi tidak lagi membantu pengambilan keputusan, proses itu justru bisa menambah keraguan. Kita bisa terus mempertanyakan informasi yang sebenarnya sudah didukung bukti, sementara jawaban yang salah lolos karena terdengar masuk akal atau sesuai dengan asumsi awal.
 
-## 5. Cara Menyikapinya
+##  Cara Menyikapinya
 
 Pakai prinsip sederhana: **satu tujuan, satu sumber utama, satu batas verifikasi.**
 
@@ -91,7 +91,7 @@ Pakai prinsip sederhana: **satu tujuan, satu sumber utama, satu batas verifikasi
 
 Mulai dengan satu tujuan belajar, pilih satu sumber utama yang tepercaya, lalu tentukan batas verifikasi sesuai tingkat risiko klaim. Tambahkan sumber independen jika klaim penting, kontroversial, atau belum jelas.
 
-## 6. Batasan Data
+##  Batasan Data
 
 Klaim harus sekuat metode datanya:
 
@@ -105,7 +105,7 @@ Klaim harus sekuat metode datanya:
 - Studi Frontiers bersifat cross-sectional, bukan bukti kausal.
 - Salah satu eksperimen yang ditinjau melaporkan skor post-test 15–30% lebih rendah pada kondisi distraksi tertentu dibandingkan kondisi kontrol.
 
-## 7. Kesimpulan
+##  Kesimpulan
 
 Ragu dan verifikasi itu sehat; yang tidak sehat adalah verifikasi tanpa batas dan belajar tanpa tujuan. AI harus diberi konteks dan arah, sementara kamu harus punya sistem untuk menentukan kapan berhenti mencari dan mulai mempraktikkan.
 

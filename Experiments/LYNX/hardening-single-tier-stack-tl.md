@@ -17,7 +17,7 @@ Layunin:
 - Pag-verify pagkatapos ng hardening
 - Mga karaniwang pagkakamali na dapat iwasan
 
-## 1. Mga Pangunahing Prinsip ng Hardening
+##  Mga Pangunahing Prinsip ng Hardening
 
 Ang hardening ay hindi isang pindutan. Ito ay unti-unting proseso:
 
@@ -30,7 +30,7 @@ Ang hardening ay hindi isang pindutan. Ito ay unti-unting proseso:
 
 > **Warning:** Huwag mag-hardening nang direkta sa production. Palaging subukan muna sa lab o VM.
 
-## 2. Pamantayan ng Hardening: CIS
+##  Pamantayan ng Hardening: CIS
 
 Hindi kailangang hulaan ang hardening. May mga pamantayan na maaaring gamiting gabay:
 
@@ -52,7 +52,7 @@ Pinaka-relevant na benchmark para sa single-tier:
 
 > **Note:** Ang CIS Benchmark ay binubuo ng Level 1 (minimum baseline) at Level 2 (mas mahigpit). "100%" ay nangangahulugang pag-apply ng lahat ng Level 1 + Level 2 + sub-control. Sa praktika, pumili ng Level na angkop—Level 1 para sa baseline, Level 2 para sa high-security—pagkatapos i-dokumento kung ano ang inapply at ano ang sinadyang nilaktawan. Huwag i-apply nang sabay-sabay na walang prioridad, suriin bawat kontrol, subukan sa lab, saka i-roll out nang unti-unti.
 
-## 3. Operating System
+##  Operating System
 
 | Aspeto | Gagawin | Bakit mahalaga |
 |---|---|---|
@@ -70,7 +70,7 @@ Pinaka-relevant na benchmark para sa single-tier:
 > - **Hardening ng kernel at service:** sysctl parameters, SELinux/AppArmor, bawasan ang service, i-disable ang hindi ginagamit na module.
 > Bakit mahalaga: bawat aspekto ay nagbabawas ng attack surface at pumipigil sa data leak o DoS.
 
-## 4. Mga Serbisyo, File, at Secret
+##  Mga Serbisyo, File, at Secret
 
 | Aspeto | Gagawin | Bakit |
 |---|---|---|
@@ -91,7 +91,7 @@ Pinaka-relevant na benchmark para sa single-tier:
 4. **I-audit** — suriin ang access log upang malaman kung ginamit ang secret nang hindi awtorisado.
 5. **Pigilan** — magdagdag ng secret scanning (gitleaks, trufflehog) sa CI/CD at pre-commit hook.
 
-## 5. Web Server Hardening
+##  Web Server Hardening
 
 | Web server | Mahahalagang setting | Layunin |
 |---|---|---|
@@ -124,7 +124,7 @@ Mga security header na dapat meron:
 - Limitahan ang admin endpoint sa specific IP.
 - I-enable ang access at error logging.
 
-## 6. TLS / HTTPS
+##  TLS / HTTPS
 
 | Aspeto | Rekomendasyon | Bakit |
 |---|---|---|
@@ -144,7 +144,7 @@ Mga security header na dapat meron:
 - Gumamit ng `ssl_protocols TLSv1.2 TLSv1.3;` sa Nginx.
 - Itago ang private key na may mahigpit na permission (600) at huwag i-commit sa Git.
 
-## 7. WAF: Web Application Firewall
+##  WAF: Web Application Firewall
 
 | Komponente | Layunin | Tala |
 |---|---|---|
@@ -167,7 +167,7 @@ Mga security header na dapat meron:
 
 > **Warning:** Huwag i-enable ang WAF blocking mode nang direkta sa production. Ang WAF rule (lalo na OWASP CRS) ay madalas mag-false positive sa lehitimong traffic (form upload, API, kumplikadong query); kung agad na i-enable ang blocking, maaaring ma-block ang lehitimong user at ma-down ang service. Magsimula sa `DetectionOnly`, analisahin ang log upang makilala ang false positive, i-tune ang rule, pagkatapos ay i-enable nang unti-unti ang blocking.
 
-## 8. Database Hardening
+##  Database Hardening
 
 | Aspeto | Gagawin | Bakit |
 |---|---|---|
@@ -190,7 +190,7 @@ Mga security header na dapat meron:
 - Limitahan ang max connections (connection pool) upang maiwasan ang DoS.
 - I-disable ang hindi ginagamit na DB feature (xp_cmdshell, LOAD DATA LOCAL, atbp.).
 
-## 9. Runtime Hardening
+##  Runtime Hardening
 
 | Runtime | Mahahalagang setting | Layunin |
 |---|---|---|
@@ -200,7 +200,7 @@ Mga security header na dapat meron:
 | Java | Itakda ang JVM memory limit, patakbuhin bilang regular user | Pinipigilan ang memory exhaustion |
 | .NET | Patakbuhin ang Kestrel bilang non-root, gumamit ng reverse proxy sa harap | Isolation ng process at access control |
 
-## 10. Logging at Monitoring
+##  Logging at Monitoring
 
 | Komponente | Layunin | Bakit |
 |---|---|---|
@@ -210,7 +210,7 @@ Mga security header na dapat meron:
 | Fail2ban | Binablock ang IP pagkatapos ng paulit-ulit na failed login | Proteksyon sa SSH at login services |
 | Baseline | Itala ang normal na estado: port, user, service, log | Walang baseline, mahirap makita ang anomaly |
 
-## 11. Backup at Recovery
+##  Backup at Recovery
 
 | Aspeto | Gagawin | Bakit |
 |---|---|---|
@@ -222,7 +222,7 @@ Mga security header na dapat meron:
 
 > **Important:** Ang backup na nakaimbak sa parehong server ay may risk pa rin. Magtago ng hindi bababa sa isang kopya sa labas.
 
-## 12. Incident Response
+##  Incident Response
 
 | Yugto | Gagawin |
 |---|---|
@@ -234,7 +234,7 @@ Mga security header na dapat meron:
 
 Ang incident response ay hindi kailangang maging kumplikado para sa lab. Ang mahalaga ay alam mo: **ano ang nakikita, ano ang gagawin, at paano ibalik ang server.**
 
-## 13. Pag-verify ng Hardening
+##  Pag-verify ng Hardening
 
 Checklist pagkatapos ng hardening:
 
@@ -251,7 +251,7 @@ Checklist pagkatapos ng hardening:
 - [ ] Nasubukan na ang restore ng backup
 - [ ] Walang secret sa repository o world-readable files
 
-## 14. Mga Karaniwang Pagkakamali
+##  Mga Karaniwang Pagkakamali
 
 1. **Pagbubukas ng database port sa publiko** — pinakamadaling target.
 2. **SSH root login na naka-enable** — target ng brute force.
@@ -262,7 +262,7 @@ Checklist pagkatapos ng hardening:
 7. **Secret sa Git** — na-leak ang credential kasama ng repository.
 8. **Hindi kailanman nate-test ang backup** — kapag kailangan, hindi ma-restore.
 
-## 15. End-to-End: Mula OS Hanggang Database at Runtime
+##  End-to-End: Mula OS Hanggang Database at Runtime
 
 Kinokompleto ng bahaging ito ang hardening para hindi ito tumigil sa web server kundi sakupin ang buong stack.
 
@@ -358,19 +358,19 @@ Gumamit ng `pam_pwquality` para sa password policy. I-enable ang `faillock` para
 
 I-encrypt ang backup (GPG o LUKS). Magtago ng hindi bababa sa isang kopya offsite. Regular na subukan ang restore. I-dokumento ang RTO at RPO.
 
-## 16. Network, Logging, Monitoring, Backup, at Incident Response (Malalim)
+##  Network, Logging, Monitoring, Backup, at Incident Response (Malalim)
 
-### 16.1 Hangganan ng seguridad ng single-tier
+### Hangganan ng seguridad ng single-tier
 
 Ang single-tier ay nangangahulugang maraming komponente ang nagbabahagi ng isang OS. Ang logical separation ng proseso ay hindi kapareho ng security isolation. Kung na-compromise ang runtime, maaaring nakawin ang DB credential, magtanim ng persistence, o mag-eksfiltrate ng data. Sakop ng hardening ang prevention, containment, detection, at recovery.
 
-### 16.2 Network hardening
+### Network hardening
 
 Tatlong landas: **Ingress** (koneksyon mula sa labas — SSH, HTTP/HTTPS: limitahan ang source, buksan lamang ang kinakailangang port), **East-west** (komunikasyon ng komponente via loopback/Unix socket: limitahan ang access sa pagitan ng proseso), **Egress** (outbound DNS, NTP, update, backup, API: default-deny + allowlist).
 
 Tumutulong ang UFW sa ingress ngunit hindi awtomatikong naglilimita ng egress o nag-iisolate ng proseso. Upang mabawasan ang lateral movement: magkahiwalay na service account bawat komponente, dedikadong DB app user, AppArmor/SELinux, container network policy, o hiwalay na VM kung mataas ang impact.
 
-### 16.3 Logging at monitoring
+### Logging at monitoring
 
 Logging = pagtatala ng event. Monitoring = pagsusuri para sa anomalya. Alerting = pagbibigay-alam kung kailangang kumilos.
 
@@ -378,7 +378,7 @@ End-to-end na mapa: (1) entry point (SSH, HTTP/HTTPS, firewall, WAF, TLS, app au
 
 Monitoring bawat layer: firewall (koneksyon, port, destinasyon), SSH/OS account (login, bagong user), web server/WAF (URL, status, rule), runtime (error, restart, child process), database (login, privilege, sensitibong query), integridad ng file (hash, permission, owner), OS (sudo, audit event, cron, kernel), resource (CPU/RAM/disk/latency), backup (status ng job, laki, retention).
 
-### 16.4 auditd
+### auditd
 
 Nagtatala ng event ayon sa audit rule. Mahahalagang object: sshd_config, sudoers, passwd/group/shadow, systemd unit, cron, authorized_keys, config ng web server/WAF/DB, web root, config ng firewall, kritikal na binary.
 
@@ -388,14 +388,14 @@ Limitasyon: maling rule ay nakakaligtaan ng aktividad, sobrang dami ng rule ay n
 
 Iba sa: auditd (aktividad ayon sa rule), journald (mensahe ng OS/app), FIM (pagbabago vs baseline), network monitoring (koneksyon), SIEM (korelasyon at alert).
 
-### 16.5 journald, logrotate, Fail2ban, baseline
+### journald, logrotate, Fail2ban, baseline
 
 - **journald**: nagkolekta ng mensahe ng OS/app, ang persistensya ay nakadepende sa config at retention. Bantayan ang SSH, nabigong service, kernel, pagkabigo ng resource. I-forward ang kritikal na log sa hiwalay na sistema.
 - **logrotate**: namamahala sa lifecycle ng log (rotation, compression, retention). Siguraduhing hindi humihinto ang pagsusulat ng log sa rotation, sapat ang retention para sa imbestigasyon.
 - **Fail2ban**: nagbabasa ng log, nagba-block ng source pagkatapos ng pattern (paulit-ulit na failed login). Tumutulong sa simpleng brute force, hindi pinipigilan ang web exploit, credential theft, eksfiltrasyon. Maaaring mag-false positive.
 - **Baseline**: talaan ng normal na estado (port, user, service, proseso, hash ng file, firewall rule, pattern ng login/request/egress, bersyon). I-update via lehitimong pagbabago (deployment/patch).
 
-### 16.6 Epektibong monitoring
+### Epektibong monitoring
 
 Itakda ang normal na kondisyon pagkatapos ay mag-alert. Halimbawang signal: SSH admin login mula sa hindi kilalang source (mataas), bagong OS user/admin group sa labas ng change window (mataas), config file nagbago nang walang deployment (mataas), bagong proseso na hindi tumutugma sa perilaku ng app (mataas), runtime nagbubukas ng koneksyon sa bagong destinasyon (mataas kung nakumpirma), pagbabago ng DB privilege o malaking pag-export ng data (mataas), pagbabago ng firewall rule nang walang pag-apruba (mataas), pagtaas ng request sa WAF na kahawig ng eksploitasyon (kailangan ng korelasyon), pagtaas ng CPU/RAM/disk/latency (kailangan ng triage), pagkabigo ng backup job/hindi available ang kopya (mataas).
 
@@ -405,7 +405,7 @@ Ang lokal na log lamang ay hindi sapat: maaaring magbura ng lokal na log ang roo
 
 Tukuyin ang may-ari ng alert: admin (kalusugan ng service/config), developer (deployment/error), security analyst (korelasyon/containment), may-ari ng backup (availability/restore), may-ari ng serbisyo (epekto sa negosyo).
 
-### 16.7 Backup at recovery
+### Backup at recovery
 
 Mga object na dapat isaalang-alang: database (data+schema+role+metadata), app file (kilalang malinis na release version), upload ng user, config ng OS/service, secret/sertipiko (na may angkop na access/encryption), encryption key (hiwalay sa backup), log/ebidensya, dokumentasyon ng recovery (bersyon, dependensiya, pagkakasunod-sunod ng restore).
 
@@ -417,7 +417,7 @@ RPO (recovery point objective) = katanggap-tanggap na pagkawala ng data (window 
 
 Mga kahirapan sa recovery: DB at upload mula sa iba't ibang oras, ang pinakabagong backup ay maaaring may sirang/mapanganib na data, ang na-leak na secret ay kailangang i-rotate hindi lamang i-restore, ang lumang config ay maaaring magbalik ng kahinaan, walang saysay ang encrypted backup kung nawala ang key, maaaring mabigo ang app sa restore, maaaring maibalik ang persistence. Kaya restore test sa isolated environment: beripikahin ang DB, login ng app, business function, permission, service, TLS, firewall, monitoring bago ibalik ang serbisyo.
 
-### 16.8 Incident response
+### Incident response
 
 Mabilisang respons (unang minuto): beripikahin ang alert (sistema, oras, account, proseso, indicator), suriin ang impact (serbisyo, sensitibong data, admin account, egress), containment (limitahan ang attack path via network control/isolation), protektahan ang ebidensya (i-save ang log, timestamp, alert, metadata, itala ang bawat aksyon), protektahan ang access (planuhin ang pagrevoke ng session, rotation ng secret, pagpapalit ng key via trusted system), tukuyin ang escalation (root compromise, pagnanakaw ng data, ransomware → seryosong insidente).
 
@@ -429,7 +429,7 @@ Ang containment ay hindi simpleng pag-block ng IP: kung gumagamit ang attacker n
 
 Recovery at beripikasyon bago ideklarang tapos: entry point naisara/dinimitigahan, image/package/app file mula sa pinagkakatiwalaang source, data naibalik mula sa beripikadong backup, na-handle ang na-leak na credential/session, user/key/service/scheduler/firewall ayon sa inaprubahang baseline, aktibo ang logging/audit/FIM/monitoring, egress at access sa DB ayon sa polisiya, pumasa ang app sa functional at security test, dokumentasyon ng chronology/impact/aksyon/follow-up.
 
-### 16.9 Matriks ng korelasyon (halimbawang insidente)
+### Matriks ng korelasyon (halimbawang insidente)
 
 Runtime pinaghihinalaang tumakbo ng hindi inaasahang proseso pagkatapos ng web request:
 1. Paunang indikasyon: WAF at access log → hindi normal na request, endpoint, oras, status.
@@ -441,7 +441,7 @@ Runtime pinaghihinalaang tumakbo ng hindi inaasahang proseso pagkatapos ng web r
 7. Recovery: backup, baseline, pinagkakatiwalaang image → maaari bang ligtas na maibalik ang sistema at data?
 8. Pagsusuri: lahat ng ebidensya → entry path, saklaw ng impact, nabigong kontrol.
 
-### 16.10 Mga kahirapan at limitasyon
+### Mga kahirapan at limitasyon
 
 | Kontrol | Pangunahing kahirapan | Risk kung walang pagsusuri |
 |---|---|---|
@@ -455,7 +455,7 @@ Runtime pinaghihinalaang tumakbo ng hindi inaasahang proseso pagkatapos ng web r
 | Incident response | Pagbabalanse ng containment, preserbasyon ng ebidensya, kontinuitas ng serbisyo | Nawawala ang ebidensya o nagpapatuloy ang compromise |
 | Rebuild ng server | Pagtiyak ng malinis na image, available na dependensiya, konsistenteng data | Muling pumasok ang attacker/mahinang config |
 
-### 16.11 Makatwirang pagkakasunod-sunod ng implementasyon
+### Makatwirang pagkakasunod-sunod ng implementasyon
 
 1. Itakda ang baseline at inventory (port, service, user, config, dependensiya, data path, external service).
 2. Seguruhin ang ingress at lokal na access (limitahan ang SSH, isara ang hindi kinakailangang port, limitahan ang privilege ng runtime, protektahan ang access sa DB).
@@ -467,7 +467,7 @@ Runtime pinaghihinalaang tumakbo ng hindi inaasahang proseso pagkatapos ng web r
 8. Sanayin ang incident response (simulahin ang kahina-hinalang login, pagbabago ng file, hindi inaasahang egress, restore ng backup sa lab).
 9. Beripikahin at suriin muli (subukan ang kontrol pagkatapos ng pagbabago, itala ang exception, muling suriin ang baseline).
 
-### 16.12 Mga sanggunian
+### Mga sanggunian
 
 - [Ubuntu Server — Firewall](https://ubuntu.com/server/docs/firewalls/) — perilaku at pamamahala ng firewall host gamit ang UFW.
 - [Linux Audit System — auditd](https://www.linux.org/docs/man5/auditd.html) — papel ng audit daemon at pagproseso ng audit record.

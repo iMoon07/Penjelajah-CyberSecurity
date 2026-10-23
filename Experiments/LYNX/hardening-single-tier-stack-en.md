@@ -17,7 +17,7 @@ Goals:
 - Verification after hardening
 - Common mistakes to avoid
 
-## 1. Core Hardening Principles
+##  Core Hardening Principles
 
 Hardening is not a single button. It is a gradual process:
 
@@ -30,7 +30,7 @@ Hardening is not a single button. It is a gradual process:
 
 > **Warning:** Never harden directly in production. Always test in a lab or VM first.
 
-## 2. Hardening Standard: CIS
+##  Hardening Standard: CIS
 
 Hardening does not have to be guesswork. There are standards you can use as a reference:
 
@@ -54,7 +54,7 @@ CIS Benchmarks are secure configuration recommendations developed through securi
 
 > **Note:** The CIS Benchmark consists of Level 1 (minimum baseline) and Level 2 (stricter). "100%" means applying all Level 1 + Level 2 + sub-control items. In practice, choose the Level that fits—Level 1 for baseline, Level 2 for high-security—then document what is applied and what is deliberately skipped. Do not apply everything at once without priority, evaluate per control, test in the lab, then roll out gradually.
 
-## 3. Operating System
+##  Operating System
 
 | Aspect | What to do | Why it matters |
 |---|---|---|
@@ -72,7 +72,7 @@ CIS Benchmarks are secure configuration recommendations developed through securi
 > - **Kernel & service hardening:** sysctl parameters, SELinux/AppArmor, minimize services, disable unused modules.
 > Why it matters: each aspect reduces attack surface and prevents data leaks or DoS.
 
-## 4. Services, Files, and Secrets
+##  Services, Files, and Secrets
 
 | Aspect | What to do | Why |
 |---|---|---|
@@ -93,7 +93,7 @@ CIS Benchmarks are secure configuration recommendations developed through securi
 4. **Audit** — check access logs to see whether the secret was abused.
 5. **Prevention** — add secret scanning (gitleaks, trufflehog) in CI/CD and pre-commit hooks.
 
-## 5. Web Server Hardening
+##  Web Server Hardening
 
 | Web server | Key settings | Goal |
 |---|---|---|
@@ -126,7 +126,7 @@ Security headers you should have:
 - Restrict admin endpoints to specific IPs.
 - Enable access and error logging.
 
-## 6. TLS / HTTPS
+##  TLS / HTTPS
 
 | Aspect | Recommendation | Why |
 |---|---|---|
@@ -146,7 +146,7 @@ Security headers you should have:
 - Use `ssl_protocols TLSv1.2 TLSv1.3;` in Nginx.
 - Store private keys with strict permissions (600) and never commit to Git.
 
-## 7. WAF: Web Application Firewall
+##  WAF: Web Application Firewall
 
 | Component | Purpose | Notes |
 |---|---|---|
@@ -169,7 +169,7 @@ Security headers you should have:
 
 > **Warning:** Do not enable WAF blocking mode directly in production. WAF rules (especially OWASP CRS) often false-positive on legitimate traffic (form uploads, APIs, complex queries); if blocking is enabled immediately, legitimate users may be blocked and the service can go down. Start in `DetectionOnly`, analyze logs to identify false positives, tune rules, then enable blocking gradually.
 
-## 8. Database Hardening
+##  Database Hardening
 
 | Aspect | What to do | Why |
 |---|---|---|
@@ -192,7 +192,7 @@ Security headers you should have:
 - Cap max connections (connection pool) to prevent DoS.
 - Disable unused DB features (xp_cmdshell, LOAD DATA LOCAL, etc.).
 
-## 9. Runtime Hardening
+##  Runtime Hardening
 
 | Runtime | Key settings | Goal |
 |---|---|---|
@@ -202,7 +202,7 @@ Security headers you should have:
 | Java | Set JVM memory limits, run as regular user | Prevents memory exhaustion |
 | .NET | Run Kestrel as non-root, use a reverse proxy in front | Process isolation and access control |
 
-## 10. Logging and Monitoring
+##  Logging and Monitoring
 
 | Component | Purpose | Why |
 |---|---|---|
@@ -212,7 +212,7 @@ Security headers you should have:
 | Fail2ban | Blocks IPs after repeated failed logins | Protects SSH and login services |
 | Baseline | Record normal state: ports, users, services, logs | Without a baseline, anomalies are hard to spot |
 
-## 11. Backup and Recovery
+##  Backup and Recovery
 
 | Aspect | What to do | Why |
 |---|---|---|
@@ -224,7 +224,7 @@ Security headers you should have:
 
 > **Important:** Backups stored on the same server are still at risk. Keep at least one copy offsite.
 
-## 12. Incident Response
+##  Incident Response
 
 | Phase | What to do |
 |---|---|
@@ -236,7 +236,7 @@ Security headers you should have:
 
 Incident response does not have to be complex for a lab. What matters is knowing: **what you see, what you do, and how to recover the server.**
 
-## 13. Hardening Verification
+##  Hardening Verification
 
 Checklist after hardening:
 
@@ -253,7 +253,7 @@ Checklist after hardening:
 - [ ] Backup restore tested at least once
 - [ ] No secrets in repository or world-readable files
 
-## 14. Common Mistakes
+##  Common Mistakes
 
 1. **Opening database port to the public** — easiest target.
 2. **SSH root login enabled** — brute force target.
@@ -264,7 +264,7 @@ Checklist after hardening:
 7. **Secrets in Git** — credentials leak with the repository.
 8. **Backups never tested** — when needed, they can't be restored.
 
-## 15. End-to-End: From OS to Database and Runtime
+##  End-to-End: From OS to Database and Runtime
 
 This section completes hardening so it does not stop at the web server but covers the entire stack.
 
@@ -360,19 +360,19 @@ Use `pam_pwquality` for password policy. Enable `faillock` for lockout after rep
 
 Encrypt backups (GPG or LUKS). Keep at least one copy offsite. Test restores regularly. Document RTO and RPO.
 
-## 16. Network, Logging, Monitoring, Backup, and Incident Response (Deep Dive)
+##  Network, Logging, Monitoring, Backup, and Incident Response (Deep Dive)
 
-### 16.1 Single-tier security boundary
+### Single-tier security boundary
 
 Single-tier means multiple components share one OS. Logical process separation is not the same as security isolation. If runtime is compromised, attackers may steal DB credentials, plant persistence, or exfiltrate data. Hardening must cover prevention, containment, detection, and recovery.
 
-### 16.2 Network hardening
+### Network hardening
 
 Three paths: **Ingress** (external connections — SSH, HTTP/HTTPS: restrict sources, open only needed ports), **East-west** (component-to-component via loopback/Unix socket: restrict inter-process access), **Egress** (outbound DNS, NTP, updates, backups, APIs: default-deny + allowlist).
 
 UFW helps with ingress but does not auto-limit egress or isolate processes. To reduce lateral movement: separate service accounts per component, dedicated DB app user, AppArmor/SELinux, container network policies, or separate VMs if impact is high.
 
-### 16.3 Logging and monitoring
+### Logging and monitoring
 
 Logging = recording events. Monitoring = checking for anomalies. Alerting = notifying when action needed.
 
@@ -380,7 +380,7 @@ End-to-end map: (1) entry points (SSH, HTTP/HTTPS, firewall, WAF, TLS, app auth)
 
 Per-layer monitoring: firewall (connections, ports, destinations), SSH/OS accounts (logins, new users), web server/WAF (URLs, status, rules), runtime (errors, restarts, child processes), database (logins, privileges, sensitive queries), file integrity (hash, permissions, owner), OS (sudo, audit events, cron, kernel), resources (CPU/RAM/disk/latency), backups (job status, size, retention).
 
-### 16.4 auditd
+### auditd
 
 Records events per audit rules. Key objects: sshd_config, sudoers, passwd/group/shadow, systemd units, cron, authorized_keys, web server/WAF/DB configs, web root, firewall config, critical binaries.
 
@@ -390,14 +390,14 @@ Limits: wrong rules miss activity, too many rules cause disk pressure/noise, leg
 
 Distinguish: auditd (activity per rules), journald (OS/app messages), FIM (change vs baseline), network monitoring (connections), SIEM (correlation & alerts).
 
-### 16.5 journald, logrotate, Fail2ban, baseline
+### journald, logrotate, Fail2ban, baseline
 
 - **journald**: collects OS/app messages, persistence depends on config/retention. Monitor SSH, failed services, kernel, resource failures. Forward critical logs to separate system.
 - **logrotate**: manages log lifecycle (rotation, compression, retention). Ensure rotation doesn't stop log writing, retention long enough for investigation.
 - **Fail2ban**: reads logs, blocks sources after patterns (repeated failed logins). Helps simple brute force, does not prevent web exploits, credential theft, exfiltration. Can false-positive.
 - **Baseline**: record of normal state (ports, users, services, processes, file hashes, firewall rules, login/request/egress patterns, versions). Update via legitimate changes (deployments/patches).
 
-### 16.6 Effective monitoring
+### Effective monitoring
 
 Set normal conditions then alert. Example signals: SSH admin login from unknown source (high), new OS user/admin group outside change window (high), config file changed without deployment (high), new process not matching app behavior (high), runtime opening connections to new destinations (high if confirmed), DB privilege change or large data export (high), firewall rule change without approval (high), WAF request spike resembling exploitation (needs correlation), CPU/RAM/disk/latency spike (needs triage), backup job failure/unavailable copy (high).
 
@@ -407,7 +407,7 @@ Local logs alone insufficient: root attackers can delete local logs. Forward cri
 
 Assign alert owners: admin (service health/config), developer (deployment/errors), security analyst (correlation/containment), backup owner (availability/restore), service owner (business impact).
 
-### 16.7 Backup and recovery
+### Backup and recovery
 
 Objects to consider: database (data+schema+roles+metadata), app files (known-clean release version), user uploads, OS/service configs, secrets/certificates (with appropriate access/encryption), encryption keys (separate from backups), logs/evidence, recovery documentation (versions, dependencies, restore order).
 
@@ -419,7 +419,7 @@ RPO (recovery point objective) = acceptable data loss (time window). RTO (recove
 
 Recovery difficulties: DB and uploads from different times, latest backup may contain corrupted/malicious data, leaked secrets need rotation not just restore, old configs may reintroduce vulnerabilities, encrypted backups useless if keys lost, app may fail on restore, persistence may be restored. Therefore restore test in isolated environment: verify DB, app login, business functions, permissions, services, TLS, firewall, monitoring before returning to service.
 
-### 16.8 Incident response
+### Incident response
 
 Rapid response (first minutes): validate alert (system, time, account, process, indicator), assess impact (service, sensitive data, admin accounts, egress), containment (limit attack paths via network controls/isolation), protect evidence (save logs, timestamps, alerts, metadata, record every action), protect access (plan session revocation, secret rotation, key replacement via trusted systems), determine escalation (root compromise, data theft, ransomware → serious incident).
 
@@ -431,7 +431,7 @@ Containment is not just IP blocking: if attacker uses legitimate accounts/sessio
 
 Recovery & verification before declaring done: entry point closed/mitigated, images/packages/app files from trusted sources, data restored from verified backup, leaked credentials/sessions handled, users/keys/services/scheduler/firewall match approved baseline, logging/audit/FIM/monitoring active, egress & DB access per policy, app passes functional & security tests, documentation of chronology/impact/actions/follow-ups.
 
-### 16.9 Correlation matrix (example incident)
+### Correlation matrix (example incident)
 
 Runtime suspected of running unexpected process after web request:
 1. Initial indication: WAF & access logs → abnormal request, endpoint, time, status.
@@ -443,7 +443,7 @@ Runtime suspected of running unexpected process after web request:
 7. Recovery: backups, baseline, trusted image → can system & data be safely restored?
 8. Evaluation: all evidence → entry path, impact scope, failed controls.
 
-### 16.10 Difficulties and limitations
+### Difficulties and limitations
 
 | Control | Main difficulty | Risk if applied without evaluation |
 |---|---|---|
@@ -457,7 +457,7 @@ Runtime suspected of running unexpected process after web request:
 | Incident response | Balancing containment, evidence preservation, service continuity | Evidence lost or compromise continues |
 | Server rebuild | Ensuring clean image, dependencies available, data consistency | Attacker/vulnerable config re-enters |
 
-### 16.11 Sensible implementation order
+### Sensible implementation order
 
 1. Establish baseline & inventory (ports, services, users, config, dependencies, data paths, external services).
 2. Secure ingress & local access (limit SSH, close unneeded ports, restrict runtime privileges, protect DB access).
@@ -469,7 +469,7 @@ Runtime suspected of running unexpected process after web request:
 8. Practice incident response (simulate suspicious logins, file changes, unexpected egress, backup restore in lab).
 9. Verify & review (test controls after changes, document exceptions, re-evaluate baseline).
 
-### 16.12 References
+### References
 
 - [Ubuntu Server — Firewall](https://ubuntu.com/server/docs/firewalls/) — host firewall behavior and management with UFW.
 - [Linux Audit System — auditd](https://www.linux.org/docs/man5/auditd.html) — audit daemon role and audit record processing.

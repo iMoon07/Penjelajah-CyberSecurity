@@ -20,13 +20,13 @@ Tujuannya adalah memahami:
 - Bagaimana gangguan digital mengganggu tumpuan
 - Cara menggunakan LLM dengan batasan yang jelas
 
-## 1. Pembelajaran Digital Bukan Automatik Produktif
+##  Pembelajaran Digital Bukan Automatik Produktif
 
 Pembelajaran digital boleh mempercepatkan akses kepada maklumat, tetapi kelajuan input bukan sama dengan pemahaman. Apabila maklumat mudah diperoleh, risikonya bukan kekurangan maklumat, tetapi **kelebihan maklumat** dan **kekeliruan**.
 
 Digital burnout sering muncul daripada information overload dan tuntutan kognitif yang berterusan. Kajian terhadap 566 pelajar mendapati bahawa pendedahan maklumat AI berkorelasi positif dengan digital burnout; keletihan emosi dan kognitif muncul apabila maklumat terlalu banyak dan tuntutan kognitif berterusan. [Frontiers in Psychology](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1897395/pdf)
 
-## 2. Rabbit Hole dan Burnout
+##  Rabbit Hole dan Burnout
 
 Rabbit hole biasanya berlaku kerana satu soalan membuka soalan lain:
 
@@ -34,7 +34,7 @@ Rabbit hole biasanya berlaku kerana satu soalan membuka soalan lain:
 
 Ini boleh berguna untuk penyiasatan, tetapi merosakkan tanpa **stopping rule**. Belajar bukan mengejar kepastian 100% sebelum bermula; belajar ialah membuat keputusan terbaik dengan bukti yang mencukupi, kemudian menguji dan memperbaikinya.
 
-## 3. Apabila Penambahbaikan Menjadi Pengulangan
+##  Apabila Penambahbaikan Menjadi Pengulangan
 
 Rabbit hole tidak semestinya bermula dari mencari maklumat baru. Kadang-kadang, ia muncul dari keinginan memperbaiki sesuatu yang sebenarnya sudah cukup baik.
 
@@ -61,7 +61,7 @@ Jika tiada kekurangan yang jelas, tidak semua kemungkinan penambahbaikan perlu d
 
 **Tujuannya bukan berhenti memperbaiki, tetapi berhenti apabila manfaat perubahan tidak lagi sepadan dengan kosnya.**
 
-## 4. Apabila Ragu Berubah Menjadi Rabbit Hole
+##  Apabila Ragu Berubah Menjadi Rabbit Hole
 
 Kajian Microsoft Research dan Carnegie Mellon University terhadap 319 knowledge worker dan 936 contoh penggunaan AI mendapati bahawa semakin tinggi kepercayaan seseorang terhadap GenAI, semakin rendah usaha critical thinking yang dilaporkan. Sebaliknya, orang yang lebih percaya pada kemampuan dirinya cenderung lebih kritis memeriksa output AI. [Microsoft Research](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
 
@@ -77,7 +77,7 @@ Terdapat tiga pemicu umum:
 
 Apabila pengesahan tidak lagi membantu pengambilan keputusan, proses itu justru boleh menambah keraguan. Kita boleh terus mempertanyakan maklumat yang sebenarnya sudah disokong bukti, manakala jawapan yang salah lolos kerana terdengar masuk akal atau sesuai dengan andaian awal.
 
-## 5. Cara Menyikapinya
+##  Cara Menyikapinya
 
 Gunakan prinsip mudah: **satu tujuan, satu sumber utama, satu batas pengesahan.**
 
@@ -91,7 +91,7 @@ Gunakan prinsip mudah: **satu tujuan, satu sumber utama, satu batas pengesahan.*
 
 Mula dengan satu tujuan belajar, pilih satu sumber utama yang dipercayai, kemudian tentukan batas pengesahan mengikut tahap risiko dakwaan. Tambah sumber independen jika dakwaan penting, kontroversi, atau belum jelas.
 
-## 6. Batasan Data
+##  Batasan Data
 
 Dakwaan mesti sekuat kaedah datanya:
 
@@ -105,7 +105,7 @@ Dakwaan mesti sekuat kaedah datanya:
 - Kajian Frontiers bersifat cross-sectional, bukan bukti kausal.
 - Salah satu eksperimen yang ditinjau melaporkan skor post-test 15–30% lebih rendah pada keadaan gangguan tertentu berbanding kawalan.
 
-## 7. Kesimpulan
+##  Kesimpulan
 
 Ragu dan pengesahan itu sihat; yang tidak sihat ialah pengesahan tanpa batas dan belajar tanpa tujuan. AI mesti diberi konteks dan arah, manakala anda mesti ada sistem untuk menentukan bila berhenti mencari dan mula berpraktik.
 

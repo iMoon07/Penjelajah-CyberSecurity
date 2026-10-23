@@ -17,7 +17,7 @@ Layunin:
 - Paano nakikilala at pinaprioridad ang technical debt
 - Kung tunay bang nakakatipid ang AI o iniilipat lamang nito
 
-## 1. Pinabilis ng AI ang Paglikha ng Code
+##  Pinabilis ng AI ang Paglikha ng Code
 
 Maaaring gawin ng AI (tulad ng Copilot, ChatGPT, Claude):
 
@@ -28,7 +28,7 @@ Maaaring gawin ng AI (tulad ng Copilot, ChatGPT, Claude):
 
 Resulta: **bumaba nang malaki ang creation cost**. Ang code na dati ay tumatagal ng oras, ngayon ay tumatagal ng minuto.
 
-## 2. Pagsulat ng Code ≠ Pagpapanatili ng Code
+##  Pagsulat ng Code ≠ Pagpapanatili ng Code
 
 Ngunit may malaking pagkakaiba:
 
@@ -42,7 +42,7 @@ Ang code na tumatakbo ay hindi nangangahulugang:
 - Madaling masuri
 - Ligtas
 
-## 3. Mga Gastos na Madalas Nakatago
+##  Mga Gastos na Madalas Nakatago
 
 ### Gastos sa pag-unawa (Understanding cost)
 
@@ -67,7 +67,7 @@ Ang code na tumatakbo ay hindi nangangahulugang:
 - Gaano kahirap baguhin ang code nang hindi sinisira ang ibang bahagi?
 - May mga hindi kinakailangang abstraksyon ba?
 
-## 4. Technical Debt at AI
+##  Technical Debt at AI
 
 Hindi awtomatikong lumilitaw ang technical debt dahil gawa ng AI ang code. Maaaring manggaling ang technical debt sa:
 
@@ -83,7 +83,7 @@ Gayunpaman, maaaring **pabilisin ng AI ang pag-accumulate ng utang** kung:
 - Dinadagdag ang hindi kinakailangang abstraksyon
 - Ipinakikilala ang hindi kinakailangang dependency
 
-## 5. Pamamahala ng Technical Debt
+##  Pamamahala ng Technical Debt
 
 Mga estratehiya para pamahalaan ang technical debt:
 
@@ -93,7 +93,7 @@ Mga estratehiya para pamahalaan ang technical debt:
 4. **Refactoring** — ayusin ang code na hindi malinaw o hindi episyente.
 5. **Beripikasyon** — huwag basta-basta magtiwala sa output ng AI.
 
-## 6. Konklusyon
+##  Konklusyon
 
 Pinabilis ng AI ang paglikha ng code, ngunit hindi awtomatikong nabawasan ang gastos sa pag-unawa at pagpapanatili. LLM (tulad ng GPT-4, Claude, Gemini) at mga AI tool (Copilot, Cursor, atbp.) ay hindi lamang generator ng code; sila ay bahagi ng sistema ng pag-unlad na nangangailangan ng konteksto, direksyon, at pangangasiwa.
 

@@ -20,13 +20,13 @@ The goal is to understand:
 - How digital distraction disrupts focus
 - How to use LLMs with clear boundaries
 
-## 1. Digital Learning Is Not Automatically Productive
+##  Digital Learning Is Not Automatically Productive
 
 Digital learning can accelerate access to information, but input speed is not the same as understanding. When information is easy to obtain, the risk is not lack of information, but **information overload** and **confusion**.
 
 Digital burnout often arises from information overload and continuous cognitive demands. A study of 566 students found that AI information exposure correlates positively with digital burnout; emotional and cognitive fatigue emerge when information is excessive and cognitive demands persist. [Frontiers in Psychology](https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2026.1897395/pdf)
 
-## 2. Rabbit Holes and Burnout
+##  Rabbit Holes and Burnout
 
 Rabbit holes usually happen because one question opens another:
 
@@ -34,7 +34,7 @@ Rabbit holes usually happen because one question opens another:
 
 This can be useful for investigation, but harmful without a **stopping rule**. Learning is not chasing 100% certainty before starting; learning is making the best decision with sufficient evidence, then testing and improving it.
 
-## 3. When Improvement Becomes Rework
+##  When Improvement Becomes Rework
 
 Rabbit holes do not always start from seeking new information. Sometimes they appear as the desire to fix something that is already good enough.
 
@@ -61,7 +61,7 @@ If there is no clear shortcoming, not all possible improvements need to be pursu
 
 **The goal is not to stop improving, but to stop when the benefit of change no longer matches its cost.**
 
-## 4. When Doubt Becomes a Rabbit Hole
+##  When Doubt Becomes a Rabbit Hole
 
 Research by Microsoft Research and Carnegie Mellon University of 319 knowledge workers and 936 AI usage examples found that higher trust in GenAI correlates with lower reported critical thinking effort. Conversely, those who trust their own abilities tend to be more critical in checking AI output. [Microsoft Research](https://www.microsoft.com/en-us/research/wp-content/uploads/2025/01/lee_2025_ai_critical_thinking_survey.pdf)
 
@@ -77,7 +77,7 @@ Three common triggers:
 
 When verification no longer helps decision-making, the process can instead add doubt. We can keep questioning information that is already supported by evidence, while wrong answers pass because they sound plausible or match initial assumptions.
 
-## 5. How to Handle It
+##  How to Handle It
 
 Use a simple principle: **one goal, one primary source, one verification boundary.**
 
@@ -91,7 +91,7 @@ Use a simple principle: **one goal, one primary source, one verification boundar
 
 Start with one learning goal, choose one trusted primary source, then set a verification boundary according to the risk level of the claim. Add independent sources if the claim is important, controversial, or unclear.
 
-## 6. Data Limitations
+##  Data Limitations
 
 Claims must be as strong as their data methods:
 
@@ -105,7 +105,7 @@ Claims must be as strong as their data methods:
 - The Frontiers study is cross-sectional, not causal.
 - One reviewed experiment reported post-test scores 15–30% lower under certain distraction conditions compared to control.
 
-## 7. Conclusion
+##  Conclusion
 
 Doubt and verification are healthy; what is unhealthy is verification without limits and learning without purpose. AI must be given context and direction, while you must have a system to determine when to stop searching and start practicing.
 

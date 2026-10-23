@@ -16,7 +16,7 @@ Tujuannya adalah memahami:
 - Hal keamanan yang perlu dipikirkan
 - Cara memakainya untuk latihan
 
-## 1. Deployment: Bare Metal, VM, Container
+##  Deployment: Bare Metal, VM, Container
 
 | Metode | Fungsinya | Kelebihan | Kekurangan | Kapan dipakai |
 |---|---|---|---|---|
@@ -26,7 +26,7 @@ Tujuannya adalah memahami:
 
 > **Catatan:** Untuk single-tier, VM atau container bisa menampung seluruh stack: web server, runtime, dan database. Karena semuanya ada di satu mesin atau host, ini menjadi **Single Point of Failure (SPOF)**. Kalau mesin itu mati, website, aplikasi, dan database juga ikut mati.
 
-## 2. Sistem Operasi
+##  Sistem Operasi
 
 | OS | Package manager | Kelebihan | Kekurangan | Kapan dipakai |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ Tujuannya adalah memahami:
 | **FreeBSD** | pkg / Ports | Punya Jails, firewall `pf` bawaan, dan dokumentasi bagus di Handbook. Stabil untuk service. Bukan Linux. | Banyak panduan web app menganggap sistemnya Linux. Beberapa PHP module atau package harus dibangun lewat Ports, jadi bisa lebih lama. Ekosistem beberapa tools lebih kecil. | Bagus untuk menjelajahi single-tier berbasis BSD. Butuh usaha lebih untuk mengikuti panduan Linux. |
 | **OpenBSD** | pkg_add / Ports | Sangat fokus pada keamanan. Aman secara default dan memakai tools seperti privsep, pledge, dan unveil. Sangat minimal. | Paket yang tersedia lebih sedikit. Banyak web app butuh langkah konfigurasi berbeda. Komunitas web stack jauh lebih kecil daripada Linux. | Bagus untuk belajar hardening keamanan dan sistem minimal. Bukan pilihan paling praktis untuk web app biasa. |
 
-## 3. Web Server
+##  Web Server
 
 | Web server | Tipe | Kelebihan | Kekurangan | Kapan dipakai |
 |---|---|---|---|---|
@@ -51,7 +51,7 @@ Tujuannya adalah memahami:
 | **[Caddy](https://caddyserver.com/)** | Event-driven dengan reverse proxy bawaan | Konfigurasi sangat sederhana. Bisa mendapatkan sertifikat HTTPS otomatis dengan ACME. Sintaksnya mudah. Reverse proxy mudah disetel. | Module lebih sedikit daripada Apache atau Nginx. Beberapa kebutuhan khusus butuh plugin. TLS bergantung pada ACME dan DNS. | Bagus untuk lab cepat dengan HTTPS otomatis. Kamu tetap perlu memahami pengaturan dan batasannya. |
 | **[IIS](https://www.iis.net/)** | Terintegrasi dengan Windows | Bekerja natural dengan Windows. Punya tools administrasi grafis. Cocok dengan .NET dan ASP.NET. | Hanya jalan di Windows. Memakai resource lebih besar. Kurang fleksibel untuk stack non-.NET. Kurang umum dengan tools open-source Linux. | Pakai hanya jika stack-mu memang berbasis Windows atau .NET. |
 
-## 4. Server-Side Runtime
+##  Server-Side Runtime
 
 | Runtime | Fungsinya | Kelebihan | Kekurangan | Kapan dipakai |
 |---|---|---|---|---|
@@ -61,7 +61,7 @@ Tujuannya adalah memahami:
 | **[Java](https://openjdk.org/)** dengan Tomcat, Jetty, atau Undertow | JVM runtime | Stabil dan kuat untuk aplikasi kompleks. Garbage collection bisa disetel. | Memakai memory lebih besar, terutama di server kecil. Start lebih lambat. Pengaturan JVM perlu diperhatikan. | Bagus untuk aplikasi Java atau Jakarta EE. Kurang efisien untuk VM kecil atau resource kecil. |
 | **[.NET](https://dotnet.microsoft.com/)** dengan Kestrel dan reverse proxy | .NET runtime | Performa bagus. Bisa jalan di Linux dan Windows. Integrasi modern. | Versi .NET runtime harus cocok dengan aplikasi. Di Linux, biasanya Nginx atau Apache diletakkan di depan Kestrel. Penggunaan resource perlu diperhatikan. | Bagus jika aplikasimu dibuat dengan .NET. Tetap bisa dipakai untuk single-tier Linux. |
 
-## 5. Database dan Cache untuk Single-Tier
+##  Database dan Cache untuk Single-Tier
 
 | Komponen | Tipe | Kelebihan | Kekurangan | Kapan dipakai |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ Tujuannya adalah memahami:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Database relasional SQL | Kuat dan cocok dengan .NET. Edisi Express gratis, tetapi ada batasan. | Express punya batasan RAM dan ukuran database, tergantung versinya. Paling cocok untuk Windows. Di Linux, MariaDB dan PostgreSQL lebih umum di lab. | Pakai hanya untuk stack single-tier berbasis .NET. |
 | **[Redis](https://redis.io/)** | Key-value store di memory | Sangat cepat untuk cache dan session. Ringan dan mudah dipakai. Bisa mengurangi beban database. | Data ada di RAM, jadi butuh persistence jika ingin disimpan. Bukan pengganti database relasional. Kamu harus menyetel `maxmemory` dan eviction policy. Periksa lisensi versi yang kamu pakai. | Opsional. Sangat berguna untuk aplikasi dengan banyak pembacaan, cache, atau session. Tidak wajib. |
 
-## 6. Open Source untuk Production: Keunggulan, Risiko, dan Tanggung Jawab
+##  Open Source untuk Production: Keunggulan, Risiko, dan Tanggung Jawab
 
 **Keunggulan utama:**
 1. **Transparansi/audit** — bisa periksa implementasi autentikasi, permission, enkripsi, secret handling; memudahkan security review & compliance.
@@ -135,7 +135,7 @@ Pada single-tier, seluruh komponen berada di satu mesin. Kompromi terhadap satu 
 
 Tujuannya bukan memilih open source karena dianggap selalu lebih baik, melainkan memilih software berdasarkan kebutuhan, risiko, kemampuan operasional, dan tingkat kendali yang diperlukan.
 
-## 7. Akses Online: Domain, DNS, Tunnel, Kelebihan dan Kekurangan
+##  Akses Online: Domain, DNS, Tunnel, Kelebihan dan Kekurangan
 
 | Metode akses | Yang dibutuhkan | Kelebihan | Kekurangan dan risiko | Kapan dipakai |
 |---|---|---|---|---|
@@ -154,7 +154,7 @@ Tujuannya bukan memilih open source karena dianggap selalu lebih baik, melainkan
 - **Ketergantungan:** Home lab + Tunnel bergantung pada listrik, ISP, server, dan Cloudflare. VPS + Tunnel atau Proxy bergantung pada VPS, provider, dan Cloudflare. Semakin banyak service perantara, semakin banyak titik kegagalan.  
 - **Untuk latihan,** lebih penting memahami trade-off ini daripada hanya membuat aplikasi bisa diakses.
 
-## 8. Operasional & Pemeliharaan (Single-Tier)
+##  Operasional & Pemeliharaan (Single-Tier)
 
 | Aspek | Yang dilakukan | Kenapa |
 |---|---|---|

@@ -16,7 +16,7 @@ Ang layunin ay maunawaan:
 - Mga bagay sa seguridad na kailangang isaalang-alang
 - Kung paano ito gagamitin para sa pagsasanay
 
-## 1. Deployment: Bare Metal, VM, Container
+##  Deployment: Bare Metal, VM, Container
 
 | Paraan | Ano ang ginagawa nito | Mga bentahe | Mga disbentahe | Kailan gagamitin |
 |---|---|---|---|---|
@@ -26,7 +26,7 @@ Ang layunin ay maunawaan:
 
 > **Note:** Para sa single-tier, maaaring ilagay ng VM o container ang buong stack: web server, runtime, at database. Dahil nasa iisang machine o host ang lahat, ito ay **Single Point of Failure (SPOF)**. Kapag namatay ang machine na iyon, mamamatay din ang website, application, at database.
 
-## 2. Operating System
+##  Operating System
 
 | OS | Package manager | Mga bentahe | Mga disbentahe | Kailan gagamitin |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ Ang layunin ay maunawaan:
 | **FreeBSD** | pkg / Ports | May Jails, built-in `pf` firewall, at magandang documentation sa Handbook. Stable para sa services. Hindi ito Linux. | Maraming web-app guides ang nag-aassume na Linux ang system. Kailangang i-build sa Ports ang ilang PHP modules o packages, kaya mas matagal. Mas maliit ang ecosystem ng ilang tools. | Maganda para sa pag-explore ng BSD-based single-tier setup. Mas maraming effort ang kailangan para sundan ang Linux guides. |
 | **OpenBSD** | pkg_add / Ports | Napakafocus sa security. Secure by default at gumagamit ng tools tulad ng privsep, pledge, at unveil. Napakaminimal. | Mas kaunti ang available packages. Kailangan ng ibang configuration steps ang maraming web apps. Mas maliit ang web-stack community kumpara sa Linux. | Maganda para sa pag-aaral ng security hardening at minimal systems. Hindi ang pinakapraktikal na choice para sa ordinary web apps. |
 
-## 3. Web Server
+##  Web Server
 
 | Web server | Type | Mga bentahe | Mga disbentahe | Kailan gagamitin |
 |---|---|---|---|---|
@@ -51,7 +51,7 @@ Ang layunin ay maunawaan:
 | **[Caddy](https://caddyserver.com/)** | Event-driven na may built-in reverse proxy | Napakasimple ng configuration. Maaaring kumuha ng HTTPS certificates automatically gamit ang ACME. Madali ang syntax. Simple ang reverse proxy setup. | Mas kaunti ang modules kumpara sa Apache o Nginx. Kailangan ng plugins ang ilang special use cases. Nakadepende sa ACME at DNS ang TLS. | Maganda para sa mabilis na lab na may automatic HTTPS. Kailangan mo pa ring maunawaan ang settings at limitations nito. |
 | **[IIS](https://www.iis.net/)** | Integrated sa Windows | Natural na gumagana sa Windows. May graphical admin tool. Maganda ang integration sa .NET at ASP.NET. | Windows lang ang kayang patakbuhin. Mas malaki ang resource usage. Mas hindi flexible para sa non-.NET stacks. Hindi karaniwan sa Linux open-source tools. | Gamitin lang kung talagang Windows o .NET-based ang stack mo. |
 
-## 4. Server-Side Runtime
+##  Server-Side Runtime
 
 | Runtime | Ano ang ginagawa nito | Mga bentahe | Mga disbentahe | Kailan gagamitin |
 |---|---|---|---|---|
@@ -61,7 +61,7 @@ Ang layunin ay maunawaan:
 | **[Java](https://openjdk.org/)** gamit ang Tomcat, Jetty, o Undertow | JVM runtime | Stable at malakas para sa complex applications. Maaaring i-tune ang garbage collection. | Mas malaki ang memory usage, lalo na sa maliit na server. Mas mabagal ang startup. Kailangang pansinin ang JVM settings. | Maganda para sa Java o Jakarta EE applications. Hindi pinaka-efficient para sa maliit na VM o resources. |
 | **[.NET](https://dotnet.microsoft.com/)** gamit ang Kestrel at reverse proxy | .NET runtime | Magandang performance. Gumagana sa Linux at Windows. Modern integration. | Kailangang tugma ang .NET runtime version sa application. Sa Linux, karaniwang nilalagyan ng Nginx o Apache ang harap ng Kestrel. Kailangang pansinin ang resource usage. | Maganda kung .NET ang ginamit sa application. Pwede pa ring gamitin sa single-tier Linux setup. |
 
-## 5. Database at Cache para sa Single-Tier
+##  Database at Cache para sa Single-Tier
 
 | Komponent | Type | Mga bentahe | Mga disbentahe | Kailan gagamitin |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ Ang layunin ay maunawaan:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Relational SQL database | Malakas at tugma sa .NET. Libre ang Express edition, pero may limits. | May limits ang Express sa RAM at database size, depende sa version. Pinakaangkop sa Windows. Sa Linux, mas karaniwan ang MariaDB at PostgreSQL sa labs. | Gamitin lang para sa .NET single-tier stack. |
 | **[Redis](https://redis.io/)** | In-memory key-value store | Napakabilis para sa cache at sessions. Magaan at madaling gamitin. Maaaring bawasan ang database load. | Nasa RAM ang data, kaya kailangan ng persistence kung gusto mong i-save. Hindi replacement para sa relational database. Kailangang i-set ang `maxmemory` at eviction policy. Tingnan ang license ng version na ginamit. | Optional. Napak useful para sa applications na maraming reads, caching, o sessions. Hindi required. |
 
-## 6. Open Source para sa Production: Mga Bentahe, Risiko, at Responsibilidad
+##  Open Source para sa Production: Mga Bentahe, Risiko, at Responsibilidad
 
 **Pangunahing bentahe:**
 1. **Transparency/audit** — maaaring suriin ang implementasyon ng auth, permission, encryption, secret handling; nagpapadali ng security review & compliance.
@@ -135,7 +135,7 @@ Sa single-tier, lahat ng komponente ay nasa isang makina. Ang kompromiso ng isan
 
 Ang layunin ay hindi ang pumili ng open source dahil laging mas mabuti, kundi pumili ng software batay sa pangangailangan, risk, operational capability, at kinakailangang antas ng kontrol.
 
-## 7. Online Access: Domain, DNS, Tunnel, Mga Bentahe at Disbentahe
+##  Online Access: Domain, DNS, Tunnel, Mga Bentahe at Disbentahe
 
 | Access method | Mga kailangan | Mga bentahe | Mga disbentahe at risks | Kailan gagamitin |
 |---|---|---|---|---|
@@ -154,7 +154,7 @@ Ang layunin ay hindi ang pumili ng open source dahil laging mas mabuti, kundi pu
 - **Dependencies:** Home lab + Tunnel ay nakadepende sa power, ISP, server, at Cloudflare. VPS + Tunnel o Proxy ay nakadepende sa VPS, provider, at Cloudflare. Mas maraming middle services, mas maraming possible failure points.  
 - **Para sa practice,** mas mahalagang maunawaan ang trade-offs na ito kaysa simply gawing reachable ang app.
 
-## 8. Operations & Maintenance (Single-Tier)
+##  Operations & Maintenance (Single-Tier)
 
 | Aspeto | Gagawin | Bakit |
 |---|---|---|

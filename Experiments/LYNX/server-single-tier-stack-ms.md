@@ -16,7 +16,7 @@ Tujuannya adalah memahami:
 - Perkara keselamatan yang perlu dipertimbangkan
 - Cara menggunakannya untuk latihan
 
-## 1. Deployment: Bare Metal, VM, Container
+##  Deployment: Bare Metal, VM, Container
 
 | Kaedah | Fungsinya | Kelebihan | Kekurangan | Bila digunakan |
 |---|---|---|---|---|
@@ -26,7 +26,7 @@ Tujuannya adalah memahami:
 
 > **Nota:** Untuk single-tier, VM atau container boleh menampung keseluruhan stack: web server, runtime, dan database. Kerana semuanya berada pada satu server atau host, ia menjadi **Single Point of Failure (SPOF)**. Jika server itu mati, website, aplikasi, dan database turut mati.
 
-## 2. Sistem Operasi
+##  Sistem Operasi
 
 | OS | Package manager | Kelebihan | Kekurangan | Bila digunakan |
 |---|---|---|---|---|
@@ -42,7 +42,7 @@ Tujuannya adalah memahami:
 | **FreeBSD** | pkg / Ports | Mempunyai Jails, firewall `pf` terbina dalam, dan dokumentasi yang baik dalam Handbook. Stabil untuk service. Bukan Linux. | Banyak panduan web app mengandaikan sistem ialah Linux. Beberapa PHP module atau package perlu dibina melalui Ports, jadi mungkin mengambil masa lebih lama. Ekosistem beberapa tools lebih kecil. | Bagus untuk meneroka single-tier berasaskan BSD. Memerlukan usaha lebih untuk mengikuti panduan Linux. |
 | **OpenBSD** | pkg_add / Ports | Sangat fokus kepada keselamatan. Selamat secara lalai dan menggunakan tools seperti privsep, pledge, dan unveil. Sangat minimum. | Package yang tersedia lebih sedikit. Banyak web app memerlukan langkah konfigurasi berbeza. Komuniti web stack jauh lebih kecil berbanding Linux. | Bagus untuk mempelajari hardening keselamatan dan sistem minimum. Bukan pilihan paling praktikal untuk web app biasa. |
 
-## 3. Web Server
+##  Web Server
 
 | Web server | Jenis | Kelebihan | Kekurangan | Bila digunakan |
 |---|---|---|---|---|
@@ -51,7 +51,7 @@ Tujuannya adalah memahami:
 | **[Caddy](https://caddyserver.com/)** | Event-driven dengan reverse proxy terbina dalam | Konfigurasi sangat ringkas. Boleh mendapatkan sertifikat HTTPS secara automatik dengan ACME. Sintaksnya mudah. Reverse proxy mudah disediakan. | Module lebih sedikit berbanding Apache atau Nginx. Beberapa keperluan khas memerlukan plugin. TLS bergantung pada ACME dan DNS. | Bagus untuk makmal pantas dengan HTTPS automatik. Anda masih perlu memahami tetapan dan hadnya. |
 | **[IIS](https://www.iis.net/)** | Terintegrasi dengan Windows | Berfungsi secara semula jadi dengan Windows. Mempunyai tools pentadbiran grafik. Serasi dengan .NET dan ASP.NET. | Hanya berjalan pada Windows. Menggunakan resource lebih besar. Kurang fleksibel untuk stack bukan .NET. Kurang umum dengan tools open-source Linux. | Gunakan hanya jika stack anda memang berasaskan Windows atau .NET. |
 
-## 4. Server-Side Runtime
+##  Server-Side Runtime
 
 | Runtime | Fungsinya | Kelebihan | Kekurangan | Bila digunakan |
 |---|---|---|---|---|
@@ -61,7 +61,7 @@ Tujuannya adalah memahami:
 | **[Java](https://openjdk.org/)** dengan Tomcat, Jetty, atau Undertow | JVM runtime | Stabil dan kukuh untuk aplikasi kompleks. Garbage collection boleh ditetapkan. | Menggunakan memory lebih besar, terutamanya pada server kecil. Permulaan lebih lambat. Tetapan JVM perlu diberi perhatian. | Bagus untuk aplikasi Java atau Jakarta EE. Kurang cekap untuk VM kecil atau resource kecil. |
 | **[.NET](https://dotnet.microsoft.com/)** dengan Kestrel dan reverse proxy | .NET runtime | Prestasi baik. Boleh berjalan pada Linux dan Windows. Integrasi moden. | Versi .NET runtime mesti sepadan dengan aplikasi. Di Linux, biasanya Nginx atau Apache diletakkan di hadapan Kestrel. Penggunaan resource perlu diberi perhatian. | Bagus jika aplikasi anda dibina dengan .NET. Masih boleh digunakan untuk single-tier Linux. |
 
-## 5. Database dan Cache untuk Single-Tier
+##  Database dan Cache untuk Single-Tier
 
 | Komponen | Jenis | Kelebihan | Kekurangan | Bila digunakan |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ Tujuannya adalah memahami:
 | **[SQL Server Express](https://www.microsoft.com/sql-server/sql-server-downloads)** | Database hubungan SQL | Kukuh dan serasi dengan .NET. Edisi Express percuma, tetapi ada had. | Express mempunyai had RAM dan saiz database, bergantung pada versi. Paling sesuai untuk Windows. Di Linux, MariaDB dan PostgreSQL lebih umum dalam makmal. | Gunakan hanya untuk stack single-tier berasaskan .NET. |
 | **[Redis](https://redis.io/)** | Key-value store dalam memory | Sangat pantas untuk cache dan session. Ringan dan mudah digunakan. Boleh mengurangkan beban database. | Data berada dalam RAM, jadi perlukan persistence jika mahu disimpan. Bukan pengganti database hubungan. Anda perlu menetapkan `maxmemory` dan eviction policy. Semak lesen versi yang digunakan. | Pilihan. Sangat berguna untuk aplikasi dengan banyak pembacaan, cache, atau session. Tidak wajib. |
 
-## 6. Open Source untuk Production: Kelebihan, Risiko, dan Tanggungjawab
+##  Open Source untuk Production: Kelebihan, Risiko, dan Tanggungjawab
 
 **Kelebihan utama:**
 1. **Transparansi/audit** — boleh periksa implementasi autentikasi, permission, enkripsi, pengurusan secret; memudahkan security review & compliance.
@@ -135,7 +135,7 @@ Pada single-tier, semua komponen berada pada satu mesin. Kompromi terhadap satu 
 
 Tujuannya bukan memilih open source kerana dianggap selalu lebih baik, tetapi memilih software berdasarkan keperluan, risiko, keupayaan operasi, dan tahap kawalan yang diperlukan.
 
-## 7. Akses Dalam Talian: Domain, DNS, Tunnel, Kelebihan dan Kekurangan
+##  Akses Dalam Talian: Domain, DNS, Tunnel, Kelebihan dan Kekurangan
 
 | Kaedah akses | Yang diperlukan | Kelebihan | Kekurangan dan risiko | Bila digunakan |
 |---|---|---|---|---|
@@ -154,7 +154,7 @@ Tujuannya bukan memilih open source kerana dianggap selalu lebih baik, tetapi me
 - **Kebergantungan:** Home lab + Tunnel bergantung pada elektrik, ISP, server, dan Cloudflare. VPS + Tunnel atau Proxy bergantung pada VPS, provider, dan Cloudflare. Semakin banyak service perantara, semakin banyak titik kegagalan.  
 - **Untuk latihan,** lebih penting memahami trade-off ini daripada hanya memastikan aplikasi boleh diakses.
 
-## 8. Operasi & Penyelenggaraan (Single-Tier)
+##  Operasi & Penyelenggaraan (Single-Tier)
 
 | Aspek | Yang perlu dilakukan | Sebab |
 |---|---|---|

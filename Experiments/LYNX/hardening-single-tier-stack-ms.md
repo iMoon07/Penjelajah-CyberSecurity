@@ -15,7 +15,7 @@ Tujuannya adalah memahami:
 - Pengesahan selepas hardening
 - Kesilapan umum yang perlu dielakkan
 
-## 1. Prinsip Asas Hardening
+##  Prinsip Asas Hardening
 
 Hardening bukan satu butang. Ia ialah proses berperingkat:
 
@@ -28,7 +28,7 @@ Hardening bukan satu butang. Ia ialah proses berperingkat:
 
 > **Warning:** Jangan lakukan hardening terus dalam production. Sentiasa uji dalam lab atau VM dahulu.
 
-## 2. Standard Hardening: CIS
+##  Standard Hardening: CIS
 
 Hardening tidak perlu diteka. Terdapat standard yang boleh digunakan sebagai rujukan:
 
@@ -52,7 +52,7 @@ CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konse
 
 > **Note:** CIS Benchmark terdiri daripada Level 1 (baseline minimum) dan Level 2 (lebih ketat). "100%" bermaksud menerapkan semua Level 1 + Level 2 + sub-control. Dalam praktik, pilih Level yang sesuai—Level 1 untuk baseline, Level 2 untuk high-security—kemudian dokumentasikan apa yang diterapkan dan apa yang sengaja dilewati. Jangan terapkan semua sekaligus tanpa prioriti, nilaikan setiap kontrol, uji di lab, baru terapkan secara berperingkat.
 
-## 3. Sistem Operasi
+##  Sistem Operasi
 
 | Aspek | Yang dilakukan | Mengapa penting |
 |---|---|---|
@@ -70,7 +70,7 @@ CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konse
 > - **Hardening kernel & service:** parameter sysctl, SELinux/AppArmor, minimasi service, nyahaktifkan module yang tidak digunakan.
 > Kenapa penting: setiap aspek mengurangkan attack surface dan mencegah kebocoran data atau DoS.
 
-## 4. Service, Fail, dan Secret
+##  Service, Fail, dan Secret
 
 | Aspek | Yang dilakukan | Mengapa |
 |---|---|---|
@@ -91,7 +91,7 @@ CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konse
 4. **Audit** — cek log akses untuk mengetahui apakah secret sudah disalahgunakan.
 5. **Pencegahan** — tambahkan secret scanning (gitleaks, trufflehog) di CI/CD dan pre-commit hook.
 
-## 5. Hardening Web Server
+##  Hardening Web Server
 
 | Web server | Tetapan penting | Matlamat |
 |---|---|---|
@@ -124,7 +124,7 @@ Security header yang sebaiknya ada:
 - Hadkan akses admin endpoint kepada IP tertentu.
 - Aktifkan logging akses dan ralat.
 
-## 6. TLS / HTTPS
+##  TLS / HTTPS
 
 | Aspek | Cadangan | Mengapa |
 |---|---|---|
@@ -144,7 +144,7 @@ Security header yang sebaiknya ada:
 - Gunakan `ssl_protocols TLSv1.2 TLSv1.3;` dalam Nginx.
 - Simpan private key dengan kebenaran ketat (600) dan jangan commit ke Git.
 
-## 7. WAF: Web Application Firewall
+##  WAF: Web Application Firewall
 
 | Komponen | Fungsinya | Nota |
 |---|---|---|
@@ -167,7 +167,7 @@ Security header yang sebaiknya ada:
 
 > **Warning:** Jangan terus aktifkan WAF mod blocking dalam production. Rule WAF (terutamanya OWASP CRS) sering false positive pada traffic yang sah (upload form, API, query kompleks); jika blocking diaktifkan serta-merta, user yang sah boleh disekat dan service boleh down. Mulakan dengan `DetectionOnly`, analisis log untuk kenal pasti false positive, tuning rule, kemudian aktifkan blocking secara berperingkat.
 
-## 8. Hardening Database
+##  Hardening Database
 
 | Aspek | Yang dilakukan | Mengapa |
 |---|---|---|
@@ -190,7 +190,7 @@ Security header yang sebaiknya ada:
 - Hadkan jumlah sambungan maksimum (connection pool) untuk cegah DoS.
 - Matikan ciri DB yang tidak digunakan (xp_cmdshell, LOAD DATA LOCAL, dll).
 
-## 9. Hardening Runtime
+##  Hardening Runtime
 
 | Runtime | Tetapan penting | Matlamat |
 |---|---|---|
@@ -200,7 +200,7 @@ Security header yang sebaiknya ada:
 | Java | Tetapkan had memory JVM, jalankan sebagai user biasa | Menghalang memory exhaustion |
 | .NET | Jalankan Kestrel sebagai user bukan root, gunakan reverse proxy di hadapannya | Pengasingan process dan kawalan akses |
 
-## 10. Logging dan Monitoring
+##  Logging dan Monitoring
 
 | Komponen | Fungsinya | Mengapa |
 |---|---|---|
@@ -210,7 +210,7 @@ Security header yang sebaiknya ada:
 | Fail2ban | Sekat IP selepas kegagalan log masuk berulang | Perlindungan SSH dan log masuk service |
 | Baseline | Rekod keadaan normal: port, user, service, log | Tanpa baseline, sukar mengetahui mana yang pelik |
 
-## 11. Backup dan Recovery
+##  Backup dan Recovery
 
 | Aspek | Yang dilakukan | Mengapa |
 |---|---|---|
@@ -222,7 +222,7 @@ Security header yang sebaiknya ada:
 
 > **Important:** Backup yang disimpan pada server yang sama masih berisiko. Simpan sekurang-kurangnya satu salinan di lokasi berasingan.
 
-## 12. Incident Response
+##  Incident Response
 
 | Peringkat | Yang dilakukan |
 |---|---|
@@ -234,7 +234,7 @@ Security header yang sebaiknya ada:
 
 Incident response tidak perlu kompleks untuk lab. Yang penting anda tahu: **apa yang dilihat, apa yang dilakukan, dan cara memulihkan server.**
 
-## 13. Pengesahan Hardening
+##  Pengesahan Hardening
 
 Senarai semak selepas hardening:
 
@@ -251,7 +251,7 @@ Senarai semak selepas hardening:
 - [ ] Restore backup pernah diuji
 - [ ] Tiada secret dalam repository atau fail world-readable
 
-## 14. Kesilapan Umum
+##  Kesilapan Umum
 
 1. **Buka port database kepada awam** — sasaran paling mudah.
 2. **Root login SSH aktif** — sasaran brute force.
@@ -262,7 +262,7 @@ Senarai semak selepas hardening:
 7. **Secret masuk Git** — credential bocor bersama repository.
 8. **Backup tidak pernah diuji** — apabila diperlukan, ternyata tidak dapat dipulihkan.
 
-## 15. End-to-End: Dari OS ke Database dan Runtime
+##  End-to-End: Dari OS ke Database dan Runtime
 
 Bahagian ini melengkapkan hardening supaya tidak berhenti di web server, tetapi merangkumi keseluruhan stack.
 
@@ -358,19 +358,19 @@ Gunakan `pam_pwquality` untuk kebijakan password. Aktifkan `faillock` untuk lock
 
 Enkripsi backup (GPG atau LUKS). Simpan minimum satu salinan offsite. Uji restore secara berkala. Dokumentasikan RTO dan RPO.
 
-## 16. Network, Logging, Monitoring, Backup, dan Incident Response (Mendalam)
+##  Network, Logging, Monitoring, Backup, dan Incident Response (Mendalam)
 
-### 16.1 Batas keselamatan single-tier
+### Batas keselamatan single-tier
 
 Single-tier bermaksud beberapa komponen berkongsi satu OS. Pemisahan proses secara logik tidak sama dengan pemisahan mesin secara keselamatan. Jika runtime dibobol, penyerang boleh mencuri credential DB, menanam persistence, atau mengeksfiltrasi data. Hardening mesti merangkumi pencegahan, containment, pengesanan, dan pemulihan.
 
-### 16.2 Network hardening
+### Network hardening
 
 Tiga jalur: **Ingress** (sambungan luar — SSH, HTTP/HTTPS: hadkan sumber, buka hanya port yang perlu), **East-west** (komunikasi antarkomponen melalui loopback/Unix socket: hadkan akses antara proses), **Egress** (sambungan keluar — DNS, NTP, update, backup, API: default-deny + allowlist).
 
 UFW membantu ingress tetapi tidak automatik mengehadkan egress atau mengasingkan proses. Untuk mengurangkan lateral movement: akaun service berasingan bagi setiap komponen, user DB khusus app, AppArmor/SELinux, policy jaringan container, atau VM berasingan jika impak tinggi.
 
-### 16.3 Logging dan monitoring
+### Logging dan monitoring
 
 Logging = pencatatan kejadian. Monitoring = pemeriksaan untuk menemukan anomali. Alerting = pemberitahuan apabila tindakan diperlukan.
 
@@ -378,7 +378,7 @@ Peta monitoring hujung-ke-hujung: (1) titik masuk (SSH, HTTP/HTTPS, firewall, WA
 
 Monitoring setiap layer: firewall (sambungan, port, destinasi), akaun SSH/OS (login, user baru), web server/WAF (URL, status, rule), runtime (error, restart, proses anak), database (login, privilege, query sensitif), integriti fail (hash, kebenaran, owner), OS (sudo, audit event, cron, kernel), sumber (CPU/RAM/disk/latency), backup (status job, saiz, retensi).
 
-### 16.4 auditd
+### auditd
 
 Merekod kejadian mengikut aturan audit. Objek penting: sshd_config, sudoers, passwd/group/shadow, unit systemd, cron, authorized_keys, config web server/WAF/DB, web root, config firewall, binari kritikal.
 
@@ -388,14 +388,14 @@ Had: aturan yang salah melepaskan aktiviti, terlalu banyak aturan membebani disk
 
 Bezakan: auditd (aktiviti mengikut aturan), journald (mesej OS/app), FIM (perubahan vs baseline), network monitoring (sambungan), SIEM (korelasi & alert).
 
-### 16.5 journald, logrotate, Fail2ban, baseline
+### journald, logrotate, Fail2ban, baseline
 
 - **journald**: kumpul mesej OS/app, persistensi bergantung config & retensi. Pantau SSH, service gagal, kernel, kegagalan sumber. Hantar log penting ke sistem berasingan.
 - **logrotate**: urus kitar hidup log (rotasi, mampatan, retensi). Pastikan rotasi tidak menghentikan penulisan log, retensi cukup untuk siasatan.
 - **Fail2ban**: baca log, sekat sumber selepas pola (login gagal berulang). Membantu brute force ringkas, tidak mencegah eksploitasi web, kecurian credential, eksfiltrasi. Boleh false positive.
 - **Baseline**: rekod keadaan normal (port, user, service, proses, hash fail, aturan firewall, corak login/request/egress, versi). Kemas kini melalui perubahan sah (deployment/patch).
 
-### 16.6 Monitoring yang berkesan
+### Monitoring yang berkesan
 
 Tetapkan keadaan normal kemudian alert. Contoh isyarat: login admin SSH dari sumber tidak dikenali (tinggi), user baru/grup admin di luar tetingkap perubahan (tinggi), fail config berubah tanpa deployment (tinggi), proses baru tidak sepadan dengan perilaku app (tinggi), runtime membuka sambungan ke destinasi baru (tinggi jika disahkan), perubahan privilege DB atau eksport data besar (tinggi), perubahan aturan firewall tanpa kelulusan (tinggi), lonjakan request WAF menyerupai eksploitasi (perlu korelasi), lonjakan CPU/RAM/disk/latency (perlu triase), job backup gagal/salinan tidak tersedia (tinggi).
 
@@ -405,7 +405,7 @@ Log lokal sahaja tidak cukup: penyerang root boleh memadam log lokal. Hantar log
 
 Tentukan pemilik alert: admin (kesihatan service/config), developer (deployment/error), security analyst (korelasi/containment), pemilik backup (ketersediaan/restore), pemilik perkhidmatan (impak perniagaan).
 
-### 16.7 Backup dan pemulihan
+### Backup dan pemulihan
 
 Objek yang perlu dipertimbangkan: database (data+skema+role+metadata), fail app (versi rilis yang diketahui bersih), upload pengguna, config OS/service, secret/sijil (dengan akses/enkripsi sesuai), kunci enkripsi (berasingan dari backup), log/bukti, dokumentasi pemulihan (versi, dependensi, urutan pemulihan).
 
@@ -417,7 +417,7 @@ RPO (recovery point objective) = kehilangan data yang boleh diterima (rentang ma
 
 Kesukaran pemulihan: DB dan upload dari masa berbeza, backup terbaru mungkin sudah mengandungi data rosak/fail berbahaya, secret yang bocor perlu rotasi bukan sekadar restore, config lama mungkin mengembalikan kelemahan, backup terenkripsi tidak berguna jika kunci hilang, app mungkin gagal semasa restore, persistence mungkin ikut kembali. Oleh itu ujian restore di persekitaran terasing: sahkan DB, login app, fungsi perniagaan, kebenaran, service, TLS, firewall, monitoring sebelum perkhidmatan kembali.
 
-### 16.8 Incident response
+### Incident response
 
 Respons pantas (minit pertama): sahkan alert (sistem, masa, akaun, proses, penunjuk), nilai impak (perkhidmatan, data sensitif, akaun admin, egress), containment (hadkan jalur serangan melalui kawalan jaringan/pengasingan), lindungi bukti (simpan log, timestamp, alert, metadata, catat setiap tindakan), lindungi akses (rancang pencabutan sesi, rotasi secret, penggantian key melalui sistem dipercayai), tentukan eskalasi (root compromise, kecurian data, ransomware → insiden serius).
 
@@ -429,7 +429,7 @@ Containment bukan sekadar blokir IP: jika penyerang menggunakan akaun/sesi yang 
 
 Pemulihan & pengesahan sebelum diisytiharkan selesai: jalur masuk ditutup/dimitigasi, image/paket/fail app dari sumber tepercaya, data dipulihkan dari backup yang disahkan, credential/sesi yang bocor ditangani, user/key/service/scheduler/firewall sepadan dengan baseline yang diluluskan, logging/audit/FIM/monitoring aktif, egress & akses DB mengikut polisi, app lulus ujian fungsi & keselamatan, dokumentasi kronologi/impak/tindakan/pekerjaan lanjutan.
 
-### 16.9 Matriks korelasi (contoh insiden)
+### Matriks korelasi (contoh insiden)
 
 Runtime disyaki menjalankan proses yang tidak semestinya selepas request web:
 1. Indikasi awal: WAF & access log → request tidak normal, endpoint, masa, status.
@@ -441,7 +441,7 @@ Runtime disyaki menjalankan proses yang tidak semestinya selepas request web:
 7. Pemulihan: backup, baseline, image tepercaya → bolehkah sistem & data dipulihkan dengan selamat?
 8. Penilaian: semua bukti → jalur masuk, skop impak, kawalan yang gagal.
 
-### 16.10 Kesukaran dan batasan
+### Kesukaran dan batasan
 
 | Kawalan | Kesukaran utama | Risiko jika tanpa penilaian |
 |---|---|---|
@@ -455,7 +455,7 @@ Runtime disyaki menjalankan proses yang tidak semestinya selepas request web:
 | Incident response | Mengimbangi containment, pemeliharaan bukti, kesinambungan perkhidmatan | Bukti hilang atau kompromi berterusan |
 | Rebuild server | Memastikan image bersih, dependensi tersedia, data konsisten | Penyerang/config rentan masuk semula |
 
-### 16.11 Urutan implementasi yang masuk akal
+### Urutan implementasi yang masuk akal
 
 1. Tetapkan baseline & inventori (port, service, user, config, dependensi, jalur data, perkhidmatan luaran).
 2. Amankan ingress & akses tempatan (hadkan SSH, tutup port tidak perlu, hadkan privilege runtime, lindungi akses DB).
@@ -467,7 +467,7 @@ Runtime disyaki menjalankan proses yang tidak semestinya selepas request web:
 8. Latih incident response (simulasi login mencurigakan, perubahan fail, egress tidak diharapkan, restore backup di lab).
 9. Sahkan & semak semula (uji kawalan selepas perubahan, catat pengecualian, nilai semula baseline).
 
-### 16.12 Referensi
+### Referensi
 
 - [Ubuntu Server — Firewall](https://ubuntu.com/server/docs/firewalls/) — perilaku dan pengurusan firewall host menggunakan UFW.
 - [Linux Audit System — auditd](https://www.linux.org/docs/man5/auditd.html) — peranan daemon audit dan pemrosesan rekod audit.

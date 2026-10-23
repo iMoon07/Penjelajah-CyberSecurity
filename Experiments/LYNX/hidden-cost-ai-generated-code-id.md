@@ -18,7 +18,7 @@ Tujuannya adalah memahami:
 - Bagaimana AI dapat mempercepat atau mengurangi technical debt
 - Kapan technical debt layak diterima
 
-## 1. AI Mempercepat Pembuatan Kode
+##  AI Mempercepat Pembuatan Kode
 
 AI (seperti GitHub Copilot, ChatGPT, Claude) bisa:
 
@@ -31,7 +31,7 @@ Hasilnya: **creation cost turun drastis**. Kode yang sebelumnya butuh jam, sekar
 
 Namun, seperti yang ditekankan oleh **Google Cloud CTO** dalam artikel "When AI writes the code, who reviews it?": bottleneck bergeser dari menulis kode ke mereview, mengetes, dan mengintegrasikan output AI. [cloud.google](https://cloud.google.com/transform/when-ai-writes-the-code-who-reviews-it-cto-google-cloud)
 
-## 2. Membuat Kode ≠ Memelihara Kode
+##  Membuat Kode ≠ Memelihara Kode
 
 Tetapi ada perbedaan besar:
 
@@ -49,7 +49,7 @@ Kode yang berhasil dijalankan belum tentu:
 
 AI dapat menyelesaikan masalah pembuatan kode, tetapi tidak otomatis menyelesaikan masalah tanggung jawab engineering.
 
-## 3. Empat Biaya Tersembunyi
+##  Empat Biaya Tersembunyi
 
 ### Biaya pemahaman (Understanding cost)
 
@@ -74,7 +74,7 @@ AI dapat menyelesaikan masalah pembuatan kode, tetapi tidak otomatis menyelesaik
 - Seberapa sulit mengubah kode tanpa merusak yang lain?
 - Apakah ada abstraksi yang tidak perlu?
 
-## 4. Apa Itu Technical Debt—dan Apa yang Bukan
+##  Apa Itu Technical Debt—dan Apa yang Bukan
 
 Martin Fowler membedakan **technical debt** dari sekadar *mess*: debt muncul ketika seseorang membuat keputusan shortcut yang memberi manfaat jangka pendek, tetapi menimbulkan biaya perbaikan di masa depan. [martinfowler](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html)
 
@@ -87,7 +87,7 @@ Martin Fowler membedakan **technical debt** dari sekadar *mess*: debt muncul ket
 
 Fowler juga membedakan debt *prudent/reckless* dan *deliberate/inadvertent*, jadi kita bisa pakai kerangka itu untuk menjelaskan kapan AI mempercepat debt yang sehat atau berbahaya. [martinfowler](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html)
 
-## 5. Bagaimana AI Mempercepat Technical Debt
+##  Bagaimana AI Mempercepat Technical Debt
 
 AI dapat mempercepat akumulasi debt secara mekanis:
 
@@ -99,7 +99,7 @@ AI dapat mempercepat akumulasi debt secara mekanis:
 
 Penelitian awal tentang *GenAI-induced self-admitted technical debt* mengidentifikasi contoh developer yang menunda testing, menyelesaikan adaptasi, dan mengakui keterbatasan pemahaman terhadap kode AI—artinya debt sering bergeser ke tahap verifikasi dan maintenance. Studi ini menganalisis 6.540 komentar kode yang menyebut LLM, dengan 81 komentar yang secara eksplisit mengakui technical debt. Temuan ini mendukung adanya pola masalah, tetapi tidak membuktikan bahwa mayoritas kode AI menghasilkan debt. [arxiv](https://arxiv.org/html/2601.07786)
 
-## 6. Contoh Nyata: Kode yang Jalan tetapi Belum Layak Dipelihara
+##  Contoh Nyata: Kode yang Jalan tetapi Belum Layak Dipelihara
 
 > AI menghasilkan fungsi upload file yang berhasil saat dicoba. Kode jalan, tetapi tidak memvalidasi tipe file, tidak membatasi ukuran, tidak menangani nama file berbahaya, dan tidak menulis test. Dari sudut pandang “membuat kode”, selesai dalam lima menit. Dari sudut pandang engineering, barulah pekerjaan dimulai: verifikasi, perbaikan, test, dokumentasi, dan pemeliharaan.
 
@@ -107,7 +107,7 @@ Atau contoh dependency:
 
 > AI menyarankan library untuk fitur kecil. Developer memasangnya tanpa mengecek lisensi, maintenance, ukuran bundle, dan alternatif bawaan bahasa. Enam bulan kemudian library tersebut tidak lagi dirawat, dan tim harus menggantinya.
 
-## 7. Kapan AI Justru Membantu Mengurangi Debt
+##  Kapan AI Justru Membantu Mengurangi Debt
 
 AI juga bisa mengurangi technical debt jika dipakai dengan benar:
 
@@ -120,7 +120,7 @@ AI juga bisa mengurangi technical debt jika dipakai dengan benar:
 
 AI bukan penyebab debt; cara kita menerima, memverifikasi, dan mengelola output AI yang menentukan. Riset juga menunjukkan AI kadang justru membantu memperbaiki atau memvalidasi implementasi existing. [arxiv](https://arxiv.org/html/2601.07786)
 
-## 8. Cara Mengelola Debt dari Kode AI
+##  Cara Mengelola Debt dari Kode AI
 
 1. **Jangan langsung commit output AI.** Baca dulu alur utamanya: input, output, error handling, dan efek samping.
 2. **Tanyakan “kenapa” sebelum menerima kode.** Kalau developer tidak bisa menjelaskan keputusan utamanya, kode itu belum siap masuk.
@@ -132,13 +132,13 @@ AI bukan penyebab debt; cara kita menerima, memverifikasi, dan mengelola output 
 
 Google Cloud menyoroti guardrails seperti linter, test coverage, review berbasis arsitektur, dan risk assessment untuk mengelola percepatan yang dibawa AI. [cloud.google](https://cloud.google.com/transform/when-ai-writes-the-code-who-reviews-it-cto-google-cloud)
 
-## 9. Kapan Debt Boleh Diterima
+##  Kapan Debt Boleh Diterima
 
 Tidak semua debt harus segera dilunasi. Ada debt yang murah “bunganya” karena jarang disentuh. Fowler secara eksplisit menyebut bahwa debt untuk rilis tertentu mungkin tidak layak dilunasi jika biaya bunganya kecil. [martinfowler](https://martinfowler.com/bliki/TechnicalDebtQuadrant.html)
 
 Fokusnya adalah **keputusan yang sadar**: kenapa debt diambil, apa risikonya, dan kapan akan dibayar.
 
-## 10. Kesimpulan
+##  Kesimpulan
 
 AI menurunkan biaya produksi kode, tetapi biaya pemahaman, verifikasi, dan tanggung jawab tetap ada—bahkan bisa naik jika output LLM diterima tanpa disiplin engineering. Nilai penghematan AI baru nyata jika kode tersebut tetap bisa dipahami, diverifikasi, dan diubah dengan biaya yang masuk akal.
 

@@ -17,7 +17,7 @@ Tujuannya adalah memahami:
 - Bagaimana technical debt dikenal pasti dan diprioritikan
 - Sama ada AI benar-benar menjimatkan kos atau sekadar memindahkannya
 
-## 1. AI Mempercepat Penciptaan Kod
+##  AI Mempercepat Penciptaan Kod
 
 AI (seperti Copilot, ChatGPT, Claude) boleh:
 
@@ -28,7 +28,7 @@ AI (seperti Copilot, ChatGPT, Claude) boleh:
 
 Hasilnya: **kos penciptaan menurun dengan drastik**. Kod yang sebelumnya mengambil masa berjam-jam kini mengambil minit.
 
-## 2. Menulis Kod ≠ Menyelenggara Kod
+##  Menulis Kod ≠ Menyelenggara Kod
 
 Tetapi terdapat perbezaan besar:
 
@@ -42,7 +42,7 @@ Kod yang berjalan tidak semestinya:
 - Mudah diuji
 - Selamat
 
-## 3. Kos yang Sering Tersembunyi
+##  Kos yang Sering Tersembunyi
 
 ### Kos pemahaman (Understanding cost)
 
@@ -67,7 +67,7 @@ Kod yang berjalan tidak semestinya:
 - Sejauh manakah sukarnya mengubah kod tanpa merosakkan bahagian lain?
 - Adakah terdapat abstraksi yang tidak perlu?
 
-## 4. Technical Debt dan AI
+##  Technical Debt dan AI
 
 Technical debt tidak automatik timbul kerana kod dihasilkan oleh AI. Technical debt boleh datang dari:
 
@@ -83,7 +83,7 @@ Namun, AI boleh **mempercepat pengumpulan utang** apabila:
 - Abstraksi yang tidak perlu ditambah
 - Dependency yang tidak perlu diperkenalkan
 
-## 5. Mengurus Technical Debt
+##  Mengurus Technical Debt
 
 Strategi untuk mengurus utang teknikal:
 
@@ -93,7 +93,7 @@ Strategi untuk mengurus utang teknikal:
 4. **Refactoring** — perbaiki kod yang tidak jelas atau tidak cekap.
 5. **Pengesahan** — jangan percaya output AI tanpa berfikir.
 
-## 10. Kesimpulan
+##  Kesimpulan
 
 AI menurunkan kos pengeluaran kod, tetapi kos pemahaman, pengesahan, dan tanggungjawab kekal—bahkan boleh meningkat jika output LLM diterima tanpa disiplin kejuruteraan. LLM (seperti GPT-4, Claude, Gemini) dan alat AI (Copilot, Cursor, dll.) bukan sekadar penjana kod; mereka adalah sebahagian daripada sistem pembangunan yang memerlukan konteks, arah, dan pengawasan.
 
