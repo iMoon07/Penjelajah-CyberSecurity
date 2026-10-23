@@ -4,7 +4,7 @@
 
 This is about a **Single-Tier Server for Web Apps**. It is a setup where the web server, server-side runtime, database, and optional cache are all on **one machine**.
 
-![]
+![Server single tier](linux-exposure-network-experiment.png)
 
 The goal is to understand:
 - Which stack you can choose
