@@ -52,7 +52,7 @@ Most relevant benchmarks for single-tier:
 
 CIS Benchmarks are secure configuration recommendations developed through security practitioner consensus and available free in PDF for non-commercial use. CIS Controls map those practices into 18 priority controls, from asset inventory to penetration testing. [cisecurity](https://www.cisecurity.org/cis-benchmarks-overview)
 
-> **Note:** The CIS Benchmark consists of Level 1 (minimum baseline) and Level 2 (stricter). "100%" means applying all Level 1 + Level 2 + sub-control items. In practice, choose the Level that fits—Level 1 for baseline, Level 2 for high-security—then document what is applied and what is deliberately skipped. Do not apply everything at once without priority, evaluate per control, test in the lab, then roll out gradually.
+> **Note:** The CIS Benchmark consists of Level 1 (minimum baseline) and Level 2 (stricter). Compliance scores depend on the benchmark profile, version, and which controls apply to your environment. Applying Level 1 + Level 2 does not mean "100% secure"—compliance is a guide, not a guarantee of absolute security. Choose the appropriate level, document exceptions, evaluate per control, test in the lab, and roll out gradually.
 
 ##  Operating System
 
@@ -61,16 +61,15 @@ CIS Benchmarks are secure configuration recommendations developed through securi
 | Update and patch | Regularly update OS and packages | Closes known vulnerabilities |
 | User and privilege | Don't log in as root, create a regular user with sudo | Limits impact if an account leaks |
 | SSH | Disable root login and password auth, use SSH keys | SSH is the main entry point to the server |
-| Host firewall | Default deny incoming, open only 22, 80, 443 | Reduces port exposure |
+| Host firewall | Default deny incoming, allow only ports required for the architecture (e.g., 22, 80, 443) | Reduces port exposure |
 | Auto patch | Enable unattended upgrades for security patches | Keeps the system safe without manual intervention |
 | Service minimization | Disable unused services | Fewer services means smaller attack surface |
 | Kernel parameters | Apply relevant sysctl hardening | Reduces network-level abuse risk |
 
-> **Important:** Never open database ports (3306, 5432) to the public—database access only from localhost or internal network. Also consider often-overlooked aspects:
-> - **Footprint & installation:** during install, enable disk encryption (LUKS) and separate partitions for `/`, `/var`, `/tmp`, `/home`; apply mount options `noexec`, `nosuid`, `nodev` on sensitive partitions.
+> **Important:** Never open database ports (3306, 5432) to the public—database access should be limited to `127.0.0.1` or a Unix socket. SSH can be restricted to a VPN/admin network, and HTTP can be used only for redirect to HTTPS. Also consider often-overlooked aspects:
+> - **Footprint & installation:** during install, enable disk encryption (LUKS) and separate partitions for `/`, `/var`, `/tmp`, `/home`. Apply mount options `noexec`, `nosuid`, `nodev` only to sensitive partitions as appropriate for their function and always test in a lab (they can break certain applications).
 > - **Memory & disk management:** encrypt swap, cap log sizes, rotate logs, and monitor disk usage to avoid denial-of-service from a full disk.
-> - **Kernel & service hardening:** sysctl parameters, SELinux/AppArmor, minimize services, disable unused modules.
-> Why it matters: each aspect reduces attack surface and prevents data leaks or DoS.
+> - **Kernel & service hardening:** apply relevant sysctl parameters, enable SELinux/AppArmor, minimize services, disable unused modules.
 
 ##  Services, Files, and Secrets
 
@@ -81,7 +80,7 @@ CIS Benchmarks are secure configuration recommendations developed through securi
 | Umask | Use strict default permissions (umask 027 or 077) | Newly created files are not world-readable, reducing accidental data leaks |
 | SELinux/AppArmor | Enable per distro (enforcing mode) | Limits service behavior if compromised—even if a service is breached, damage is confined to the allowed policy |
 | Secrets | Don't put passwords or API keys in repos or world-readable files | Credentials leaked to Git or world-readable files allow unauthorized access |
-| Environment variables | Store secrets in tightly permissioned files or a secret manager (Vault, SOPS) | Reduces configuration leak risk and eases auditing and credential rotation |
+| Secret storage | Store in tightly permissioned files or a secret manager (Vault, SOPS). Enforce least privilege, rotation, and auditing. | Reduces configuration leak risk, eases rotation, and maintains an audit trail |
 | `.gitignore` | Add `.env`, `*.key`, `*.pem`, `backup/` to `.gitignore` from the start | Prevents credentials, SSH keys, and backups from accidentally entering the Git repository |
 
 > **Warning:** `.env` files, database credentials, SSH keys, and backups must not go into Git. Use `.gitignore` from the start, and if already committed, rotate credentials immediately (treat as leaked).
@@ -93,30 +92,27 @@ CIS Benchmarks are secure configuration recommendations developed through securi
 4. **Audit** — check access logs to see whether the secret was abused.
 5. **Prevention** — add secret scanning (gitleaks, trufflehog) in CI/CD and pre-commit hooks.
 
-##  Web Server Hardening
+##  Web Server & Web Client Hardening
+
+### Web Server (server-side)
 
 | Web server | Key settings | Goal |
 |---|---|---|
-| Nginx | `server_tokens off`, security headers, restrict HTTP methods, disable autoindex | Hide version info and limit dangerous requests |
-| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security headers | Hide server info and reject dangerous methods |
+| Nginx | `server_tokens off`, security headers on the server, restrict HTTP methods, disable autoindex, modern TLS, rate limiting (`limit_req`), WAF (ModSecurity) | Hide version info, limit dangerous requests, protect from abuse/DDoS |
+| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security headers on the server, modern TLS, ModSecurity WAF | Hide server info and reject dangerous methods |
 | Caddy | Security headers, reverse proxy with automatic TLS | Simple config with safe defaults |
 
-Security headers you should have:
-
-- `X-Frame-Options: SAMEORIGIN` — prevents clickjacking
+**Security headers commonly set at the web server:**
+- `Strict-Transport-Security (HSTS)` — forces HTTPS (see TLS section)
 - `X-Content-Type-Options: nosniff` — prevents MIME sniffing
+- `X-Frame-Options: SAMEORIGIN` — prevents clickjacking (can be supplemented/replaced by `Content-Security-Policy: frame-ancestors`)
 - `Referrer-Policy: strict-origin-when-cross-origin` — controls referrer leakage
 - `Permissions-Policy` — restricts browser feature access
-- `Content-Security-Policy (CSP)` — restricts sources for scripts/styles/images, mitigates XSS
-- `Strict-Transport-Security (HSTS)` — forces HTTPS
+- `Content-Security-Policy (CSP)` — restricts sources for scripts/styles/images to mitigate XSS
 
-**Client-side / browser hardening:**
-- Enable strict CSP; avoid `unsafe-inline`/`unsafe-eval`.
-- Use Subresource Integrity (SRI) for CDN assets.
-- Set cookies with `Secure`, `HttpOnly`, `SameSite=Strict/Lax`.
-- Validate input on client (UX) and server (security).
+> **Note:** Headers reduce certain risks, but they **do not replace** input validation, output encoding, authentication, and authorization. Those remain the application's responsibility.
 
-**Rate limiting & WAF:**
+**Rate limiting & WAF (server-side):**
 - Limit requests per IP/user at the web server (`limit_req`, `mod_evasive`).
 - Deploy a WAF (ModSecurity/OWASP CRS) to filter SQLi, XSS, and malicious payloads.
 - Block repeatedly abusive IPs (fail2ban).
@@ -125,6 +121,19 @@ Security headers you should have:
 - Forward `X-Forwarded-For` correctly; do not trust blindly.
 - Restrict admin endpoints to specific IPs.
 - Enable access and error logging.
+
+### Web Client / Browser-side Hardening
+
+Focus on controls that **cannot be solved by server headers alone**:
+- **Strict CSP**: avoid `unsafe-inline`/`unsafe-eval`; use nonce/hash.
+- **Subresource Integrity (SRI)**: hash CDN assets to prevent tampering.
+- **Cookie security**: `Secure`, `HttpOnly`, `SameSite=Strict/Lax`, correct domain/path, short expiry.
+- **Anti-CSRF tokens** for requests that change state.
+- **Session management**: regenerate session ID on login, idle/absolute timeouts, invalidate on logout.
+- **CORS**: restrict origins strictly; never use wildcard `*` for sensitive endpoints.
+- **Storage**: avoid storing sensitive tokens in `localStorage`/`sessionStorage` (XSS risk), prefer `HttpOnly` cookies.
+- **Third-party scripts**: audit/minimize, use SRI, sandbox iframes.
+- **Mixed content**: block HTTP resources on HTTPS pages.
 
 ##  TLS / HTTPS
 
@@ -175,11 +184,11 @@ Security headers you should have:
 |---|---|---|
 | Secure installation | Run the database's built-in secure installation | Removes anonymous users, test database, remote root |
 | Least privilege | Create an app user with limited rights: `SELECT`, `INSERT`, `UPDATE`, `DELETE` | If leaked, impact is limited |
-| Bind address | Database only listens on `127.0.0.1` | Database unreachable from outside |
+| Bind address | Database only listens on `127.0.0.1` or Unix socket | Database unreachable from outside |
 | Password | Use strong passwords, PostgreSQL supports SCRAM-SHA-256 | Prevents brute force |
 | Remote access | Disable remote login for database root | Remote root is extremely dangerous |
 | Backup | Regular backups and restore tests | Hardening does not protect against human error or disk failure |
-| Encryption at rest | Enable TDE (if supported) or LUKS on data volumes | Protects data if disk is stolen |
+| Encryption at rest | Enable TDE *if supported* by the engine/version/edition, else use LUKS on data volumes + encrypted backups | Protects data if disk is stolen; TDE support varies by MySQL/MariaDB/PostgreSQL |
 | Audit logging | Enable query logging for sensitive operations (DDL, DML on key tables) | Detects unauthorized access and meets compliance |
 | Connection security | Use TLS for database connections (even localhost in multi-tenant setups) | Prevents credential/data sniffing |
 | Query monitoring | Monitor slow queries and anomalies (pg_stat_statements, slow query log) | Detects abuse or injection that bypassed the WAF |
@@ -238,129 +247,33 @@ Incident response does not have to be complex for a lab. What matters is knowing
 
 ##  Hardening Verification
 
-Checklist after hardening:
+Use a `check → execute → verify` approach:
 
-- [ ] Only ports 22, 80, 443 are open
-- [ ] Database only listens on `127.0.0.1`
-- [ ] SSH root login rejected
-- [ ] SSH password auth rejected
-- [ ] TLS configuration verified with OpenSSL or testssl.sh
-- [ ] Security headers present in responses
-- [ ] WAF `DetectionOnly` logs test requests
-- [ ] Fail2ban active and ban rules tested in lab
-- [ ] Audit log records changes to sensitive files
-- [ ] Database backup running
-- [ ] Backup restore tested at least once
-- [ ] No secrets in repository or world-readable files
+| Control | Check | Execute | Verify |
+|---|---|---|---|
+| Ports & firewall | List open ports (`ss -tulnp`, `ufw status`) | Apply default deny + allow only required ports | Only approved ports are open |
+| DB access | Check bind address | Bind to `127.0.0.1` or Unix socket, deny public access | No DB connections from outside the host |
+| SSH | Check sshd config | Disable `PermitRootLogin`, disable password auth, use keys | Root and password auth are rejected |
+| TLS | Check cert/cipher | Configure TLS 1.2/1.3, modern ciphers, HSTS, HTTP→HTTPS redirect | Test with `openssl s_client` or testssl.sh (target A) |
+| Security headers | Check HTTP response | Set headers at web server | Headers present as configured |
+| WAF | Check WAF mode | Start in `DetectionOnly`, tune, move to `Blocking` gradually | Test requests logged, false positives addressed |
+| Fail2ban | Check jail status | Enable relevant jails | Tested in lab (ban/unban works) |
+| Audit/FIM | Check `auditd`, AIDE/tripwire | Create baseline and audit rules for critical files/configs | Changes are tracked/alerted |
+| Egress | Check outbound connections | Observe → apply allowlist/deny gradually as needed | Only allowed destinations reachable |
+| Backup & restore | Check backup schedule | Automate, encrypt, separate storage, test restore | Restore in isolated env succeeds and app works |
+| Secrets | Check repo/files | Ensure `.env`/keys not committed, strict permissions | Clean scan/history, correct permissions |
 
 ##  Common Mistakes
 
-1. **Opening database port to the public** — easiest target.
-2. **SSH root login enabled** — brute force target.
-3. **Not updating** — old CVEs that already have patches.
-4. **WAF in blocking mode without tuning** — false positives block real users.
-5. **No backups** — hardening doesn't protect against human error.
-6. **Logs not monitored** — attacks go undetected.
-7. **Secrets in Git** — credentials leak with the repository.
-8. **Backups never tested** — when needed, they can't be restored.
+1. **Opening database port to the public** — database must be only on `127.0.0.1` or Unix socket.
+2. **SSH root login enabled and password auth allowed** — use SSH keys, disable both.
+3. **Not updating** — old CVEs can be exploited even if patches exist.
+4. **WAF in blocking mode without tuning** — start in `DetectionOnly`, analyze false positives, enable blocking gradually.
+5. **Backups never tested** — backups must be tested via restore in an isolated environment.
+6. **Secrets in Git** — use `.gitignore`, a secret manager, and if leaked rotate credentials and clean history.
+7. **Assuming headers are enough** — headers reduce risk, but input validation, authentication, and authorization are still required in the application.
 
-##  End-to-End: From OS to Database and Runtime
-
-This section completes hardening so it does not stop at the web server but covers the entire stack.
-
-### IDS/IPS
-
-| Component | Purpose | Examples |
-|---|---|---|
-| IDS | Network intrusion detection | Suricata, Snort |
-| IPS | Active intrusion blocking | Suricata inline mode |
-
-Install Suricata on the host or in front of the server. Use the Emerging Threats ruleset. Monitor alerts regularly.
-
-### File Integrity Monitoring (FIM)
-
-| Component | Purpose | Examples |
-|---|---|---|
-| FIM | Detect system file changes | AIDE, Tripwire |
-
-Create a baseline hash of important files (`/etc`, `/usr/bin`, web root). Run periodic checks via cron. Alert on unexpected changes.
-
-### Rate Limiting
-
-| Layer | Method | Goal |
-|---|---|---|
-| Web server | Nginx `limit_req`, Apache mod_evasive | Limit requests per IP |
-| App | Throttle per user/IP in code | Prevent brute force and abuse |
-
-### Secrets Management
-
-| Aspect | Recommendation | Why |
-|---|---|---|
-| Storage | Vault, SOPS, or secret manager | Not plain-text .env |
-| Access | Least privilege, audit log | Prevent leaks |
-| Rotation | Rotate credentials regularly | Reduce window of exposure |
-
-### Database Encryption at Rest
-
-| Method | Description |
-|---|---|
-| TDE | Transparent Data Encryption (MySQL/PostgreSQL) |
-| LUKS | OS-level volume encryption |
-
-Use LUKS for data volumes, or TDE if the database supports it. Encrypting backups is also mandatory.
-
-### Container Hardening (if using Docker/Podman)
-
-| Practice | Goal |
-|---|---|
-| Drop capabilities | Reduce container privilege |
-| Read-only filesystem | Prevent unexpected modification |
-| Non-root user | Privilege isolation |
-| Seccomp profile | Limit syscalls |
-| Image scanning | Detect CVEs in images (Trivy) |
-
-### NTP / chrony
-
-Sync server time with NTP. Logs and audits depend on accurate timestamps. Use `chrony` or `systemd-timesyncd`.
-
-### Kernel Hardening (sysctl)
-
-| Parameter | Value | Goal |
-|---|---|---|
-| `net.ipv4.conf.all.rp_filter` | 1 | Anti-spoofing |
-| `net.ipv4.tcp_syncookies` | 1 | Anti-SYN flood |
-| `net.ipv4.conf.all.accept_redirects` | 0 | Anti-redirect attack |
-| `kernel.randomize_va_space` | 2 | ASLR |
-
-Disable unused kernel modules. Set mount options `noexec`, `nosuid`, `nodev` on sensitive partitions.
-
-### Dependency Scanning
-
-| Tool | Target | When |
-|---|---|---|
-| npm audit | Node.js | During build/CI |
-| pip-audit | Python | During build/CI |
-| Trivy | Container image | During build/CI |
-
-Integrate into the pipeline. Block deploy on critical findings.
-
-### Centralized Logging / SIEM
-
-Forward logs to Loki, ELK, or Splunk. Create alerts for anomalous patterns. Retain at least 90 days for audit.
-
-### SSH Key Rotation & MFA
-
-Rotate SSH keys regularly. Enable MFA (TOTP/PAM) for admin access. Restrict SSH access to specific IPs (AllowUsers + firewall).
-
-### Password Policy & Account Lockout
-
-Use `pam_pwquality` for password policy. Enable `faillock` for lockout after repeated failed logins. Audit accounts regularly.
-
-### Backup Encryption & Offsite Verification
-
-Encrypt backups (GPG or LUKS). Keep at least one copy offsite. Test restores regularly. Document RTO and RPO.
-
-##  Network, Logging, Monitoring, Backup, and Incident Response (Deep Dive)
+##  Detection and Recovery: Boundaries of Hardening on a Single-Tier Stack
 
 ### Single-tier security boundary
 

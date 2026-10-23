@@ -50,7 +50,7 @@ Untuk single-tier, benchmark yang paling relevan:
 
 CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konsensus pengamal keselamatan dan tersedia percuma dalam format PDF untuk kegunaan bukan komersial. CIS Controls memetakan amalan tersebut kepada 18 kawalan keutamaan, daripada inventory asset sehingga penetration testing. [cisecurity](https://www.cisecurity.org/cis-benchmarks-overview)
 
-> **Note:** CIS Benchmark terdiri daripada Level 1 (baseline minimum) dan Level 2 (lebih ketat). "100%" bermaksud menerapkan semua Level 1 + Level 2 + sub-control. Dalam praktik, pilih Level yang sesuai—Level 1 untuk baseline, Level 2 untuk high-security—kemudian dokumentasikan apa yang diterapkan dan apa yang sengaja dilewati. Jangan terapkan semua sekaligus tanpa prioriti, nilaikan setiap kontrol, uji di lab, baru terapkan secara berperingkat.
+> **Note:** CIS Benchmark terdiri daripada Level 1 (baseline minimum) dan Level 2 (lebih ketat). Skor pematuhan bergantung pada profil benchmark, versi, dan kawalan yang berkenaan untuk persekitaran anda. Mengaplikasikan Level 1 + Level 2 tidak bermakna "100% selamat"—pematuhan adalah panduan, bukan jaminan keselamatan mutlak. Pilih Level yang sesuai, dokumentasikan pengecualian, nilaikan setiap kawalan, uji di makmal, kemudian laksanakan secara berperingkat.
 
 ##  Sistem Operasi
 
@@ -59,16 +59,15 @@ CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konse
 | Update dan patch | Kemas kini OS dan package secara berkala | Menutup celah yang sudah diketahui |
 | User dan privilege | Jangan log masuk sebagai root, buat user biasa dengan sudo | Mengurangkan kesan jika akaun bocor |
 | SSH | Matikan root login dan password auth, gunakan SSH key | SSH ialah pintu masuk utama server |
-| Firewall host | Default deny incoming, buka hanya 22, 80, 443 | Mengurangkan exposure port |
+| Firewall host | Default deny incoming, benarkan hanya port yang diperlukan mengikut seni bina (cth., 22, 80, 443) | Mengurangkan pendedahan port |
 | Auto patch | Aktifkan unattended upgrades untuk patch keselamatan | Mengekalkan keselamatan sistem tanpa campur tangan manual |
 | Service minimization | Matikan service yang tidak digunakan | Semakin sedikit service, semakin kecil attack surface |
 | Parameter kernel | Terapkan sysctl hardening yang relevan | Mengurangkan risiko penyalahgunaan pada tahap rangkaian |
 
-> **Important:** Jangan buka port database (3306, 5432) kepada awam—akses database hanya daripada localhost atau rangkaian dalaman. Selain itu, perhatikan aspek lain yang sering terlupakan:
-> - **Footprint & pemasangan:** semasa pemasangan, aktifkan enkripsi disk (LUKS) dan partisi berasingan untuk `/`, `/var`, `/tmp`, `/home`; gunakan mount options `noexec`, `nosuid`, `nodev` pada partisi sensitif.
-> - **Pengurusan memori & disk:** enkripsi swap, hadkan saiz log, rotasi log, dan monitor penggunaan disk untuk elak denial-of-service akibat disk penuh.
-> - **Hardening kernel & service:** parameter sysctl, SELinux/AppArmor, minimasi service, nyahaktifkan module yang tidak digunakan.
-> Kenapa penting: setiap aspek mengurangkan attack surface dan mencegah kebocoran data atau DoS.
+> **Important:** Jangan buka port pangkalan data (3306, 5432) kepada awam—akses pangkalan data hanya melalui `127.0.0.1` atau soket Unix. SSH boleh dihadkan kepada VPN/rangkaian pentadbir, dan HTTP boleh digunakan hanya untuk pengalihan ke HTTPS. Selain itu, perhatikan aspek lain yang sering diabaikan:
+> - **Jejak & pemasangan:** semasa pemasangan, aktifkan penyulitan cakera (LUKS) dan partisyen berasingan untuk `/`, `/var`, `/tmp`, `/home`. Gunakan pilihan pemasangan `noexec`, `nosuid`, `nodev` hanya pada partisyen sensitif mengikut fungsinya dan sentiasa uji dalam makmal (boleh merosakkan aplikasi tertentu).
+> - **Pengurusan memori & cakera:** sulitkan swap, hadkan saiz log, putar log, dan pantau penggunaan cakera bagi mengelak denial-of-service akibat cakera penuh.
+> - **Pengukuhan kernel & perkhidmatan:** parameter sysctl, SELinux/AppArmor, minimumkan perkhidmatan, nyahaktifkan modul yang tidak digunakan.
 
 ##  Service, Fail, dan Secret
 
@@ -78,9 +77,9 @@ CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konse
 | Kebenaran fail | Hadkan kebenaran config, log, dan fail sensitif (chmod 600/640, chown root:root) | Menghalang user non-privileged daripada membaca atau mengubah fail yang mengandungi konfigurasi atau data sensitif |
 | Umask | Gunakan kebenaran lalai yang ketat (umask 027 atau 077) | Fail baharu yang dibuat tidak serta-merta world-readable, mengurangkan kebocoran data yang tidak disengajakan |
 | SELinux/AppArmor | Aktifkan mengikut distro (enforcing mode) | Mengehadkan tingkah laku service jika berlaku compromise—walaupun service dibobol, kerosakan terhad kepada policy yang dibenarkan |
-| Secret | Jangan letak password atau API key dalam repo atau fail world-readable | Credential yang bocor ke Git atau fail yang boleh dibaca semua user membenarkan akses yang tidak dibenarkan |
-| Environment variable | Simpan secret dalam fail dengan kebenaran ketat atau secret manager (Vault, SOPS) | Mengurangkan risiko kebocoran konfigurasi dan memudahkan audit serta rotasi credential |
-| `.gitignore` | Tambah `.env`, `*.key`, `*.pem`, `backup/` ke `.gitignore` dari awal | Menghalang credential, SSH key, dan backup daripada masuk ke Git repository secara tidak sengaja |
+| Rahsia | Jangan letak kata laluan atau kunci API dalam repo atau fail yang boleh dibaca semua | Kelayakan yang bocor membolehkan akses tidak dibenarkan |
+| Penyimpanan rahsia | Simpan dalam fail berpermission ketat atau pengurus rahsia (Vault, SOPS). Hadkan akses, putar, dan audit. | Mengurangkan risiko kebocoran, memudahkan putaran, dan mengekalkan jejak audit |
+| `.gitignore` | Tambah `.env`, `*.key`, `*.pem`, `backup/` ke `.gitignore` dari awal | Menghalang kelayakan, kunci SSH, dan sandaran daripada masuk ke repositori secara tidak sengaja |
 
 > **Warning:** Fail `.env`, credential database, SSH key, dan backup tidak boleh masuk ke Git. Gunakan `.gitignore` dari awal, dan jika sudah terlanjur commit, rotasi credential segera (anggap bocor).
 
@@ -91,38 +90,48 @@ CIS Benchmarks ialah cadangan konfigurasi selamat yang dibangunkan melalui konse
 4. **Audit** — cek log akses untuk mengetahui apakah secret sudah disalahgunakan.
 5. **Pencegahan** — tambahkan secret scanning (gitleaks, trufflehog) di CI/CD dan pre-commit hook.
 
-##  Hardening Web Server
+##  Pengukuhan Pelayan Web & Pelanggan Web
 
-| Web server | Tetapan penting | Matlamat |
+### Pelayan Web (server-side)
+
+| Pelayan Web | Tetapan penting | Matlamat |
 |---|---|---|
-| Nginx | `server_tokens off`, security headers, hadkan method HTTP, nyahaktifkan autoindex | Menyembunyikan versi dan mengehadkan request berbahaya |
-| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security headers | Menyembunyikan maklumat server dan menolak method berbahaya |
-| Caddy | Security header, reverse proxy dengan TLS automatik | Konfigurasi ringkas dengan lalai yang selamat |
+| Nginx | `server_tokens off`, pengepala keselamatan di pelayan, hadkan kaedah HTTP, nyahaktifkan autoindex, TLS moden, had kadar (`limit_req`), WAF (ModSecurity) | Menyembunyi versi, mengehadkan permintaan berbahaya, melindungi daripada penyalahgunaan/DDoS |
+| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, pengepala keselamatan di pelayan, TLS moden, WAF ModSecurity | Menyembunyi maklumat pelayan dan menolak kaedah berbahaya |
+| Caddy | Pengepala keselamatan, proksi songsang dengan TLS automatik | Konfigurasi ringkas dengan lalai selamat |
 
-Security header yang sebaiknya ada:
-
-- `X-Frame-Options: SAMEORIGIN` — menghalang clickjacking
+**Pengepala keselamatan biasa yang ditetapkan di pelayan web:**
+- `Strict-Transport-Security (HSTS)` — memaksa HTTPS (lihat bahagian TLS)
 - `X-Content-Type-Options: nosniff` — menghalang MIME sniffing
-- `Referrer-Policy: strict-origin-when-cross-origin` — kawalan referrer
-- `Permissions-Policy` — mengehadkan akses ciri browser
-- `Content-Security-Policy (CSP)` — mengehadkan sumber script/style/image, mitigasi XSS
-- `Strict-Transport-Security (HSTS)` — paksa HTTPS
+- `X-Frame-Options: SAMEORIGIN` — menghalang clickjacking (boleh ditambah/diganti oleh `Content-Security-Policy: frame-ancestors`)
+- `Referrer-Policy: strict-origin-when-cross-origin` — kawalan kebocoran referrer
+- `Permissions-Policy` — mengehadkan akses ciri pelayar
+- `Content-Security-Policy (CSP)` — mengehadkan sumber skrip/gaya/imej untuk mitigasi XSS
 
-**Client-side / browser hardening:**
-- Aktifkan CSP yang ketat; elakkan `unsafe-inline`/`unsafe-eval`.
-- Gunakan Subresource Integrity (SRI) untuk CDN assets.
-- Tetapkan cookie dengan `Secure`, `HttpOnly`, `SameSite=Strict/Lax`.
-- Sahkan input di client (UX) dan server (keselamatan).
+> **Nota:** Pengepala mengurangkan risiko tertentu, tetapi **tidak menggantikan** pengesahan input, pengekodan output, pengesahan, dan kebenaran. Tanggungjawab tersebut kekal pada aplikasi.
 
-**Rate limiting & WAF:**
-- Hadkan request per IP/user di web server (`limit_req`, `mod_evasive`).
-- Pasang WAF (ModSecurity/OWASP CRS) untuk menapis SQLi, XSS, dan payload berbahaya.
-- Sekat IP yang kerap abusive (fail2ban).
+**Had kadar & WAF (server-side):**
+- Hadkan permintaan setiap IP/pengguna di pelayan web (`limit_req`, `mod_evasive`).
+- Pasang WAF (ModSecurity/OWASP CRS) untuk menapis SQLi, XSS, dan muatan berbahaya.
+- Sekat IP yang kerap menyalahgunakan (fail2ban).
 
-**Reverse proxy / load balancer (jika ada):**
-- Teruskan header `X-Forwarded-For` dengan betul; jangan percaya blindly.
-- Hadkan akses admin endpoint kepada IP tertentu.
-- Aktifkan logging akses dan ralat.
+**Proksi songsang / pengimbang beban (jika ada):**
+- Hantar `X-Forwarded-For` dengan betul; jangan percaya secara membuta tuli.
+- Hadkan akses titik akhir pentadbir kepada IP tertentu.
+- Aktifkan pengelogan akses dan ralat.
+
+### Pengukuhan Pelanggan Web / Pelayar
+
+Fokus pada kawalan yang **tidak boleh diselesaikan oleh pengepala pelayan sahaja**:
+- **CSP ketat**: elakkan `unsafe-inline`/`unsafe-eval`; guna nonce/hash.
+- **Subresource Integrity (SRI)**: cincang aset CDN bagi mengelak gangguan.
+- **Keselamatan kuki**: `Secure`, `HttpOnly`, `SameSite=Strict/Lax`, domain/laluan betul, tamat tempoh pendek.
+- **Token anti-CSRF** untuk permintaan yang mengubah keadaan.
+- **Pengurusan sesi**: jana semula ID sesi selepas log masuk, tamat masa tidak aktif/mutlak, tidak sahkan semasa log keluar.
+- **CORS**: hadkan asal secara ketat; jangan guna wildcard `*` untuk titik akhir sensitif.
+- **Storan**: elak menyimpan token sensitif dalam `localStorage`/`sessionStorage` (risiko XSS), lebih baik guna kuki `HttpOnly`.
+- **Skrip pihak ketiga**: audit/minimumkan, guna SRI, sandbox iframe.
+- **Kandungan bercampur**: sekat sumber HTTP pada halaman HTTPS.
 
 ##  TLS / HTTPS
 
@@ -173,16 +182,16 @@ Security header yang sebaiknya ada:
 |---|---|---|
 | Pemasangan selamat | Jalankan secure installation lalai database | Buang anonymous user, test database, dan remote root |
 | Least privilege | Buat user aplikasi dengan hak terhad: `SELECT`, `INSERT`, `UPDATE`, `DELETE` | Jika bocor, kesannya terhad |
-| Bind address | Database hanya listen pada `127.0.0.1` | Database tidak boleh diakses dari luar |
+| Bind address | Database hanya listen pada `127.0.0.1` atau soket Unix | Database tidak boleh diakses dari luar |
 | Password | Gunakan password yang kukuh, PostgreSQL menyokong SCRAM-SHA-256 | Menghalang brute force |
 | Akses jauh | Matikan remote login untuk root database | Root dari luar sangat berbahaya |
 | Backup | Backup berkala dan uji restore | Hardening tidak melindungi daripada human error atau kerosakan disk |
-| Encryption at rest | Aktifkan TDE (jika disokong) atau LUKS pada volume data | Melindungi data jika disk dicuri |
+| Penyulitan semasa rehat | Aktifkan TDE *jika disokong* oleh enjin/versi/edisi pangkalan data. Jika tidak, gunakan LUKS pada volum data + sandaran disulitkan | Melindungi data jika cakera dicuri; sokongan TDE berbeza mengikut MySQL/MariaDB/PostgreSQL |
 | Audit logging | Aktifkan query log untuk operasi sensitif (DDL, DML pada tabel penting) | Mengesan akses yang tidak dibenarkan dan memenuhi compliance |
-| Connection security | Gunakan TLS untuk sambungan database (walaupun localhost dalam setup multi-tenant) | Mencegah sniffing credential/data |
-| Query monitoring | Monitor query lambat dan anomali (pg_stat_statements, slow query log) | Mengesan abuse atau injection yang lolos WAF |
-| Backup encryption | Enkripsi backup (GPG/LUKS), simpan offsite, uji restore | Mencegah kebocoran data daripada backup yang dicuri |
-| Network isolation | Jangan expose port DB kepada awam, gunakan firewall/VPN untuk akses admin | Mengurangkan attack surface |
+| Keselamatan sambungan | Gunakan TLS untuk sambungan database (walaupun localhost dalam setup multi-tenant) | Mencegah sniffing credential/data |
+| Pemantauan query | Monitor query lambat dan anomali (pg_stat_statements, slow query log) | Mengesan abuse atau injection yang lolos WAF |
+| Penyulitan sandaran | Sulitkan sandaran (GPG/LUKS), simpan offsite, uji restore | Mencegah kebocoran data daripada sandaran yang dicuri |
+| Pengasingan rangkaian | Jangan dedahkan port DB kepada awam, guna firewall/VPN untuk akses pentadbir | Mengurangkan permukaan serangan |
 
 **Catatan praktis:**
 - Pisahkan user DB per aplikasi, jangan gunakan root untuk app.
@@ -234,135 +243,39 @@ Security header yang sebaiknya ada:
 
 Incident response tidak perlu kompleks untuk lab. Yang penting anda tahu: **apa yang dilihat, apa yang dilakukan, dan cara memulihkan server.**
 
-##  Pengesahan Hardening
+##  Pengesahan Pengukuhan
 
-Senarai semak selepas hardening:
+Guna pendekatan `check → execute → verify`:
 
-- [ ] Hanya port 22, 80, dan 443 terbuka
-- [ ] Database hanya listen pada `127.0.0.1`
-- [ ] SSH root login ditolak
-- [ ] Password auth SSH ditolak
-- [ ] Konfigurasi TLS disahkan dengan OpenSSL atau testssl.sh
-- [ ] Security header wujud dalam response
-- [ ] WAF `DetectionOnly` merekod request ujian
-- [ ] Fail2ban aktif dan peraturan ban telah diuji dalam lab
-- [ ] Audit log merekod perubahan fail sensitif
-- [ ] Backup database berjalan
-- [ ] Restore backup pernah diuji
-- [ ] Tiada secret dalam repository atau fail world-readable
+| Kawalan | Check | Execute | Verify |
+|---|---|---|---|
+| Port & firewall | Senaraikan port terbuka (`ss -tulnp`, `ufw status`) | Default deny + benarkan hanya port diperlukan | Hanya port yang diluluskan terbuka |
+| Akses DB | Semak bind address | Listen di `127.0.0.1` atau soket Unix, tolak akses awam | Tiada sambungan DB dari luar hos |
+| SSH | Semak config sshd | Nyahaktifkan `PermitRootLogin`, `PasswordAuthentication`, guna kunci | Log masuk root & kata laluan ditolak |
+| TLS | Semak sijil & cipher | TLS 1.2/1.3, cipher moden, HSTS, HTTP→HTTPS | Uji dengan `openssl s_client` atau testssl.sh (sasaran A) |
+| Pengepala keselamatan | Semak respons HTTP | Tetapkan pengepala di pelayan web | Pengepala muncul seperti dikonfigurasi |
+| WAF | Semak mod WAF | Mula `DetectionOnly`, penalaan, kemudian `Blocking` berperingkat | Log permintaan ujian direkod, false positive ditangani |
+| Fail2ban | Semak status jail | Aktifkan jail berkaitan | Uji di makmal (ban/unban berfungsi) |
+| Audit/FIM | Semak `auditd`, AIDE/tripwire | Baseline & peraturan audit untuk fail/konfigurasi kritikal | Perubahan dijejak/di-alert |
+| Egress | Semak sambungan keluar | Cerapan → allowlist/deny berperingkat mengikut keperluan | Hanya destinasi dibenarkan boleh diakses |
+| Sandaran & restore | Semak jadual sandaran | Automatik, sulitkan, simpan berasingan, uji restore | Restore di persekitaran terasing berjaya & aplikasi berfungsi |
+| Rahsia | Semak repo/fail | Pastikan `.env`/kunci tidak di-commit, permission ketat | Imbasan/sejarah bersih, permission betul |
 
 ##  Kesilapan Umum
 
-1. **Buka port database kepada awam** — sasaran paling mudah.
-2. **Root login SSH aktif** — sasaran brute force.
-3. **Tidak membuat kemas kini** — CVE lama yang sebenarnya sudah ada patch.
-4. **WAF terus blocking tanpa tuning** — false positive menyekat pengguna sebenar.
-5. **Tiada backup** — hardening tidak melindungi daripada human error.
-6. **Log tidak dipantau** — serangan tidak dikesan.
-7. **Secret masuk Git** — credential bocor bersama repository.
-8. **Backup tidak pernah diuji** — apabila diperlukan, ternyata tidak dapat dipulihkan.
+1. **Membuka port pangkalan data kepada awam** — pangkalan data mesti hanya pada `127.0.0.1` atau soket Unix.
+2. **Log masuk root SSH diaktifkan & pengesahan kata laluan dibenarkan** — guna kunci SSH, nyahaktifkan kedua-duanya.
+3. **Tidak mengemas kini** — CVE lama boleh dieksploitasi walaupun patch wujud.
+4. **WAF dalam mod blocking tanpa penalaan** — mula dari `DetectionOnly`, analisis false positive, aktifkan blocking secara berperingkat.
+5. **Sandaran tidak pernah diuji** — sandaran mesti diuji restore dalam persekitaran terasing.
+6. **Rahsia masuk ke Git** — guna `.gitignore`, pengurus rahsia, dan jika bocor putar kelayakan & bersihkan sejarah.
+7. **Menganggap pengepala sudah mencukupi** — pengepala mengurangkan risiko, tetapi pengesahan input, pengesahan, dan kebenaran tetap wajib dalam aplikasi.
 
-##  End-to-End: Dari OS ke Database dan Runtime
+##  Pengesanan dan Pemulihan: Sempadan Pengukuhan pada Tumpukan Satu-Tingkat
 
-Bahagian ini melengkapkan hardening supaya tidak berhenti di web server, tetapi merangkumi keseluruhan stack.
+### Sempadan keselamatan satu-tingkat
 
-### IDS/IPS
-
-| Komponen | Fungsi | Contoh |
-|---|---|---|
-| IDS | Pengesanan intrusi rangkaian | Suricata, Snort |
-| IPS | Sekatan intrusi secara aktif | Suricata inline mode |
-
-Pasang Suricata pada host atau di hadapan server. Gunakan ruleset Emerging Threats. Monitor alert secara rutin.
-
-### File Integrity Monitoring (FIM)
-
-| Komponen | Fungsi | Contoh |
-|---|---|---|
-| FIM | Pengesanan perubahan fail sistem | AIDE, Tripwire |
-
-Buat baseline hash fail penting (`/etc`, `/usr/bin`, web root). Jalankan semakan berkala melalui cron. Alert jika ada perubahan tidak dijangka.
-
-### Rate Limiting
-
-| Layer | Cara | Tujuan |
-|---|---|---|
-| Web server | Nginx `limit_req`, Apache mod_evasive | Hadkan request per IP |
-| App | Throttle per user/IP dalam kod | Mencegah brute force dan abuse |
-
-### Secrets Management
-
-| Aspek | Cadangan | Kenapa |
-|---|---|---|
-| Penyimpanan | Vault, SOPS, atau secret manager | Bukan .env plain text |
-| Akses | Least privilege, audit log | Mencegah leak |
-| Rotasi | Rotasi credential secara rutin | Mengurangkan window of exposure |
-
-### Database Encryption at Rest
-
-| Kaedah | Deskripsi |
-|---|---|
-| TDE | Transparent Data Encryption (MySQL/PostgreSQL) |
-| LUKS | Enkripsi volume pada tahap OS |
-
-Gunakan LUKS untuk volume data, atau TDE jika database menyokongnya. Enkripsi backup juga wajib.
-
-### Container Hardening (jika gunakan Docker/Podman)
-
-| Amalan | Tujuan |
-|---|---|
-| Drop capabilities | Kurangkan privilege container |
-| Read-only filesystem | Mencegah pengubahsuaian tidak dijangka |
-| Non-root user | Pengasingan privilege |
-| Seccomp profile | Hadkan syscall |
-| Image scanning | Kesanan CVE dalam image (Trivy) |
-
-### NTP / chrony
-
-Sinkronkan waktu server dengan NTP. Log dan audit bergantung pada timestamp yang tepat. Gunakan `chrony` atau `systemd-timesyncd`.
-
-### Kernel Hardening (sysctl)
-
-| Parameter | Nilai | Tujuan |
-|---|---|---|
-| `net.ipv4.conf.all.rp_filter` | 1 | Anti-spoofing |
-| `net.ipv4.tcp_syncookies` | 1 | Anti-SYN flood |
-| `net.ipv4.conf.all.accept_redirects` | 0 | Anti-redirect attack |
-| `kernel.randomize_va_space` | 2 | ASLR |
-
-Nyahaktifkan module kernel yang tidak digunakan. Tetapkan mount options `noexec`, `nosuid`, `nodev` pada partisi sensitif.
-
-### Dependency Scanning
-
-| Alat | Sasaran | Bila |
-|---|---|---|
-| npm audit | Node.js | Semasa build/CI |
-| pip-audit | Python | Semasa build/CI |
-| Trivy | Container image | Semasa build/CI |
-
-Integrasikan dalam pipeline. Sekat deploy jika ada critical finding.
-
-### Centralized Logging / SIEM
-
-Forward log ke Loki, ELK, atau Splunk. Buat alert untuk corak aneh. Retensi minimum 90 hari untuk audit.
-
-### SSH Key Rotation & MFA
-
-Rotasi SSH key secara berkala. Aktifkan MFA (TOTP/PAM) untuk akses admin. Hadkan akses SSH kepada IP tertentu (AllowUsers + firewall).
-
-### Password Policy & Account Lockout
-
-Gunakan `pam_pwquality` untuk kebijakan password. Aktifkan `faillock` untuk lockout selepas login gagal berulang. Audit akaun secara berkala.
-
-### Backup Encryption & Offsite Verification
-
-Enkripsi backup (GPG atau LUKS). Simpan minimum satu salinan offsite. Uji restore secara berkala. Dokumentasikan RTO dan RPO.
-
-##  Network, Logging, Monitoring, Backup, dan Incident Response (Mendalam)
-
-### Batas keselamatan single-tier
-
-Single-tier bermaksud beberapa komponen berkongsi satu OS. Pemisahan proses secara logik tidak sama dengan pemisahan mesin secara keselamatan. Jika runtime dibobol, penyerang boleh mencuri credential DB, menanam persistence, atau mengeksfiltrasi data. Hardening mesti merangkumi pencegahan, containment, pengesanan, dan pemulihan.
+Satu-tingkat bermaksud beberapa komponen berkongsi satu OS. Pengasingan proses secara logik tidak sama dengan pengasingan keselamatan. Jika masa jalan dikompromi, penyerang boleh mencuri kelayakan DB, menanam kegigihan, atau mengekstrak data. Pengukuhan mesti merangkumi pencegahan, pembendungan, pengesanan, dan pemulihan.
 
 ### Network hardening
 

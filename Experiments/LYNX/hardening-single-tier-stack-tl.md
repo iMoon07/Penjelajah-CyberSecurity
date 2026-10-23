@@ -50,7 +50,7 @@ Pinaka-relevant na benchmark para sa single-tier:
 | Container | CIS Docker Benchmark |
 | Orchestration | CIS Kubernetes Benchmark, kung lumago ang stack sa Kubernetes |
 
-> **Note:** Ang CIS Benchmark ay binubuo ng Level 1 (minimum baseline) at Level 2 (mas mahigpit). "100%" ay nangangahulugang pag-apply ng lahat ng Level 1 + Level 2 + sub-control. Sa praktika, pumili ng Level na angkop—Level 1 para sa baseline, Level 2 para sa high-security—pagkatapos i-dokumento kung ano ang inapply at ano ang sinadyang nilaktawan. Huwag i-apply nang sabay-sabay na walang prioridad, suriin bawat kontrol, subukan sa lab, saka i-roll out nang unti-unti.
+> **Note:** Ang CIS Benchmark ay binubuo ng Level 1 (minimum baseline) at Level 2 (mas mahigpit). Ang compliance score ay nakadepende sa benchmark profile, bersyon, at mga kontrol na angkop sa iyong kapaligiran. Ang pag-apply ng Level 1 + Level 2 ay hindi nangangahulugang "100% ligtas"—ang pagsunod ay gabay lamang, hindi garantiya ng ganap na seguridad. Pumili ng angkop na level, i-dokumento ang mga exception, suriin bawat kontrol, subukan sa lab, at i-roll out nang unti-unti.
 
 ##  Operating System
 
@@ -59,28 +59,27 @@ Pinaka-relevant na benchmark para sa single-tier:
 | Update at patch | Regular na i-update ang OS at mga package | Sinasara ang kilalang vulnerabilities |
 | User at privilege | Huwag mag-login bilang root, gumawa ng regular user na may sudo | Binabawasan ang epekto kung may account na na-leak |
 | SSH | I-disable ang root login at password auth, gumamit ng SSH key | Ang SSH ang pangunahing pintuan ng server |
-| Host firewall | Default deny incoming, buksan lamang ang 22, 80, 443 | Binabawasan ang exposure ng port |
+| Host firewall | Default deny incoming, payagan lamang ang mga port na kinakailangan ayon sa arkitektura (hal., 22, 80, 443) | Binabawasan ang exposure ng port |
 | Auto patch | I-enable ang unattended upgrades para sa security patches | Pinapanatiling ligtas ang sistema nang walang manual na interbensyon |
 | Service minimization | I-disable ang mga hindi ginagamit na serbisyo | Mas kaunting serbisyo = mas maliit na attack surface |
 | Kernel parameters | I-apply ang relevant sysctl hardening | Binabawasan ang network-level abuse risk |
 
-> **Important:** Huwag buksan ang database ports (3306, 5432) sa publiko—akses database lamang mula sa localhost o internal network. Isaalang-alang din ang madalas na nakakaligtaang aspekto:
-> - **Footprint & pag-install:** sa pag-install, i-enable ang disk encryption (LUKS) at hiwalay na partisyon para sa `/`, `/var`, `/tmp`, `/home`; ilapat ang mount options na `noexec`, `nosuid`, `nodev` sa sensitive partitions.
-> - **Pamamahala ng memorya & disk:** i-encrypt ang swap, limitahan ang laki ng log, i-rotate ang log, at i-monitor ang paggamit ng disk upang iwasan ang denial-of-service dahil sa punong disk.
-> - **Hardening ng kernel at service:** sysctl parameters, SELinux/AppArmor, bawasan ang service, i-disable ang hindi ginagamit na module.
-> Bakit mahalaga: bawat aspekto ay nagbabawas ng attack surface at pumipigil sa data leak o DoS.
+> **Important:** Huwag buksan ang mga database port (3306, 5432) sa publiko—ang access sa database ay dapat limitado sa `127.0.0.1` o Unix socket. Maaaring paghigpitan ang SSH sa VPN/admin network, at ang HTTP ay maaari lamang gamitin para sa pag-redirect sa HTTPS. Isaalang-alang din ang mga madalas na nakakaligtaang aspeto:
+> - **Pag-install & footprint:** sa pag-install, i-enable ang disk encryption (LUKS) at hiwalay na partisyon para sa `/`, `/var`, `/tmp`, `/home`. Ilapat ang mount options na `noexec`, `nosuid`, `nodev` lamang sa mga sensitibong partisyon ayon sa kanilang tungkulin at laging subukan sa lab (maaaring masira ang ilang aplikasyon).
+> - **Pamamahala ng memorya at disk:** i-encrypt ang swap, limitahan ang laki ng log, i-rotate ang log, at i-monitor ang paggamit ng disk upang maiwasan ang DoS dahil sa puno ang disk.
+> - **Hardening ng kernel at serbisyo:** ilapat ang kinakailangang sysctl parameter, i-enable ang SELinux/AppArmor, bawasan ang serbisyo, i-disable ang hindi ginagamit na module.
 
 ##  Mga Serbisyo, File, at Secret
 
 | Aspeto | Gagawin | Bakit |
 |---|---|---|
-| Minimal services | Alisin o i-disable ang mga hindi ginagamit na serbisyo | Bawat aktibong serbisyo ay potensyal na entry point, mas kaunting serbisyo = mas maliit na attack surface |
-| File permissions | Limitahan ang permission sa config, log, at sensitive files (chmod 600/640, chown root:root) | Pinipigilan ang non-privileged user na magbasa o magbago ng file na naglalaman ng config o sensitive data |
-| Umask | Gumamit ng mahigpit na default permission (umask 027 o 077) | Ang bagong file na ginawa ay hindi agad world-readable, binabawasan ang aksidental na data leak |
-| SELinux/AppArmor | I-enable ayon sa distro (enforcing mode) | Nililimitahan ang kilos ng serbisyo kung na-compromise—kahit na-breach ang serbisyo, limitado ang pinsala sa policy na pinapayagan |
-| Secret | Huwag ilagay ang password o API key sa repo o world-readable files | Ang credential na nabocor sa Git o world-readable files ay nagbibigay-daan sa hindi awtorisadong access |
-| Environment variable | Itago ang secret sa file na may mahigpit na permission o secret manager (Vault, SOPS) | Binabawasan ang risk ng configuration leak at nagpapadali ng audit at credential rotation |
-| `.gitignore` | Idagdag ang `.env`, `*.key`, `*.pem`, `backup/` sa `.gitignore` mula sa simula | Pinipigilan ang credential, SSH key, at backup na aksidental na mapunta sa Git repository |
+| Minimal na serbisyo | Alisin o i-disable ang mga hindi ginagamit na serbisyo | Bawat aktibong serbisyo ay potensyal na entry point, mas kaunting serbisyo = mas maliit na attack surface |
+| Mga pahintulot ng file | Limitahan ang pahintulot sa config, log, at sensitibong file (chmod 600/640, chown root:root) | Pinipigilan ang non-privileged user na magbasa o magbago ng file na may config o sensitibong data |
+| Umask | Gumamit ng mahigpit na default na pahintulot (umask 027 o 077) | Ang bagong file ay hindi agad world-readable, binabawasan ang aksidenteng pag-leak ng data |
+| SELinux/AppArmor | I-enable ayon sa distro (enforcing mode) | Nililimitahan ang kilos ng serbisyo kung na-compromise—kahit nabigyan ng access ang serbisyo, limitado ang pinsala sa pinapayagang patakaran |
+| Mga lihim | Huwag ilagay ang password o API key sa repo o sa mga file na mababasa ng lahat | Ang mga credential na nalabas ay nagbibigay-daan sa hindi awtorisadong access |
+| Pag-iimbak ng lihim | Itago sa file na may mahigpit na pahintulot o secret manager (Vault, SOPS). Limitahan ang access, i-rotate, at i-audit. | Binabawasan ang panganib ng leak, nagpapadali ng rotation, at nagpapanatili ng audit trail |
+| `.gitignore` | Idagdag ang `.env`, `*.key`, `*.pem`, `backup/` sa `.gitignore` mula sa simula | Pinipigilan ang mga credential, SSH key, at backup na mapunta sa Git nang hindi sinasadya |
 
 > **Warning:** Ang `.env`, database credential, SSH key, at backup ay hindi dapat mapunta sa Git. Gumamit ng `.gitignore` mula sa simula, at kung na-commit na, i-rotate agad ang credential (ituring na bocor).
 
@@ -91,38 +90,48 @@ Pinaka-relevant na benchmark para sa single-tier:
 4. **I-audit** — suriin ang access log upang malaman kung ginamit ang secret nang hindi awtorisado.
 5. **Pigilan** — magdagdag ng secret scanning (gitleaks, trufflehog) sa CI/CD at pre-commit hook.
 
-##  Web Server Hardening
+##  Hardening ng Web Server at Web Client
 
-| Web server | Mahahalagang setting | Layunin |
+### Web Server (server-side)
+
+| Web Server | Mahahalagang setting | Layunin |
 |---|---|---|
-| Nginx | `server_tokens off`, security headers, limitahan ang HTTP methods, i-disable ang autoindex | Itago ang version at limitahan ang mapanganib na request |
-| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security headers | Itago ang impormasyon ng server at tanggihan ang mapanganib na method |
-| Caddy | Security headers, reverse proxy na may automatic TLS | Simpleng config na may ligtas na default |
+| Nginx | `server_tokens off`, security headers sa server, limitahan ang HTTP methods, i-disable ang autoindex, modern TLS, rate limiting (`limit_req`), WAF (ModSecurity) | Itago ang bersyon, limitahan ang mapanganib na request, protektahan laban sa abuse/DDoS |
+| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security headers sa server, modern TLS, ModSecurity WAF | Itago ang impormasyon ng server at tanggihan ang mapanganib na method |
+| Caddy | Security headers, reverse proxy na may awtomatikong TLS | Simpleng config na may ligtas na default |
 
-Mga security header na dapat meron:
-
-- `X-Frame-Options: SAMEORIGIN` — pinipigilan ang clickjacking
+**Mga karaniwang security header na itinakda sa web server:**
+- `Strict-Transport-Security (HSTS)` — pinipilit ang HTTPS (tingnan ang seksyon ng TLS)
 - `X-Content-Type-Options: nosniff` — pinipigilan ang MIME sniffing
-- `Referrer-Policy: strict-origin-when-cross-origin` — kontrol sa referrer
-- `Permissions-Policy` — limitahan ang access sa browser features
-- `Content-Security-Policy (CSP)` — limitahan ang sources para sa script/style/image, mitigasyon ng XSS
-- `Strict-Transport-Security (HSTS)` — pilitin ang HTTPS
+- `X-Frame-Options: SAMEORIGIN` — pinipigilan ang clickjacking (maaaring dagdagan/palitan ng `Content-Security-Policy: frame-ancestors`)
+- `Referrer-Policy: strict-origin-when-cross-origin` — kontrol sa pag-leak ng referrer
+- `Permissions-Policy` — limitahan ang access sa mga feature ng browser
+- `Content-Security-Policy (CSP)` — limitahan ang mga source ng script/style/image upang mabawasan ang XSS
 
-**Client-side / browser hardening:**
-- I-enable ang mahigpit na CSP; iwasan ang `unsafe-inline`/`unsafe-eval`.
-- Gumamit ng Subresource Integrity (SRI) para sa CDN assets.
-- Itakda ang cookie na may `Secure`, `HttpOnly`, `SameSite=Strict/Lax`.
-- I-validate ang input sa client (UX) at server (seguridad).
+> **Tala:** Ang mga header ay nagbabawas ng ilang panganib, ngunit **hindi pinapalitan** ang input validation, output encoding, authentication, at authorization. Nanatili ang mga iyon sa responsibilidad ng aplikasyon.
 
-**Rate limiting & WAF:**
+**Rate limiting at WAF (server-side):**
 - Limitahan ang request bawat IP/user sa web server (`limit_req`, `mod_evasive`).
 - Mag-deploy ng WAF (ModSecurity/OWASP CRS) para salain ang SQLi, XSS, at mapanganib na payload.
-- I-block ang paulit-ulit na abusive IP (fail2ban).
+- I-block ang paulit-ulit na mapang-abusong IP (fail2ban).
 
 **Reverse proxy / load balancer (kung mayroon):**
-- I-forward nang tama ang `X-Forwarded-For`; huwag basta-basta maniwala.
-- Limitahan ang admin endpoint sa specific IP.
+- I-forward nang tama ang `X-Forwarded-For`; huwag basta maniwala.
+- Limitahan ang admin endpoint sa mga tinukoy na IP.
 - I-enable ang access at error logging.
+
+### Hardening ng Web Client / Browser
+
+Pagtuunan ng pansin ang mga kontrol na **hindi malulutas ng mga header ng server lamang**:
+- **Mahigpit na CSP**: iwasan ang `unsafe-inline`/`unsafe-eval`; gumamit ng nonce/hash.
+- **Subresource Integrity (SRI)**: i-hash ang mga CDN asset upang maiwasan ang pag-tamper.
+- **Seguridad ng cookie**: `Secure`, `HttpOnly`, `SameSite=Strict/Lax`, tamang domain/path, maikli ang tagal.
+- **Anti-CSRF token** para sa mga request na nagbabago ng estado.
+- **Pamamahala ng session**: baguhin ang session ID pagkatapos mag-login, idle/absolute timeout, i-invalidate sa pag-logout.
+- **CORS**: paghigpitan nang mahigpit ang origin; huwag gumamit ng wildcard `*` para sa sensitibong endpoint.
+- **Storage**: iwasan ang pag-imbak ng sensitibong token sa `localStorage`/`sessionStorage` (panganib ng XSS), mas mainam na gumamit ng `HttpOnly` cookie.
+- **Mga third-party script**: i-audit/bawasan, gumamit ng SRI, i-sandbox ang iframe.
+- **Mixed content**: i-block ang HTTP resource sa HTTPS na pahina.
 
 ##  TLS / HTTPS
 
@@ -173,16 +182,16 @@ Mga security header na dapat meron:
 |---|---|---|
 | Secure installation | Patakbuhin ang built-in secure installation ng database | Inaalis ang anonymous user, test database, at remote root |
 | Least privilege | Gumawa ng app user na may limitadong karapatan: `SELECT`, `INSERT`, `UPDATE`, `DELETE` | Kung na-leak, limitado ang epekto |
-| Bind address | Ang database ay nakikinig lamang sa `127.0.0.1` | Hindi maabot mula sa labas |
+| Bind address | Ang database ay nakikinig lamang sa `127.0.0.1` o Unix socket | Hindi maabot mula sa labas |
 | Password | Gumamit ng malakas na password, sinusuportahan ng PostgreSQL ang SCRAM-SHA-256 | Pinipigilan ang brute force |
 | Remote access | I-disable ang remote login para sa database root | Napakadelikado ng remote root |
 | Backup | Regular na backup at restore test | Ang hardening ay hindi nagpoprotekta laban sa human error o disk failure |
-| Encryption at rest | I-enable ang TDE (kung sinusuportahan) o LUKS sa data volumes | Pinoprotektahan ang data kung ninakaw ang disk |
-| Audit logging | I-enable ang query log para sa sensitive operations (DDL, DML sa key tables) | Natutuklasan ang hindi awtorisadong access at nakakasunod sa compliance |
-| Connection security | Gumamit ng TLS para sa database connections (kahit localhost sa multi-tenant setup) | Pinipigilan ang sniffing ng credential/data |
+| Encryption at rest | I-enable ang TDE *kung sinusuportahan* ng engine/bersyon/edisyon, kung hindi gumamit ng LUKS sa data volume + encrypted na backup | Pinoprotektahan ang data kung ninakaw ang disk; iba-iba ang suporta ng TDE sa MySQL/MariaDB/PostgreSQL |
+| Audit logging | I-enable ang query log para sa sensitibong operasyon (DDL, DML sa mga key table) | Natutuklasan ang hindi awtorisadong access at nakakasunod sa compliance |
+| Connection security | Gumamit ng TLS para sa koneksyon sa database (kahit localhost sa multi-tenant setup) | Pinipigilan ang sniffing ng credential/data |
 | Query monitoring | I-monitor ang mabagal na query at anomalya (pg_stat_statements, slow query log) | Natutuklasan ang abuse o injection na nakalusot sa WAF |
-| Backup encryption | I-encrypt ang backup (GPG/LUKS), itago offsite, subukan ang restore | Pinipigilan ang data leak mula sa ninakaw na backup |
-| Network isolation | Huwag i-expose ang DB ports sa publiko, gumamit ng firewall/VPN para sa admin access | Binabawasan ang attack surface |
+| Backup encryption | I-encrypt ang backup (GPG/LUKS), itago sa labas, subukan ang restore | Pinipigilan ang data leak mula sa ninakaw na backup |
+| Network isolation | Huwag i-expose ang DB port sa publiko, gumamit ng firewall/VPN para sa admin access | Binabawasan ang attack surface |
 
 **Praktikal na tala:**
 - Maghiwalay ng DB user bawat app, huwag gumamit ng root para sa app.
@@ -236,129 +245,33 @@ Ang incident response ay hindi kailangang maging kumplikado para sa lab. Ang mah
 
 ##  Pag-verify ng Hardening
 
-Checklist pagkatapos ng hardening:
+Gamitin ang `check → execute → verify`:
 
-- [ ] Tanging port 22, 80, 443 lamang ang bukas
-- [ ] Ang database ay nakikinig lamang sa `127.0.0.1`
-- [ ] Tinanggihan ang SSH root login
-- [ ] Tinanggihan ang SSH password auth
-- [ ] Na-verify ang TLS configuration gamit ang OpenSSL o testssl.sh
-- [ ] May security headers sa response
-- [ ] Ang WAF `DetectionOnly` ay nagtatala ng test request
-- [ ] Aktibo ang Fail2ban at na-test na ang ban rules sa lab
-- [ ] Ang audit log ay nagtatala ng pagbabago sa sensitive files
-- [ ] Tumatakbo ang database backup
-- [ ] Nasubukan na ang restore ng backup
-- [ ] Walang secret sa repository o world-readable files
+| Kontrol | Check | Execute | Verify |
+|---|---|---|---|
+| Mga port at firewall | Ilista ang bukas na port (`ss -tulnp`, `ufw status`) | Default deny + payagan lamang ang kinakailangan | Tanging mga aprubadong port lamang ang bukas |
+| Access sa DB | Suriin ang bind address | I-bind sa `127.0.0.1` o Unix socket, tanggihan ang pampublikong access | Walang koneksyon sa DB mula sa labas ng host |
+| SSH | Suriin ang sshd config | I-disable ang `PermitRootLogin`, i-disable ang password auth, gumamit ng key | Tinanggihan ang root at password auth |
+| TLS | Suriin ang cert/cipher | I-configure ang TLS 1.2/1.3, modern ciphers, HSTS, HTTP→HTTPS | Subukan gamit ang `openssl s_client` o testssl.sh (target A) |
+| Security headers | Suriin ang HTTP response | Itakda ang headers sa web server | Nasa response ang mga headers ayon sa config |
+| WAF | Suriin ang mode ng WAF | Magsimula sa `DetectionOnly`, i-tune, unti-unting gawing `Blocking` | Na-log ang test request, na-address ang false positive |
+| Fail2ban | Suriin ang status ng jail | I-enable ang nauugnay na jail | Na-test sa lab (gumagana ang ban/unban) |
+| Audit/FIM | Suriin ang `auditd`, AIDE/tripwire | Gumawa ng baseline at audit rule para sa kritikal na file/config | Nasusubaybayan/na-alert ang pagbabago |
+| Egress | Suriin ang outbound na koneksyon | Obserbahan → ilapat ang allowlist/deny nang unti-unti kung kinakailangan | Tanging pinapayagang destinasyon lamang ang maa-access |
+| Backup at restore | Suriin ang iskedyul ng backup | I-automate, i-encrypt, hiwalay na storage, subukan ang restore | Ang restore sa isolated env ay matagumpay at gumagana ang app |
+| Mga lihim | Suriin ang repo/file | Siguruhin na hindi na-commit ang `.env`/key, mahigpit ang pahintulot | Malinis ang scan/history, tama ang pahintulot |
 
 ##  Mga Karaniwang Pagkakamali
 
-1. **Pagbubukas ng database port sa publiko** — pinakamadaling target.
-2. **SSH root login na naka-enable** — target ng brute force.
-3. **Hindi nag-a-update** — lumang CVE na may patch na.
-4. **WAF sa blocking mode nang walang tuning** — false positive na nagbablock sa totoong user.
-5. **Walang backup** — ang hardening ay hindi nagpoprotekta laban sa human error.
-6. **Hindi mino-monitor ang log** — hindi nadetect ang atake.
-7. **Secret sa Git** — na-leak ang credential kasama ng repository.
-8. **Hindi kailanman nate-test ang backup** — kapag kailangan, hindi ma-restore.
+1. **Pagbubukas ng database port sa publiko** — ang database ay dapat lamang sa `127.0.0.1` o Unix socket.
+2. **Naka-enable ang SSH root login at pinapayagan ang password auth** — gumamit ng SSH key, i-disable ang dalawa.
+3. **Hindi nag-a-update** — ang mga lumang CVE ay maaaring ma-exploit kahit may patch na.
+4. **WAF sa blocking mode nang walang tuning** — magsimula sa `DetectionOnly`, suriin ang false positive, i-enable ang blocking nang unti-unti.
+5. **Hindi kailanman nasubukan ang backup** — kinakailangan na subukan ang restore sa isolated na kapaligiran.
+6. **Mga lihim sa Git** — gumamit ng `.gitignore`, secret manager, at kung nalabas na i-rotate ang credential at linisin ang history.
+7. **Pag-aakala na sapat na ang mga header** — binabawasan ng mga header ang panganib, ngunit kinakailangan pa rin ang input validation, authentication, at authorization sa aplikasyon.
 
-##  End-to-End: Mula OS Hanggang Database at Runtime
-
-Kinokompleto ng bahaging ito ang hardening para hindi ito tumigil sa web server kundi sakupin ang buong stack.
-
-### IDS/IPS
-
-| Komponente | Layunin | Halimbawa |
-|---|---|---|
-| IDS | Network intrusion detection | Suricata, Snort |
-| IPS | Aktibong pag-block ng intrusion | Suricata inline mode |
-
-I-install ang Suricata sa host o sa harap ng server. Gumamit ng Emerging Threats ruleset. I-monitor nang regular ang mga alert.
-
-### File Integrity Monitoring (FIM)
-
-| Komponente | Layunin | Halimbawa |
-|---|---|---|
-| FIM | Deteksyon ng pagbabago sa system files | AIDE, Tripwire |
-
-Gumawa ng baseline hash ng importanteng files (`/etc`, `/usr/bin`, web root). Patakbuhin nang pana-panahon ang check gamit ang cron. Mag-alert kung may hindi inaasahang pagbabago.
-
-### Rate Limiting
-
-| Layer | Paraan | Layunin |
-|---|---|---|
-| Web server | Nginx `limit_req`, Apache mod_evasive | Limitahan ang request bawat IP |
-| App | Throttle bawat user/IP sa code | Pigilan ang brute force at abuse |
-
-### Secrets Management
-
-| Aspeto | Rekomendasyon | Bakit |
-|---|---|---|
-| Storage | Vault, SOPS, o secret manager | Hindi plain-text .env |
-| Access | Least privilege, audit log | Pigilan ang leak |
-| Rotation | Regular na pag-rotate ng credential | Bawasan ang window of exposure |
-
-### Database Encryption at Rest
-
-| Paraan | Paglalarawan |
-|---|---|
-| TDE | Transparent Data Encryption (MySQL/PostgreSQL) |
-| LUKS | OS-level volume encryption |
-
-Gumamit ng LUKS para sa data volumes, o TDE kung sinusuportahan ng database. Kinakailangan ding i-encrypt ang backup.
-
-### Container Hardening (kung gumagamit ng Docker/Podman)
-
-| Practice | Layunin |
-|---|---|
-| Drop capabilities | Bawasan ang privilege ng container |
-| Read-only filesystem | Pigilan ang hindi inaasahang pagbabago |
-| Non-root user | Privilege isolation |
-| Seccomp profile | Limitahan ang syscall |
-| Image scanning | Detektahan ang CVE sa image (Trivy) |
-
-### NTP / chrony
-
-I-sync ang oras ng server gamit ang NTP. Nakadepende sa tamang timestamp ang log at audit. Gumamit ng `chrony` o `systemd-timesyncd`.
-
-### Kernel Hardening (sysctl)
-
-| Parameter | Halaga | Layunin |
-|---|---|---|
-| `net.ipv4.conf.all.rp_filter` | 1 | Anti-spoofing |
-| `net.ipv4.tcp_syncookies` | 1 | Anti-SYN flood |
-| `net.ipv4.conf.all.accept_redirects` | 0 | Anti-redirect attack |
-| `kernel.randomize_va_space` | 2 | ASLR |
-
-I-disable ang mga hindi ginagamit na kernel module. Itakda ang mount options na `noexec`, `nosuid`, `nodev` sa sensitive partitions.
-
-### Dependency Scanning
-
-| Tool | Target | Kailan |
-|---|---|---|
-| npm audit | Node.js | Sa build/CI |
-| pip-audit | Python | Sa build/CI |
-| Trivy | Container image | Sa build/CI |
-
-I-integrate sa pipeline. I-block ang deploy kung may critical finding.
-
-### Centralized Logging / SIEM
-
-I-forward ang log sa Loki, ELK, o Splunk. Gumawa ng alert para sa anomalous patterns. Mag-retain ng hindi bababa sa 90 araw para sa audit.
-
-### SSH Key Rotation & MFA
-
-Regular na i-rotate ang SSH keys. I-enable ang MFA (TOTP/PAM) para sa admin access. Limitahan ang SSH access sa specific IPs (AllowUsers + firewall).
-
-### Password Policy & Account Lockout
-
-Gumamit ng `pam_pwquality` para sa password policy. I-enable ang `faillock` para sa lockout pagkatapos ng paulit-ulit na failed login. Regular na i-audit ang mga account.
-
-### Backup Encryption & Offsite Verification
-
-I-encrypt ang backup (GPG o LUKS). Magtago ng hindi bababa sa isang kopya offsite. Regular na subukan ang restore. I-dokumento ang RTO at RPO.
-
-##  Network, Logging, Monitoring, Backup, at Incident Response (Malalim)
+##  Pagtuklas at Pagbawi: Mga Hangganan ng Hardening sa Single-Tier Stack
 
 ### Hangganan ng seguridad ng single-tier
 

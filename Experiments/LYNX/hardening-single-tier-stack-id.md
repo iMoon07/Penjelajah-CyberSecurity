@@ -52,7 +52,7 @@ Untuk single-tier, benchmark yang paling relevan:
 
 CIS Benchmarks adalah rekomendasi konfigurasi aman yang dikembangkan melalui konsensus praktisi keamanan dan tersedia gratis dalam format PDF untuk penggunaan non-komersial. CIS Controls memetakan praktik tersebut ke dalam 18 kontrol prioritas, dari inventory asset sampai penetration testing. [cisecurity](https://www.cisecurity.org/cis-benchmarks-overview)
 
-> **Note:** CIS Benchmark terdiri dari Level 1 (baseline minimum) dan Level 2 (lebih ketat). "100%" berarti menerapkan seluruh kontrol Level 1 + Level 2 + semua sub-control. Dalam praktik, pilih Level sesuai kebutuhan—Level 1 untuk baseline, Level 2 untuk high-security—lalu dokumentasikan apa yang diterapkan dan apa yang sengaja dilewati. Jangan terapkan semua sekaligus tanpa prioritas, evaluasi per kontrol, uji di lab, baru terapkan bertahap.
+> **Note:** CIS Benchmark terdiri dari Level 1 (baseline minimum) dan Level 2 (lebih ketat). Skor kepatuhan bergantung pada profil benchmark, versi, dan kontrol yang berlaku untuk lingkungan kamu. Menerapkan Level 1 + Level 2 tidak berarti "100% aman" — kepatuhan adalah acuan, bukan jaminan keamanan absolut. Pilih Level sesuai kebutuhan, dokumentasikan pengecualian, evaluasi per kontrol, uji di lab, lalu terapkan bertahap.
 
 ##  Sistem Operasi
 
@@ -61,16 +61,15 @@ CIS Benchmarks adalah rekomendasi konfigurasi aman yang dikembangkan melalui kon
 | Update dan patch | Rutin perbarui OS dan paket | Menutup celah yang sudah diketahui |
 | User dan privilege | Jangan login root, buat user biasa dengan sudo | Mengurangi dampak jika akun bocor |
 | SSH | Nonaktifkan root login dan password auth, pakai SSH key | SSH adalah pintu masuk utama server |
-| Firewall host | Default deny incoming, buka hanya 22, 80, 443 | Mengurangi exposure port |
+| Firewall host | Default deny incoming, izinkan hanya port yang dibutuhkan sesuai arsitektur (contoh: 22, 80, 443) | Mengurangi exposure port |
 | Auto patch | Aktifkan unattended upgrades untuk patch keamanan | Menjaga sistem tetap aman tanpa intervensi manual |
 | Service minimization | Matikan service yang tidak dipakai | Semakin sedikit service, semakin kecil attack surface |
 | Kernel parameter | Terapkan sysctl hardening yang relevan | Mengurangi risiko network-level abuse |
 
-> **Important:** Jangan buka port database (3306, 5432) ke publik—database hanya localhost atau jaringan internal. Selain itu, perhatikan aspek lain yang sering terlupakan:
-- **Footprint & instalasi:** saat instalasi, pilih enkripsi disk (LUKS) dan partisi terpisah untuk `/`, `/var`, `/tmp`, `/home`; gunakan mount options `noexec`, `nosuid`, `nodev` pada partisi sensitif.
+> **Important:** Jangan buka port database (3306, 5432) ke publik—database hanya boleh diakses via `127.0.0.1` atau Unix socket. SSH bisa dibatasi ke VPN/jaringan admin. HTTP bisa cukup digunakan untuk redirect ke HTTPS. Selain itu, perhatikan aspek lain yang sering terlupakan:
+- **Footprint & instalasi:** saat instalasi, pilih enkripsi disk (LUKS) dan partisi terpisah untuk `/`, `/var`, `/tmp`, `/home`. Penerapan mount options `noexec`, `nosuid`, `nodev` hanya pada partisi sensitif sesuai fungsinya, wajib diuji di lab karena bisa merusak aplikasi tertentu.
 - **Manajemen memori & disk:** atur swap dengan enkripsi, batasi ukuran log, rotasi log, dan monitor penggunaan disk agar tidak denial-of-service akibat penuh.
 - **Hardening kernel & service:** kernel parameter (sysctl), SELinux/AppArmor, minimasi service, dan disable module yang tidak dipakai.
-Kenapa penting: setiap aspek ini mengurangi attack surface dan mencegah kebocoran data atau DoS.
 
 ##  Service, File, dan Secret
 
@@ -81,7 +80,7 @@ Kenapa penting: setiap aspek ini mengurangi attack surface dan mencegah kebocora
 | Umask | Gunakan default permission ketat (umask 027 atau 077) | File baru yang dibuat tidak langsung world-readable, mengurangi kebocoran data tak sengaja |
 | SELinux/AppArmor | Aktifkan sesuai distro (enforcing mode) | Membatasi perilaku service jika terkena compromise—meskipun service dibobol, kerusakan terbatas pada policy yang diizinkan |
 | Secret | Jangan taruh password atau API key di repo atau file world-readable | Credential yang bocor ke Git atau file yang bisa dibaca semua user memungkinkan akses tidak sah |
-| Environment variable | Simpan secret di file dengan permission ketat atau secret manager (Vault, SOPS) | Mengurangi risiko kebocoran konfigurasi dan memudahkan audit serta rotasi credential |
+| Penyimpanan secret | Simpan di file dengan permission ketat, atau gunakan secret manager (Vault, SOPS). Batasi akses, rotasi, dan audit. | Mengurangi risiko kebocoran, memudahkan rotasi, dan menjaga jejak akses |
 | `.gitignore` | Tambahkan `.env`, `*.key`, `*.pem`, `backup/` ke `.gitignore` sejak awal | Mencegah credential, SSH key, dan backup tidak sengaja masuk ke Git repository |
 
 > **Warning:** File `.env`, database credential, SSH key, dan backup tidak boleh masuk ke Git. Gunakan `.gitignore` sejak awal, dan jika sudah terlanjur commit, rotasi credential segera (anggap bocor).
@@ -99,17 +98,19 @@ Kenapa penting: setiap aspek ini mengurangi attack surface dan mencegah kebocora
 
 | Web server | Pengaturan penting | Tujuan |
 |---|---|---|
-| Nginx | `server_tokens off`, security headers, batasi method HTTP, nonaktifkan autoindex, TLS modern, rate limiting (`limit_req`), WAF (ModSecurity) | Menyembunyikan versi, membatasi request berbahaya, melindungi dari DDoS/abuse |
-| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security headers, TLS modern, ModSecurity WAF | Menyembunyikan informasi server dan menolak method berbahaya |
+| Nginx | `server_tokens off`, terapkan security header di server, batasi method HTTP, nonaktifkan autoindex, TLS modern, rate limiting (`limit_req`), WAF (ModSecurity) | Menyembunyikan versi, membatasi request berbahaya, melindungi dari DDoS/abuse |
+| Apache | `ServerTokens Prod`, `ServerSignature Off`, `TraceEnable Off`, security header di server, TLS modern, ModSecurity WAF | Menyembunyikan informasi server dan menolak method berbahaya |
 | Caddy | Header security, reverse proxy dengan TLS otomatis, security headers | Konfigurasi sederhana dengan default yang aman |
 
-**Security headers (web server + aplikasi):**
-- `X-Frame-Options: SAMEORIGIN` — mencegah clickjacking
+**Security header yang umum diterapkan di web server:**
+- `Strict-Transport-Security (HSTS)` — paksa HTTPS (detail di bagian TLS / HTTPS)
 - `X-Content-Type-Options: nosniff` — mencegah MIME sniffing
+- `X-Frame-Options: SAMEORIGIN` — mencegah clickjacking (bisa digantikan/dilengkapi oleh `Content-Security-Policy: frame-ancestors`)
 - `Referrer-Policy: strict-origin-when-cross-origin` — kontrol referrer
 - `Permissions-Policy` — batasi akses fitur browser (camera, mic, geolocation)
-- `Content-Security-Policy (CSP)` — batasi sumber script/style/image, mitigasi XSS
-- `Strict-Transport-Security (HSTS)` — paksa HTTPS (detail di bagian 6)
+- `Content-Security-Policy (CSP)` — batasi sumber script/style/image untuk mitigasi XSS
+
+> **Catatan:** Header membantu mengurangi risiko tertentu, tetapi **tidak menggantikan** validasi input, output encoding, autentikasi, dan otorisasi. Tanggung jawab itu tetap ada di aplikasi.
 
 **Rate limiting & WAF (server-side):**
 - Batasi request per IP/user di web server (`limit_req`, `mod_evasive`).
@@ -117,26 +118,22 @@ Kenapa penting: setiap aspek ini mengurangi attack surface dan mencegah kebocora
 - Blokir IP berulang yang abusive (fail2ban).
 
 **Reverse proxy / load balancer (jika ada):**
-- Teruskan header `X-Forwarded-For` dengan benar; jangan percaya blindly.
+- Teruskan header `X-Forwarded-For` dengan benar; jangan percaya secara membabi buta.
 - Batasi akses admin endpoint ke IP tertentu.
 - Aktifkan logging akses dan error.
 
 ### Web Client / Browser-side Hardening
 
+Fokus pada kontrol yang **tidak bisa diselesaikan hanya dengan header server**:
 - **CSP ketat**: hindari `unsafe-inline`/`unsafe-eval`; gunakan nonce/hash.
 - **Subresource Integrity (SRI)**: hash untuk CDN assets agar tidak dimanipulasi.
 - **Cookie security**: `Secure`, `HttpOnly`, `SameSite=Strict/Lax`, domain/path tepat, expiry pendek.
-- **Clickjacking**: `X-Frame-Options` + CSP `frame-ancestors`.
-- **MIME sniffing**: `X-Content-Type-Options: nosniff`.
-- **Referrer control**: `Referrer-Policy` atau `no-referrer`.
-- **Permissions-Policy**: batasi camera, mic, geolocation, payment, USB.
-- **CORS**: batasi origin; jangan wildcard `*` untuk endpoint sensitif.
-- **Input validation**: sanitasi/escape output (UX, bukan keamanan utama — server tetap wajib validasi).
 - **Anti-CSRF token** untuk request yang mengubah state.
 - **Session management**: regenerasi session ID setelah login, timeout idle/absolute, invalidasi saat logout.
-- **Storage**: hindari simpan token sensitif di localStorage/sessionStorage (risk XSS), prefer httpOnly cookie.
+- **CORS**: batasi origin secara ketat; jangan gunakan wildcard `*` untuk endpoint sensitif.
+- **Storage**: hindari menyimpan token sensitif di `localStorage`/`sessionStorage` (risiko XSS), lebih baik pakai `HttpOnly` cookie.
 - **Third-party scripts**: audit & minimalkan, gunakan SRI, sandbox iframe.
-- **Mixed content**: blokir HTTP resources di halaman HTTPS.
+- **Mixed content**: blokir resource HTTP di halaman HTTPS.
 
 ##  TLS / HTTPS
 
@@ -187,11 +184,11 @@ Kenapa penting: setiap aspek ini mengurangi attack surface dan mencegah kebocora
 |---|---|---|
 | Secure installation | Jalankan secure installation bawaan database | Hapus anonymous user, test database, dan remote root |
 | Least privilege | Buat user aplikasi dengan hak terbatas: SELECT, INSERT, UPDATE, DELETE | Jika bocor, dampaknya terbatas |
-| Bind address | Database hanya listen di `127.0.0.1` | Database tidak bisa diakses dari luar |
+| Bind address | Database hanya listen di `127.0.0.1` atau pakai Unix socket | Database tidak bisa diakses dari luar |
 | Password | Gunakan password kuat, PostgreSQL mendukung SCRAM-SHA-256 | Mencegah brute force |
 | Remote access | Nonaktifkan remote login untuk root database | Root dari luar sangat berbahaya |
 | Backup | Backup rutin dan tes restore | Hardening tidak melindungi dari human error atau kerusakan disk |
-| Encryption at rest | Aktifkan TDE (jika didukung) atau LUKS pada volume data | Melindungi data jika disk dicuri |
+| Encryption at rest | Aktifkan TDE *jika didukung* oleh engine, versi, dan edisi database. Jika tidak, enkripsi volume (LUKS) + enkripsi backup | Perlindungan data jika disk dicuri; dukungan TDE bervariasi (MySQL/MariaDB/PostgreSQL) |
 | Audit logging | Aktifkan query log untuk operasi sensitif (DDL, DML pada tabel penting) | Deteksi akses tidak sah dan memenuhi compliance |
 | Connection security | Gunakan TLS untuk koneksi database (bahkan localhost jika multi-tenant) | Mencegah sniffing credential/data |
 | Query monitoring | Monitor query lambat dan anomali (pg_stat_statements, slow query log) | Deteksi abuse atau injeksi yang lolos WAF |
@@ -250,129 +247,33 @@ Incident response tidak harus kompleks untuk lab. Yang penting kamu tahu: **apa 
 
 ##  Verifikasi Hardening
 
-Checklist setelah hardening:
+Gunakan pendekatan `check → execute → verify`:
 
-- [ ] Hanya port 22, 80, 443 yang terbuka
-- [ ] Database hanya listen di `127.0.0.1`
-- [ ] SSH root login ditolak
-- [ ] Password auth SSH ditolak
-- [ ] TLS configuration diverifikasi dengan OpenSSL atau testssl.sh
-- [ ] Security headers ada di response
-- [ ] WAF `DetectionOnly` mencatat request uji
-- [ ] Fail2ban aktif dan aturan ban sudah diuji di lab
-- [ ] Audit log mencatat perubahan file sensitif
-- [ ] Backup database berjalan
-- [ ] Restore backup sudah pernah diuji
-- [ ] Tidak ada secret di repository atau file world-readable
+| Kontrol | Check | Execute | Verify |
+|---|---|---|---|
+| Port & firewall | Cek port terbuka (`ss -tulnp`, `ufw status`) | Terapkan default deny + izinkan hanya port yang dibutuhkan | Hanya port yang disetujui yang terbuka |
+| Akses DB | Cek bind address | Pastikan listen di `127.0.0.1` atau Unix socket, tolak akses publik | Tidak ada koneksi DB dari luar host |
+| SSH | Cek config sshd | Nonaktifkan `PermitRootLogin no`, `PasswordAuthentication no`, pakai key | Login root & password auth ditolak |
+| TLS | Cek sertifikat & cipher | Konfigurasi TLS 1.2/1.3, cipher modern, HSTS, redirect HTTP→HTTPS | Tes dengan `openssl s_client` atau testssl.sh (target grade A) |
+| Security header | Cek response HTTP | Terapkan header di web server | Header muncul sesuai konfigurasi |
+| WAF | Cek mode WAF | Mulai dari `DetectionOnly`, tuning, lalu `Blocking` bertahap | Log request uji tercatat, false positive ditangani |
+| Fail2ban | Cek status jail | Aktifkan jail relevan | Uji di lab (ban/unban berfungsi) |
+| Audit/FIM | Cek `auditd`, AIDE/tripwire | Buat baseline & aturan audit untuk file/konfigurasi kritis | Perubahan terpantau & alert muncul |
+| Egress | Cek koneksi keluar | Terapkan observasi → allowlist/deny bertahap sesuai kebutuhan | Hanya tujuan yang diizinkan yang bisa diakses |
+| Backup & restore | Cek jadwal backup | Otomatisasi backup, enkripsi, simpan terpisah, uji restore | Restore di lingkungan terisolasi berhasil & aplikasi berfungsi |
+| Secret | Cek repo & file | Pastikan `.env`/key tidak ter-commit, permission ketat | `git log`/scan bersih, permission tepat |
 
 ##  Kesalahan Umum
 
-1. **Buka port database ke publik** — target paling mudah.
-2. **Root login SSH aktif** — target brute force.
-3. **Tidak update** — CVE lama yang sebenarnya sudah ada patch.
-4. **WAF langsung blocking tanpa tuning** — false positive memblokir user asli.
-5. **Tidak ada backup** — hardening tidak melindungi dari human error.
-6. **Log tidak dimonitor** — serangan tidak terdeteksi.
-7. **Secret masuk Git** — credential bocor bersama repository.
-8. **Backup tidak pernah dites** — saat dibutuhkan, ternyata tidak bisa dipulihkan.
+1. **Buka port database ke publik** — database harus hanya di `127.0.0.1` atau Unix socket.
+2. **Root login SSH aktif & password auth diizinkan** — pakai SSH key, nonaktifkan keduanya.
+3. **Tidak update** — CVE lama bisa dieksploitasi padahal sudah ada patch.
+4. **WAF langsung blocking tanpa tuning** — mulai dari `DetectionOnly`, analisis false positive, baru blocking bertahatp.
+5. **Backup tidak pernah dites** — backup harus diuji restore di lingkungan terisolasi.
+6. **Secret masuk Git** — gunakan `.gitignore`, secret manager, dan jika bocor rotasi + bersihkan history.
+7. **Menganggap header sudah cukup** — header mengurangi risiko, tapi validasi input, autentikasi, otorisasi tetap wajib di aplikasi.
 
-##  End-to-End: Dari OS Sampai Database dan Runtime
-
-Bagian ini melengkapi hardening agar tidak hanya berhenti di web server, tetapi mencakup seluruh stack.
-
-### IDS/IPS
-
-| Komponen | Fungsi | Contoh |
-|---|---|---|
-| IDS | Deteksi intrusi jaringan | Suricata, Snort |
-| IPS | Blokir intrusi secara aktif | Suricata inline mode |
-
-Pasang Suricata di host atau di depan server. Gunakan ruleset Emerging Threats. Monitor alert secara rutin.
-
-### File Integrity Monitoring (FIM)
-
-| Komponen | Fungsi | Contoh |
-|---|---|---|
-| FIM | Deteksi perubahan file sistem | AIDE, Tripwire |
-
-Buat baseline hash file penting (`/etc`, `/usr/bin`, web root). Jalankan cek berkala via cron. Alert jika ada perubahan tak terduga.
-
-### Rate Limiting
-
-| Layer | Cara | Tujuan |
-|---|---|---|
-| Web server | Nginx `limit_req`, Apache mod_evasive | Batasi request per IP |
-| App | Throttle per user/IP di kode | Mencegah brute force dan abuse |
-
-### Secrets Management
-
-| Aspek | Rekomendasi | Kenapa |
-|---|---|---|
-| Penyimpanan | Vault, SOPS, atau secret manager | Bukan .env plain text |
-| Akses | Least privilege, audit log | Mencegah leak |
-| Rotasi | Rutin rotasi credential | Mengurangi window of exposure |
-
-### Database Encryption at Rest
-
-| Metode | Deskripsi |
-|---|---|
-| TDE | Transparent Data Encryption (MySQL/PostgreSQL) |
-| LUKS | Enkripsi volume di level OS |
-
-Gunakan LUKS untuk volume data, atau TDE jika database mendukungnya. Enkripsi backup juga wajib.
-
-### Container Hardening (jika pakai Docker/Podman)
-
-| Praktik | Tujuan |
-|---|---|
-| Drop capabilities | Kurangi privilege container |
-| Read-only filesystem | Mencegah modifikasi tak terduga |
-| Non-root user | Isolasi privilege |
-| Seccomp profile | Batasi syscall |
-| Image scanning | Deteksi CVE di image (Trivy) |
-
-### NTP / chrony
-
-Sinkronkan waktu server dengan NTP. Log dan audit bergantung pada timestamp yang akurat. Gunakan `chrony` atau `systemd-timesyncd`.
-
-### Kernel Hardening (sysctl)
-
-| Parameter | Nilai | Tujuan |
-|---|---|---|
-| `net.ipv4.conf.all.rp_filter` | 1 | Anti-spoofing |
-| `net.ipv4.tcp_syncookies` | 1 | Anti-SYN flood |
-| `net.ipv4.conf.all.accept_redirects` | 0 | Anti-redirect attack |
-| `kernel.randomize_va_space` | 2 | ASLR |
-
-Disable module kernel yang tidak dipakai. Set mount options `noexec`, `nosuid`, `nodev` pada partisi sensitif.
-
-### Dependency Scanning
-
-| Tool | Target | Kapan |
-|---|---|---|
-| npm audit | Node.js | Saat build/CI |
-| pip-audit | Python | Saat build/CI |
-| Trivy | Container image | Saat build/CI |
-
-Integrasikan di pipeline. Block deploy jika ada critical finding.
-
-### Centralized Logging / SIEM
-
-Forward log ke Loki, ELK, atau Splunk. Buat alert untuk pola aneh. Retensi minimal 90 hari untuk audit.
-
-### SSH Key Rotation & MFA
-
-Rotasi SSH key secara berkala. Aktifkan MFA (TOTP/PAM) untuk akses admin. Batasi akses SSH ke IP tertentu (AllowUsers + firewall).
-
-### Password Policy & Account Lockout
-
-Gunakan `pam_pwquality` untuk kebijakan password. Aktifkan `faillock` untuk lockout setelah gagal login berulang. Audit akun secara berkala.
-
-### Backup Encryption & Offsite Verification
-
-Enkripsi backup (GPG atau LUKS). Simpan minimal satu salinan offsite. Uji restore secara berkala. Dokumentasikan RTO dan RPO.
-
-##  Network, Logging, Monitoring, Backup, dan Incident Response (Mendalam)
+##  Deteksi dan Pemulihan: Batas Hardening pada Single-Tier
 
 ### Batas keamanan single-tier
 
