@@ -44,6 +44,12 @@ Sekarang, kita ikutin alurnya step by step.
 ### Langkah 1: Permintaan untuk Menjalankan Program
 Ketika kamu klik ikon aplikasinya, sistem operasi **tidak selalu** langsung menciptakan proses baru. Bergantung pada sistem operasi dan aplikasinya, klik tersebut bisa memanggil proses yang sudah ada (misalnya lewat *single instance*), atau bisa membuat satu atau lebih proses baru. Setelah proses terbentuk, barulah sistem operasi memetakan program ke ruang alamat proses dan memuat halaman yang dibutuhkan saat diperlukan.
 
+### Langkah 2: Memuat Program ke Memori
+Setelah proses terbentuk, sistem operasi membaca file program dari disk dan memuatnya ke RAM. Ia tidak langsung memuat seluruh file; hanya bagian yang dibutuhkan (halaman) yang dimuat saat diperlukan (*lazy loading*). Ini disebut *demand paging*.
+
+### Langkah 3: Inisialisasi dan Penjadwalan
+Sistem operasi menyiapkan ruang alamat proses, menetapkan stack dan heap, lalu menempatkan proses di antrian penjadwalan (*scheduler*). CPU akan mengeksekusi proses sesuai giliran yang ditentukan oleh OS.
+
 ### Langkah 4: CPU Mengeksekusi Instruksi
 Sekarang, **CPU** yang mulai bekerja. Ia akan mengambil instruksi satu per satu dari memori, menerjemahkan, dan menjalankannya.
 
