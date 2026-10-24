@@ -8,7 +8,7 @@
 
 ## Satu Server, Satu Tumpukan
 
-**Server Single-Tier Stack** artinya [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [runtime aplikasi](https://en.wikipedia.org/wiki/Runtime_system), dan [database](https://en.wikipedia.org/wiki/Database) semua berjalan di **satu mesin yang sama**.
+**Server Single-Tier Stack** artinya [web server](https://developer.mozilla.org/en-US/docs/Learn\_web\_development/Howto/Web\_mechanics/What\_is\_a\_web\_server), [runtime aplikasi](https://en.wikipedia.org/wiki/Runtime\_system), dan [database](https://en.wikipedia.org/wiki/Database) semua berjalan di **satu mesin yang sama**.
 
 Bayangin warung makan satu atap. Kasir, dapur, dan gudang bahan ada di bangunan yang sama. Pesanan langsung diproses di sana tanpa harus dikirim ke bangunan lain.
 
@@ -16,11 +16,11 @@ Semua komponen ini bekerja bersama di satu server agar alurnya lebih mudah dipah
 
 ## Alurnya Gimana?
 
-Saat ada pengunjung membuka websitemu lewat [browser](https://en.wikipedia.org/wiki/Web_browser), ini yang terjadi:
+Saat ada pengunjung membuka websitemu lewat [browser](https://en.wikipedia.org/wiki/Web\_browser), ini yang terjadi:
 
 1. **Browser** → Mengirim [HTTP request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) ke server
 2. **Web Server** → Menerima dan mengarahkan permintaan ke aplikasi
-3. **Runtime Aplikasi** → Menjalankan [logika bisnis](https://en.wikipedia.org/wiki/Business_logic) aplikasimu (form, login, validasi, dll)
+3. **Runtime Aplikasi** → Menjalankan [logika bisnis](https://en.wikipedia.org/wiki/Business\_logic) aplikasimu (form, login, validasi, dll)
 4. **Database** → Mencari, menambah, mengubah, atau menghapus data yang dibutuhkan
 5. **Balasan** → Web server mengembalikan [HTTP response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) berupa halaman web, file, atau [JSON](https://www.json.org/) ke browser
 
@@ -30,15 +30,15 @@ Semua ini terjadi di **satu mesin yang sama**.
 
 | Komponen | Fungsi | Contoh |
 |---|---|---|
-| **[Web Server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server)** | Pintu masuk. Menerima permintaan, mengarahkan, dan mengembalikan respon. | [Nginx](https://nginx.org/), [Apache HTTP Server](https://httpd.apache.org/), [Caddy](https://caddyserver.com/) |
-| **[Runtime Aplikasi](https://en.wikipedia.org/wiki/Runtime_system)** | Otak. Menjalankan kode aplikasimu. | [PHP-FPM](https://www.php.net/manual/en/install.fpm.php), [Node.js](https://nodejs.org/), [Gunicorn](https://gunicorn.org/), [Kestrel (.NET)](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel) |
+| **[Web Server](https://developer.mozilla.org/en-US/docs/Learn\_web\_development/Howto/Web\_mechanics/What\_is\_a\_web\_server)** | Pintu masuk. Menerima permintaan, mengarahkan, dan mengembalikan respon. | [Nginx](https://nginx.org/), [Apache HTTP Server](https://httpd.apache.org/), [Caddy](https://caddyserver.com/) |
+| **[Runtime Aplikasi](https://en.wikipedia.org/wiki/Runtime\_system)** | Otak. Menjalankan kode aplikasimu. | [PHP-FPM](https://www.php.net/manual/en/install.fpm.php), [Node.js](https://nodejs.org/), [Gunicorn](https://gunicorn.org/), [Kestrel (.NET)](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/servers/kestrel) |
 | **[Database](https://en.wikipedia.org/wiki/Database)** | Gudang data. Menyimpan dan mengelola data aplikasi. | [MariaDB](https://mariadb.org/), [MySQL](https://www.mysql.com/), [PostgreSQL](https://www.postgresql.org/), [SQLite](https://sqlite.org/) |
 
-Bisa ditambah [cache](https://en.wikipedia.org/wiki/Cache_(computing)) seperti [Redis](https://redis.io/) untuk mempercepat akses data yang sering diminta.
+Bisa ditambah [cache](https://en.wikipedia.org/wiki/Cache\_(computing)) seperti [Redis](https://redis.io/) untuk mempercepat akses data yang sering diminta.
 
 ## Kombinasi Stack: LAMP, LEMP, WAMP, WIMP, FAMP & Lainnya
 
-Kombinasi [sistem operasi](https://en.wikipedia.org/wiki/Operating_system), [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [database](https://en.wikipedia.org/wiki/Database), dan [bahasa pemrograman](https://en.wikipedia.org/wiki/Programming_language) membentuk sebuah [solution stack](https://en.wikipedia.org/wiki/Solution_stack). Ini hanya contoh kombinasi yang umum, bukan standar wajib.
+Kombinasi [sistem operasi](https://en.wikipedia.org/wiki/Operating\_system), [web server](https://developer.mozilla.org/en-US/docs/Learn\_web\_development/Howto/Web\_mechanics/What\_is\_a\_web\_server), [database](https://en.wikipedia.org/wiki/Database), dan [bahasa pemrograman](https://en.wikipedia.org/wiki/Programming\_language) membentuk sebuah [solution stack](https://en.wikipedia.org/wiki/Solution\_stack). Ini hanya contoh kombinasi yang umum, bukan standar wajib.
 
 | Singkatan | Kepanjangan | Keterangan |
 |---|---|---|
@@ -56,9 +56,9 @@ Kombinasi [sistem operasi](https://en.wikipedia.org/wiki/Operating_system), [web
 
 | Cara | Penjelasan | Referensi | Keterangan |
 |---|---|---|---|
-| **[Bare Metal](https://en.wikipedia.org/wiki/Bare_machine)** | Sistem operasi berjalan langsung di hardware fisik. | [IBM — Bare Metal Servers](https://www.ibm.com/think/topics/bare-metal-servers) | Memberikan akses langsung ke hardware, dengan performa yang bergantung pada spesifikasi dan konfigurasi. |
-| **[Virtual Machine (VM)](https://en.wikipedia.org/wiki/Virtual_machine)** | Komputer virtual yang berjalan di atas host lewat hypervisor. | [KVM](https://www.linux-kvm.org/), [VirtualBox](https://www.virtualbox.org/), [VMware](https://www.vmware.com/) | **Paling cocok buat belajar**. Bisa di-snapshot, mudah di-reset. |
-| **[Container](https://en.wikipedia.org/wiki/Containerization_(computing))** | Aplikasi diisolasi, tapi tetap memakai kernel host. | [Docker](https://www.docker.com/), [Podman](https://podman.io/) | Sangat ringan, cepat dibuat ulang, hemat resource. |
+| **[Bare Metal](https://en.wikipedia.org/wiki/Bare\_machine)** | Sistem operasi berjalan langsung di hardware fisik. | [IBM — Bare Metal Servers](https://www.ibm.com/think/topics/bare-metal-servers) | Memberikan akses langsung ke hardware, dengan performa yang bergantung pada spesifikasi dan konfigurasi. |
+| **[Virtual Machine (VM)](https://en.wikipedia.org/wiki/Virtual\_machine)** | Komputer virtual yang berjalan di atas host lewat hypervisor. | [KVM](https://www.linux-kvm.org/), [VirtualBox](https://www.virtualbox.org/), [VMware](https://www.vmware.com/) | **Paling cocok buat belajar**. Bisa di-snapshot, mudah di-reset. |
+| **[Container](https://en.wikipedia.org/wiki/Containerization\_(computing))** | Aplikasi diisolasi, tapi tetap memakai kernel host. | [Docker](https://www.docker.com/), [Podman](https://podman.io/) | Sangat ringan, cepat dibuat ulang, hemat resource. |
 
 ## Kelebihan, Kekurangan & SPOF
 
@@ -66,7 +66,7 @@ Kombinasi [sistem operasi](https://en.wikipedia.org/wiki/Operating_system), [web
 |---|---|
 | **Kelebihan** | Simpel, murah, gampang dipahami, semua terpusat, ideal buat belajar. |
 | **Kekurangan** | Saling berebut resource, konfigurasi bisa campur, skalabilitas terbatas. |
-| **[SPOF (Single Point of Failure)](https://en.wikipedia.org/wiki/Single_point_of_failure)** | Kalau mesin ini mati, **web server, runtime aplikasi, dan database ikut mati**. Aplikasi jadi tidak bisa diakses sama sekali. |
+| **[SPOF (Single Point of Failure)](https://en.wikipedia.org/wiki/Single\_point\_of\_failure)** | Kalau mesin ini mati, **web server, runtime aplikasi, dan database ikut mati**. Aplikasi jadi tidak bisa diakses sama sekali. |
 
 ## Kapan Cocok & Kapan Harus Pindah
 
@@ -81,7 +81,7 @@ Kombinasi [sistem operasi](https://en.wikipedia.org/wiki/Operating_system), [web
 
 1. **Fokus ke alurnya** — Kuasai `browser → web server → runtime → database`.
 2. **Pilih SATU stack** — Mulai dari **[LEMP](https://make.wordpress.org/hosting/handbook/appendix/server-environment/#lemp-stack)** atau **[LAMP](https://cloud.google.com/learn/what-is-a-lamp-stack)**. Kuasai satu dulu baru coba yang lain.
-3. **Praktek lokal** — Pakai [VM](https://en.wikipedia.org/wiki/Virtual_machine) atau [container](https://en.wikipedia.org/wiki/Containerization_(computing)) di laptop kamu, cukup pakai `localhost`.
+3. **Praktek lokal** — Pakai [VM](https://en.wikipedia.org/wiki/Virtual\_machine) atau [container](https://en.wikipedia.org/wiki/Containerization\_(computing)) di laptop kamu, cukup pakai `localhost`.
 4. **Ingat SPOF** — Single-Tier simpel buat belajar, bukan solusi buat aplikasi yang wajib selalu online.
 
 **Intinya:** *Single-Tier = semua di satu server. Simpel buat dipelajari, terbatas buat diskalakan. Kuasai yang simpel dulu, baru paham kenapa harus dipisah.*

@@ -504,7 +504,7 @@ NVIDIA 550.163.01 memiliki masalah `nvidia_drm`/`drm_gem_lock` pada kernel 6.19 
 **Referensi:**
 
 - Kali Linux Bug #9746 — NVIDIA 550.163.01 + kernel 6.19: [Kali Bug #9746](https://bugs.kali.org/view.php?id=9746)
-- NVIDIA Linux 580.173.02: [NVIDIA 580.173.02](https://download.nvidia.com/XFree86/Linux-x86_64/580.173.02/README/selectdriver.html)
+- NVIDIA Linux 580.173.02: [NVIDIA 580.173.02](https://download.nvidia.com/XFree86/Linux-x86\_64/580.173.02/README/selectdriver.html)
 - Kali Linux Bug Tracker — `0009746: nvidia 550.163.01 causes kernel NULL pointer dereference in drm_gem_lock on kernel 6.19.11`: [0009746](https://bugs.kali.org/view.php?id=9746)
 
 ### Konfigurasi LM-Studio & Pengujian

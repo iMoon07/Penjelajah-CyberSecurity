@@ -315,25 +315,25 @@ Seluruh pengujian dilakukan pada lingkungan lab untuk memahami rantai eksploitas
 # Referensi
 
 * **OWASP – SQL Injection**
-  [OWASP SQL Injection](https://owasp.org/www-community/attacks/SQL_Injection?utm_source=chatgpt.com)
+  [OWASP SQL Injection](https://owasp.org/www-community/attacks/SQL\_Injection?utm\_source=chatgpt.com)
 
 * **OWASP – SQL Injection Prevention Cheat Sheet**
-  [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html?utm_source=chatgpt.com)
+  [SQL Injection Prevention Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/SQL\_Injection\_Prevention\_Cheat\_Sheet.html?utm\_source=chatgpt.com)
 
 * **PortSwigger – SQL Injection**
-  [PortSwigger Web Security Academy – SQL Injection](https://portswigger.net/web-security/sql-injection?utm_source=chatgpt.com)
+  [PortSwigger Web Security Academy – SQL Injection](https://portswigger.net/web-security/sql-injection?utm\_source=chatgpt.com)
 
 * **sqlmap – Automatic SQL Injection and Database Takeover Tool**
-  [sqlmap](https://sqlmap.org/?utm_source=chatgpt.com)
+  [sqlmap](https://sqlmap.org/?utm\_source=chatgpt.com)
 
 * **RevShells – Reverse Shell Generator**
-  [RevShells](https://www.revshells.com/?utm_source=chatgpt.com)
+  [RevShells](https://www.revshells.com/?utm\_source=chatgpt.com)
 
 * **OWASP Mutillidae II**
-  [OWASP Mutillidae II](https://github.com/webpwnized/mutillidae?utm_source=chatgpt.com)
+  [OWASP Mutillidae II](https://github.com/webpwnized/mutillidae?utm\_source=chatgpt.com)
 
 * **MITRE ATT&CK – Command and Scripting Interpreter**
-  [MITRE ATT&CK T1059](https://attack.mitre.org/techniques/T1059/?utm_source=chatgpt.com)
+  [MITRE ATT&CK T1059](https://attack.mitre.org/techniques/T1059/?utm\_source=chatgpt.com)
 
 ---
 
