@@ -2,6 +2,8 @@
 
 [🇬🇧 Read in English](build-tcp-udp-proxy-lab-en.md)
 
+﷽
+
 Lab ini membuat proxy sederhana menggunakan Python untuk meneruskan trafik antara client dan server.
 
 Proxy ditempatkan di tengah komunikasi:

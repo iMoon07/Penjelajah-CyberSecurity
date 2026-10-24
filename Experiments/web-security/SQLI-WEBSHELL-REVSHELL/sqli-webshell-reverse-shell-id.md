@@ -2,6 +2,8 @@
 
 [🇬🇧 Read in English](sqli-webshell-reverse-shell-en.md)
 
+﷽
+
 # Apa itu SQL Injection?
 
 **SQL Injection (SQLi)** adalah kerentanan keamanan siber di mana penyerang dapat menyisipkan atau memanipulasi query SQL berbahaya ke dalam input aplikasi. 
@@ -11,7 +13,6 @@ Hal ini terjadi karena aplikasi tidak melakukan validasi atau sanitasi yang mema
 Jika berhasil dieksploitasi, penyerang dapat membaca, memodifikasi, atau menghapus data sensitif, bahkan dalam beberapa kasus, dapat mengambil alih kendali server secara keseluruhan.
 
 # Jenis SQL Injection
-
 
 <details>
 <summary>Beberapa bentuk dan variasi SQL Injection yang umum antara lain:</summary>
@@ -95,7 +96,6 @@ Reverse Shell adalah teknik di mana mesin target melakukan koneksi outbound ke m
 
 Pada demonstrasi kali ini, SQL Injection menjadi titik masuk akibat kelemahan pada statement SQL. Eksploitasi kemudian dilanjutkan dengan penempatan Webshell sebagai foothold, yang selanjutnya digunakan untuk memperoleh Reverse Shell.
 
-
 Alur pengujian:
 
 ```text
@@ -178,9 +178,7 @@ Secara umum peng-kodean untuk melakukan uji validasi:
 | **URL Encoding**  | `%20`        | Representasi spasi                                          |
 | **Form Encoding** | `+`          | Representasi spasi pada `application/x-www-form-urlencoded` |
 
-
 Di sini pengintaian difokuskan untuk mengetahui **sejauh mana SQL Injection dapat memberikan akses terhadap sistem**, mulai dari database dan data yang tersedia hingga kemungkinan akses ke file dan sistem operasi.
-
 
 Memuat request terlebih dahulu fokus ke request yang telah positif sql injection.
 
@@ -205,7 +203,6 @@ Di gambar dan lists bawah ini adalah payload ciri khas sqlmap yang diujikan yang
 * **Boolean-based blind** → SQLi yang divalidasi dengan kondisi **benar/salah (TRUE/FALSE)** dan melihat perbedaan respons aplikasi.
 * **Time-based blind** → SQLi yang divalidasi melalui **perbedaan waktu respons**, misalnya query dibuat delay `5` detik.
 * **UNION-based** → SQLi yang memanfaatkan **`UNION SELECT`** untuk menggabungkan hasil query sehingga data dapat muncul pada respons aplikasi.
-
 
 ```bash
 Parameter: firstname (POST)
@@ -310,7 +307,6 @@ Demonstrasi ini menunjukkan bagaimana SQL Injection dapat menjadi titik awal ser
 Alur tersebut menunjukkan bahwa dampak SQL Injection tidak hanya terbatas pada manipulasi atau pengambilan data database. Dalam kondisi tertentu, kombinasi privilege database, konfigurasi DBMS, akses filesystem, dan konfigurasi aplikasi dapat memungkinkan eskalasi dari **SQL Injection → Webshell → OS Command Execution → Reverse Shell**.
 
 Seluruh pengujian dilakukan pada lingkungan lab untuk memahami rantai eksploitasi dan batas akses yang dapat diperoleh dari SQL Injection.
-
 
 # Referensi
 

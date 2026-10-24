@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](from-hardware-to-software-how-applications-actually-run-en.md)  
 [🇵🇭 Basahin sa Tagalog](from-hardware-to-software-how-applications-actually-run-tl.md)
 
+﷽
+
 ![Daripada Perkakasan ke Perisian: Bagaimana Aplikasi Benar-Benar Berjalan](from-hardware-to-software.png)
 
 ## Soalan Mudah: Bagaimana Sesuatu Fail Boleh Berjalan?

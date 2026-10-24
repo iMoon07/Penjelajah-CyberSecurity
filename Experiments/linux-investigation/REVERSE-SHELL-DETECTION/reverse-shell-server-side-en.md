@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](reverse-shell-server-side.md)
 
+﷽
+
 This time, we will look at what happens to the system after a **Reverse Shell** is successfully executed.
 
 The focus is on three main artifacts that can be observed from the system:

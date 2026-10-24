@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](from-hardware-to-software-how-applications-actually-run-en.md)  
 [🇲🇾 Baca dalam Bahasa Melayu](from-hardware-to-software-how-applications-actually-run-ms.md)
 
+﷽
+
 ![Mula sa Hardware Hanggang sa Software: Paano Talagang Gumagana ang mga Aplikasyon](from-hardware-to-software.png)
 
 ## Simpleng Tanong: Paano Gumagana ang Isang File?

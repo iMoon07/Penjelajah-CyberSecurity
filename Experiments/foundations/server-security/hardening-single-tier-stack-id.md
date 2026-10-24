@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](hardening-single-tier-stack-ms.md)
 [🇵🇭 Basahin sa Tagalog](hardening-single-tier-stack-tl.md)
 
+﷽
+
 ![Hardening Single-Tier Stack](hardening-single-tier-stack.png)
 
 ## Mengapa Perlu Dihardening?

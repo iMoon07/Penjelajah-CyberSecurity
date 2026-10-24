@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](ssh-client-server-python-id.md)
 
+﷽
+
 In this experiment, I tried to build and test a simple SSH client and SSH server using Python and Paramiko.
 Paramiko is a Python library that implements the SSHv2 protocol. It can be used to create both SSH clients and SSH servers directly in Python programs.
 

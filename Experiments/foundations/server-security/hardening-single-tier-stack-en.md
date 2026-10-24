@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](hardening-single-tier-stack-ms.md)
 [🇵🇭 Basahin sa Tagalog](hardening-single-tier-stack-tl.md)
 
+﷽
+
 ## Why Harden?
 
 Default configurations are built so applications run immediately, not so they are secure. In a single-tier architecture, all components — web server, runtime, database, and file system — live on **one machine**. A small flaw in one layer can open a path to another without crossing many boundaries.

@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](build-tcp-udp-proxy-lab-id.md)
 
+﷽
+
 This lab builds a simple proxy using Python to forward traffic between a client and a server.
 
 The proxy is placed in the middle of the communication:

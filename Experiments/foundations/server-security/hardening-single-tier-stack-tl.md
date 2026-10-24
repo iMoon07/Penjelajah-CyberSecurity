@@ -4,6 +4,8 @@
 [🇮🇩 Baca dalam Bahasa Indonesia](hardening-single-tier-stack-id.md)
 [🇲🇾 Baca dalam Bahasa Melayu](hardening-single-tier-stack-ms.md)
 
+﷽
+
 ## Bakit Kailangan I-hardening?
 
 Ang default configuration ay ginawa para tumakbo agad ang application, hindi para maging secure. Sa single-tier architecture, lahat ng component — web server, runtime, database, at file system — ay nasa **isang machine lang**. Maaaring maliit na butas sa isang layer ang magbukas ng daan patungo sa iba pang layer nang hindi kailangang dumaan sa maraming boundary.

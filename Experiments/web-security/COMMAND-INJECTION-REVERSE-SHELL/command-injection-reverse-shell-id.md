@@ -2,6 +2,8 @@
 
 [🇬🇧 Read in English](command-injection-reverse-shell-en.md)
 
+﷽
+
 # Apa itu Reverse Shell?
 
 Reverse Shell adalah teknik di mana **mesin target membuat koneksi keluar (outbound connection)** menuju mesin milik attacker atau pentester sehingga shell interaktif dapat diperoleh dari jarak jauh.

@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](from-hardware-to-software-how-applications-actually-run-ms.md)  
 [🇵🇭 Basahin sa Tagalog](from-hardware-to-software-how-applications-actually-run-tl.md)
 
+﷽
+
 ![From Hardware to Software: How Applications Actually Run](from-hardware-to-software.png)
 
 ## A Simple Question: How Does a File Actually Run?

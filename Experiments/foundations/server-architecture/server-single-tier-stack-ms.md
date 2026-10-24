@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](server-single-tier-stack-en.md)
 [🇵🇭 Basahin sa Tagalog](server-single-tier-stack-tl.md)
 
+﷽
+
 ![Tindanan Pelayan Satu-Tingkat](single-tier-stack.png)
 
 ## 1. Satu Pelayan, Satu Tindanan

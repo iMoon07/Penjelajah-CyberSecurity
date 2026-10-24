@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](linux-enumeration-investigation.md)
 
+﷽
+
 This time, we look at the activity that occurred on a Linux system from the server side.
 
 The question we want to answer is:

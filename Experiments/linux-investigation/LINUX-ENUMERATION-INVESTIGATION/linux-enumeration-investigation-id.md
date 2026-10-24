@@ -2,6 +2,9 @@
 
 [🇬🇧 Read in English](linux-enumeration-investigation-en.md)
 
+﷽
+
+
 Kali ini kita melihat aktivitas yang terjadi pada sebuah sistem Linux dari sisi server.
 
 Pertanyaan yang ingin dijawab:

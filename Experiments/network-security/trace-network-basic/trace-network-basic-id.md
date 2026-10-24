@@ -2,6 +2,8 @@
 
 [🇬🇧 Read in English](trace-network-basic-en.md)
 
+﷽
+
 Di sini saya berlatih melakukan tracing komunikasi TCP dan UDP antara Kali (`10.10.10.1`) sebagai client dan Ubuntu (`10.10.10.2`) sebagai server.
 
 Ini adalah lanjutan dari tulisan sebelumnya tentang [`Socket Programming Experiments with Python`](https://imoon07.github.io/read.html?post=network-hacking-basic)

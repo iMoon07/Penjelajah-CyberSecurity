@@ -565,8 +565,6 @@ Result of testing the connection and use of the Gemma 4 12B model through VS Cod
 
 </details>
 
-
-
 ---
 
 **Enjoy exploring and build your own AI assistant!**

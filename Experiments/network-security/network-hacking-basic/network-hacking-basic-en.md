@@ -2,6 +2,8 @@
 
 [🇮🇩 Baca dalam Bahasa Indonesia](network-hacking-basic-id.md)
 
+﷽
+
 Last night, I read **Black Hat Python, 2nd Edition** by Justin Seitz and Tim Arnold. In the early part of the book, I found a discussion about network programming: TCP, UDP, sockets, and a simple Netcat implementation using Python.
 
 [Source code](https://github.com/iMoon07/OWASP-Lab-Toolkit/tree/main/network-hacking-basic-code)
@@ -59,7 +61,6 @@ I also explored several important Python network socket syntaxes, such as the di
 
 - TCP establishes a connection first, then sends and receives data.
 - UDP sends data directly to the destination without establishing a connection first.
-
 
 At the moment, I have not yet seen the packet side while it is running.
 

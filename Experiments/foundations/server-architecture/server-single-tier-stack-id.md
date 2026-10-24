@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](server-single-tier-stack-ms.md)
 [🇵🇭 Basahin sa Tagalog](server-single-tier-stack-tl.md)
 
+﷽
+
 ![Server Single-Tier Stack](single-tier-stack.png)
 
 ## Satu Server, Satu Tumpukan

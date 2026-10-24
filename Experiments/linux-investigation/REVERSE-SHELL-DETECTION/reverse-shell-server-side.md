@@ -2,6 +2,9 @@
 
 [🇬🇧 Read in English](reverse-shell-server-side-en.md)
 
+﷽
+
+
 Kali ini kita melihat apa yang terjadi pada sistem setelah **Reverse Shell** berhasil dijalankan.
 
 Fokusnya adalah tiga artefak utama yang dapat diamati dari sistem:

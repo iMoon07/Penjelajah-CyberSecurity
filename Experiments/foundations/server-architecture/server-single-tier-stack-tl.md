@@ -4,6 +4,8 @@
 [🇬🇧 Read in English](server-single-tier-stack-en.md)
 [🇲🇾 Baca dalam Bahasa Melayu](server-single-tier-stack-ms.md)
 
+﷽
+
 ![Single-Tier Server Stack](single-tier-stack.png)
 
 ## Isang Server, Isang Stack

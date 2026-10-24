@@ -2,6 +2,8 @@
 
 [🇮🇩 Read in Indonesian](sqli-webshell-reverse-shell-id.md)
 
+﷽
+
 # What is SQL Injection?
 
 **SQL Injection (SQLi)** is a cybersecurity vulnerability where an attacker can insert or manipulate malicious SQL queries through application input.

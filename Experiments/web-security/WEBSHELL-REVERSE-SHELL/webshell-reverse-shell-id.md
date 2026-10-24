@@ -2,6 +2,9 @@
 
 [🇬🇧 Read in English](webshell-reverse-shell-en.md)
 
+﷽
+
+
 # Apa itu Webshell?
 Webshell adalah file/script yang digunakan attacker atau pentester untuk menjalankan kode atau perintah pada server web, umumnya melalui eksploitasi file upload, dan dapat digunakan sebagai sarana persistence.
 

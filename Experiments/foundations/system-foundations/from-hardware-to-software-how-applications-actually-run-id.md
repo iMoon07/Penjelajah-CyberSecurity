@@ -4,6 +4,8 @@
 [🇲🇾 Baca dalam Bahasa Melayu](from-hardware-to-software-how-applications-actually-run-ms.md)  
 [🇵🇭 Basahin sa Tagalog](from-hardware-to-software-how-applications-actually-run-tl.md)
 
+﷽
+
 ![Dari Perangkat Keras ke Perangkat Lunak: Bagaimana Aplikasi Benar-Benar Berjalan](from-hardware-to-software.png)
 
 ## Pertanyaan Sederhana: Gimana Caranya File Bisa Berjalan?

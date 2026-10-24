@@ -4,6 +4,8 @@
 [🇮🇩 Baca dalam Bahasa Indonesia](hardening-single-tier-stack-id.md)
 [🇵🇭 Basahin sa Tagalog](hardening-single-tier-stack-tl.md)
 
+﷽
+
 ## Mengapa Perlu Dihardening?
 
 Konfigurasi lalai dibina supaya aplikasi boleh terus berjalan, bukan supaya selamat. Dalam seni bina *single-tier*, semua komponen — pelayan web, runtime, pangkalan data, dan sistem fail — berada dalam **satu mesin yang sama**. Kecacatan kecil pada satu lapisan boleh membuka jalan ke lapisan lain tanpa menembusi banyak sempadan.

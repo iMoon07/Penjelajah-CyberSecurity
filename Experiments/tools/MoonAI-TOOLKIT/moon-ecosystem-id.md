@@ -34,7 +34,6 @@ Spesifikasi yang saya gunakan:
 - vCPU 12
 - NVIDIA GEFORCE RTX 3060 windows
 
-
 Lanjut Windows
 
 Apa alasan saya menggunakan LM Studio? sebenarnya saya mencoba karena saran dari ChatGPT saya mencoba untuk melihat struktur sistem dari sisi operational selama pemakaian dan sedikit paham juga bahwa untuk menjalankan model saya bisa tau arah dan alur nya.
@@ -167,7 +166,6 @@ Oh iya sepertinya nabrak dengan llm jadi koneksi nya tidak bisa menampung.
 
 Tapi sebenarnya discovered 27 tools nya, termasuk di LM studio.
 
-
 Okay cukup menarik saya show inputan di vscode
 
 Saya bertanya = Apakah kamu ready burpsuite mcp?
@@ -228,7 +226,6 @@ Berikut adalah daftar fungsi utama yang tersedia dalam sesi ini:
 | **Extender** | Tempat untuk memuat ekstensi atau plugin pihak ketiga. |
 
 **Catatan:** Jika yang Anda maksud adalah **27 ekstensi spesifik**, saya memerlukan akses ke daftar "Extensions" yang terinstal secara manual. Jika Anda ingin saya mengecek ekstensi tertentu, silakan beri tahu saya!
-
 
 Secara konteks sama tapi memang lebih singkat padat jelas yang VScode.
 
