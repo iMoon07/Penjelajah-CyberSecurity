@@ -287,7 +287,7 @@ Memilih technology stack bisa membingungkan karena banyaknya bahasa pemrograman,
 
 Artikel engineering berikut dapat menjadi referensi untuk memahami alasan pemilihan teknologi, tantangan arsitektur, serta solusi yang diterapkan berdasarkan kebutuhan mereka.
 
-- [Uber Engineering](https://www.uber.com/us/en/blog/engineering/) — Arsitektur backend dan skalabilitas.
+- [Uber Engineering](https://www.uber.com/us/en/blog/engineering/ — Arsitektur backend dan skalabilitas.
 - [Shopify Engineering](https://shopify.engineering/) — Monolith dan skalabilitas database.
 - [Cloudflare Blog](https://blog.cloudflare.com/) — Infrastruktur server dan networking.
 - [Netflix TechBlog](https://netflixtechblog.medium.com/) — Distributed systems dan reliability.
