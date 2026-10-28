@@ -1,8 +1,10 @@
 # Daftar Literasi dan Sumber Belajar Gratis
 
+🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)
+
 ﷽
 
-**🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)**
+Kumpulan sumber belajar gratis untuk mendukung pembelajaran mandiri dalam berbagai bidang ilmu, bahasa, dan literasi melalui referensi terbuka yang dapat diakses secara daring.
 
 ![photo](photo.png)
 
