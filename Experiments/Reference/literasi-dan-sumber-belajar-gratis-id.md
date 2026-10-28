@@ -1,5 +1,9 @@
 # Daftar Literasi dan Sumber Belajar Gratis
 
+﷽
+
+**🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)** | **🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)**
+
 ## 1. Matematika, Fisika, dan Kimia
 
 | Bidang | Urutan Materi | Referensi Gratis |
