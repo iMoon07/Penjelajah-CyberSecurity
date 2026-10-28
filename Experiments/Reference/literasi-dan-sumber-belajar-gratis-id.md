@@ -2,7 +2,9 @@
 
 ﷽
 
-**🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)** | **🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)**
+**🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)**
+
+![photo](photo.png)
 
 ## 1. Matematika, Fisika, dan Kimia
 

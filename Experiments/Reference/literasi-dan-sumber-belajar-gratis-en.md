@@ -4,6 +4,8 @@
 
 **🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)**
 
+![photo](photo.png)
+
 ## 1. Mathematics, Physics, and Chemistry
 
 | Field | Topic Order | Free Resources |
