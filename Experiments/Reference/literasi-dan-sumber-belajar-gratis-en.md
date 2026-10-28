@@ -1,6 +1,8 @@
-# Daftar Literasi dan Sumber Belajar Gratis
+# List of Free Literacy and Learning Resources
 
-**🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)** | **🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)**
+﷽
+
+**🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)**
 
 ## 1. Mathematics, Physics, and Chemistry
 
