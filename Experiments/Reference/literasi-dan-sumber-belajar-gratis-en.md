@@ -6,8 +6,6 @@
 
 A collection of free learning resources to support independent learning across various fields of knowledge, languages, and literacy through openly accessible online references.
 
-**🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)**
-
 ![photo](photo.png)
 
 ## 1. Mathematics, Physics, and Chemistry
