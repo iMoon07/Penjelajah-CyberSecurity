@@ -4,11 +4,13 @@
 
 ﷽
 
+## What is that? 
+
 A collection of free learning resources to support independent learning across various fields of knowledge, languages, and literacy through openly accessible online references.
 
 ![photo](photo.png)
 
-## 1. Mathematics, Physics, and Chemistry
+## Technical and Theoretical Fields
 
 | Field | Topic Order | Free Resources |
 | --- | --- | --- |

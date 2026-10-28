@@ -4,11 +4,13 @@
 
 ﷽
 
+## Apa ini?
+
 Kumpulan sumber belajar gratis untuk mendukung pembelajaran mandiri dalam berbagai bidang ilmu, bahasa, dan literasi melalui referensi terbuka yang dapat diakses secara daring.
 
 ![photo](photo.png)
 
-## 1. Matematika, Fisika, dan Kimia
+## Bidang Teknis dan Teori
 
 | Bidang | Urutan Materi | Referensi Gratis |
 | --- | --- | --- |
