@@ -145,7 +145,7 @@ Purpose: Learn the practical workflow for identifying and understanding SQL inje
 <summary>3. SQL Injection Vulnerability in WHERE Clause — BlackArch/Burp by z3nsh3ll</summary>
 
 Topic: SQL Injection — Retrieving Hidden Data
-Video: https://www.youtube.com/watch?v=jTH9z7Rz7oAo
+Video: https://www.youtube.com/watch?v=jTHz9Rz7oAo
 Purpose: Review a practical demonstration involving SQL injection testing with Burp Suite.
 
 </details>
@@ -332,11 +332,48 @@ To solve the lab, determine the number of columns returned by the query by perfo
 
 ##### Tutorial
 
-1. Use Burp Suite to intercept first `category` `Pets` and then send to repeater.
-2. Modify `Pets` to giving it the value `'` and `'--` for comment to see error respone and give back respone normally behaviour.
-3. Modify the category parameter to add additional give a value `ORDER BY` `1-4`
-4. While `1-4` give error statment `ORDER` display change to `UNION` inject to `1-3`, and then give a representation
-5. Respone success code 200 with a NULL value input.
+1. Use Burp Suite to intercept the request with `category=Pets`, then send it to Repeater.
+2. Modify `Pets` to `'` and `'--` to check for SQL errors and compare the responses with the normal behavior.
+   SQL
+   ```
+   category='
+   category='--
+   ```
+3. Modify the `category` parameter using `ORDER BY` with values from `1` to `4`.
+   SQL
+   ```
+   ' ORDER BY 1--
+   ' ORDER BY 2--
+   ' ORDER BY 3--
+   ' ORDER BY 4--
+   ```
+4. When an `ORDER BY` value produces an error, determine the number of columns and test `UNION SELECT` with `NULL` values from `1` to `3`.
+   SQL
+   ```
+   ' UNION SELECT NULL--
+   ' UNION SELECT NULL,NULL--
+   ' UNION SELECT NULL,NULL,NULL--
+   ```
+5. Check whether the response returns HTTP 200 OK when using `NULL` values, and compare the response body with the normal response.
+
+##### Reference
+
+<details>
+<summary>8. SQL Injection - Lab #3 SQLI UNION attack determining the number of columns returned by query — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=umXGHbEyW5I
+Purpose: This lab contains a SQL injection vulnerability in the product filter category field. This vulnerability can be exploited using a UNION attack to retrieve data from other tables. To solve the lab, we perform a SQL injection attack that determines the number of columns that are being returned by the query.This is the first step of a SQL injection UNION attack. We'll use this technique in subsequent labs to construct the full attack.
+
+</details>
+
+<details>
+<summary> 9. SQL UNION Attack - Determining the Number of Columns Returned by Query — z3nsh3ll</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=mS0A9e_oy8A&t=1s
+Purpose: This lab was provided by the burp suite web security academy for learning SQL injection union injection attacks. The task is 'determining the number of columns returned by the query'. 
+</details>
 
 </details>
 
