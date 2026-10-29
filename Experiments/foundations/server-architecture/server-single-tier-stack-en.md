@@ -35,6 +35,9 @@ flowchart TD
         G
     end
 ```
+Looking at the eatery analogy above, it's clear that everything happens in one place. Behind a simple meal, there are roles, rules, and tools working together to get an order from customer to kitchen and back again.
+
+The same applies to a single-tier stack. When a browser sends a request, several components work together on the same machine to process it, fetch data if needed, and return the response to the user.
 
 ## Core Components
 

@@ -36,6 +36,10 @@ flowchart TD
     end
 ```
 
+Daripada gambar rajah gerai makan di atas, jelas bahawa semua proses berlaku di satu lokasi yang sama. Di sebalik hidangan yang kelihatan ringkas, terdapat pelbagai peranan, peraturan dan alatan yang bekerjasama untuk memproses pesanan dan menghantarnya semula dengan tepat.
+
+Begitu juga dengan *tindanan pelayan satu-tingkat*. Apabila pelayar menghantar permintaan, komponen-komponen pada mesin yang sama akan bertindak balas untuk memprosesnya, mendapatkan data jika perlu, dan mengembalikan hasilnya kepada pengguna.
+
 ## Komponen Teras
 
 | Komponen | Analogi Gerai Makan | Fungsi |

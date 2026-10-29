@@ -36,6 +36,10 @@ flowchart TD
     end
 ```
 
+Mula sa diagram ng karinderya, malinaw na ang lahat ng gawain ay nagaganap sa iisang lugar lamang. Sa likod ng isang simpleng pagkain, may mga tungkulin, patakaran, at kagamitan na nagtutulungan upang maiproseso nang tama ang order at maibalik ito sa customer.
+
+Ganun din ang nangyayari sa *single-tier stack*. Kapag ang browser ay nagpapadala ng kahilingan, ang mga bahagi sa loob ng iisang makina ang magtutulungan upang maproseso ito, kunin ang kinakailangang datos, at maibalik ang resulta sa gumagamit.
+
 ## Mga Pangunahing Bahagi
 
 | Bahagi | Analohiya sa Karinderya | Tungkulin |

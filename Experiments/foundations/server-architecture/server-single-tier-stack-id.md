@@ -36,6 +36,10 @@ flowchart TD
     end
 ```
 
+Dari diagram warung makan di atas, terlihat bahwa semua proses terjadi di satu lokasi yang sama. Di balik sajian makanan yang tampak sederhana, sebenarnya ada serangkaian peran, aturan, dan alat yang bekerja bersama agar pesanan bisa diproses dan diantar kembali dengan tepat.
+
+Hal inilah yang juga terjadi pada *server single-tier stack*. Ketika browser mengirim permintaan, ada komponen-komponen yang bertugas menerimanya, memproses logika aplikasi, mengambil data jika dibutuhkan, lalu mengembalikan hasilnya ke pengguna.
+
 ## Komponen Inti
 
 | Komponen | Analogi Warung Makan | Fungsi |
