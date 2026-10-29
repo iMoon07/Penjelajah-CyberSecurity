@@ -1,5 +1,9 @@
 # Cara Setup Burpsuite Community di Browser
 
+[🇬🇧 Read in English](Setup-Burpsuite-Community-en.md)
+
+﷽
+
 Pertama pastikan mempunyai Tools Burpsuite, jika pengguna Operating System Linux distro Kali Linux secara khusus langsung ada dan disediakan.
 
 Lalu membutuhkan extension, dan pemilihan browser yang tepat dan nyaman.

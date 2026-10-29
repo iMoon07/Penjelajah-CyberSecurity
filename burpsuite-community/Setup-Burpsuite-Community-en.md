@@ -1,5 +1,9 @@
 # How to Setup Burpsuite Community in Browser
 
+[🇮🇩 Read in Bahasa Indonesia](Setup-Burpsuite-Community-id.md)
+
+﷽
+
 First, make sure you have Burpsuite installed. If you are using Kali Linux, it is typically pre-installed.
 
 Then, you will need an extension and a suitable, comfortable browser.
