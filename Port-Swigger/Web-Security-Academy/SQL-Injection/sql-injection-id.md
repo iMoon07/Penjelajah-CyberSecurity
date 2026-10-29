@@ -1,4 +1,4 @@
-# SQL injection
+# SQL Injection — PortSwigger Web Security Academy
 
 [🇬🇧 Read in English](sql-injection-en.md)
 
