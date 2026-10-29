@@ -38,26 +38,24 @@ flowchart TD
 
 ## Komponen Inti
 
-Mari mengenal beberapa variasi.
+| Komponen | Analogi Warung Makan | Fungsi |
+| --- | --- | --- |
+| [Operating System (OS)](https://en.wikipedia.org/wiki/Operating_system) | Bangunan warung | Fondasi yang mengelola perangkat keras, memori, proses, dan sumber daya server. |
+| [Web Server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server) | Pelayan | Menerima permintaan HTTP/HTTPS, meneruskannya ke aplikasi, lalu mengantar respons kembali ke client. |
+| [Runtime Aplikasi](https://en.wikipedia.org/wiki/Runtime_system) | Koki | Menjalankan kode aplikasi agar logika program dapat diproses menjadi hasil yang siap disajikan. |
+| [Database](https://en.wikipedia.org/wiki/Database) | Gudang / Pantry | Menyimpan, mengatur, dan mengambil data yang dibutuhkan aplikasi. Tidak selalu diperlukan jika aplikasi tidak membutuhkan penyimpanan data persisten. |
 
-Jarang warung makan memberikan detail tentang bahan penyajian yang kita bisa tau apa yang ada di balik dapur mereka.
+## Komponen Pelengkap
 
-Akan tetapi jika kita mengetahui-nya dari pengalaman kita pernah merasakan makan langsung di sana atau pernah dan bisa membuat nya sendiri didapur itu akan membuat kita tau apa saja yang di gunakan oleh warung tersebut.
+| Komponen | Analogi Warung Makan | Fungsi |
+| --- | --- | --- |
+| [Web Client](https://en.wikipedia.org/wiki/Web_browser) | Pelanggan | Aplikasi di sisi pengguna, seperti browser, yang mengirim HTTP request ke server dan menampilkan HTTP response. |
+| [TLS (Transport Layer Security) & Sertifikat TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) | Segel kemasan & sertifikat keaslian warung | Mengamankan komunikasi melalui HTTPS dengan enkripsi, autentikasi server, dan integritas data. SSL merupakan pendahulu TLS yang sudah tidak direkomendasikan. Sertifikat membantu browser memverifikasi identitas server. Untuk website publik, penggunaan HTTPS dengan TLS 1.2 atau TLS 1.3 sudah menjadi standar. |
+| [Cache (opsional)](https://en.wikipedia.org/wiki/Cache_(computing)) | Makanan siap saji di etalase | Menyimpan data sementara untuk mempercepat akses terhadap data yang sering digunakan dan mengurangi beban pada server. |
 
-Konteks ini sama seperti di dunia server.
+> Catatan: Komponen pelengkap tidak selalu wajib untuk membuat aplikasi dapat berjalan. Kebutuhannya menyesuaikan tujuan aplikasi, pengalaman yang ingin diberikan kepada pengguna, kebutuhan keamanan, serta lingkungan *deployment*. Ada yang bisa bersifat hampir wajib (misalnya HTTPS untuk situs publik), ada pula yang hanya ditambahkan saat benar-benar dibutuhkan (misalnya *cache* untuk meningkatkan performa).
 
-Misalnya, berikut beberapa komponen inti beserta fungsinya dalam dunia server.
-
-| Komponen | Fungsi |
-| --- | --- |
-| Operating System (OS) | Fondasi. Mengelola perangkat keras, memori, proses, dan sumber daya server. |
-| Web Client | Aplikasi di sisi pengguna, seperti browser, yang mengirim HTTP request ke server dan menampilkan HTTP response. |
-| TLS (Transport Layer Security) | Protokol kriptografi untuk mengamankan komunikasi antara web client dan server melalui enkripsi, autentikasi server, dan integritas data. SSL (Secure Sockets Layer) adalah pendahulunya yang kini sudah deprecated, sehingga yang digunakan adalah TLS. Pada website, TLS diterapkan melalui HTTPS (port 443), direkomendasikan TLS 1.2 atau TLS 1.3. |
-| Sertifikat TLS | Sertifikat digital dari *Certificate Authority* (CA) terpercaya untuk membuktikan identitas server. Browser memverifikasi rantai kepercayaan, kecocokan domain, dan masa berlaku. Jika valid, koneksi HTTPS dipercaya dan ditandai ikon gembok. |
-| Web Server | Menerima permintaan HTTP, menyajikan konten, atau meneruskan permintaan ke aplikasi. |
-| Runtime Aplikasi | Menjalankan kode aplikasi agar dapat diproses oleh server. |
-
-> Catatan: Setiap aplikasi bisa menggunakan kombinasi komponen yang berbeda sesuai kebutuhan. Komponen seperti Operating System, TLS, Web Server, Runtime Aplikasi, Framework, Database, dan Cache dapat dipilih atau diganti dengan alternatif lain sesuai arsitektur yang digunakan.
+Referensi: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
 ## Kombinasi Stack
 
@@ -195,9 +193,11 @@ Stack yang menggabungkan sistem operasi, web server, database, atau teknologi pe
 
 > Catatan: Memilih bahan yang pas makanan yang kita buat akan sedap dan enak membuat pelanggan nyaman untuk bisa datang ke tempat kita. Tapi ada trade off jika asal memilih bahan makanan begitupun technology stack, disini bukan daftar lengkap atau standar wajib. Komponen dalam satu stack dapat memiliki alternatif sesuai kebutuhan.
 
-## Di Mana Menjalankan Stack?
+## Memilih Platform untuk Menjalankan Stack
 
-Setelah memilih technology stack yang akan digunakan, langkah berikutnya adalah menentukan **di mana stack itu akan berjalan** dan bagaimana infrastrukturnya dikelola. Proses ini disebut **deployment environment** atau **lingkungan deployment**.
+Setelah memilih technology stack yang akan digunakan, langkah berikutnya adalah menentukan **platform tempat stack tersebut dijalankan**. Pilihannya beragam, mulai dari server fisik (_bare metal_), _virtual machine_ (VM), _container_, hingga layanan cloud seperti PaaS dan _serverless_.
+
+Dalam dunia server, pilihan ini menentukan bagaimana aplikasi dijalankan, sumber daya komputasi disediakan, dan infrastruktur dikelola. Referensi: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
 flowchart TD
@@ -233,44 +233,69 @@ Dalam dunia server, pilihan tersebut punya konsep yang serupa:
 | **Shared Hosting** | Warung di pinggir jalan yang dibagi banyak pedagang. Murah, tapi ramai dan terbatas. | Beberapa pengguna berbagi sumber daya server yang sama. | [cPanel](https://cpanel.net/), [Hostinger](https://www.hostinger.com/) |
 | **Managed Hosting** | Sewa toko dengan manajer yang mengurus operasional sehari-hari. | Penyedia menangani sebagian besar pengelolaan server dan operasionalnya. | [AWS Elastic Beanstalk](https://aws.amazon.com/elasticbeanstalk/), [DigitalOcean App Platform](https://www.digitalocean.com/products/app-platform) |
 | **Edge Computing** | Gerobak makanan yang diparkir dekat pelanggan agar makanan cepat disajikan. | Pemrosesan dijalankan lebih dekat dengan pengguna untuk mengurangi latensi. | [Cloudflare Workers](https://workers.cloudflare.com/), [AWS Wavelength](https://aws.amazon.com/wavelength/) |
-
 ### Perbedaan Penting
 
 - **VMware Workstation dan Fusion** = virtualisasi untuk komputer pribadi (lokal), cocok buat belajar di rumah.
 - **VMware ESXi / vSphere dan Proxmox VE** = virtualisasi untuk server produksi, cocok buat kelola banyak VM sekaligus.
-- **Bare Metal** merujuk pada cara sistem berjalan langsung di hardware. **Dedicated Server** merujuk pada server fisik yang disewa untuk satu pelanggan. Keduanya sering digunakan bersama, tapi bukan hal yang sama.
+- **Bare Metal** merujuk pada sistem yang berjalan langsung di hardware fisik. **Dedicated Server** merujuk pada server fisik yang disewa khusus untuk satu pelanggan. Keduanya sering berkaitan, tapi bukan hal yang sama.
 
 ### Hubungannya dengan Single-Tier Stack
 
-**Single-tier** berarti semua komponen stack (web server, runtime aplikasi, dan database) berada di **satu tempat yang sama** — misal dalam satu VM, satu container, atau satu server fisik.
+**Single-tier** berarti semua komponen stack ([web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [runtime aplikasi](https://en.wikipedia.org/wiki/Runtime_system), dan [database](https://en.wikipedia.org/wiki/Database)) berada di **satu tempat yang sama** — misalnya dalam satu VM, satu _container_, atau satu server fisik.
 
-Tapi single-tier **tidak berarti harus pakai VM atau container**. Kamu juga bisa menjalankannya di bare metal, dedicated server, atau bahkan PaaS, asalkan semua komponen tetap berada dalam satu lingkungan deployment.
+Single-tier **tidak berarti harus** menggunakan VM atau _container_. Stack ini juga bisa berjalan langsung di _bare metal_, _dedicated server_, atau bahkan di _Platform as a Service_ (PaaS), asalkan seluruh komponennya tetap berada dalam satu platform yang sama.
 
 Penting untuk membedakan:
-- **Lingkungan deployment** = tempat stack dijalankan (VM, container, bare metal, dll).
-- **Arsitektur tier** = bagaimana komponen aplikasi dibagi (single-tier, multi-tier, dll).
 
-Pilihan deployment ini akan sangat memengaruhi biaya operasional, fleksibilitas, skalabilitas, keamanan, dan cara aplikasi dipelihara. Tidak ada satu pilihan yang selalu paling baik semuanya bergantung pada kebutuhan proyek.
+- **Platform (tempat pelaksanaan)** = fasilitas tempat stack dijalankan (_bare metal_, VM, _container_, PaaS, _serverless_, dll.).
+- **Arsitektur _tier_** = cara pembagian komponen aplikasi (_single-tier_, _multi-tier_, dll.).
+
+Pilihan platform ini akan sangat memengaruhi biaya operasional, fleksibilitas, skalabilitas, keamanan, dan cara aplikasi dipelihara. Tidak ada satu pilihan yang selalu paling baik — semuanya bergantung pada kebutuhan proyek.
 
 ## Tips Buat Mulai
 
-1. Pahami alur aplikasi. Pelajari bagaimana request bergerak dari browser ke web server, diteruskan ke runtime aplikasi, lalu berinteraksi dengan database. Ini membantu kamu menemukan sumber masalah ketika aplikasi gagal berjalan. Referensi: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/How_the_web_works).
+1. **Pahami alur aplikasi**  
+   Pelajari bagaimana [HTTP request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) dikirim dari browser ke [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), diproses oleh aplikasi, berinteraksi dengan [database](https://en.wikipedia.org/wiki/Database) jika diperlukan, lalu kembali sebagai [HTTP response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) ke browser. Cobalah menjalankan aplikasi sederhana dan amati kode status seperti `200 OK`, `404 Not Found`, dan `500 Internal Server Error` untuk membedakan permintaan yang berhasil dan gagal.  
+   Referensi: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
-2. Pilih stack sesuai tujuan. Untuk belajar, pilih teknologi yang kamu sukai agar lebih mudah konsisten berlatih. Contohnya, LAMP atau LEMP untuk PHP, maupun MERN untuk JavaScript. Untuk proyek serius, pertimbangkan kebutuhan aplikasi, pengalaman tim, dokumentasi, keamanan, performa, biaya, dan dukungan jangka panjang.
+2. **Pilih *technology stack* sesuai kebutuhan**  
+   Pilih *stack* berdasarkan kebutuhan aplikasi, kemampuan tim, ketersediaan dokumentasi, keamanan, performa, dan biaya. Untuk mulai belajar, gunakan *stack* yang relatif sederhana, seperti [LAMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)) atau [LEMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)#LEMP) untuk PHP, maupun [MERN](https://www.mongodb.com/resources/languages/mern-stack) untuk JavaScript. Pelajari fungsi setiap komponen terlebih dahulu sebelum menambahkan teknologi lain.
 
-3. Mulai dari lingkungan lokal. Gunakan [VirtualBox](https://www.virtualbox.org/) untuk menjalankan VM atau [Docker](https://www.docker.com/) untuk menjalankan container. VM memiliki sistem operasi tamu sendiri, sedangkan container berbagi kernel host. Keduanya memudahkan eksperimen sebelum aplikasi diterapkan ke server produksi.
+3. **Mulai dengan lingkungan lokal**  
+   Sebelum menerapkan ke server publik, bangun dan jalankan *stack*-mu di komputer sendiri menggunakan instalasi lokal, [VirtualBox](https://www.virtualbox.org/) untuk *virtual machine* (VM), atau [Docker](https://www.docker.com/) untuk *container*. Cobalah menjalankan, menghentikan, dan menjalankan ulang aplikasi untuk memahami konfigurasi, dependensi, serta kebutuhan sumber dayanya.  
+   Perhatikan perbedaan: VM memiliki sistem operasi tamu sendiri, sedangkan *container* berbagi kernel *host*.  
+   Referensi: [Docker — What is a Container?](https://www.docker.com/resources/what-container/)
 
-4. Uji setiap komponen. Pastikan web server menerima request, runtime menjalankan aplikasi, dan database dapat menyimpan serta membaca data. Pengujian bertahap mempermudah identifikasi komponen yang bermasalah. Referensi: [Docker — Get Started](https://docs.docker.com/get-started/).
+4. **Uji aplikasi setelah dijalankan**  
+   Aplikasi yang berhasil dinyalakan belum tentu berfungsi dengan benar. Coba akses melalui browser, periksa respons HTTP, pastikan aplikasi dapat memproses permintaan, dan uji operasi baca-tulis ke database jika digunakan.  
+   Untuk melatih kemampuan *troubleshooting*, hentikan salah satu komponen di lingkungan uji, amati dampaknya, periksa log, lalu jalankan kembali komponen tersebut dan pastikan aplikasi pulih dengan normal.  
+   Referensi: [Docker — Run Your First Container](https://docs.docker.com/get-started/)
 
-5. Pantau sebelum mengoptimalkan. Periksa penggunaan CPU, RAM, disk, waktu respons, dan log untuk menemukan penyebab kelambatan sebelum menambah resource atau mengganti teknologi. Referensi: [Prometheus](https://prometheus.io/) dan [Grafana](https://grafana.com/).
+5. **Pahami HTTP dan HTTPS sebelum menerapkan TLS**  
+   Mulailah dengan mempelajari perbedaan HTTP dan HTTPS. Di lingkungan pengujian, coba akses aplikasi melalui HTTP, lalu aktifkan HTTPS menggunakan sertifikat uji. Amati perbedaan protokol, validasi sertifikat, serta peringatan yang muncul di browser saat sertifikat tidak dipercaya atau tidak valid.  
+   Setelah memahaminya, terapkan HTTPS dengan sertifikat yang valid sebelum membuka website ke publik. [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) melindungi jalur komunikasi melalui enkripsi, autentikasi server, dan integritas data, namun tidak otomatis mengamankan kode aplikasi, autentikasi, atau database.  
+   Referensi: [OWASP — Transport Layer Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html)
 
-6. Terapkan keamanan sejak awal. Batasi hak akses, lindungi kredensial, perbarui dependensi, dan buka hanya port yang diperlukan. Kesalahan konfigurasi pada satu mesin dapat memengaruhi seluruh aplikasi. Referensi: [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/).
+6. **Pantau performa sebelum melakukan optimasi**  
+   Catat penggunaan CPU, RAM, ruang disk, waktu respons, dan log saat aplikasi berjalan dalam kondisi normal. Lakukan pengujian beban secara bertahap dan bandingkan hasilnya untuk melihat di mana *bottleneck* mulai muncul.  
+   Jika ditemukan masalah, ubah satu hal pada satu waktu, ukur kembali hasilnya, dan baru pertimbangkan menambah cache atau sumber daya.  
+   Referensi: [Prometheus — Overview](https://prometheus.io/docs/introduction/overview/)
 
-7. Siapkan backup dan uji pemulihan. Cadangkan database, file aplikasi, serta konfigurasi penting. Uji pemulihan secara berkala agar kamu mengetahui apakah data benar-benar dapat dikembalikan saat terjadi kerusakan. Referensi: [PostgreSQL — Backup and Restore](https://www.postgresql.org/docs/current/backup.html).
+7. **Uji cache dan pemulihan *backup***  
+   Jika aplikasi sering membaca data yang sama, bandingkan waktu respons dan beban database sebelum dan sesudah menggunakan [cache](https://en.wikipedia.org/wiki/Cache_(computing)). Perhatikan juga konsistensi datanya saat data asli berubah.  
+   Untuk data penting, buat *backup* database dan file aplikasi, lalu coba pulihkan ke lingkungan pengujian. Pastikan data hasil pemulihan benar-benar dapat dibaca dan digunakan kembali. Keberhasilan membuat *backup* saja belum membuktikan pemulihan berhasil.  
+   Referensi: [PostgreSQL — Backup and Restore](https://www.postgresql.org/docs/current/backup.html)
 
-8. Dokumentasikan perubahan. Catat versi perangkat lunak, konfigurasi, dependensi, dan langkah deployment. Gunakan [Git](https://git-scm.com/) untuk melacak perubahan kode sehingga proses perbaikan dan pengembangan lebih mudah ditelusuri.
+8. **Dokumentasikan konfigurasi dan perubahan**  
+   Catat versi perangkat lunak, dependensi, konfigurasi penting, serta langkah untuk menjalankan aplikasi. Gunakan [Git](https://git-scm.com/) untuk melacak perubahan kode agar mudah ditelusuri atau dikembalikan jika dibutuhkan.  
+   Sebagai latihan, coba bangun ulang lingkungan hanya berdasarkan dokumentasi yang kamu buat. Jika bisa diulang tanpa bergantung pada ingatan, artinya dokumentasimu sudah cukup jelas.  
+   Referensi: [Pro Git — About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
 
-9. Kenali batas single-tier. Jika satu mesin mulai kewalahan atau aplikasi membutuhkan ketersediaan tinggi, evaluasi optimasi, redundansi, dan pemisahan komponen. Satu mesin dapat menjadi Single Point of Failure (SPOF), yaitu titik kegagalan yang berpotensi menghentikan seluruh aplikasi. Referensi: [Red Hat — What Is High Availability?](https://www.redhat.com/en/topics/linux/what-is-high-availability).
+9. **Kenali batas *single-tier***  
+   Pada arsitektur *single-tier*, [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [runtime aplikasi](https://en.wikipedia.org/wiki/Runtime_system), dan [database](https://en.wikipedia.org/wiki/Database) berjalan pada satu mesin yang sama. Gangguan pada mesin ini bisa berdampak pada seluruh aplikasi.  
+   Cobalah hentikan salah satu komponen di lingkungan pengujian untuk melihat risikonya, atau simulasikan kehabisan sumber daya dan mesin yang tidak dapat diakses.  
+   Jika kebutuhan aplikasi meningkat, evaluasi opsi seperti optimasi, penambahan kapasitas, redundansi, atau pemisahan komponen ke mesin dan layanan berbeda berdasarkan masalah yang terukur, kebutuhan ketersediaan, dan biaya operasional.  
+   Referensi: [Red Hat — What Is High Availability?](https://www.redhat.com/en/topics/containers/what-is-container-orchestration#what-is-high-availability)
 
 ## Rumus Memilih Stack dan Deployment Environment
 
@@ -298,8 +323,14 @@ Artikel engineering berikut dapat menjadi referensi untuk memahami alasan pemili
 
 ## Kesimpulan
 
-Server Single-Tier Stack adalah arsitektur yang menjalankan komponen utama aplikasi, seperti web server, runtime aplikasi, dan database, pada satu mesin yang sama. Browser mengirim HTTP request ke server, aplikasi memproses permintaan dan mengakses database jika diperlukan, lalu hasilnya dikembalikan sebagai HTTP response.
+**Server Single-Tier Stack** adalah arsitektur di mana komponen utama aplikasi, yaitu *[web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server)*, *[runtime aplikasi](https://en.wikipedia.org/wiki/Runtime_system)*, dan *[database](https://en.wikipedia.org/wiki/Database)*, berjalan pada satu mesin yang sama. 
 
-Memahami konsep ini membantu kita mengenali fungsi setiap komponen, memilih technology stack, dan menentukan deployment environment sesuai kebutuhan. Namun, satu mesin juga memiliki keterbatasan sumber daya dan berpotensi menjadi Single Point of Failure (SPOF).
+Prosesnya mirip dengan warung makan satu lokasi: browser mengirim *[HTTP Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods)* ke server, aplikasi memproses permintaan tersebut (serta mengakses database jika dibutuhkan), lalu mengembalikannya dalam bentuk *[HTTP Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)* ke pengguna.
 
-Intinya: Pilih stack dan deployment berdasarkan kebutuhan aplikasi, kemampuan tim, keamanan, biaya, dan hasil pengujian. Mulai dari arsitektur sederhana, lalu evaluasi kebutuhan optimasi atau pemisahan komponen seiring perkembangan aplikasi.
+Dengan membedakan *komponen inti* (OS, web server, runtime aplikasi, dan database) dan *komponen pelengkap* (web client, TLS & sertifikat TLS, serta cache), kita bisa lebih mudah mengenali mana yang wajib agar aplikasi bisa berjalan, dan mana yang bisa ditambahkan untuk meningkatkan keamanan, performa, maupun kenyamanan pengguna.
+
+Terdapat beragam *technology stack* seperti LAMP, MERN, Django, Spring Boot, dan lainnya yang bisa dipilih sesuai kebutuhan. Stack ini juga bisa dijalankan di berbagai *platform*, mulai dari *bare metal*, VM, *container*, PaaS, hingga *serverless*. 
+
+Meski sederhana, mudah dipelajari, dikonfigurasi, dan diuji, arsitektur ini memiliki keterbatasan sumber daya dan berpotensi menjadi *Single Point of Failure* (SPOF) karena seluruh komponen bergantung pada satu mesin yang sama.
+
+**Intinya:** Mulailah dari arsitektur *single-tier* untuk membangun pemahaman dasar tentang cara kerja server. Pilih *stack* dan *platform* yang sesuai kebutuhan, terapkan praktik keamanan sejak awal, lakukan pengujian dan dokumentasi dengan baik. Jika aplikasi berkembang dan membutuhkan skalabilitas serta ketersediaan yang lebih tinggi, barulah pertimbangkan untuk beralih ke arsitektur *multi-tier*.

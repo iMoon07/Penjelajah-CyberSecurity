@@ -38,24 +38,24 @@ flowchart TD
 
 ## Komponen Teras
 
-Marilah kita mengenali komponen-komponen utama serta peranan masing-masing dalam persekitaran pelayan.
+| Komponen | Analogi Gerai Makan | Fungsi |
+| --- | --- | --- |
+| [Sistem Pengendalian (OS)](https://ms.wikipedia.org/wiki/Sistem_pengendalian) | Bangunan gerai | Asas sistem. Mengurus perkakasan, ingatan, proses, dan sumber pelayan. |
+| [Pelayan Web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server) | Pelayan | Menerima permintaan HTTP/HTTPS, mengemudikannya ke aplikasi, lalu menghantar respons kembali kepada klien. |
+| [Masa Jalan Aplikasi](https://ms.wikipedia.org/wiki/Masa_jalan_sistem) | Tukang masak | Melaksanakan kod aplikasi agar logika program dapat diproses menjadi hidangan yang sedia dihidang. |
+| [Pangkalan Data](https://ms.wikipedia.org/wiki/Pangkalan_data) | Stor / Pantri | Menyimpan, menyusun, dan mendapatkan semula data yang diperlukan oleh aplikasi. Tidak semestinya diperlukan jika aplikasi tidak memerlukan penyimpanan data kekal. |
 
-Seperti gerai makan, tidak setiap premis mendedahkan secara terbuka butiran penuh proses di dapurnya. Namun, melalui pengalaman langsung atau dengan mempelajari cara masakan di dapur tersebut, seseorang akan mengetahui dengan tepat bahan dan kaedah yang digunakan.
+## Komponen Pelengkap
 
-Begitu juga dalam seni bina pelayan. Berikut merupakan komponen teras yang lazim ditemui dalam tindanan satu-tingkat:
+| Komponen | Analogi Gerai Makan | Fungsi |
+| --- | --- | --- |
+| [Klien Web](https://ms.wikipedia.org/wiki/Pelayar_web) | Pelanggan | Aplikasi di pihak pengguna (cth., pelayar web) yang menghantar permintaan HTTP kepada pelayan dan memaparkan respons HTTP. |
+| [TLS (Transport Layer Security) & Sijil TLS](https://ms.wikipedia.org/wiki/Keselamatan_lapisan_pengangkutan) | Pembungkus bertutup & sijil keaslian gerai | Melindungi komunikasi melalui HTTPS dengan penyulitan, pengesahan pelayan, dan integriti data. SSL ialah pendahulu TLS yang kini tidak lagi disyorkan. Sijil membantu pelayar mengesahkan identiti pelayan. Untuk laman web awam, penggunaan HTTPS dengan TLS 1.2 atau TLS 1.3 telah menjadi piawaian. |
+| [Cache (pilihan)](https://ms.wikipedia.org/wiki/Cache) | Makanan sedia di kaunter pameran | Menyimpan data yang kerap diakses secara sementara bagi mempercepat capaian dan mengurangkan beban pelayan. |
 
-| Komponen | Fungsi |
-| --- | --- |
-| Sistem Pengendalian (OS) | Asas sistem. Mengurus perkakasan, ingatan, proses, dan sumber pelayan. |
-| Klien Web | Aplikasi di pihak pengguna (cth., pelayar web) yang menghantar permintaan HTTP kepada pelayan dan memaparkan respons HTTP. |
-| TLS (Transport Layer Security) | Protokol kriptografi yang melindungi komunikasi antara klien web dan pelayan melalui penyulitan, pengesahan pelayan, dan integriti data. SSL ialah pendahulunya yang kini sudah ditamatkan; laman web moden menggunakan TLS melalui HTTPS (biasanya port 443), disyorkan TLS 1.2 atau TLS 1.3. |
-| Sijil TLS | Sijil digital daripada *Certificate Authority* (CA) yang dipercayai bagi membuktikan identiti pelayan. Pelayar mengesahkan rantaian kepercayaan, kesesuaian domain, dan tempoh sah; jika sah, sambungan HTTPS dipercayai dan ditandai dengan ikon kunci. |
-| Masa Jalan Aplikasi | Melaksanakan kod aplikasi agar dapat diproses oleh pelayan. |
-| Rangka Kerja Aplikasi | Menyediakan struktur dan ciri terbina bagi membangunkan aplikasi tanpa perlu membina segala-galanya dari awal. |
-| Pangkalan Data | Menyimpan, menyusun, dan mendapatkan semula data yang diperlukan oleh aplikasi. |
-| Cache (pilihan) | Menyimpan data yang kerap diakses secara sementara bagi meningkatkan prestasi. |
+> *Nota:* Komponen pelengkap tidak semestinya wajib agar aplikasi dapat berjalan. Keperluannya bergantung kepada tujuan aplikasi, pengalaman pengguna yang ingin dicapai, keperluan keselamatan, serta persekitaran pelaksanaan (*deployment*). Ada yang hampir wajib (cth., HTTPS untuk laman web awam), ada pula yang hanya ditambah apabila benar-benar diperlukan (cth., *cache* bagi meningkatkan prestasi).
 
-> *Nota:* Setiap aplikasi mungkin menggunakan gabungan komponen yang berbeza bergantung kepada keperluan. Komponen seperti sistem pengendalian, TLS, pelayan web, masa jalan aplikasi, rangka kerja, pangkalan data, dan cache boleh dipilih atau digantikan dengan alternatif yang sesuai mengikut seni bina yang dipilih.
+Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
 ## Gabungan Tindanan Teknologi
 
@@ -189,9 +189,11 @@ Tindanan yang menggabungkan sistem pengendalian, pelayan web, pangkalan data, at
 
 > *Nota:* Memilih bahan yang betul menghasilkan hidangan lazat yang menarik pelanggan kembali. Namun, setiap pilihan melibatkan pertukaran—begitu juga dengan tindanan teknologi. Senarai ini bukanlah lengkap atau wajib; komponen dalam sesuatu tindanan boleh digantikan bagi memenuhi keperluan tertentu.
 
-## Di Mana Untuk Menjalankan Tindanan?
+## Memilih Platform untuk Menjalankan Tindanan
 
-Setelah memilih tindanan teknologi, langkah seterusnya ialah menentukan *di mana* ia akan dijalankan dan bagaimana infrastrukturnya diurus. Ini dikenali sebagai **persekitaran pelaksanaan**.
+Setelah memilih tindanan teknologi, langkah seterusnya ialah menentukan **platform tempat tindanan tersebut dijalankan**. Pilihannya meliputi pelayan fizikal (_bare metal_), _mesin maya_ (VM), _bekas_ (_container_), serta perkhidmatan awan seperti PaaS dan _tanpa pelayan_ (_serverless_).
+
+Dari sudut pelayan, pilihan ini menentukan cara aplikasi dijalankan, cara sumber komputasi disediakan, dan cara infrastruktur diurus. Rujukan: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
 flowchart TD
@@ -230,32 +232,65 @@ Dari sudut pelayan, pilihan ini mempunyai analogi yang serupa:
 
 - **VMware Workstation dan Fusion** adalah untuk virtualisasi desktop tempatan, sesuai untuk pembelajaran di rumah.
 - **VMware ESXi/vSphere dan Proxmox VE** adalah untuk virtualisasi pelayan pengeluaran, sesuai untuk mengurus berbilang VM pada skala besar.
-- **Logam Kosong** merujuk kepada perisian berjalan terus pada perkakasan fizikal. **Pelayan Berdedikasi** merujuk kepada pelayan fizikal yang disewa untuk seorang pelanggan sahaja. Kedua-duanya sering digunakan bersama tetapi tidak sinonim.
+- **Logam Kosong (_Bare Metal_)** merujuk kepada sistem yang berjalan terus pada perkakasan fizikal. **Pelayan Berdedikasi (_Dedicated Server_)** merujuk kepada pelayan fizikal yang disewa khusus untuk seorang pelanggan sahaja. Kedua-duanya berkaitan, tetapi tidak sinonim.
 
 ### Hubungan dengan Tindanan Satu-Tingkat
 
-Seni bina **satu-tingkat** bermaksud semua komponen tindanan (pelayan web, masa jalan aplikasi, dan pangkalan data) berada di **tempat yang sama**—contohnya, dalam satu VM, satu bekas, atau satu pelayan fizikal.
+Tindanan **satu-tingkat** bermaksud semua komponen tindanan ([pelayan web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [masa jalan aplikasi](https://ms.wikipedia.org/wiki/Masa_jalan_sistem), dan [pangkalan data](https://ms.wikipedia.org/wiki/Pangkalan_data)) berada di **tempat yang sama** — contohnya, dalam satu VM, satu _bekas_ (_container_), atau satu pelayan fizikal.
 
-Namun, satu-tingkat **tidak semestinya** menggunakan VM atau bekas. Ia juga boleh dijalankan pada logam kosong, pelayan berdedikasi, atau bahkan PaaS, asalkan semua komponen kekal dalam persekitaran pelaksanaan tunggal.
+Namun, satu-tingkat **tidak semestinya** menggunakan VM atau _bekas_. Ia juga boleh dijalankan pada _bare metal_, pelayan berdedikasi, atau PaaS, asalkan semua komponen kekal pada platform yang sama.
 
 Penting untuk membezakan:
 
-- **Persekitaran pelaksanaan** = tempat tindanan dijalankan (VM, bekas, logam kosong, dll.).
-- **Seni bina tingkat** = cara komponen aplikasi dibahagikan (satu-tingkat, pelbagai-tingkat, dll.).
+- **Platform** = tempat tindanan dijalankan (_bare metal_, VM, _bekas_, PaaS, _tanpa pelayan_, dll.).
+- **Seni bina tingkat** = cara komponen aplikasi dibahagikan (_satu-tingkat_, _pelbagai-tingkat_, dll.).
 
-Pilihan persekitaran pelaksanaan mempengaruhi kos operasi, fleksibiliti, kebolehskalaan, keselamatan, dan kebolehselenggaraan. Tiada pilihan yang optimum untuk semua kes—segala-galanya bergantung kepada keperluan projek.
+Pilihan platform mempengaruhi kos operasi, fleksibiliti, kebolehskalaan, keselamatan, dan kebolehselenggaraan. Tiada pilihan yang optimum untuk semua kes — bergantung kepada keperluan projek.
 
 ## Panduan Memulakan
 
-1. **Fahami aliran aplikasi.** Pelajari bagaimana permintaan bergerak dari pelayar ke pelayan web, dihantar kepada masa jalan aplikasi, dan berinteraksi dengan pangkalan data. Ini membantu dalam penyelesaian masalah kegagalan. Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/How_the_web_works).
-2. **Pilih tindanan mengikut matlamat.** Untuk pembelajaran, pilih teknologi yang anda gemari bagi memastikan konsistensi latihan. Contohnya, LAMP/LEMP untuk PHP, atau MERN untuk JavaScript. Untuk projek serius, pertimbangkan keperluan aplikasi, kepakaran pasukan, dokumentasi, keselamatan, prestasi, kos, dan sokongan jangka panjang.
-3. **Mulakan dalam persekitaran tempatan.** Gunakan [VirtualBox](https://www.virtualbox.org/) untuk VM atau [Docker](https://www.docker.com/) untuk bekas. VM mempunyai sistem pengendalian tetamu sendiri, manakala bekas berkongsi inti hos. Kedua-duanya memudahkan eksperimen sebelum dilaksanakan ke pelayan pengeluaran.
-4. **Uji setiap komponen.** Pastikan pelayan web menerima permintaan, masa jalan melaksanakan aplikasi, dan pangkalan data boleh membaca serta menulis data. Pengujian berperingkat memudahkan pengenalpastian isu. Rujukan: [Docker — Mulakan](https://docs.docker.com/get-started/).
-5. **Pantau sebelum mengoptimumkan.** Jejaki penggunaan CPU, RAM, cakera, masa tindak balas, and log bagi mengenal pasti kesesakan sebelum menambah sumber atau menukar teknologi. Rujukan: [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/).
-6. **Utamakan keselamatan dari awal.** Hadkan kebenaran akses, lindungi kelayakan, kemas kini pergantungan, dan hanya buka port yang diperlukan. Kesalahan konfigurasi pada satu mesin boleh menjejaskan keseluruhan aplikasi. Rujukan: [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/).
-7. **Sediakan sandaran dan uji pemulihan.** Sandarkan pangkalan data, fail aplikasi, dan konfigurasi penting. Uji pemulihan secara berkala bagi memastikan data boleh dikembalikan sekiranya berlaku kegagalan. Rujukan: [PostgreSQL — Sandaran dan Pemulihan](https://www.postgresql.org/docs/current/backup.html).
-8. **Dokumentasikan perubahan.** Catat versi perisian, konfigurasi, pergantungan, dan langkah pelaksanaan. Gunakan [Git](https://git-scm.com/) bagi menjejak perubahan kod untuk memudahkan penyelesaian masalah dan kerjasama.
-9. **Ketahui had tindanan satu-tingkat.** Jika satu mesin menjadi terbeban atau kebolehsediaan tinggi diperlukan, nilaikan pengoptimuman, redundansi, atau pemisahan komponen merentas tingkat. Satu mesin merupakan Titik Kegagalan Tunggal (Single Point of Failure/SPoF)—satu titik kegagalan yang boleh menghentikan keseluruhan aplikasi. Rujukan: [Red Hat — Apakah Kebolehsediaan Tinggi?](https://www.redhat.com/en/topics/linux/what-is-high-availability).
+1. **Fahami alur aplikasi**  
+   Pelajari bagaimana [permintaan HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) dihantar dari pelayar ke [pelayan web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), diproses oleh aplikasi, berinteraksi dengan [pangkalan data](https://ms.wikipedia.org/wiki/Pangkalan_data) jika perlu, dan kembali sebagai [respons HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) ke pelayar. Cuba jalankan aplikasi ringkas dan perhatikan kod status seperti `200 OK`, `404 Not Found`, dan `500 Internal Server Error` untuk membezakan permintaan yang berjaya dan yang gagal.  
+   Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
+
+2. **Pilih *technology stack* yang sesuai**  
+   Pilih *stack* berdasarkan keperluan aplikasi, kepakaran pasukan, dokumentasi, keselamatan, prestasi, dan kos. Untuk pembelajaran, mulakan dengan *stack* yang ringkas seperti [LAMP](https://ms.wikipedia.org/wiki/LAMP_(perisian)) atau [LEMP](https://ms.wikipedia.org/wiki/LAMP_(perisian)#LEMP) untuk PHP, atau [MERN](https://www.mongodb.com/resources/languages/mern-stack) untuk JavaScript. Fahami fungsi setiap komponen terlebih dahulu sebelum menambah teknologi lain.
+
+3. **Mulakan di persekitaran tempatan**  
+   Sebelum melaksanakan ke pelayan awam, bina dan jalankan *stack* anda di komputer sendiri menggunakan pemasangan tempatan, [VirtualBox](https://www.virtualbox.org/) untuk *mesin maya* (VM), atau [Docker](https://www.docker.com/) untuk *bekas* (*container*). Cuba jalankan, hentikan, dan jalankan semula aplikasi untuk memahami konfigurasi, pergantungan, dan keperluan sumber.  
+   Perhatikan perbezaan: VM mempunyai sistem pengendalian tetamu sendiri, manakala *bekas* berkongsi inti *hos*.  
+   Rujukan: [Docker — Apakah Itu Container?](https://www.docker.com/resources/what-container/)
+
+4. **Uji aplikasi selepas dijalankan**  
+   Aplikasi yang boleh dijalankan belum semestinya berfungsi dengan betul. Akses melalui pelayar, semak respons HTTP, pastikan permintaan diproses dengan baik, dan uji operasi baca-tulis ke pangkalan data jika digunakan.  
+   Untuk berlatih menyelesaikan masalah, hentikan salah satu komponen dalam persekitaran ujian, perhatikan kesan dan log yang terhasil, kemudian jalankan semula komponen tersebut bagi memastikan aplikasi pulih dengan normal.  
+   Rujukan: [Docker — Jalankan Container Pertama Anda](https://docs.docker.com/get-started/)
+
+5. **Fahami HTTP dan HTTPS sebelum melaksanakan TLS**  
+   Mulakan dengan mempelajari perbezaan HTTP dan HTTPS. Dalam persekitaran ujian, bandingkan capaian melalui HTTP dan HTTPS menggunakan sijil ujian. Perhatikan perbezaan protokol, pengesahan sijil, serta amaran pelayar apabila sijil tidak dipercayai atau tidak sah.  
+   Setelah memahaminya, laksanakan HTTPS dengan sijil yang sah sebelum mendedahkan laman web kepada pengguna awam. [TLS](https://ms.wikipedia.org/wiki/Keselamatan_lapisan_pengangkutan) melindungi komunikasi melalui penyulitan, pengesahan pelayan, dan integriti data, tetapi tidak secara automatik mengamankan kod aplikasi, pengesahan, atau pangkalan data.  
+   Rujukan: [OWASP — Transport Layer Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html)
+
+6. **Pantau prestasi sebelum mengoptimumkan**  
+   Catat penggunaan CPU, RAM, ruang cakera, masa tindak balas, dan log semasa aplikasi berjalan dalam keadaan biasa. Jalankan ujian beban secara berperingkat dan bandingkan keputusannya bagi mengenal pasti *bottleneck*.  
+   Jika terdapat masalah, ubah satu perkara pada satu masa, ukur semula, dan hanya pertimbangkan penambahan *cache* atau sumber baharu selepas melihat kesan yang nyata.  
+   Rujukan: [Prometheus — Overview](https://prometheus.io/docs/introduction/overview/)
+
+7. **Uji *cache* dan pemulihan sandaran**  
+   Jika aplikasi kerap membaca data yang sama, bandingkan masa tindak balas dan beban pangkalan data sebelum dan selepas menggunakan [*cache*](https://ms.wikipedia.org/wiki/Cache). Pastikan data yang disimpan sementara kekal konsisten apabila data asal berubah.  
+   Bagi data penting, buat sandaran pangkalan data dan fail aplikasi, kemudian cuba pulihkannya ke persekitaran ujian. Pastikan data hasil pemulihan boleh dibaca dan digunakan. Berjaya mencipta sandaran sahaja tidak menjamin pemulihan akan berjaya.  
+   Rujukan: [PostgreSQL — Backup and Restore](https://www.postgresql.org/docs/current/backup.html)
+
+8. **Dokumentasikan konfigurasi dan perubahan**  
+   Catat versi perisian, pergantungan, konfigurasi penting, serta langkah untuk menjalankan aplikasi. Gunakan [Git](https://git-scm.com/) bagi menjejak perubahan kod supaya mudah dilihat atau dikembalikan jika diperlukan.  
+   Sebagai latihan, cuba bina semula persekitaran hanya berdasarkan dokumentasi yang anda sediakan. Jika ia boleh diulangi tanpa bergantung sepenuhnya pada ingatan, dokumentasi tersebut sudah memadai.  
+   Rujukan: [Pro Git — About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+
+9. **Kenali had tindanan satu-tingkat**  
+   Dalam seni bina satu-tingkat, [pelayan web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [masa jalan aplikasi](https://ms.wikipedia.org/wiki/Masa_jalan_sistem), dan [pangkalan data](https://ms.wikipedia.org/wiki/Pangkalan_data) berjalan pada satu mesin yang sama. Kegagalan atau kehabisan sumber pada mesin ini boleh menjejaskan keseluruhan aplikasi.  
+   Cuba hentikan salah satu komponen dalam persekitaran ujian untuk melihat risikonya, atau simulasikan kehabisan sumber dan kegagalan capaian mesin.  
+   Jika keperluan aplikasi bertambah, nilaikan pilihan seperti pengoptimuman, penambahan kapasiti, redundansi, atau pemisahan komponen berdasarkan masalah yang boleh diukur, keperluan kebolehsediaan, dan kos operasi.  
+   Rujukan: [Red Hat — What Is High Availability?](https://www.redhat.com/en/topics/availability/what-is-high-availability)
 
 ## Formula Memilih Tindanan dan Persekitaran Pelaksanaan
 
@@ -281,8 +316,14 @@ Memilih tindanan teknologi boleh membingungkan memandangkan kepelbagaian bahasa,
 
 ## Kesimpulan
 
-Tindanan pelayan satu-tingkat ialah seni bina di mana komponen utama aplikasi—pelayan web, masa jalan aplikasi, dan pangkalan data—berjalan pada satu mesin yang sama. Pelayar menghantar permintaan HTTP kepada pelayan, aplikasi memprosesnya dan mengakses pangkalan data jika perlu, dan hasilnya dikembalikan sebagai respons HTTP.
+**Tindanan Pelayan Satu-Tingkat** ialah seni bina di mana komponen utama aplikasi—[pelayan web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [masa jalan aplikasi](https://ms.wikipedia.org/wiki/Masa_jalan_sistem), dan [pangkalan data](https://ms.wikipedia.org/wiki/Pangkalan_data)—berjalan pada satu mesin yang sama.
 
-Memahami konsep ini membantu mengenali peranan setiap komponen, memilih tindanan teknologi yang sesuai, dan menentukan persekitaran pelaksanaan yang bersesuaian. Namun, satu mesin mempunyai had sumber dan berisiko menjadi Titik Kegagalan Tunggal (SPoF).
+Prosesnya adalah seperti gerai makan di satu lokasi: pelayar menghantar [permintaan HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) kepada pelayan, aplikasi memproses permintaan tersebut (serta mengakses pangkalan data jika perlu), lalu mengembalikannya sebagai [respons HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) kepada pengguna.
 
-**Akhir kata:** Pilih tindanan dan pelaksanaan berdasarkan keperluan aplikasi, keupayaan pasukan, keselamatan, kos, dan keputusan ujian. Mulakan secara ringkas, dan apabila aplikasi berkembang, nilaikan keperluan pengoptimuman atau pemisahan komponen merentas pelbagai tingkat.
+Dengan membezakan antara *komponen teras* (sistem pengendalian, pelayan web, masa jalan aplikasi, dan pangkalan data) serta *komponen pelengkap* (klien web, TLS & sijil TLS, dan cache), kita dapat mengenal pasti komponen yang wajib bagi membolehkan aplikasi berjalan, serta komponen tambahan bagi meningkatkan keselamatan, prestasi dan pengalaman pengguna.
+
+Terdapat pelbagai *tindanan teknologi* seperti LAMP, MERN, Django, Spring Boot dan lain-lain yang boleh dipilih mengikut keperluan. Ia juga boleh dijalankan pada pelbagai *platform* termasuk *bare metal*, VM, *bekas*, PaaS dan *tanpa pelayan*.
+
+Walaupun ringkas, mudah dipelajari, dikonfigurasi dan diuji, seni bina ini mempunyai had sumber dan berpotensi menjadi *Titik Kegagalan Tunggal* (SPOF) kerana semua komponen bergantung kepada satu mesin yang sama.
+
+**Intipati:** Mulakan dengan seni bina satu-tingkat bagi membina asas pemahaman tentang cara pelayan berfungsi. Pilih *tindanan* dan *platform* yang bersesuaian, utamakan keselamatan, laksanakan ujian dan dokumentasi dengan baik. Apabila aplikasi berkembang serta memerlukan kebolehskalaan dan kebolehsediaan yang lebih tinggi, barulah pertimbangkan untuk beralih kepada seni bina pelbagai tingkat.

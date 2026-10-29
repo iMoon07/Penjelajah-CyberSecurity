@@ -38,24 +38,24 @@ flowchart TD
 
 ## Mga Pangunahing Bahagi
 
-Kilalanin natin ang mga pangunahing bahagi at ang kanilang tungkulin sa isang server environment.
+| Bahagi | Analohiya sa Karinderya | Tungkulin |
+| --- | --- | --- |
+| [Operating System (OS)](https://en.wikipedia.org/wiki/Operating_system) | Gusali ng karinderya | Ang pundasyon. Pinamamahalaan nito ang hardware, memory, proseso, at mga resource ng server. |
+| [Web Server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server) | Waiter | Tumatanggap ng mga kahilingan na HTTP/HTTPS, ipinapasa ito sa application, at ibinabalik ang tugon sa client. |
+| [Application Runtime](https://en.wikipedia.org/wiki/Runtime_system) | Kusinero | Isinasagawa ang application code upang maproseso ang lohika ng aplikasyon at gawing handa nang ihain ang resulta. |
+| [Database](https://en.wikipedia.org/wiki/Database) | Bodega / Pantry | Nagtatago, nag-oorganisa, at kumukuha ng datos na kinakailangan ng aplikasyon. Hindi ito palaging kinakailangan kung ang aplikasyon ay hindi nangangailangan ng permanenteng pag-iimbak ng datos. |
 
-Katulad ng karinderya, hindi lahat ng establisyimento ay hayagang nagpapahayag ng buong detalye ng kanilang paghahanda sa kusina. Gayunpaman, sa pamamagitan ng direktang karanasan o sa pagkatuto ng pagluluto sa mismong kusina na iyon, malalaman ng isa nang eksakto kung ano ang mga sangkap at pamamaraan na ginagamit.
+## Mga Komponenteng Pantulong
 
-Ganun din ang nangyayari sa arkitektura ng server. Narito ang mga pangunahing bahagi na karaniwang makikita sa isang single-tier stack:
+| Bahagi | Analohiya sa Karinderya | Tungkulin |
+| --- | --- | --- |
+| [Web Client](https://en.wikipedia.org/wiki/Web_browser) | Customer | Ang application sa panig ng gumagamit (halimbawa, web browser) na nagpapadala ng HTTP request sa server at nagpapakita ng HTTP response. |
+| [TLS (Transport Layer Security) & TLS Certificate](https://en.wikipedia.org/wiki/Transport_Layer_Security) | Selyadong packaging & opisyal na lisensya ng karinderya | Nagbibigay ng seguridad sa komunikasyon sa pamamagitan ng HTTPS gamit ang encryption, server authentication, at data integrity. Ang SSL ang dating bersyon na hindi na nire-rekomenda. Tinutulungan ng certificate ang browser na i-verify ang identidad ng server. Para sa pampublikong website, ang paggamit ng HTTPS na may TLS 1.2 o TLS 1.3 ay naging pamantayan na. |
+| [Cache (opsyonal)](https://en.wikipedia.org/wiki/Cache_(computing)) | Mga pagkain na handa na sa display | Pansamantalang nagtatago ng mga madalas na ginagamit na datos upang mapabilis ang access at mabawasan ang load sa server. |
 
-| Bahagi | Tungkulin |
-| --- | --- |
-| Operating System (OS) | Ang pundasyon. Pinamamahalaan nito ang hardware, memory, proseso, at mga resource ng server. |
-| Web Client | Ang application sa panig ng gumagamit (halimbawa, web browser) na nagpapadala ng HTTP request sa server at nagpapakita ng HTTP response. |
-| TLS (Transport Layer Security) | Isang cryptographic protocol na nagse-secure ng komunikasyon sa pagitan ng web client at server sa pamamagitan ng encryption, server authentication, at data integrity. Ang SSL ang na-deprecate nang predecessor nito; ang mga modernong site ay gumagamit ng TLS sa HTTPS (karaniwang port 443), mas mainam ang TLS 1.2 o TLS 1.3. |
-| TLS Certificate | Isang digital certificate mula sa pinagkakatiwalaang Certificate Authority (CA) na nagpapatunay ng identidad ng server. Sinusuri ng browser ang chain of trust, pagtutugma ng domain, at validity; kung wasto, ang HTTPS ay pinagkakatiwalaan at may padlock icon. |
-| Application Runtime | Isinasagawa ang application code upang ma-process ito ng server. |
-| Application Framework | Nagbibigay ng estruktura at mga built-in na feature upang makabuo ng aplikasyon nang hindi kinakailangan na buuin ang lahat mula sa simula. |
-| Database | Nagtatago, nag-oorganisa, at kumukuha ng datos na kinakailangan ng aplikasyon. |
-| Cache (opsyonal) | Pansamantalang nagtatago ng mga madalas na binibisitang datos upang mapabilis ang performance. |
+> *Tala:* Ang mga komponenteng pantulong ay hindi palaging kinakailangan upang gumana ang isang aplikasyon. Depende ito sa layunin ng aplikasyon, nais na karanasan ng user, mga kinakailangan sa seguridad, at sa deployment environment. Ang iba ay halos kinakailangan na (halimbawa, HTTPS para sa pampublikong website), habang ang iba naman ay idinadagdag lamang kung nagbibigay ng malinaw na benepisyo (halimbawa, caching para sa mas mabilis na performance).
 
-> *Tala:* Maaaring gumamit ang bawat aplikasyon ng iba't ibang kombinasyon ng mga bahagi depende sa pangangailangan nito. Ang mga bahagi tulad ng operating system, TLS, web server, application runtime, framework, database, at cache ay maaaring piliin o palitan ng mga angkop na alternatibo alinsunod sa napiling arkitektura.
+Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
 ## Mga Kombinasyon ng Technology Stack
 
@@ -189,9 +189,11 @@ Ang mga stack na ito ay nagsasama ng operating system, web server, database, o m
 
 > *Tala:* Ang pagpili ng tamang mga sangkap ay nagreresulta sa masarap na pagkain na nagpapanatili sa mga customer na bumalik. Gayunpaman, ang bawat pagpili ay may trade-off—ganun din sa technology stacks. Hindi ito isang kumpleto o obligatoryong listahan; ang mga bahagi sa loob ng isang stack ay maaaring palitan upang umangkop sa mga partikular na pangangailangan.
 
-## Saan Patatakbuhin ang Stack?
+## Pagpili ng Platform para Patakbuhin ang Stack
 
-Matapos pumili ng technology stack, ang susunod na pagsasaalang-alang ay *saan* ito tatakbo at paano pamamahalaan ang infrastructure nito. Ito ay tinatawag na **deployment environment**.
+Matapos pumili ng technology stack, ang susunod na hakbang ay tukuyin ang **platform kung saan tatakbo ang stack**. Ang mga pagpipilian ay mula sa pisikal na server (_bare metal_), _virtual machine_ (VM), _container_, hanggang sa mga cloud service tulad ng PaaS at _serverless_.
+
+Sa konteksto ng server, ang pagpiling ito ang magtatakda kung paano tatakbo ang aplikasyon, paano ipapamigay ang mga computing resource, at paano pamamahalaan ang imprastruktura. Sanggunian: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
 flowchart TD
@@ -230,32 +232,65 @@ Sa mundo ng server, ang mga pagpipilian na ito ay may katumbas na pagkakatulad:
 
 - **VMware Workstation at Fusion** ay para sa lokal na desktop virtualization, angkop para sa pag-aaral sa bahay.
 - **VMware ESXi/vSphere at Proxmox VE** ay para sa production server virtualization, angkop para sa pamamahala ng maraming VM sa malaking sukat.
-- **Bare Metal** ay tumutukoy sa software na direktang tumatakbo sa pisikal na hardware. Ang **Dedicated Server** ay tumutukoy sa pisikal na server na inuupahan sa isang customer lamang. Ang mga termino ay madalas na magkasama ngunit hindi magkapareho.
+- **Bare Metal** ay tumutukoy sa system na direktang tumatakbo sa pisikal na hardware. Ang **Dedicated Server** naman ay tumutukoy sa pisikal na server na eksklusibong inuupahan sa isang customer. Magkaugnay ang mga ito, ngunit hindi magkapareho.
 
 ### Kaugnayan sa Single-Tier Stack
 
-Ang **single-tier** na arkitektura ay nangangahulugan na ang lahat ng bahagi ng stack (web server, application runtime, at database) ay nasa **iisang lugar**—halimbawa, sa loob ng isang VM, isang container, o isang pisikal na server.
+Ang arkitekturang **single-tier** ay nangangahulugan na ang lahat ng bahagi ng stack ([web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), at [database](https://en.wikipedia.org/wiki/Database)) ay nasa **iisang lugar** — halimbawa, sa loob ng isang VM, isang _container_, o isang pisikal na server.
 
-Gayunpaman, ang single-tier ay **hindi nangangailangan** ng VM o container. Maaari rin itong patakbuhin sa bare metal, dedicated server, o kahit sa PaaS, hangga't ang lahat ng bahagi ay nananatili sa loob ng iisang deployment environment.
+Gayunpaman, ang single-tier ay **hindi nangangailangan** ng VM o _container_. Maaari rin itong patakbuhin sa _bare metal_, _dedicated server_, o kahit sa PaaS, hangga't ang lahat ng bahagi ay nananatili sa iisang platform.
 
 Mahalaga na pag-iba-ibahin ang mga sumusunod:
 
-- **Deployment environment** = kung saan tumatakbo ang stack (VM, container, bare metal, atbp.).
-- **Tier architecture** = kung paano nahahati ang mga bahagi ng aplikasyon (single-tier, multi-tier, atbp.).
+- **Platform** = lugar kung saan tatakbo ang stack (_bare metal_, VM, _container_, PaaS, _serverless_, atbp.).
+- **Tier architecture** = paraan ng paghahati ng mga bahagi ng aplikasyon (_single-tier_, _multi-tier_, atbp.).
 
-Ang pagpili ng deployment environment ay nakakaapekto sa operational costs, flexibility, scalability, seguridad, at maintainability. Walang solong pinakamainam na pagpipilian para sa lahat—depende ito sa pangangailangan ng proyekto.
+Ang pagpili ng platform ay nakakaapekto sa gastos sa pagpapatakbo, kakayahang umangkop, scalability, seguridad, at maintainability. Walang iisang pinakamainam na opsyon — ito ay nakadepende sa pangangailangan ng proyekto.
 
 ## Mga Tip para sa Pagsisimula
 
-1. **Unawain ang daloy ng aplikasyon.** Alamin kung paano gumagalaw ang request mula sa browser papunta sa web server, ipinapasa sa application runtime, at nakikipag-ugnayan sa database. Nakakatulong ito sa pag-troubleshoot ng mga pagkakamali. Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/How_the_web_works).
-2. **Pumili ng stack batay sa layunin.** Para sa pag-aaral, pumili ng teknolohiya na gusto mo upang mapanatili ang pagkakapare-pareho sa pagsasanay. Halimbawa, LAMP/LEMP para sa PHP, o MERN para sa JavaScript. Para sa seryosong mga proyekto, isaalang-alang ang pangangailangan ng aplikasyon, kakayahan ng koponan, dokumentasyon, seguridad, performance, gastos, at long-term na suporta.
-3. **Magsimula sa lokal na environment.** Gumamit ng [VirtualBox](https://www.virtualbox.org/) para sa mga VM o [Docker](https://www.docker.com/) para sa mga container. Ang mga VM ay may sariling guest OS, samantalang ang mga container ay nagbabahagi ng host kernel. Pareho itong nagpapadali sa eksperimento bago i-deploy sa production.
-4. **Subukan ang bawat bahagi.** Tiyakin na ang web server ay tumatanggap ng mga request, ang runtime ay nagsasagawa ng aplikasyon, at ang database ay maaaring magbasa at magsulat ng datos. Ang unti-unting pagsubok ay nagpapadali sa paghiwalay ng mga suliranin. Sanggunian: [Docker — Magsimula](https://docs.docker.com/get-started/).
-5. **Subaybayan bago mag-optimize.** Bantayan ang CPU, RAM, disk usage, response times, at mga log upang matukoy ang mga bottleneck bago magdagdag ng resources o magpalit ng teknolohiya. Mga sanggunian: [Prometheus](https://prometheus.io/) at [Grafana](https://grafana.com/).
-6. **Unahin ang seguridad mula sa simula.** Limitahan ang mga access permission, protektahan ang mga credentials, panatilihing updated ang mga dependencies, at buksan lamang ang mga kinakailangang port. Ang maling configuration sa iisang makina ay maaaring makaapekto sa kabuuang aplikasyon. Sanggunian: [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/).
-7. **Maghanda ng mga backup at subukan ang recovery.** I-backup ang database, mga application files, at mga kritikal na configuration. Subukan ang restoration nang pana-panahon upang matiyak na ang datos ay mababalikan sa kaso ng pagkasira. Sanggunian: [PostgreSQL — Backup at Restore](https://www.postgresql.org/docs/current/backup.html).
-8. **Idokumento ang mga pagbabago.** Itala ang mga bersyon ng software, configuration, dependencies, at mga hakbang sa pag-deploy. Gumamit ng [Git](https://git-scm.com/) upang subaybayan ang mga pagbabago sa code para sa mas madaling pag-debug at pakikipagtulungan.
-9. **Alamin ang mga limitasyon ng single-tier.** Kung ang isang makina ay nagsisimula nang maging sobra sa kapasidad o kinakailangan ang high availability, suriin ang optimization, redundancy, o paghihiwalay ng mga bahagi sa iba't ibang tiers. Ang iisang makina ay isang Single Point of Failure (SPOF)—isang punto ng pagkasira na maaaring magpahinto sa kabuuang aplikasyon. Sanggunian: [Red Hat — Ano ang High Availability?](https://www.redhat.com/en/topics/linux/what-is-high-availability).
+1. **Unawain ang daloy ng aplikasyon**  
+   Alamin kung paano nagpapadala ang browser ng [HTTP request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) sa [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), paano ito pinoproseso ng aplikasyon, paano ito nakikipag-ugnayan sa [database](https://en.wikipedia.org/wiki/Database) kung kinakailangan, at kung paano ito bumabalik bilang [HTTP response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Subukan ang isang simpleng aplikasyon at obserbahan ang mga status code tulad ng `200 OK`, `404 Not Found`, at `500 Internal Server Error` upang makilala ang pagkakaiba ng matagumpay at hindi matagumpay na kahilingan.  
+   Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
+
+2. **Pumili ng angkop na *technology stack***  
+   Pumili ng *stack* batay sa pangangailangan ng aplikasyon, kakayahan ng koponan, dokumentasyon, seguridad, performance, at gastos. Para sa pag-aaral, mas mainam na magsimula sa simpleng *stack* tulad ng [LAMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)) o [LEMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)#LEMP) para sa PHP, o [MERN](https://www.mongodb.com/resources/languages/mern-stack) para sa JavaScript. Unawain muna ang tungkulin ng bawat bahagi bago magdagdag ng karagdagang teknolohiya.
+
+3. **Magsimula sa lokal na kapaligiran**  
+   Bago ito i-deploy sa pampublikong server, buuin at patakbuhin ang *stack* sa iyong sariling kompyuter gamit ang lokal na instalasyon, [VirtualBox](https://www.virtualbox.org/) para sa *virtual machine* (VM), o [Docker](https://www.docker.com/) para sa *container*. Subukan itong patakbuhin, ihinto, at patakbuhin muli upang maunawaan ang configuration, dependencies, at resource na kinakailangan.  
+   Pansinin ang pagkakaiba: ang VM ay may sariling guest OS, samantalang ang *container* ay nagbabahagi ng kernel ng *host*.  
+   Sanggunian: [Docker — What is a Container?](https://www.docker.com/resources/what-container/)
+
+4. **Subukan ang aplikasyon matapos itong patakbuhin**  
+   Hindi sapat na gumagana ang stack — kailangang siguraduhin na tama rin ang aplikasyon. I-access ito sa browser, suriin ang HTTP response, tiyakin na naproseso ng maayos ang kahilingan, at subukan ang read/write sa database kung kinakailangan.  
+   Upang sanayin ang *troubleshooting*, ihinto ang isa sa mga bahagi sa test environment, obserbahan ang errors at logs, pagkatapos ay patakbuhin ito muli at tiyakin na nakabangon nang maayos ang aplikasyon.  
+   Sanggunian: [Docker — Run Your First Container](https://docs.docker.com/get-started/)
+
+5. **Unawain ang HTTP at HTTPS bago magpatupad ng TLS**  
+   Magsimula sa pag-aaral ng pagkakaiba ng HTTP at HTTPS. Sa test environment, i-access ang aplikasyon sa HTTP, pagkatapos ay paganahin ang HTTPS gamit ang test certificate. Obserbahan ang pagkakaiba ng protocol, certificate validation, at mga babala ng browser sa mga hindi pinagkakatiwalaang o invalid na certificate.  
+   Kapag naunawaan na ito, gumamit ng valid na certificate para sa HTTPS bago ilantad ang website sa publiko. Pinoprotektahan ng [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) ang komunikasyon sa pamamagitan ng encryption, server authentication, at data integrity, ngunit hindi nito awtomatikong sinisiguro ang seguridad ng application code, authentication, o database.  
+   Sanggunian: [OWASP — Transport Layer Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html)
+
+6. **Sukatin ang performance bago mag-optimize**  
+   Itala ang CPU, RAM, disk usage, response time, at logs habang normal na tumatakbo ang aplikasyon. Pagkatapos, magsagawa ng controlled load test at ihambing ang resulta. Obserbahan kung tataas ang resource usage o babagal ang response time.  
+   Kung may suliranin, baguhin lamang ang isang bagay sa bawat pagkakataon, sukatin muli, at huwag agad magdagdag ng [cache](https://en.wikipedia.org/wiki/Cache_(computing)) o resources nang hindi batay sa datos.  
+   Sanggunian: [Prometheus — Overview](https://prometheus.io/docs/introduction/overview/)
+
+7. **Subukan ang cache at backup recovery**  
+   Kung madalas basahin ang parehong data, ihambing ang response time at database load bago at pagkatapos gumamit ng cache. Siguruhin na nananatiling consistent ang data sa cache kapag nagbago ang orihinal na data.  
+   Para sa mahahalagang data, gumawa ng backup ng database at app files, at subukan itong i-restore sa test environment. Tiyakin na nababasa at magagamit muli ang restored na data — ang pagkakaroon lamang ng backup ay hindi sapat na patunay na kaya itong ma-restore nang maayos.  
+   Sanggunian: [PostgreSQL — Backup and Restore](https://www.postgresql.org/docs/current/backup.html)
+
+8. **Idokumento ang configuration at mga pagbabago**  
+   Itala ang bersyon ng software, dependencies, mahahalagang configuration, at mga hakbang sa pagpapatakbo ng aplikasyon. Gumamit ng [Git](https://git-scm.com/) upang subaybayan ang mga pagbabago sa code.  
+   Bilang pagsasanay, subukan na muling buuin ang environment batay lamang sa dokumentasyon — kung kaya mong gawin ito nang hindi umaasa sa memorya, sapat na ang dokumentasyon.  
+   Sanggunian: [Pro Git — About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+
+9. **Alamin ang mga limitasyon ng single-tier stack**  
+   Sa single-tier na arkitektura, ang [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), at [database](https://en.wikipedia.org/wiki/Database) ay sabay-sabay na tumatakbo sa iisang makina. Kaya't ang pagkasira o pagkaubos ng resources sa makinang iyon ay maaaring makaapekto sa buong aplikasyon.  
+   Subukan ito sa ligtas na test environment sa pamamagitan ng paghinto sa isa sa mga bahagi o pagsagawa ng load simulation.  
+   Kung lumalaki na ang pangangailangan ng aplikasyon, suriin ang mga opsyon tulad ng optimization, capacity upgrade, redundancy, o paghihiwalay ng mga bahagi batay sa nasusukat na pangangailangan, availability goals, at gastos.  
+   Sanggunian: [Red Hat — What Is High Availability?](https://www.redhat.com/en/topics/availability/what-is-high-availability)
 
 ## Formula sa Pagpili ng Stack at Deployment Environment
 
@@ -281,8 +316,14 @@ Ang pagpili ng technology stack ay maaaring nakakalito dahil sa napakaraming wik
 
 ## Konklusyon
 
-Ang server single-tier stack ay isang arkitektura kung saan ang mga pangunahing bahagi ng aplikasyon—web server, application runtime, at database—ay tumatakbo sa iisang makina lamang. Ang browser ay nagpapadala ng HTTP request sa server, pinoproseso ito ng aplikasyon at kumukuha ng datos mula sa database kung kinakailangan, at ang resulta ay ibinabalik bilang HTTP response.
+Ang **Server Single-Tier Stack** ay isang arkitektura kung saan ang mga pangunahing bahagi ng aplikasyon—[web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), at [database](https://en.wikipedia.org/wiki/Database)—ay sabay-sabay na tumatakbo sa iisang makina lamang.
 
-Ang pag-unawa sa konseptong ito ay nakakatulong sa pagkilala sa tungkulin ng bawat bahagi, pagpili ng angkop na technology stack, at pagpili ng angkop na deployment environment. Gayunpaman, ang iisang makina ay may mga limitasyon sa resources at nagdadala ng panganib na maging Single Point of Failure (SPOF).
+Katulad ito ng isang karinderya na nasa iisang lugar: ang browser ay nagpapadala ng [HTTP Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) sa server, pinoproseso ito ng aplikasyon (at kumukuha ng datos mula sa database kung kinakailangan), at ibinabalik ang resulta bilang [HTTP Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) sa gumagamit.
 
-**Sa huli:** Pumili ng iyong stack at deployment batay sa pangangailangan ng aplikasyon, kakayahan ng koponan, seguridad, gastos, at mga resulta ng pagsubok. Magsimula nang simple, at sa paglaki ng iyong aplikasyon, suriin ang pangangailangan para sa optimization o paghihiwalay ng mga bahagi sa iba't ibang tiers.
+Sa pamamagitan ng pagkakaiba ng *mga pangunahing bahagi* (OS, web server, application runtime, at database) at *mga komponenteng pantulong* (web client, TLS & TLS certificate, at cache), mas madali nating matutukoy kung ano ang kinakailangan para gumana ang aplikasyon at kung ano ang maaaring idagdag para mapataas ang seguridad, performance, o karanasan ng gumagamit.
+
+Marami nang pagpipilian na *technology stack* gaya ng LAMP, MERN, Django, Spring Boot, at iba pa na maaaring piliin ayon sa pangangailangan. Maaari rin itong patakbuhin sa iba't ibang *platform* tulad ng *bare metal*, VM, *container*, PaaS, at *serverless*.
+
+Bagama't simple, madali matutunan, i-configure, at i-test, ang arkitekturang ito ay may limitadong resources at may panganib na maging *Single Point of Failure* (SPOF) dahil ang lahat ng bahagi ay nakadepende sa iisang makina lamang.
+
+**Sa madaling salita:** Magsimula sa *single-tier* na arkitektura upang magkaroon ng matibay na pundasyon sa pag-unawa kung paano gumagana ang server. Piliin ang angkop na *stack* at *platform*, sundin ang mga pinakamahusay na kasanayan sa seguridad, magsagawa ng sapat na pagsubok, at gumawa ng dokumentasyon. Kapag lumaki na ang aplikasyon at nangangailangan ng mas mataas na scalability at availability, saka lamang isaalang-alang ang paglipat sa *multi-tier* na arkitektura.

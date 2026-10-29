@@ -38,24 +38,24 @@ flowchart TD
 
 ## Core Components
 
-Let us get acquainted with the key components and their roles in a server environment. 
+| Component | Eatery Analogy | Function |
+| --- | --- | --- |
+| [Operating System (OS)](https://en.wikipedia.org/wiki/Operating_system) | The building itself | The foundation. Manages hardware, memory, processes, and server resources. |
+| [Web Server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server) | The waiter | Receives HTTP/HTTPS requests, forwards them to the application, and returns the response to the client. |
+| [Application Runtime](https://en.wikipedia.org/wiki/Runtime_system) | The chef | Executes application code so that the logic can be processed and turned into a ready-to-serve response. |
+| [Database](https://en.wikipedia.org/wiki/Database) | The pantry/storage room | Stores, organizes, and retrieves the data required by the application. Not always needed if the application does not require persistent data storage. |
 
-Much like an eatery, not every establishment openly reveals the full details of its preparations. Yet, through firsthand experience or by learning the craft in that very kitchen, one comes to know precisely what goes into each dish.
+## Supporting Components
 
-The same holds true in server architecture. The following are the core components commonly found in a single-tier stack:
+| Component | Eatery Analogy | Function |
+| --- | --- | --- |
+| [Web Client](https://en.wikipedia.org/wiki/Web_browser) | The customer | The user-side application (e.g., a web browser) that sends HTTP requests to the server and renders HTTP responses. |
+| [TLS (Transport Layer Security) & TLS Certificate](https://en.wikipedia.org/wiki/Transport_Layer_Security) | Sealed packaging & official business license | Secures communication over HTTPS with encryption, server authentication, and data integrity. SSL is the deprecated predecessor of TLS. Certificates help browsers verify the server's identity. For public websites, HTTPS with TLS 1.2 or TLS 1.3 is considered the standard. |
+| [Cache (optional)](https://en.wikipedia.org/wiki/Cache_(computing)) | Ready-to-serve items on display | Temporarily stores frequently accessed data to improve performance and reduce load on the server. |
 
-| Component | Function |
-| --- | --- |
-| Operating System (OS) | The foundation. Manages hardware, memory, processes, and server resources. |
-| Web Client | The user-side application (e.g., a web browser) that sends HTTP requests to the server and renders HTTP responses. |
-| TLS (Transport Layer Security) | A cryptographic protocol that secures communication between a web client and server via encryption, server authentication, and data integrity. SSL is its deprecated predecessor; modern sites use TLS over HTTPS (typically port 443), preferably TLS 1.2 or TLS 1.3. |
-| TLS Certificate | A digital certificate from a trusted Certificate Authority (CA) that proves the server's identity. The browser verifies the chain of trust, domain match, and validity; if valid, HTTPS is trusted and shown with a padlock icon. |
-| Application Runtime | Executes application code so that it can be processed by the server. |
-| Application Framework | Provides structure and built-in features to build applications without having to construct everything from scratch. |
-| Database | Stores, organizes, and retrieves the data required by the application. |
-| Cache (optional) | Temporarily stores frequently accessed data to improve performance. |
+> *Note:* Supporting components are not always required for an application to run. Their need depends on the application's purpose, the user experience desired, security requirements, and the deployment environment. Some may be nearly essential (e.g., HTTPS for public websites), while others are only added when they provide clear benefits (e.g., caching for performance).
 
-> *Note:* Each application may employ a different combination of components depending on its needs. Elements such as the operating system, TLS, web server, application runtime, framework, database, and cache may be selected or replaced with suitable alternatives in accordance with the chosen architecture.
+Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
 ## Technology Stack Combinations
 
@@ -189,9 +189,11 @@ Stacks that combine operating systems, web servers, databases, or supporting too
 
 > *Note:* Choosing the right ingredients makes for a delicious meal that keeps customers coming back. However, every choice involves trade-offs—just as with technology stacks. This is not an exhaustive or prescriptive list; components within a stack may be substituted to suit specific needs.
 
-## Where to Run the Stack?
+## Choosing a Platform to Run the Stack
 
-Once a technology stack has been chosen, the next consideration is *where* it will run and how its infrastructure will be managed. This is known as the **deployment environment**.
+Once a technology stack has been chosen, the next step is to determine the **platform on which the stack will run**. The options range from physical servers (_bare metal_) and _virtual machines_ (VMs) to _containers_, as well as cloud-based offerings such as PaaS and _serverless_.
+
+In server terms, this choice affects how the application runs, how computing resources are provisioned, and how the infrastructure is managed. Reference: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
 flowchart TD
@@ -230,32 +232,60 @@ In server terms, these choices are analogous:
 
 - **VMware Workstation and Fusion** are for local desktop virtualization, ideal for learning at home.
 - **VMware ESXi/vSphere and Proxmox VE** are for production server virtualization, ideal for managing many VMs at scale.
-- **Bare Metal** refers to software running directly on physical hardware. A **Dedicated Server** refers to a physical server rented to a single customer. The terms are often used together but are not synonymous.
+- **Bare Metal** refers to software running directly on physical hardware. A **Dedicated Server** refers to a physical server rented to a single customer. The terms are related but not synonymous.
 
 ### Relation to Single-Tier Stack
 
-A **single-tier** architecture means all stack components (web server, application runtime, and database) reside in **the same place**—for example, within a single VM, a single container, or a single physical server.
+A **single-tier** architecture means all stack components ([web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), and [database](https://en.wikipedia.org/wiki/Database)) reside in **the same place** — for example, within a single VM, a single container, or a single physical server.
 
-However, single-tier does **not** require using a VM or container. The stack can also run on bare metal, a dedicated server, or even PaaS, as long as all components remain within a single deployment environment.
+However, single-tier does **not** require using a VM or container. The stack can also run on bare metal, a dedicated server, or even PaaS, as long as all components remain on the same platform.
 
 It is important to distinguish:
 
-- **Deployment environment** = where the stack runs (VM, container, bare metal, etc.).
+- **Platform** = the environment where the stack runs (bare metal, VM, container, PaaS, serverless, etc.).
 - **Tier architecture** = how application components are divided (single-tier, multi-tier, etc.).
 
-The choice of deployment environment affects operational costs, flexibility, scalability, security, and maintainability. There is no universally optimal choice—everything depends on the needs of the project.
+The choice of platform affects operational costs, flexibility, scalability, security, and maintainability. There is no universally optimal choice — everything depends on the needs of the project.
 
 ## Tips to Get Started
 
-1. **Understand the application flow.** Learn how a request travels from the browser to the web server, is forwarded to the application runtime, and interacts with the database. This helps when troubleshooting failures. Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Your_first_website/How_the_web_works).
-2. **Choose a stack based on your goals.** For learning, pick a technology you enjoy to stay consistent. For example, LAMP/LEMP for PHP, or MERN for JavaScript. For serious projects, consider application needs, team expertise, documentation, security, performance, cost, and long-term support.
-3. **Start in a local environment.** Use [VirtualBox](https://www.virtualbox.org/) for VMs or [Docker](https://www.docker.com/) for containers. VMs have their own guest OS, while containers share the host kernel. Both make experimentation easier before deploying to production.
-4. **Test each component.** Ensure the web server receives requests, the runtime executes the application, and the database can read and write data. Gradual testing makes it easier to isolate issues. Reference: [Docker — Get Started](https://docs.docker.com/get-started/).
-5. **Monitor before optimizing.** Track CPU, RAM, disk usage, response times, and logs to identify bottlenecks before adding resources or changing technologies. References: [Prometheus](https://prometheus.io/) and [Grafana](https://grafana.com/).
-6. **Prioritize security from the outset.** Restrict access permissions, protect credentials, keep dependencies updated, and only open necessary ports. A misconfiguration on a single machine can affect the entire application. Reference: [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/).
-7. **Prepare backups and test recovery.** Back up your database, application files, and critical configurations. Test restoration periodically to ensure data can be recovered in the event of failure. Reference: [PostgreSQL — Backup and Restore](https://www.postgresql.org/docs/current/backup.html).
-8. **Document your changes.** Record software versions, configurations, dependencies, and deployment steps. Use [Git](https://git-scm.com/) to track code changes for easier debugging and collaboration.
-9. **Know the limits of single-tier.** If a single machine becomes overwhelmed or high availability is required, evaluate optimization, redundancy, or splitting components across tiers. A single machine is a Single Point of Failure (SPOF)—a failure point that can bring down the entire application. Reference: [Red Hat — What Is High Availability?](https://www.redhat.com/en/topics/linux/what-is-high-availability).
+1. **Understand the application flow**  
+   Learn how an [HTTP request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) travels from the browser to the [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), how it's processed by the application, and how the [database](https://en.wikipedia.org/wiki/Database) is used if needed before returning an [HTTP response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status). Run a simple app and observe status codes like `200 OK`, `404 Not Found`, and `500 Internal Server Error` to see the difference between successful and failed requests.  
+   Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
+
+2. **Choose the right technology stack**  
+   Pick a stack based on your application needs, team skills, documentation, security, performance, and cost. For learning, start with a simple one like [LAMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)) or [LEMP](https://en.wikipedia.org/wiki/LAMP_(software_bundle)#LEMP) for PHP, or [MERN](https://www.mongodb.com/resources/languages/mern-stack) for JavaScript. Learn the role of each component before adding more tools.
+
+3. **Start in a local environment**  
+   Build and run your stack on your own machine using a local install, [VirtualBox](https://www.virtualbox.org/) for a virtual machine (VM), or [Docker](https://www.docker.com/) for a container. Try starting, stopping, and restarting it to understand configuration and dependencies. Note the difference: VMs run their own guest OS, while containers share the host kernel.  
+   Reference: [Docker — What is a Container?](https://www.docker.com/resources/what-container/)
+
+4. **Test your application after running it**  
+   A stack that starts doesn't always work correctly. Access it through a browser, check the HTTP response, verify request handling, and test database read/write operations if used. To practice troubleshooting, stop one component in a test environment, observe errors and logs, then restart it to see if the app recovers.  
+   Reference: [Docker — Run Your First Container](https://docs.docker.com/get-started/)
+
+5. **Learn HTTP and HTTPS before implementing TLS**  
+   Understand the difference between HTTP and HTTPS first. In a test environment, access your app over HTTP, then enable HTTPS with a test certificate. Observe protocol differences, certificate validation, and browser warnings for untrusted or invalid certificates.  
+   Once you understand this, use HTTPS with a valid certificate for public sites. [TLS](https://en.wikipedia.org/wiki/Transport_Layer_Security) encrypts communication, authenticates the server, and ensures integrity, but it won't secure your application code, authentication, or database by itself.  
+   Reference: [OWASP — Transport Layer Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Transport_Layer_Security_Cheat_Sheet.html)
+
+6. **Measure performance before optimizing**  
+   Track CPU, RAM, disk usage, response times, and logs under normal load. Then run controlled load tests and compare results. Look for rising resource usage or slower responses. If issues appear, change one thing at a time, measure again, and only optimize after seeing measurable impact.  
+   Reference: [Prometheus — Overview](https://prometheus.io/docs/introduction/overview/)
+
+7. **Test caching and backup recovery**  
+   If your app reads the same data often, compare response times and database load before and after adding a [cache](https://en.wikipedia.org/wiki/Cache_(computing)). Check that cached data stays consistent when the source data changes.  
+   For important data, create a backup of your database and app files, then restore it to a test environment. Verify the restored data is readable and usable — creating a backup doesn't guarantee you can recover from it.  
+   Reference: [PostgreSQL — Backup and Restore](https://www.postgresql.org/docs/current/backup.html)
+
+8. **Document your configuration and changes**  
+   Keep track of software versions, dependencies, key configurations, and setup steps. Use [Git](https://git-scm.com/) to version-control your code and track changes. As a test, rebuild your environment from scratch using only your documentation — if you can do it without relying on memory, it's good enough.  
+   Reference: [Pro Git — About Version Control](https://git-scm.com/book/en/v2/Getting-Started-About-Version-Control)
+
+9. **Know the limits of a single-tier stack**  
+   In a single-tier setup, the [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), and [database](https://en.wikipedia.org/wiki/Database) all run on the same machine. A failure or resource exhaustion on that machine can bring down the entire app.  
+   Test this in a safe environment by stopping one component or simulating high load. If your needs grow, evaluate optimizations, scaling up, redundancy, or splitting components across separate services based on measured needs, availability goals, and cost.  
+   Reference: [Red Hat — What Is High Availability?](https://www.redhat.com/en/topics/availability/what-is-high-availability)
 
 ## Formula for Choosing a Stack and Deployment Environment
 
@@ -281,8 +311,14 @@ Choosing a technology stack can be overwhelming given the vast array of language
 
 ## Conclusion
 
-A server single-tier stack is an architecture where the core application components—web server, application runtime, and database—run on a single machine. The browser sends an HTTP request to the server, the application processes it and accesses the database if needed, and the result is returned as an HTTP response.
+**Server Single-Tier Stack** is an architecture where the core application components—[web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), and [database](https://en.wikipedia.org/wiki/Database)—all run on a single machine.
 
-Understanding this concept helps in recognizing the role of each component, selecting an appropriate technology stack, and choosing a suitable deployment environment. However, a single machine comes with resource limitations and carries the risk of being a Single Point of Failure (SPOF).
+Much like a small eatery operating in one location, a browser sends an [HTTP Request](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods) to the server, the application processes it (and queries the database if needed), and returns an [HTTP Response](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) to the user.
 
-**Ultimately:** Choose your stack and deployment based on application needs, team capabilities, security, cost, and test results. Start simple, and as your application grows, evaluate the need for optimization or splitting components across multiple tiers.
+By distinguishing between *core components* (OS, web server, application runtime, and database) and *supporting components* (web client, TLS & TLS certificate, and cache), it's easier to identify what is required to run an application and what can be added to improve security, performance, or user experience.
+
+There are many technology stacks to choose from—such as LAMP, MERN, Django, Spring Boot, and more—depending on project needs. These stacks can run on various platforms, from bare metal and VMs to containers, PaaS, and serverless.
+
+While simple, easy to learn, configure, and test, a single-tier architecture has limited resources and carries the risk of being a *Single Point of Failure* (SPOF), since all components rely on the same machine.
+
+**In short:** Start with a single-tier architecture to build a solid foundation of how servers work. Choose the right stack and platform for your needs, apply security best practices, test thoroughly, and document well. As your application grows and demands greater scalability and availability, consider moving to a multi-tier architecture.
