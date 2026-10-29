@@ -52,13 +52,12 @@ Misalnya, berikut beberapa komponen inti beserta fungsinya dalam dunia server.
 | --- | --- |
 | Operating System (OS) | Fondasi. Mengelola perangkat keras, memori, proses, dan sumber daya server. |
 | Web Client | Aplikasi di sisi pengguna, seperti browser, yang mengirim HTTP request ke server dan menampilkan HTTP response. |
+| TLS (Transport Layer Security) | Protokol kriptografi untuk mengamankan komunikasi antara web client dan server melalui enkripsi, autentikasi server, dan integritas data. SSL (Secure Sockets Layer) adalah pendahulunya yang kini sudah deprecated, sehingga yang digunakan adalah TLS. Pada website, TLS diterapkan melalui HTTPS (port 443), direkomendasikan TLS 1.2 atau TLS 1.3. |
+| Sertifikat TLS | Sertifikat digital dari *Certificate Authority* (CA) terpercaya untuk membuktikan identitas server. Browser memverifikasi rantai kepercayaan, kecocokan domain, dan masa berlaku. Jika valid, koneksi HTTPS dipercaya dan ditandai ikon gembok. |
 | Web Server | Menerima permintaan HTTP, menyajikan konten, atau meneruskan permintaan ke aplikasi. |
 | Runtime Aplikasi | Menjalankan kode aplikasi agar dapat diproses oleh server. |
-| Application Framework | Menyediakan struktur dan fitur untuk membangun aplikasi tanpa harus membuat semuanya dari awal. |
-| Database | Menyimpan, mengatur, dan mengambil data yang dibutuhkan aplikasi. |
-| Cache (opsional) | Menyimpan data sementara untuk mempercepat akses ke data yang sering digunakan. |
 
-> Catatan: Setiap aplikasi bisa menggunakan kombinasi komponen yang berbeda sesuai kebutuhan. Komponen seperti Operating System, Web Server, Runtime Aplikasi, Framework, Database, dan Cache dapat dipilih atau diganti dengan alternatif lain sesuai arsitektur yang digunakan.
+> Catatan: Setiap aplikasi bisa menggunakan kombinasi komponen yang berbeda sesuai kebutuhan. Komponen seperti Operating System, TLS, Web Server, Runtime Aplikasi, Framework, Database, dan Cache dapat dipilih atau diganti dengan alternatif lain sesuai arsitektur yang digunakan.
 
 ## Kombinasi Stack
 
@@ -287,7 +286,7 @@ Memilih technology stack bisa membingungkan karena banyaknya bahasa pemrograman,
 
 Artikel engineering berikut dapat menjadi referensi untuk memahami alasan pemilihan teknologi, tantangan arsitektur, serta solusi yang diterapkan berdasarkan kebutuhan mereka.
 
-- [Uber Engineering](https://www.uber.com/us/en/blog/engineering/ — Arsitektur backend dan skalabilitas.
+- [Uber Engineering](https://www.uber.com/us/en/blog/engineering/) — Arsitektur backend dan skalabilitas.
 - [Shopify Engineering](https://shopify.engineering/) — Monolith dan skalabilitas database.
 - [Cloudflare Blog](https://blog.cloudflare.com/) — Infrastruktur server dan networking.
 - [Netflix TechBlog](https://netflixtechblog.medium.com/) — Distributed systems dan reliability.

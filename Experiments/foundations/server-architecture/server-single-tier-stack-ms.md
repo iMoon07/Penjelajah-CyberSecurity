@@ -48,13 +48,14 @@ Begitu juga dalam seni bina pelayan. Berikut merupakan komponen teras yang lazim
 | --- | --- |
 | Sistem Pengendalian (OS) | Asas sistem. Mengurus perkakasan, ingatan, proses, dan sumber pelayan. |
 | Klien Web | Aplikasi di pihak pengguna (cth., pelayar web) yang menghantar permintaan HTTP kepada pelayan dan memaparkan respons HTTP. |
-| Pelayan Web | Menerima permintaan HTTP, menghidangkan kandungan secara langsung, atau mengemudi permintaan kepada aplikasi. |
+| TLS (Transport Layer Security) | Protokol kriptografi yang melindungi komunikasi antara klien web dan pelayan melalui penyulitan, pengesahan pelayan, dan integriti data. SSL ialah pendahulunya yang kini sudah ditamatkan; laman web moden menggunakan TLS melalui HTTPS (biasanya port 443), disyorkan TLS 1.2 atau TLS 1.3. |
+| Sijil TLS | Sijil digital daripada *Certificate Authority* (CA) yang dipercayai bagi membuktikan identiti pelayan. Pelayar mengesahkan rantaian kepercayaan, kesesuaian domain, dan tempoh sah; jika sah, sambungan HTTPS dipercayai dan ditandai dengan ikon kunci. |
 | Masa Jalan Aplikasi | Melaksanakan kod aplikasi agar dapat diproses oleh pelayan. |
 | Rangka Kerja Aplikasi | Menyediakan struktur dan ciri terbina bagi membangunkan aplikasi tanpa perlu membina segala-galanya dari awal. |
 | Pangkalan Data | Menyimpan, menyusun, dan mendapatkan semula data yang diperlukan oleh aplikasi. |
 | Cache (pilihan) | Menyimpan data yang kerap diakses secara sementara bagi meningkatkan prestasi. |
 
-> *Nota:* Setiap aplikasi mungkin menggunakan gabungan komponen yang berbeza bergantung kepada keperluan. Komponen seperti sistem pengendalian, pelayan web, masa jalan aplikasi, rangka kerja, pangkalan data, dan cache boleh dipilih atau digantikan dengan alternatif yang sesuai mengikut seni bina yang dipilih.
+> *Nota:* Setiap aplikasi mungkin menggunakan gabungan komponen yang berbeza bergantung kepada keperluan. Komponen seperti sistem pengendalian, TLS, pelayan web, masa jalan aplikasi, rangka kerja, pangkalan data, dan cache boleh dipilih atau digantikan dengan alternatif yang sesuai mengikut seni bina yang dipilih.
 
 ## Gabungan Tindanan Teknologi
 

@@ -48,13 +48,14 @@ Ganun din ang nangyayari sa arkitektura ng server. Narito ang mga pangunahing ba
 | --- | --- |
 | Operating System (OS) | Ang pundasyon. Pinamamahalaan nito ang hardware, memory, proseso, at mga resource ng server. |
 | Web Client | Ang application sa panig ng gumagamit (halimbawa, web browser) na nagpapadala ng HTTP request sa server at nagpapakita ng HTTP response. |
-| Web Server | Tumatanggap ng HTTP request, direktang naglilingkod ng content, o nagpapasa ng request sa application. |
+| TLS (Transport Layer Security) | Isang cryptographic protocol na nagse-secure ng komunikasyon sa pagitan ng web client at server sa pamamagitan ng encryption, server authentication, at data integrity. Ang SSL ang na-deprecate nang predecessor nito; ang mga modernong site ay gumagamit ng TLS sa HTTPS (karaniwang port 443), mas mainam ang TLS 1.2 o TLS 1.3. |
+| TLS Certificate | Isang digital certificate mula sa pinagkakatiwalaang Certificate Authority (CA) na nagpapatunay ng identidad ng server. Sinusuri ng browser ang chain of trust, pagtutugma ng domain, at validity; kung wasto, ang HTTPS ay pinagkakatiwalaan at may padlock icon. |
 | Application Runtime | Isinasagawa ang application code upang ma-process ito ng server. |
 | Application Framework | Nagbibigay ng estruktura at mga built-in na feature upang makabuo ng aplikasyon nang hindi kinakailangan na buuin ang lahat mula sa simula. |
 | Database | Nagtatago, nag-oorganisa, at kumukuha ng datos na kinakailangan ng aplikasyon. |
 | Cache (opsyonal) | Pansamantalang nagtatago ng mga madalas na binibisitang datos upang mapabilis ang performance. |
 
-> *Tala:* Maaaring gumamit ang bawat aplikasyon ng iba't ibang kombinasyon ng mga bahagi depende sa pangangailangan nito. Ang mga bahagi tulad ng operating system, web server, application runtime, framework, database, at cache ay maaaring piliin o palitan ng mga angkop na alternatibo alinsunod sa napiling arkitektura.
+> *Tala:* Maaaring gumamit ang bawat aplikasyon ng iba't ibang kombinasyon ng mga bahagi depende sa pangangailangan nito. Ang mga bahagi tulad ng operating system, TLS, web server, application runtime, framework, database, at cache ay maaaring piliin o palitan ng mga angkop na alternatibo alinsunod sa napiling arkitektura.
 
 ## Mga Kombinasyon ng Technology Stack
 

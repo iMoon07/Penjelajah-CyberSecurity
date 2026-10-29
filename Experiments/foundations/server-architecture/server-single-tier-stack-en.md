@@ -48,13 +48,14 @@ The same holds true in server architecture. The following are the core component
 | --- | --- |
 | Operating System (OS) | The foundation. Manages hardware, memory, processes, and server resources. |
 | Web Client | The user-side application (e.g., a web browser) that sends HTTP requests to the server and renders HTTP responses. |
-| Web Server | Receives HTTP requests, serves content directly, or forwards requests to the application. |
+| TLS (Transport Layer Security) | A cryptographic protocol that secures communication between a web client and server via encryption, server authentication, and data integrity. SSL is its deprecated predecessor; modern sites use TLS over HTTPS (typically port 443), preferably TLS 1.2 or TLS 1.3. |
+| TLS Certificate | A digital certificate from a trusted Certificate Authority (CA) that proves the server's identity. The browser verifies the chain of trust, domain match, and validity; if valid, HTTPS is trusted and shown with a padlock icon. |
 | Application Runtime | Executes application code so that it can be processed by the server. |
 | Application Framework | Provides structure and built-in features to build applications without having to construct everything from scratch. |
 | Database | Stores, organizes, and retrieves the data required by the application. |
 | Cache (optional) | Temporarily stores frequently accessed data to improve performance. |
 
-> *Note:* Each application may employ a different combination of components depending on its needs. Elements such as the operating system, web server, application runtime, framework, database, and cache may be selected or replaced with suitable alternatives in accordance with the chosen architecture.
+> *Note:* Each application may employ a different combination of components depending on its needs. Elements such as the operating system, TLS, web server, application runtime, framework, database, and cache may be selected or replaced with suitable alternatives in accordance with the chosen architecture.
 
 ## Technology Stack Combinations
 
