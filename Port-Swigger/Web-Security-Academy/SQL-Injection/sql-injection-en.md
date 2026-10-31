@@ -6,7 +6,7 @@
 
 ## What is that?
 
-![sql-injection](sql-injection.png)
+![sql-injection](images/overview/sql-injection.png)
 
 This learning path introduces SQL injection (SQLi), a critical web vulnerability. You'll learn how to detect and exploit SQLi to uncover hidden data and manipulate application behavior, as well as essential techniques to secure applications against SQLi attacks.
 
@@ -113,15 +113,15 @@ SELECT * FROM products WHERE category = 'Gifts' AND released = 1
 
 To solve the lab, perform a SQL injection attack that causes the application to display one or more unreleased products.
 
-![access lab 0.1](access-lab-0.1.png)
+![access lab 0.1](images/lab-0.1-retrieving-hidden-data/access-lab-0.1.png)
 
-![Intercept 0.1](intercept-01.png)
+![Intercept 0.1](images/lab-0.1-retrieving-hidden-data/intercept-01.png)
 
-![error 0.1](error-01.png)
+![error 0.1](images/lab-0.1-retrieving-hidden-data/error-01.png)
 
-![comment 0.1](comment-01.png)
+![comment 0.1](images/lab-0.1-retrieving-hidden-data/comment-01.png)
 
-![true 0.1](true-01.png)
+![true 0.1](images/lab-0.1-retrieving-hidden-data/true-01.png)
 
 ##### Tutorial
 
@@ -196,17 +196,17 @@ To solve the lab, perform a SQL injection attack that logs in to the application
 
 This lab contains a SQL Injection vulnerability in the login function. 
 
-![access lab 0.2](access-lab-0.2.png)
+![access lab 0.2](images/lab-0.2-login-bypass/access-lab-0.2.png)
 
-![go my account and login 0.2](go-my-account-and-login-0.2.png)
+![go my account and login 0.2](images/lab-0.2-login-bypass/go-my-account-and-login-0.2.png)
 
-![send repeater 0.2](repeater-0.2.png)
+![send repeater 0.2](images/lab-0.2-login-bypass/repeater-0.2.png)
 
-![error 0.2](error-0.2.png)
+![error 0.2](images/lab-0.2-login-bypass/error-0.2.png)
 
-![forward 0.2](forward-0.2.png)
+![forward 0.2](images/lab-0.2-login-bypass/forward-0.2.png)
 
-![my account get login administrator 0.2](my-account-get-login-administrator-0.2.png)
+![my account get login administrator 0.2](images/lab-0.2-login-bypass/my-account-get-login-administrator-0.2.png)
 
 ##### Tutorial
 
@@ -314,31 +314,31 @@ This lab contains a SQL injection vulnerability in the product category filter. 
 
 To solve the lab, determine the number of columns returned by the query by performing a SQL injection UNION attack that returns an additional row containing null values.
 
-![access labs 0.3](access-lab-0.3.png)
+![access labs 0.3](images/lab-0.3-union-column-count/access-lab-0.3.png)
 
-![go to search parameter Pets 0.3](go-to-search-parameter-Pets-0.3.png)
+![go to search parameter Pets 0.3](images/lab-0.3-union-column-count/go-to-search-parameter-Pets-0.3.png)
 
-![intercept 0.3](intercept-0.3.png)
+![intercept 0.3](images/lab-0.3-union-column-count/intercept-0.3.png)
 
-![error 0.3](error-0.3.png)
+![error 0.3](images/lab-0.3-union-column-count/error-0.3.png)
 
-![comment 0.3](comments-0.3.png)
+![comment 0.3](images/lab-0.3-union-column-count/comments-0.3.png)
 
-![ORDER BY 1 0.3](ORDER-BY-1-0.3.png)
+![ORDER BY 1 0.3](images/lab-0.3-union-column-count/ORDER-BY-1-0.3.png)
 
-![ORDER BY 2 0.3](ORDER-BY-2-0.3.png)
+![ORDER BY 2 0.3](images/lab-0.3-union-column-count/ORDER-BY-2-0.3.png)
 
-![ORDER BY 3 0.3](ORDER-BY-3-0.3.png)
+![ORDER BY 3 0.3](images/lab-0.3-union-column-count/ORDER-BY-3-0.3.png)
 
-![Error in ORDER BY 4 0.3](Error-in-ORDER-BY-4-0.3.png)
+![Error in ORDER BY 4 0.3](images/lab-0.3-union-column-count/Error-in-ORDER-BY-4-0.3.png)
 
-![ORDER BY give a detected select table in 3 0.3](ORDER-BY-give-a-detected-select-table-in-3-0.3.png)
+![ORDER BY give a detected select table in 3 0.3](images/lab-0.3-union-column-count/ORDER-BY-give-a-detected-select-table-in-3-0.3.png)
 
-![add + repersentation 0.3](add-+-repersentation-0.3.png)
+![add + repersentation 0.3](images/lab-0.3-union-column-count/add-+-repersentation-0.3.png)
 
-![change NULL have respone 200 0.3](change-NULL-0.3.png)
+![change NULL have respone 200 0.3](images/lab-0.3-union-column-count/change-NULL-0.3.png)
 
-![Success to UNION Attack determining the number columns by query 0.3](success-0.3.png)
+![Success to UNION Attack determining the number columns by query 0.3](images/lab-0.3-union-column-count/success-0.3.png)
 
 
 ### Tutorial
@@ -440,27 +440,27 @@ This lab contains a SQL injection vulnerability in the product category filter. 
 
 The lab will provide a random value that you need to make appear within the query results. To solve the lab, perform a SQL injection UNION attack that returns an additional row containing the value provided. This technique helps you determine which columns are compatible with string data.
 
-![access labs 0.4](access-lab-0.4.png)
+![access labs 0.4](images/lab-0.4-union-text-column/access-lab-0.4.png)
 
-![Open Gifts parameter 0.4](Open-Gifts-parameter-0.4.png)
+![Open Gifts parameter 0.4](images/lab-0.4-union-text-column/Open-Gifts-parameter-0.4.png)
 
-![intercept and repeater 0.4](intercept-and-repeater-0.4.png)
+![intercept and repeater 0.4](images/lab-0.4-union-text-column/intercept-and-repeater-0.4.png)
 
-![error 0.4](error-0.4.png)
+![error 0.4](images/lab-0.4-union-text-column/error-0.4.png)
 
-![comment 0.4](comments-0.4.png)
+![comment 0.4](images/lab-0.4-union-text-column/comments-0.4.png)
 
-![ORDER BY 1 0.4](ORDER-BY-1-0.4.png)
+![ORDER BY 1 0.4](images/lab-0.4-union-text-column/ORDER-BY-1-0.4.png)
 
-![ORDER BY 2 0.4](ORDER-BY-2-0.4.png)
+![ORDER BY 2 0.4](images/lab-0.4-union-text-column/ORDER-BY-2-0.4.png)
 
-![ORDER BY 3 0.4](ORDER-BY-3-0.4.png)
+![ORDER BY 3 0.4](images/lab-0.4-union-text-column/ORDER-BY-3-0.4.png)
 
-![Error in ORDER BY 4 0.4](Error-in-ORDER-BY-4-0.4.png)
+![Error in ORDER BY 4 0.4](images/lab-0.4-union-text-column/Error-in-ORDER-BY-4-0.4.png)
 
-![Give UNION SELECT 1,2,3 and changes values NULL NULL NULL 0.4](change-NULL-0.4.png)
+![Give UNION SELECT 1,2,3 and changes values NULL NULL NULL 0.4](images/lab-0.4-union-text-column/change-NULL-0.4.png)
 
-![in respone success get information the database retrieve the string: 'AAAA' 0.4](response-success-0.4.png)
+![in respone success get information the database retrieve the string: 'AAAA' 0.4](images/lab-0.4-union-text-column/response-success-0.4.png)
 
 ##### Tutorial
 
@@ -547,37 +547,37 @@ The database contains a different table called `users`, with columns called `use
 
 To solve the lab, perform a SQL injection UNION attack that retrieves all usernames and passwords, and use the information to log in as the `administrator` user.
 
-![access labs 0.5](access-lab-0.5.png)
+![access labs 0.5](images/lab-0.5-union-retrieve-data/access-lab-0.5.png)
 
-![Open Gifts parameter 0.5](Open-Gifts-parameter-0.5.png)
+![Open Gifts parameter 0.5](images/lab-0.5-union-retrieve-data/Open-Gifts-parameter-0.5.png)
 
-![intercept and repeater 0.5](intercept-and-repeater-0.5.png)
+![intercept and repeater 0.5](images/lab-0.5-union-retrieve-data/intercept-and-repeater-0.5.png)
 
-![error 0.5](error-0.5.png)
+![error 0.5](images/lab-0.5-union-retrieve-data/error-0.5.png)
 
-![comment 0.5](comments-0.5.png)
+![comment 0.5](images/lab-0.5-union-retrieve-data/comments-0.5.png)
 
-![ORDER BY 1 0.5](ORDER-BY-1-0.5.png)
+![ORDER BY 1 0.5](images/lab-0.5-union-retrieve-data/ORDER-BY-1-0.5.png)
 
-![ORDER BY 2 0.5](ORDER-BY-2-0.5.png)
+![ORDER BY 2 0.5](images/lab-0.5-union-retrieve-data/ORDER-BY-2-0.5.png)
 
-![Error in ORDER BY 3 0.5](error-in-ORDER-BY-3-0.5.png)
+![Error in ORDER BY 3 0.5](images/lab-0.5-union-retrieve-data/error-in-ORDER-BY-3-0.5.png)
 
-![Give UNION SELECT 1,2 and changes values NULL NULL NULL 0.5](change-NULL-0.5.png)
+![Give UNION SELECT 1,2 and changes values NULL NULL NULL 0.5](images/lab-0.5-union-retrieve-data/change-NULL-0.5.png)
 
-![change tables input string 'a','b' 0.5](change-tables-input-string-0.5.png)
+![change tables input string 'a','b' 0.5](images/lab-0.5-union-retrieve-data/change-tables-input-string-0.5.png)
 
-![input statment to reteriving username and password 0.5](statments-username-password-0.5.png)
+![input statment to reteriving username and password 0.5](images/lab-0.5-union-retrieve-data/statments-username-password-0.5.png)
 
-![open respone 0.5](open-respone-0.5.png)
+![open respone 0.5](images/lab-0.5-union-retrieve-data/open-respone-0.5.png)
 
-![copy respone paste url to browser 0.5](copy-paste-url-0.5.png)
+![copy respone paste url to browser 0.5](images/lab-0.5-union-retrieve-data/copy-paste-url-0.5.png)
 
-![username in respone frontend or respone get 200 and leak](leak-0.5.png)
+![username in respone frontend or respone get 200 and leak](images/lab-0.5-union-retrieve-data/leak-0.5.png)
 
-![login username administrator 0.5](login-0.5.png)
+![login username administrator 0.5](images/lab-0.5-union-retrieve-data/login-0.5.png)
 
-![success access administrator 0.5](success-login-0.5.png)
+![success access administrator 0.5](images/lab-0.5-union-retrieve-data/success-login-0.5.png)
 
 ##### Tutorial
 
@@ -660,6 +660,23 @@ carlos~montoya
 
 
 ##### Lab: SQL injection UNION attack, retrieving multiple values in a single column
+
+This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response so you can use a UNION attack to retrieve data from other tables.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.6</summary>
+
+The database cibtaubs a different table called `users`, with columns called `username` and `password`.
+
+To solve the lab, perform a SQL injection UNION attack that retrieves all usernames and passwords, and use the information to log in as the `administrator` user.
+
+>Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
+
+##### Tutorial
+
+
+
+</details>
 
 ## Examining the database
 ### Examining the database in SQL injection attacks

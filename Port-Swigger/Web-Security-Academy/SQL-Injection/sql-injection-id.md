@@ -6,7 +6,7 @@
 
 ## What is that?
 
-![sql-injection](sql-injection.png)
+![sql-injection](images/overview/sql-injection.png)
 
 This learning path introduces SQL injection (SQLi), a critical web vulnerability. You'll learn how to detect and exploit SQLi to uncover hidden data and manipulate application behavior, as well as essential techniques to secure applications against SQLi attacks.
 
