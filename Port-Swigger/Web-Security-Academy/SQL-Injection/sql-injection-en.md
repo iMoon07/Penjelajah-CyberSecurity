@@ -16,6 +16,16 @@ SQL injection (SQLi) is a web security vulnerability that allows an attacker to 
 
 In some situasions, an attacker can escalate a SQL injection attack to compromise the underlying server or other back-end infrastructure. It can also enable them to perform denial-of-service attacks.
 
+## What is the impact of a successful SQL injection attack?
+
+A successfull SQL injection attack can result in unauthorized access to sensitive data, such as:
+
+- Password.
+- Credit card details.
+- Personal user information.
+
+>Notes: SQL injection attack have been used in many high-profile data breaches over the years. These have caused reputational damage and regulatory fines. In some cases, an attacker can obtain a persistent backdoor into an organization's systems, leanding to a long-term compromise that can go unnoticed for an extended period.
+
 ## How to detect SQL injection vulnerabilities
 
 You can detect SQL injection maually using a systematic set of tests against every entry point in the application. To do this, you would typically submit:
@@ -99,7 +109,7 @@ This lab contains a SQL injection vulnerability in the product category filter. 
 SELECT * FROM products WHERE category = 'Gifts' AND released = 1
 ```
 <details>
-<summary>Lab details, screenshots & walkthrough</summary>
+<summary>Lab details, screenshots & walkthrough 0.1</summary>
 
 To solve the lab, perform a SQL injection attack that causes the application to display one or more unreleased products.
 
@@ -111,7 +121,7 @@ To solve the lab, perform a SQL injection attack that causes the application to 
 
 ![comment 0.1](comment-01.png)
 
-![true](true-01.png)
+![true 0.1](true-01.png)
 
 ##### Tutorial
 
@@ -182,7 +192,7 @@ This query returns the user whose `username` is `administrator` and successfully
 To solve the lab, perform a SQL injection attack that logs in to the application as the `administrator` user.
 
 <details>
-<summary>Lab details, screenshots & walkthrough</summary>
+<summary>Lab details, screenshots & walkthrough 0.2</summary>
 
 This lab contains a SQL Injection vulnerability in the login function. 
 
@@ -300,7 +310,7 @@ As with the `ORDER BY` technique, the application might actually return the data
 This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables. The first step of such an attack is to determine the number of columns that are being returned by the query. You will then use this technique in subsesquent labs to construct the full attack.
 
 <details>
-<summary>Lab details, screenshots & walkthrough</summary>
+<summary>Lab details, screenshots & walkthrough 0.3</summary>
 
 To solve the lab, determine the number of columns returned by the query by performing a SQL injection UNION attack that returns an additional row containing null values.
 
@@ -426,7 +436,7 @@ If an error does not occur, and the application's response contains some additio
 This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables. To construct such an attack, you first need to determine the number of columns returned by the query. You can do this using a technique you learned in a previous lab. The next step is to identify a column that is compatible with string data.
 
 <details>
-<summary>Lab details, screenshots & walkthrough</summary>
+<summary>Lab details, screenshots & walkthrough 0.4</summary>
 
 The lab will provide a random value that you need to make appear within the query results. To solve the lab, perform a SQL injection UNION attack that returns an additional row containing the value provided. This technique helps you determine which columns are compatible with string data.
 
@@ -450,7 +460,7 @@ The lab will provide a random value that you need to make appear within the quer
 
 ![Give UNION SELECT 1,2,3 and changes values NULL NULL NULL 0.4](change-NULL-0.4.png)
 
-![in respone success get information the database retrieve the string: 'AAAA'](response-success.png)
+![in respone success get information the database retrieve the string: 'AAAA' 0.4](response-success-0.4.png)
 
 ##### Tutorial
 
@@ -482,10 +492,10 @@ The lab will provide a random value that you need to make appear within the quer
    Replace the `NULL` values with identifiable strings or numbers to determine which column is reflected in the response.
 
    ```sql
-   ' UNION SELECT 1,2,3--
+   '+UNION+SELECT+NULL,"AAAA",NULL--
    ```
 6. **Verify the Result**  
-   Check the response for HTTP `200 OK` and look for the reflected value, such as `AAAA`, in the response body. This confirms that the UNION query is being processed and identifies the displayed column.
+   Check the response for HTTP `200 OK` and look for the reflected value, such as `"AAAA"`, in the response body. This confirms that the UNION query is being processed and identifies the displayed column.
 
 ##### Reference
 
@@ -511,11 +521,144 @@ Purpose: This lab was provided by the Burp Web Security Academy. We solve the ch
 
 ### Using a SQL injection UNION attack to retrieve interesting data
 
+When you have determined the number of columns returned by the original query and found which columns can hold string data, you are in a position to retrieve interesting data.
 
+Suppose that:
+
+- The original query returns two columns, both of which can hold string data.
+- The injection point is a quoted string within the `WHERE` clause.
+- The database contains a table called `users` with the columns `username` and `password`
+
+In this example, you can retrieve the contents of the `users` table by submitting the input:
+
+```sql
+' UNION SELECT username, password FROM users--
+```
+In order to perform this attack, you need to know that there is a table called `users` with two columns called `username` and `password`. Without this information, you would have to guess the names of tables and columns. All modern databases provide ways to examine the database structure, and determine what tables and columns they contain.
 
 ##### Lab: SQL injection UNION attack, retrieving data from other tables
 
+This lab contains a SQL Injection vulnerabillity in the product category filter. The results from the query are returned in the application's response, so you can use a UNION attack t retrieve data from other tables. To construct such an attack, you need to combine some of techniques you learned in previous labs.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.5</summary>
+
+The database contains a different table called `users`, with columns called `username` and `password`.
+
+To solve the lab, perform a SQL injection UNION attack that retrieves all usernames and passwords, and use the information to log in as the `administrator` user.
+
+![access labs 0.5](access-lab-0.5.png)
+
+![Open Gifts parameter 0.5](Open-Gifts-parameter-0.5.png)
+
+![intercept and repeater 0.5](intercept-and-repeater-0.5.png)
+
+![error 0.5](error-0.5.png)
+
+![comment 0.5](comments-0.5.png)
+
+![ORDER BY 1 0.5](ORDER-BY-1-0.5.png)
+
+![ORDER BY 2 0.5](ORDER-BY-2-0.5.png)
+
+![Error in ORDER BY 3 0.5](error-in-ORDER-BY-3-0.5.png)
+
+![Give UNION SELECT 1,2 and changes values NULL NULL NULL 0.5](change-NULL-0.5.png)
+
+![change tables input string 'a','b' 0.5](change-tables-input-string-0.5.png)
+
+![input statment to reteriving username and password 0.5](statments-username-password-0.5.png)
+
+![open respone 0.5](open-respone-0.5.png)
+
+![copy respone paste url to browser 0.5](copy-paste-url-0.5.png)
+
+![username in respone frontend or respone get 200 and leak](leak-0.5.png)
+
+![login username administrator 0.5](login-0.5.png)
+
+![success access administrator 0.5](success-login-0.5.png)
+
+##### Tutorial
+
+1. Open Burpsuite  and intercept parameters `Gifts`
+2. Intercept request and send to repeater
+3. Modify to see behaviour request send input `'` have a respone 500 code error.
+4. Modify request send input `'--` for comments have a respone 200 success.
+5. Determine columns that vulnerable query is using `ORDER BY`
+
+```sql
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3--
+```
+6. Success detect error columns in `ORDER BY 3`
+7. Determine the data type of the columns used `UNION SELECT`
+8. Because statment columns find in `3` Try this `UNION SELECT`:
+
+```SQL
+' UNION SELECT 1,2--
+' UNION SELECT NULL,NULL--
+' UNION SELECT 'A','B'--
+```
+9. send UNION SELECT for both are data type string `'A' and 'b'` for validation tables.
+10. Giving a value Statment to retreving data `username` and `password` from other tables:
+
+```sql
+' UNION SELECT username, password from users--
+```
+11. In response HTTP and frontend success get leakked `username` and `password` from tables.
+
+##### Reference
+
+<details>
+<summary> 12. UNION SQL Injection to Extract Data From Other Tables! — Intigriti</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=PLa_oQtMl1U
+Purpose: In this video, we are going to have a look at a UNION SELECT query to extract data from another database table. 
+</details>
+
+<details>
+<summary>13. SQL Injection - Lab #5 SQL injection UNION attack, retrieving data from other tables — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=6Dsj5SqR944
+Purpose: This lab contains a SQL injection vulnerability in the product category field. To solve the lab, we perform a UNION based SQL injection attack that retrieves the usernames and passwords of the users of the application.
+
+</details>
+
+<details>
+<summary> 14. SQL Union Attack Retrieving Data From Other Tables — z3nsh3ll</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=ushDHoJbwEc
+Purpose: In this video we solve the Burp Suite Web Academy lab - "SQL Union Attack Retrieving Data From Other Tables"
+</details>
+
+</details>
+
 ### Retrieving multiple values within a single column
+
+In some cases the query in the previous example may only return a single column.
+
+You can retrieve multiple values together within this single column by concatenating the values together. You can include a separator to let you distinguish the combined values. For example, on Oracle you could submit the input:
+
+```sql
+` UNION SELECT username || '~' || password FROM users--
+```
+This uses the double-pipe sequence `||` which is a string concatenation operator on Oracle. The injected query concatenates together the values of the `username` and `password` fields, separated by the `~` character.
+
+The results from the query contain all the usernames and passwords, for example:
+
+```
+administrator~s3cure
+wiener~peter
+carlos~montoya
+```
+>Notes: Different databases use different syntax to perform string concatenation. For more details, see the [SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet)
+
+
 ##### Lab: SQL injection UNION attack, retrieving multiple values in a single column
 
 ## Examining the database
