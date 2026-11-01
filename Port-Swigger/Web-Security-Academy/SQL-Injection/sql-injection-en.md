@@ -341,7 +341,7 @@ To solve the lab, determine the number of columns returned by the query by perfo
 ![Success to UNION Attack determining the number columns by query 0.3](images/lab-0.3-union-column-count/success-0.3.png)
 
 
-### Tutorial
+##### Tutorial
 
 1. **Intercept the Request**  
    Use Burp Suite to intercept the request containing `category=Pets`, then send it to Repeater.
