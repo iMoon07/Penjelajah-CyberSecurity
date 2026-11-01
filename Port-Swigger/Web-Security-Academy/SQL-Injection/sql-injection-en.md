@@ -861,7 +861,7 @@ To solve the lab, display the database version string.
 
 ![try order by 2 0.7](images/lab-0.7-database-version/order-by-2-0.7.png)
 
-![success get error place columns values order by 3 0.7](images/lab-0.7-database-version/error-order-by-3-0.7.png)
+![success get error place columns values order by 3 0.7](images/lab-0.7-database-version/error-order-by-3.0.7.png)
 
 ![give a values UNION SELECT use NULL 0.7](images/lab-0.7-database-version/give-union-select-null-null-0.7.png)
 
