@@ -1140,6 +1140,23 @@ We cna continue this process to systematically determine the full password for t
 
 ##### Lab: Blind SQL injection with conditional responses
 
+This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.9</summary>
+
+The results of the SQL query are not returned, and no error messages are displayed. But the application includes a `Welcome back` message in the page if the query returns any rows.
+
+The database contains a different table `users`, with columns called `username` and `password`. You need to exploit the blind SQL injection vulnerability to find out the password of the `administrator` user.
+
+>Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
+
+##### Tutorial
+
+
+
+</details>
+
 ## Error-based SQL injection
 #### Exploiting blind SQL injection by triggering conditional errors
 #### Exploiting blind SQL injection by triggering conditional errors - Continued
