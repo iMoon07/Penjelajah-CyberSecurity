@@ -903,7 +903,6 @@ To solve the lab, display the database version string.
 | MySQL | `SELECT @@VERSION;` |
 ```
 
-
 ##### Reference
 
 <details>
@@ -982,6 +981,37 @@ To solve the lab, log in as the `administrator` user.
 >Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
 ##### Tutorial
+
+
+##### Reference
+
+<details>
+<summary> 21. List Database Content For Further Exploitation! — Intigriti</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=cC0_pFyvFtA 
+Purpose: we are going to have a look at how to examine a database for table and columns that can be further used in a UNION payload.
+</details>
+
+<details>
+<summary>22. SQL Injection - Lab #9 SQL injection attack, listing the database contents on non Oracle databases — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=JduM_dO8glw
+Purpose: This lab contains a SQL injection vulnerability in the product category field. To solve the lab, we perform a UNION based SQL injection attack on a PostgreSQL database that retrieves the usernames and passwords of all users of the application.
+
+</details>
+
+<details>
+<summary> 23. SQL Injection: Listing Database Contents on Non-Oracle Databases | PortSwigger (OLD) — Michael Sommer</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=Kd810Iiv1dM
+Purpose: This episode is the payoff for everything we built up in the previous two labs. Once we've confirmed we're not dealing with Oracle, we use `information_schema` — a standardized, read-only metadata schema shared by MySQL, PostgreSQL, and Microsoft SQL Server — to walk the full path from a UNION-based SQL injection to a complete credential dump.
+
+We enumerate the database's tables via `information_schema.tables`, narrow down to the columns of a specific table via `information_schema.columns`, and finally extract a working username and password directly through the injection. We close out the lab by logging in as `administrator` using the credentials we just pulled out of the database — no error messages needed at any point, just one consistent syntax that works identically across three of the most common database engines out there.
+
+</details>
 
 </details>
 
