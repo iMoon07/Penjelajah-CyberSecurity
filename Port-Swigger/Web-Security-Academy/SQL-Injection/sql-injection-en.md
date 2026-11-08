@@ -1377,26 +1377,41 @@ xyz' AND (SELECT CASE WHEN (Username = 'Administrator' AND SUBSTRING(Password, 1
 
 ##### Lab: Blind SQL injection with conditional errors
 
+This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+The results of the SQL query are not returned, and the application does not respond any differently based on whether the query returns any rows, if the SQL query causes an error, then the application returns a custom error message.
+
+The database contains a different table called `users`, with columns called `username` and `password`. You need to exploit the blind SQL injection vulnerability to find out the password of the `administrator` user.
+
+To solve the labs, log in as the `administrator` user.
+
+>Note: This lab uses an Oracle database. For more information, see the [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
 #### Extracting sensitive data via verbose SQL error messages
+
+
+
 #### Extracting sensitive data via verbose SQL error messages - Continued
 ##### Lab: Visible error-based SQL injection
 
-### Exploiting blind SQL injection by triggering time delays
 #### Exploiting blind SQL injection by triggering time delays
+
 #### Exploiting blind SQL injection by triggering time delays - Continued
 ##### Lab: Blind SQL injection with time delays and information retrieval
 
-### Exploiting blind SQL injection using out-of-band (OAST) techniques
+
 #### Exploiting blind SQL injection using out-of-band (OAST) techniques
+
 #### Exploiting blind SQL injection using out-of-band (OAST) techniques - Continued
 ##### Lab: Blind SQL injection with out-of-band interaction
 ##### Lab: Blind SQL injection with out-of-band data exfiltration
 
 ## SQL injection in different contexts
+
 #### Lab: SQL injection with filter bypass via XML encoding
 
 ## Second-order SQL injection
 
 ## How to prevent SQL injection
+
 ### How to prevent SQL injection - Continued

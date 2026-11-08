@@ -1,0 +1,36 @@
+# Security — IT, AppSec & Identity
+
+Official frameworks, standards, and documentation for application/infrastructure security and identity.
+
+## Frameworks, Standards & Advisories
+- [OWASP Top 10](https://owasp.org/www-project-top-ten/)
+- [OWASP ASVS](https://owasp.org/www-project-application-security-verification-standard/)
+- [OWASP API Security](https://owasp.org/www-project-api-security/)
+- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)
+- [NIST Cybersecurity Framework (CSF)](https://www.nist.gov/cyberframework)
+- [NIST SP 800 Series](https://csrc.nist.gov/publications/sp800)
+- [NIST SP 800-53 Rev. 5](https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final)
+- [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks)
+- [CIS Controls](https://www.cisecurity.org/controls)
+- [MITRE ATT&CK (Enterprise)](https://attack.mitre.org/)
+- [MITRE CWE](https://cwe.mitre.org/)
+- [MITRE CVE](https://www.cve.org/)
+- [CISA Cybersecurity Best Practices](https://www.cisa.gov/topics/cybersecurity-best-practices)
+- [CISA Known Exploited Vulnerabilities (KEV)](https://www.cisa.gov/known-exploited-vulnerabilities-catalog)
+
+## Identity & Access
+- [Kerberos (MIT)](https://web.mit.edu/kerberos/krb5-latest/doc/)
+- [OAuth 2.1](https://oauth.net/2.1/)
+- [OpenID Connect](https://openid.net/developers/how-connect-works/)
+- [WebAuthn (W3C)](https://www.w3.org/TR/webauthn-3/)
+- [SAML (OASIS)](https://docs.oasis-open.org/security/saml/Post2.0/sstc-saml-tech-overview-2.0.html)
+- [Keycloak](https://www.keycloak.org/documentation)
+- [HashiCorp Vault](https://developer.hashicorp.com/vault/docs)
+- [Open Policy Agent](https://www.openpolicyagent.org/docs/)
+
+## Security Tooling (official docs)
+- [Trivy](https://trivy.dev/latest/)
+- [Semgrep](https://semgrep.dev/docs/)
+- [Gitleaks](https://gitleaks.io/)
+- [Sigstore / Cosign](https://docs.sigstore.dev/cosign/overview/)
+- [OpenSSF](https://openssf.org/)
