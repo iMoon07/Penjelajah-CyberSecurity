@@ -1,6 +1,6 @@
 # References (IT, OT, Infrastructure, Development, Security)
 
-Curated official documentation, guides, standards, and primary references. Modular by domain. English module files use the `-en.md` suffix.
+Official documentation, technical guides, standards, and primary sources organized by domain.
 
 ## Core
 - [Standards & Core Protocols](standards-en.md)
