@@ -1,6 +1,6 @@
-# Web, API & Frameworks (inti)
+# Web, API & Frameworks
 
-Official docs/guides for core web platforms, frameworks, and API technologies.
+Official documentation for web runtimes, API technologies, and application frameworks.
 
 - [Node.js](https://nodejs.org/docs/latest/api/)
 - [React](https://react.dev/learn)

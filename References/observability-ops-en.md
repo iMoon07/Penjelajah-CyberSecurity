@@ -1,6 +1,6 @@
-# Observability & Operations (Infra)
+# Observability & Operations
 
-Official documentation for telemetry, metrics, logs, traces, and operations.
+Official documentation for telemetry, metrics, logs, tracing, and operational observability tooling.
 
 - [OpenTelemetry](https://opentelemetry.io/docs/)
 - [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/)

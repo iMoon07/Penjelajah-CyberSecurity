@@ -1,12 +1,10 @@
-# Architecture & Engineering References
+# Architecture & Engineering
 
-Official/primary references for architecture, patterns, and engineering practice.
+Primary engineering references, architecture models, and reliability/practice guides.
 
-- [C4 Model](https://c4model.com/)
-- [RFC 2119 (requirement keywords)](https://www.rfc-editor.org/rfc/rfc2119)
-- [Semantic Versioning](https://semver.org/)
-- [Conventional Commits](https://www.conventionalcommits.org/)
-- [Twelve-Factor App](https://12factor.net/)
+- [The Twelve-Factor App](https://12factor.net/)
 - [Google SRE Book](https://sre.google/sre-book/table-of-contents/)
-- [The Art of Unix Programming](http://www.catb.org/esr/writings/taoup/html/)
-- [System Design Primer (reference; not an official docs site)](https://github.com/donnemartin/system-design-primer)
+- [Google SRE Workbook](https://sre.google/workbook/table-of-contents/)
+- [C4 Model](https://c4model.com/)
+- [Google Engineering Practices](https://google.github.io/eng-practices/)
+- [Martin Fowler](https://martinfowler.com/)

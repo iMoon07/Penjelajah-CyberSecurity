@@ -1,6 +1,6 @@
-# Cloud & Infrastructure as Code (Infra)
+# Cloud & Infrastructure as Code
 
-Official cloud and IaC documentation and architecture frameworks.
+Official cloud provider documentation and Infrastructure as Code / configuration management references.
 
 - [AWS Documentation](https://docs.aws.amazon.com/)
 - [Microsoft Azure Documentation](https://learn.microsoft.com/en-us/azure/)

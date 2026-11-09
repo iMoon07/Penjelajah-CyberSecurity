@@ -1,8 +1,7 @@
-# Linux, OS & Server (Infra)
+# Linux, OS & Server
 
-Official documentation for Linux/OS administration and core server components.
+Official/primary documentation for Linux/Unix-like operating systems, core services, web servers, and foundational server components.
 
-- [Linux Kernel Docs](https://www.kernel.org/doc/html/latest/)
 - [Linux man-pages project](https://man7.org/linux/man-pages/)
 - [systemd](https://www.freedesktop.org/software/systemd/man/latest/)
 - [OpenSSH](https://www.openssh.com/manual.html)

@@ -1,6 +1,6 @@
-# Data, Databases & Messaging (inti)
+# Data, Databases & Messaging
 
-Official documentation for core databases, search, object storage, and messaging.
+Official documentation for databases, search engines, object storage, and messaging/broker systems.
 
 - [PostgreSQL](https://www.postgresql.org/docs/)
 - [MySQL](https://dev.mysql.com/doc/)

@@ -1,6 +1,6 @@
-# Testing & Quality (inti)
+# Testing & Quality
 
-Official documentation for core testing and quality tooling.
+Official documentation for testing frameworks and quality/performance validation tools.
 
 - [Playwright](https://playwright.dev/docs/intro)
 - [Pytest](https://docs.pytest.org/)

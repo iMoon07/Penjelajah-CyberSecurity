@@ -1,9 +1,7 @@
-# Security — Hardening & Secure Configuration
+# Hardening & Secure Config
 
-Official baselines, benchmarks, and secure-configuration guidance.
+Primary hardening baselines, secure configuration guidance, and platform security documentation (CIS/DISA/NIST/vendor).
 
-- [CIS Benchmarks](https://www.cisecurity.org/cis-benchmarks)
-- [CIS Controls](https://www.cisecurity.org/controls)
 - [DISA STIGs](https://public.cyber.mil/stigs/)
 - [Microsoft Security Baselines](https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/windows-security-configuration-framework/windows-security-baselines)
 - [NSA/CISA — Cybersecurity Advisories & Guidance](https://www.nsa.gov/Press-Room/Cybersecurity-Advisories-Guidance/)
@@ -15,4 +13,3 @@ Official baselines, benchmarks, and secure-configuration guidance.
 - [Linux Kernel — Security Documentation](https://www.kernel.org/doc/html/latest/security/index.html)
 - [Docker — Security](https://docs.docker.com/engine/security/)
 - [Kubernetes — Security](https://kubernetes.io/docs/concepts/security/)
-- [OWASP Cheat Sheet Series](https://cheatsheetseries.owasp.org/)

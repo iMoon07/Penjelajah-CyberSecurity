@@ -1,13 +1,13 @@
-# Standards & Core Protocols (IT)
+# Standards & Core Protocols
 
-Official/canonical standards, registries, and core web/Internet references.
+Official standards bodies, RFCs, registries, and core web/Internet specifications (IETF, IANA, W3C, WHATWG, Unicode). Verify document status and version.
 
-- [RFC Editor](https://www.rfc-editor.org/) — RFC/STD/BCP resmi.
-- [IETF Datatracker](https://datatracker.ietf.org/) — status & dokumen IETF.
-- [IANA Protocol Registries](https://www.iana.org/protocols) — registri protokol/parameter.
-- [W3C Standards](https://www.w3.org/standards/) — standar web.
-- [WHATWG Living Standards](https://whatwg.org/) — standar web living.
-- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web) — referensi web/dev.
+- [RFC Editor](https://www.rfc-editor.org/)
+- [IETF Datatracker](https://datatracker.ietf.org/)
+- [IANA Protocol Registries](https://www.iana.org/protocols)
+- [W3C Standards](https://www.w3.org/standards/)
+- [WHATWG Living Standards](https://whatwg.org/)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web)
 - [HTTP (MDN)](https://developer.mozilla.org/en-US/docs/Web/HTTP)
 - [TLS 1.3 (RFC 8446)](https://datatracker.ietf.org/doc/html/rfc8446)
 - [QUIC (RFC 9000)](https://www.rfc-editor.org/rfc/rfc9000)

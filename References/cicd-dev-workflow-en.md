@@ -1,6 +1,6 @@
-# CI/CD, Git & Developer Workflow
+# CI/CD, Git & Workflow
 
-Official documentation for version control, CI/CD, and developer workflow.
+Official documentation for source control, CI/CD, developer platforms, and development workflow tooling.
 
 - [Git](https://git-scm.com/doc)
 - [Pro Git (book)](https://git-scm.com/book/en/v2)

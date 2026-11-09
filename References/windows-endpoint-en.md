@@ -1,6 +1,6 @@
-# Windows, Identity & Endpoint (IT/Infra)
+# Windows, Identity & Endpoint
 
-Official Microsoft documentation for Windows administration, identity, endpoint, and platform APIs.
+Official Microsoft documentation for Windows client/server, identity, endpoint security, management, and Windows APIs/drivers.
 
 - [Windows Documentation (hub)](https://learn.microsoft.com/en-us/windows/)
 - [Windows Server](https://learn.microsoft.com/en-us/windows-server/)

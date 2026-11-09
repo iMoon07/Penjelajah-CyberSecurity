@@ -1,6 +1,6 @@
-# Virtualization, Containers & Kubernetes (Infra)
+# Virtualization, Containers & K8s
 
-Official documentation for virtualization, container runtimes, and Kubernetes.
+Official documentation for containers, Kubernetes, container runtimes, and virtualization/hypervisor platforms.
 
 - [Docker](https://docs.docker.com/)
 - [Podman](https://docs.podman.io/)

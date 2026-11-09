@@ -1,6 +1,6 @@
-# Low-Level Programming, Systems & Toolchain
+# Low-Level, Systems & Toolchain
 
-Official docs/specs for systems programming, compilers/toolchains, debugging, ABIs, architectures, and low-level foundations.
+Official/primary references for kernels, ABIs, compilers, debuggers, assemblers, binary formats, and low-level systems tooling.
 
 - [Linux Kernel Documentation](https://www.kernel.org/doc/html/latest/)
 - [GNU C Library (glibc) Manual](https://www.gnu.org/software/libc/manual/)
@@ -27,8 +27,6 @@ Official docs/specs for systems programming, compilers/toolchains, debugging, AB
 - [RISC-V Specifications](https://riscv.org/technical/specifications/)
 - [NASM](https://www.nasm.us/docs.php)
 - [WebAssembly Specifications](https://webassembly.github.io/spec/)
-- [POSIX.1 (The Open Group Base Specifications)](https://pubs.opengroup.org/onlinepubs/9699919799/)
+- [POSIX.1-2024 (The Open Group Base Specifications)](https://pubs.opengroup.org/onlinepubs/9799919799/)
 - [Rust Reference](https://doc.rust-lang.org/reference/)
 - [The Rustonomicon (unsafe Rust)](https://doc.rust-lang.org/nomicon/)
-- [C++ Reference (cppreference)](https://en.cppreference.com/w/)
-- [C Reference (cppreference)](https://en.cppreference.com/w/c)
