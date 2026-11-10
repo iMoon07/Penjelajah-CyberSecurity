@@ -28,7 +28,7 @@ A successfull SQL injection attack can result in unauthorized access to sensitiv
 
 ## How to detect SQL injection vulnerabilities
 
-You can detect SQL injection maually using a systematic set of tests against every entry point in the application. To do this, you would typically submit:
+You can detect SQL injection manually using a systematic set of tests against every entry point in the application. To do this, you would typically submit:
 
 - The single quote `'` and look for errors or other anomalies
 - Some SQL-specific syntax that evaluates to the base (original) value of the entry point, and to a different value, and look for systematic diffrences in the application responses.
