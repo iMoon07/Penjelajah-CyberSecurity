@@ -1328,6 +1328,8 @@ The database contains a different table `users`, with columns called `username` 
 
     If the login is successful, you will gain access to the administrator account, and the lab will be marked as Solved.
 
+##### Reference
+
 <details>
 <summary> 24. Blind SQL Injection - How Does It Work? — z3nshell</summary>
 
@@ -1573,6 +1575,8 @@ print(f"\nPassword: {password}")
 - Password: extracted password
 
 10. Verify successful authentication. The lab should now be marked as solved.
+
+##### Reference
 
 <details>
 <summary> 26. Blind SQL Injection With Conditional Errors - Administrator Password Stolen — z3nshell</summary>
