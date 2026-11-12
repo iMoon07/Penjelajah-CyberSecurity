@@ -1,10 +1,10 @@
 # SQL Injection — PortSwigger Web Security Academy
 
-[🇮🇩 Baca dalam Bahasa Indonesia](sql-injection-id.md)
+[🇬🇧 Read in English](sql-injection-en.md)
 
 ﷽
 
-## Apa Itu SQL Injection?
+## Apa ini?
 
 ![sql-injection](images/overview/sql-injection.png)
 
