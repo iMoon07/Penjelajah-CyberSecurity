@@ -20,38 +20,25 @@ Lalu, bagaimana prosesnya ketika pengunjung membuka website yang menggunakan Sin
 
 ## Alurnya
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    C(["🧑‍🦱 Pelanggan<br/>Datang dan memesan makanan"]) -->|"1. Pesan makanan<br/>seperti HTTP Request"| P["🧑‍🍳 Pelayan<br/>Menerima pesanan dan meneruskannya"]
-    P -->|"2. Teruskan pesanan<br/>ke dapur"| K["👨‍🍳 Koki<br/>Memasak sesuai pesanan"]
-    K -->|"3. Ambil bahan<br/>jika diperlukan"| G[("🥫 Gudang Bahan<br/>Menyimpan bahan makanan")]
-    G -->|"4. Kirim bahan<br/>ke koki"| K
-    K -->|"5. Sajikan makanan<br/>ke pelayan"| P
-    P -->|"6. Antar makanan<br/>ke pelanggan<br/>seperti HTTP Response"| C
-
-    subgraph W["Warung / Satu Lokasi"]
-        P
-        K
-        G
-    end
-
-    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
-    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
-    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
-    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
-
-    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
-
-    class C actor
-    class P,K role
-    class G store
-    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Alurnya",
+  "columns": [["C"], ["P"], ["K"], ["G"]],
+  "nodes": {
+    "C": ["Pelanggan", "Datang dan memesan makanan", "customer", "actor", "https://en.wikipedia.org/wiki/Web_browser"],
+    "P": ["Pelayan", "Menerima pesanan dan meneruskannya", "waiter", "process", "https://en.wikipedia.org/wiki/Web_server"],
+    "K": ["Koki", "Memasak sesuai pesanan", "cook", "process", "https://en.wikipedia.org/wiki/Runtime_system", "cook"],
+    "G": ["Gudang Bahan", "Menyimpan bahan makanan", "warehouse", "store", "https://en.wikipedia.org/wiki/Database"]
+  },
+  "edges": [["C", "P", "1"], ["P", "K", "2"], ["K", "G", "3"], ["G", "K", "4", true], ["K", "P", "5", true], ["P", "C", "6", true]],
+  "groups": [["Warung / Satu Lokasi", ["P", "K", "G"], "store"]],
+  "legend": {
+    "flow": "Pesanan / permintaan",
+    "back": "Balasan / respons"
+  },
+  "facilities": ["Di tempat ini", ["store", "Warung"], ["cooking-pot", "Dapur"], ["utensils", "Meja makan"], ["warehouse", "Gudang bahan"]]
+}
 ```
 
 Dari diagram warung makan di atas, terlihat bahwa semua proses terjadi di satu lokasi yang sama. Di balik sajian makanan yang tampak sederhana, sebenarnya ada serangkaian peran, aturan, dan alat yang bekerja bersama agar pesanan bisa diproses dan diantar kembali dengan tepat.
@@ -81,58 +68,6 @@ Referensi: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/
 
 ## Kombinasi Stack
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Technology Stack<br/>= Resep dan bahan masakan"]) --> B{"Pilih bahan sesuai menu"}
-
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastruktur<br/>ELK, Prometheus + Grafana"]
-
-    C --> L(["🍽️ Aplikasi web / API<br/>sesuai kebutuhan proyek"])
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
-
-    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
-    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
-    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
-    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
-    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
-    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
-    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
-    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
-    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
-    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
-    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
-    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H,I,J,K tech
-    class L out
-
-
-
-```
-
 Kombinasi stack ini seperti bahan makanan dasar yang digunakan oleh warung tersebut. Dalam konteks teknologi seperti sistem operasi, web server, bahasa pemrograman, framework, dan database, membentuk sebuah variasi yang disebut [solution stack](https://en.wikipedia.org/wiki/Solution_stack). 
 
 Setiap stack memiliki susunan teknologi dan tujuan yang berbeda sesuai kebutuhan aplikasi.
@@ -142,6 +77,37 @@ Beberapa contoh technology stack beserta komponen dan kegunaannya.
 ### 1. JavaScript & TypeScript Stack
 
 Stack yang menggunakan JavaScript atau TypeScript untuk membangun antarmuka pengguna (frontend) dan logika server (backend). Dengan Node.js, Bun, atau Deno, JavaScript dapat dijalankan di sisi server sehingga satu bahasa dapat mencakup seluruh tumpukan aplikasi.
+
+```topology
+{
+  "title": "JavaScript & TypeScript",
+  "grid": 4,
+  "columns": [["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"]],
+  "nodes": {
+    "mean": [
+      "MEAN",
+      "MongoDB · Angular",
+      ["si-mongodb", "si-express", "si-angular", "si-nodejs"],
+      "tech",
+      "https://www.mongodb.com/resources/languages/mean-stack"
+    ],
+    "mern": ["MERN", "MongoDB · React", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "MongoDB · Vue", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "pern": [
+      "PERN",
+      "PostgreSQL · React",
+      ["si-postgresql", "si-express", "si-react", "si-nodejs"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
+    ],
+    "nextjs": ["Next.js", "React · Next.js", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "tRPC · Prisma", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "JS · API · Markup", ["si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "Bun · SQLite", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"]
+  },
+  "groups": [["JavaScript & TypeScript", ["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"], "si-javascript"]]
+}
+```
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -158,6 +124,31 @@ Stack yang menggunakan JavaScript atau TypeScript untuk membangun antarmuka peng
 
 Stack yang berpusat pada bahasa PHP untuk pengembangan web, biasanya dijalankan di sisi server dengan web server dan database relasional.
 
+```topology
+{
+  "title": "PHP",
+  "grid": 4,
+  "columns": [["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"]],
+  "nodes": {
+    "laravel": ["Laravel", "PHP · Blade", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "PHP Components", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "Linux · Apache", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
+    "lemp": [
+      "LEMP",
+      "Linux · Nginx",
+      ["si-linux", "si-nginx", "si-mysql", "si-php"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
+    ],
+    "wamp": ["WAMP", "Windows · Apache", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "Windows · IIS", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "FreeBSD · Apache", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "Apache · PHP", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"]
+  },
+  "groups": [["PHP", ["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"], "si-php"]]
+}
+```
+
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
 | [Laravel](https://laravel.com/) | [PHP](https://www.php.net/), [Laravel](https://laravel.com/docs), MySQL atau PostgreSQL, Nginx atau Apache | Framework PHP modern yang menyediakan fitur lengkap seperti routing, autentikasi, Eloquent ORM, dan blade templating. Cocok untuk aplikasi web skala kecil hingga besar dengan pengembangan yang terstruktur dan dokumentasi yang luas. |
@@ -173,6 +164,21 @@ Stack yang berpusat pada bahasa PHP untuk pengembangan web, biasanya dijalankan 
 
 Stack yang menggunakan bahasa Python untuk pengembangan web, dari mikro framework hingga full-stack framework dengan banyak fitur bawaan.
 
+```topology
+{
+  "title": "Python",
+  "grid": 4,
+  "columns": [["django", "fastapi", "flask", "pyramid"]],
+  "nodes": {
+    "django": ["Django", "Python · ORM", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "Python · Pydantic", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "Python Micro", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "Python Flexible", ["si-python"], "tech", "https://trypyramid.com/"]
+  },
+  "groups": [["Python", ["django", "fastapi", "flask", "pyramid"], "si-python"]]
+}
+```
+
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
 | [Python-Django](https://www.djangoproject.com/) | [Python](https://www.python.org/), [Django](https://www.djangoproject.com/), PostgreSQL atau MySQL, Nginx atau Apache, Gunicorn | Framework "batteries included" yang menyediakan admin panel, autentikasi, ORM, dan fitur keamanan bawaan. Cocok untuk aplikasi web skala besar yang membutuhkan pengembangan cepat dengan standar keamanan yang tinggi. |
@@ -184,6 +190,19 @@ Stack yang menggunakan bahasa Python untuk pengembangan web, dari mikro framewor
 
 Stack yang menggunakan bahasa C# dan ekosistem .NET untuk membangun aplikasi web, API, dan layanan backend.
 
+```topology
+{
+  "title": ".NET",
+  "grid": 2,
+  "columns": [["aspnet", "blazor"]],
+  "nodes": {
+    "aspnet": ["ASP.NET Core", "C# · Kestrel", ["si-dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "C# · WASM", ["si-dotnet"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"]
+  },
+  "groups": [[".NET", ["aspnet", "blazor"], "si-dotnet"]]
+}
+```
+
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
 | [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/) | [C#](https://learn.microsoft.com/en-us/dotnet/csharp/), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/), SQL Server atau PostgreSQL, IIS atau Nginx | Framework buatan Microsoft untuk membangun aplikasi web, REST API, dan layanan backend yang performa tinggi. Kompatibel lintas platform (Windows, Linux, macOS) dan cocok untuk enterprise yang sudah menggunakan teknologi Microsoft. |
@@ -192,6 +211,20 @@ Stack yang menggunakan bahasa C# dan ekosistem .NET untuk membangun aplikasi web
 ### 5. Java Stack
 
 Stack yang menggunakan bahasa Java untuk membangun aplikasi backend dan enterprise yang skalabel.
+
+```topology
+{
+  "title": "Java",
+  "grid": 3,
+  "columns": [["spring", "jakarta", "quarkus"]],
+  "nodes": {
+    "spring": ["Java-Spring", "Java · Boot", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "Java EE", ["si-openjdk"], "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "Java · K8s", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"]
+  },
+  "groups": [["Java", ["spring", "jakarta", "quarkus"], "si-openjdk"]]
+}
+```
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -203,6 +236,19 @@ Stack yang menggunakan bahasa Java untuk membangun aplikasi backend dan enterpri
 
 Stack yang menggunakan bahasa Ruby dengan konvensi yang kuat untuk pengembangan web cepat.
 
+```topology
+{
+  "title": "Ruby",
+  "grid": 2,
+  "columns": [["rails", "sinatra"]],
+  "nodes": {
+    "rails": ["Ruby on Rails", "Ruby · Rails", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "Ruby Micro", ["si-ruby"], "tech", "https://sinatrarb.com/"]
+  },
+  "groups": [["Ruby", ["rails", "sinatra"], "si-ruby"]]
+}
+```
+
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
 | [Ruby on Rails](https://rubyonrails.org/) | [Ruby](https://www.ruby-lang.org/), [Rails](https://guides.rubyonrails.org/getting_started.html), PostgreSQL atau MySQL, Puma atau Unicorn | Framework full-stack yang mengikuti konvensi atas konfigurasi (Convention over Configuration). Menyediakan fitur lengkap seperti database migration, scaffolding, dan asset pipeline. Cocok untuk startup dan MVP yang membutuhkan pengembangan sangat cepat. |
@@ -211,6 +257,21 @@ Stack yang menggunakan bahasa Ruby dengan konvensi yang kuat untuk pengembangan 
 ### 7. Go Stack
 
 Stack yang menggunakan bahasa Go (Golang) untuk membangun aplikasi backend, API, dan microservices dengan performa tinggi.
+
+```topology
+{
+  "title": "Go",
+  "grid": 4,
+  "columns": [["gin", "echo", "fiber", "gostd"]],
+  "nodes": {
+    "gin": ["Gin", "Go · Gin", ["si-go"], "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "Go · Echo", ["si-go"], "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "Go · Fasthttp", ["si-go"], "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "Go · net/http", ["si-go"], "tech", "https://go.dev/"]
+  },
+  "groups": [["Go", ["gin", "echo", "fiber", "gostd"], "si-go"]]
+}
+```
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -223,6 +284,20 @@ Stack yang menggunakan bahasa Go (Golang) untuk membangun aplikasi backend, API,
 
 Stack yang menggunakan bahasa Rust untuk membangun aplikasi web dengan keamanan memori dan performa tingkat sistem.
 
+```topology
+{
+  "title": "Rust",
+  "grid": 3,
+  "columns": [["actix", "axum", "rocket"]],
+  "nodes": {
+    "actix": ["Actix Web", "Rust · Actix", ["si-rust"], "tech", "https://actix.rs/"],
+    "axum": ["Axum", "Rust · Tokio", ["si-rust"], "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "Rust · Rocket", ["si-rust"], "tech", "https://rocket.rs/"]
+  },
+  "groups": [["Rust", ["actix", "axum", "rocket"], "si-rust"]]
+}
+```
+
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
 | [Actix Web](https://actix.rs/) | [Rust](https://www.rust-lang.org/), [Actix Web](https://actix.rs/), berbagai database | Web framework Rust yang diklaim sebagai salah satu yang tercepat dengan model aktornya. Cocok untuk aplikasi yang membutuhkan keamanan memori, konkurensi tinggi, dan performa maksimal tanpa garbage collector. |
@@ -232,6 +307,21 @@ Stack yang menggunakan bahasa Rust untuk membangun aplikasi web dengan keamanan 
 ### 9. Infrastruktur dan Observability
 
 Stack yang menggabungkan sistem operasi, web server, database, atau teknologi pendukung untuk kebutuhan infrastruktur dan pengamatan aplikasi.
+
+```topology
+{
+  "title": "Infrastruktur dan Observability",
+  "grid": 4,
+  "columns": [["wazuh", "elk", "promgraf", "tick"]],
+  "nodes": {
+    "wazuh": ["Wazuh", "SIEM · XDR", ["si-wazuh"], "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "Elasticsearch · Logstash", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "Metrics · Grafana", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "Telegraf · InfluxDB", ["si-influxdb"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  },
+  "groups": [["Infrastruktur dan Observability", ["wazuh", "elk", "promgraf", "tick"], "server"]]
+}
+```
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -248,47 +338,34 @@ Setelah memilih technology stack yang akan digunakan, langkah berikutnya adalah 
 
 Dalam dunia server, pilihan ini menentukan bagaimana aplikasi dijalankan, sumber daya komputasi disediakan, dan infrastruktur dikelola. Referensi: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Stack sudah siap<br/>resep + bahan + peralatan"]) --> B{"📍 Jalankan di mana?"}
-
-    B --> C["🏠 Bare Metal<br/>Bangun warung sendiri"]
-    B --> D["🛏️ Virtual Machine<br/>Sewa kamar kost"]
-    B --> E["🍱 Container<br/>Sewa gerai food court"]
-    B --> F["🏪 PaaS<br/>Ikut franchise siap pakai"]
-    B --> G["🛒 Serverless<br/>Buka gerai saat ada pesanan"]
-    B --> H["🛵 Edge Computing<br/>Gerobak dekat pelanggan"]
-
-    C --> I(["🧩 Semua komponen stack<br/>berjalan di satu tempat"])
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-
-    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
-    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
-    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
-    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
-    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
-    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
-    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
-    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
-    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H host
-    class I out
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Memilih Platform untuk Menjalankan Stack",
+  "legend": {
+    "flow": "Aliran data"
+  },
+  "facilities": ["Peran", ["git-branch", "Choice"], ["server", "Platform"], ["layers", "Application"]],
+  "columns": [
+    ["B"],
+    {
+      "nodes": ["C", "D", "E", "F", "G", "H"],
+      "grid": 3
+    },
+    ["I"]
+  ],
+  "nodes": {
+    "B": ["Jalankan di mana?", "", "git-branch", "choice", "https://en.wikipedia.org/wiki/Deployment_environment"],
+    "C": ["Bare Metal", "Bangun warung sendiri", "hard-drive", "host", "https://en.wikipedia.org/wiki/Bare-metal_server"],
+    "D": ["Virtual Machine", "Sewa kamar kost", "monitor", "host", "https://en.wikipedia.org/wiki/Virtual_machine"],
+    "E": ["Container", "Sewa gerai food court", "si-docker", "host", "https://en.wikipedia.org/wiki/Operating-system-level_virtualization"],
+    "F": ["PaaS", "Ikut franchise siap pakai", "cloud", "host", "https://en.wikipedia.org/wiki/Platform_as_a_service"],
+    "G": ["Serverless", "Buka gerai saat ada pesanan", "zap", "host", "https://en.wikipedia.org/wiki/Serverless_computing"],
+    "H": ["Edge Computing", "Gerobak dekat pelanggan", "radio", "host", "https://en.wikipedia.org/wiki/Edge_computing"],
+    "I": ["Semua komponen stack", "berjalan di satu tempat", "layers", "out", "https://en.wikipedia.org/wiki/Multitier_architecture"]
+  },
+  "edges": [["B", "C"], ["B", "D"], ["B", "E"], ["B", "F"], ["B", "G"], ["B", "H"], ["C", "I"], ["D", "I"], ["E", "I"], ["F", "I"], ["G", "I"], ["H", "I"]]
+}
 ```
 
 Bayangkan kamu sudah punya resep, bahan, dan peralatan untuk membuka warung makan. Sekarang, kamu perlu menentukan tempat untuk menjalankan usaha tersebut. Kamu bisa membangun warung sendiri, menyewa tempat, berbagi fasilitas dengan pedagang lain, atau membuka gerai sementara sesuai kebutuhan.

@@ -20,38 +20,25 @@ But how does this work when a visitor accesses a website built on a single-tier 
 
 ## The Flow
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    C(["🧑‍🦱 Customer<br/>Places an order"]) -->|"1. Place order<br/>as HTTP Request"| P["🧑‍🍳 Waiter<br/>Takes the order and forwards it"]
-    P -->|"2. Forward order<br/>to the kitchen"| K["👨‍🍳 Chef<br/>Prepares the order"]
-    K -->|"3. Retrieve ingredients<br/>if needed"| G[("🥫 Pantry<br/>Stores ingredients")]
-    G -->|"4. Send ingredients<br/>to the chef"| K
-    K -->|"5. Serve meal<br/>to the waiter"| P
-    P -->|"6. Deliver meal<br/>to the customer<br/>as HTTP Response"| C
-
-    subgraph W["Eatery / Single Location"]
-        P
-        K
-        G
-    end
-
-    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
-    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
-    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
-    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
-
-    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
-
-    class C actor
-    class P,K role
-    class G store
-    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "The Flow",
+  "columns": [["C"], ["P"], ["K"], ["G"]],
+  "nodes": {
+    "C": ["Customer", "Places an order", "customer", "actor", "https://en.wikipedia.org/wiki/Web_browser"],
+    "P": ["Waiter", "Takes the order and forwards it", "waiter", "process", "https://en.wikipedia.org/wiki/Web_server"],
+    "K": ["Chef", "Prepares the order", "cook", "process", "https://en.wikipedia.org/wiki/Runtime_system", "cook"],
+    "G": ["Pantry", "Stores ingredients", "warehouse", "store", "https://en.wikipedia.org/wiki/Database"]
+  },
+  "edges": [["C", "P", "1"], ["P", "K", "2"], ["K", "G", "3"], ["G", "K", "4", true], ["K", "P", "5", true], ["P", "C", "6", true]],
+  "groups": [["Eatery / Single Location", ["P", "K", "G"], "store"]],
+  "legend": {
+    "flow": "Order / request",
+    "back": "Return / response"
+  },
+  "facilities": ["In this place", ["store", "Eatery"], ["cooking-pot", "Kitchen"], ["utensils", "Dining area"], ["warehouse", "Storage"]]
+}
 ```
 
 Looking at the eatery analogy above, it's clear that everything happens in one place. Behind a simple meal, there are roles, rules, and tools working together to get an order from customer to kitchen and back again.
@@ -81,56 +68,6 @@ Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/
 
 ## Technology Stack Combinations
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Technology Stack<br/>= Recipe and ingredients"]) --> B{"Choose ingredients based on the menu"}
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastructure<br/>ELK, Prometheus + Grafana"]
-    C --> L(["🍽️ Web Application / API<br/>tailored to project needs"])
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
-
-    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
-    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
-    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
-    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
-    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
-    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
-    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
-    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
-    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
-    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
-    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
-    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H,I,J,K tech
-    class L out
-
-
-
-```
-
 A technology stack is akin to a recipe and its ingredients. In computing, the choice of operating system, web server, programming language, framework, and database forms a distinct arrangement known as a [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
 
 Each stack carries its own composition and purpose, tailored to the requirements of the application at hand. Below are some of the most widely used technology stacks, along with their components and use cases.
@@ -138,6 +75,37 @@ Each stack carries its own composition and purpose, tailored to the requirements
 ### 1. JavaScript & TypeScript Stack
 
 This stack leverages JavaScript or TypeScript to build both the user interface (frontend) and server logic (backend). With Node.js, Bun, or Deno, JavaScript can run on the server, allowing a single language to cover the entire application stack.
+
+```topology
+{
+  "title": "JavaScript & TypeScript",
+  "grid": 4,
+  "columns": [["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"]],
+  "nodes": {
+    "mean": [
+      "MEAN",
+      "MongoDB · Angular",
+      ["si-mongodb", "si-express", "si-angular", "si-nodejs"],
+      "tech",
+      "https://www.mongodb.com/resources/languages/mean-stack"
+    ],
+    "mern": ["MERN", "MongoDB · React", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "MongoDB · Vue", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "pern": [
+      "PERN",
+      "PostgreSQL · React",
+      ["si-postgresql", "si-express", "si-react", "si-nodejs"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
+    ],
+    "nextjs": ["Next.js", "React · Next.js", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "tRPC · Prisma", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "JS · API · Markup", ["si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "Bun · SQLite", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"]
+  },
+  "groups": [["JavaScript & TypeScript", ["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"], "si-javascript"]]
+}
+```
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -154,6 +122,31 @@ This stack leverages JavaScript or TypeScript to build both the user interface (
 
 A PHP-centric stack is commonly used for web development, typically run on the server alongside a web server and a relational database.
 
+```topology
+{
+  "title": "PHP",
+  "grid": 4,
+  "columns": [["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"]],
+  "nodes": {
+    "laravel": ["Laravel", "PHP · Blade", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "PHP Components", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "Linux · Apache", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
+    "lemp": [
+      "LEMP",
+      "Linux · Nginx",
+      ["si-linux", "si-nginx", "si-mysql", "si-php"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
+    ],
+    "wamp": ["WAMP", "Windows · Apache", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "Windows · IIS", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "FreeBSD · Apache", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "Apache · PHP", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"]
+  },
+  "groups": [["PHP", ["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"], "si-php"]]
+}
+```
+
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Laravel](https://laravel.com/) | [PHP](https://www.php.net/), [Laravel](https://laravel.com/docs), MySQL or PostgreSQL, Nginx or Apache | A modern PHP framework offering routing, authentication, Eloquent ORM, Blade templating, and more. Ideal for web applications ranging from small projects to large-scale systems, with extensive documentation and a structured approach to development. |
@@ -169,6 +162,21 @@ A PHP-centric stack is commonly used for web development, typically run on the s
 
 A Python-based stack for web development, ranging from micro-frameworks to full-stack frameworks rich with built-in functionality.
 
+```topology
+{
+  "title": "Python",
+  "grid": 4,
+  "columns": [["django", "fastapi", "flask", "pyramid"]],
+  "nodes": {
+    "django": ["Django", "Python · ORM", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "Python · Pydantic", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "Python Micro", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "Python Flexible", ["si-python"], "tech", "https://trypyramid.com/"]
+  },
+  "groups": [["Python", ["django", "fastapi", "flask", "pyramid"], "si-python"]]
+}
+```
+
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Django](https://www.djangoproject.com/) | [Python](https://www.python.org/), [Django](https://www.djangoproject.com/), PostgreSQL or MySQL, Nginx or Apache, Gunicorn | A "batteries included" framework offering an admin panel, authentication, ORM, and robust security features out of the box. Ideal for large-scale web applications requiring rapid development and high security standards. |
@@ -180,6 +188,19 @@ A Python-based stack for web development, ranging from micro-frameworks to full-
 
 Built upon C# and the .NET ecosystem, this stack is used to construct web applications, APIs, and backend services.
 
+```topology
+{
+  "title": ".NET",
+  "grid": 2,
+  "columns": [["aspnet", "blazor"]],
+  "nodes": {
+    "aspnet": ["ASP.NET Core", "C# · Kestrel", ["si-dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "C# · WASM", ["si-dotnet"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"]
+  },
+  "groups": [[".NET", ["aspnet", "blazor"], "si-dotnet"]]
+}
+```
+
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/) | [C#](https://learn.microsoft.com/en-us/dotnet/csharp/), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/), SQL Server or PostgreSQL, IIS or Nginx | A high-performance, cross-platform framework from Microsoft for building web apps, REST APIs, and backend services. Runs on Windows, Linux, and macOS, making it ideal for enterprise environments within the Microsoft ecosystem. |
@@ -188,6 +209,20 @@ Built upon C# and the .NET ecosystem, this stack is used to construct web applic
 ### 5. Java Stack
 
 A stack built on Java, commonly used for scalable backend systems and enterprise-grade applications.
+
+```topology
+{
+  "title": "Java",
+  "grid": 3,
+  "columns": [["spring", "jakarta", "quarkus"]],
+  "nodes": {
+    "spring": ["Java-Spring", "Java · Boot", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "Java EE", ["si-openjdk"], "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "Java · K8s", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"]
+  },
+  "groups": [["Java", ["spring", "jakarta", "quarkus"], "si-openjdk"]]
+}
+```
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -199,6 +234,19 @@ A stack built on Java, commonly used for scalable backend systems and enterprise
 
 A stack centered around Ruby, known for its strong conventions and emphasis on rapid web development.
 
+```topology
+{
+  "title": "Ruby",
+  "grid": 2,
+  "columns": [["rails", "sinatra"]],
+  "nodes": {
+    "rails": ["Ruby on Rails", "Ruby · Rails", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "Ruby Micro", ["si-ruby"], "tech", "https://sinatrarb.com/"]
+  },
+  "groups": [["Ruby", ["rails", "sinatra"], "si-ruby"]]
+}
+```
+
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Ruby on Rails](https://rubyonrails.org/) | [Ruby](https://www.ruby-lang.org/), [Rails](https://guides.rubyonrails.org/getting_started.html), PostgreSQL or MySQL, Puma or Unicorn | A full-stack framework that follows "Convention over Configuration". It provides migrations, scaffolding, asset pipelines, and more out of the box. Ideal for startups and MVPs that require development at high velocity. |
@@ -207,6 +255,21 @@ A stack centered around Ruby, known for its strong conventions and emphasis on r
 ### 7. Go Stack
 
 A stack built with Go (Golang), designed for high-performance backends, APIs, and microservices.
+
+```topology
+{
+  "title": "Go",
+  "grid": 4,
+  "columns": [["gin", "echo", "fiber", "gostd"]],
+  "nodes": {
+    "gin": ["Gin", "Go · Gin", ["si-go"], "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "Go · Echo", ["si-go"], "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "Go · Fasthttp", ["si-go"], "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "Go · net/http", ["si-go"], "tech", "https://go.dev/"]
+  },
+  "groups": [["Go", ["gin", "echo", "fiber", "gostd"], "si-go"]]
+}
+```
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -219,6 +282,20 @@ A stack built with Go (Golang), designed for high-performance backends, APIs, an
 
 A stack built with Rust, prioritizing memory safety, concurrency, and system-level performance.
 
+```topology
+{
+  "title": "Rust",
+  "grid": 3,
+  "columns": [["actix", "axum", "rocket"]],
+  "nodes": {
+    "actix": ["Actix Web", "Rust · Actix", ["si-rust"], "tech", "https://actix.rs/"],
+    "axum": ["Axum", "Rust · Tokio", ["si-rust"], "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "Rust · Rocket", ["si-rust"], "tech", "https://rocket.rs/"]
+  },
+  "groups": [["Rust", ["actix", "axum", "rocket"], "si-rust"]]
+}
+```
+
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Actix Web](https://actix.rs/) | [Rust](https://www.rust-lang.org/), [Actix Web](https://actix.rs/), various databases | One of Rust's fastest web frameworks, built on an actor model. Ideal for applications requiring memory safety, high concurrency, and maximum performance without a garbage collector. |
@@ -228,6 +305,21 @@ A stack built with Rust, prioritizing memory safety, concurrency, and system-lev
 ### 9. Infrastructure and Observability
 
 Stacks that combine operating systems, web servers, databases, or supporting tools for infrastructure management and application observability.
+
+```topology
+{
+  "title": "Infrastructure and Observability",
+  "grid": 4,
+  "columns": [["wazuh", "elk", "promgraf", "tick"]],
+  "nodes": {
+    "wazuh": ["Wazuh", "SIEM · XDR", ["si-wazuh"], "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "Elasticsearch · Logstash", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "Metrics · Grafana", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "Telegraf · InfluxDB", ["si-influxdb"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  },
+  "groups": [["Infrastructure and Observability", ["wazuh", "elk", "promgraf", "tick"], "server"]]
+}
+```
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -244,45 +336,34 @@ Once a technology stack has been chosen, the next step is to determine the **pla
 
 In server terms, this choice affects how the application runs, how computing resources are provisioned, and how the infrastructure is managed. Reference: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Stack is ready<br/>recipe + ingredients + tools"]) --> B{"📍 Where to run it?"}
-    B --> C["🏠 Bare Metal<br/>Build your own eatery"]
-    B --> D["🛏️ Virtual Machine<br/>Rent a private room"]
-    B --> E["🍱 Container<br/>Rent a stall in a food court"]
-    B --> F["🏪 PaaS<br/>Join a ready-to-use franchise"]
-    B --> G["🛒 Serverless<br/>Open a stall only when orders come in"]
-    B --> H["🛵 Edge Computing<br/>Use a food cart near your customers"]
-    C --> I(["🧩 All stack components<br/>run in one place"])
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-
-    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
-    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
-    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
-    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
-    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
-    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
-    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
-    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
-    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H host
-    class I out
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Choosing a Platform to Run the Stack",
+  "legend": {
+    "flow": "Data flow"
+  },
+  "facilities": ["Roles", ["git-branch", "Choice"], ["server", "Platform"], ["layers", "Application"]],
+  "columns": [
+    ["B"],
+    {
+      "nodes": ["C", "D", "E", "F", "G", "H"],
+      "grid": 3
+    },
+    ["I"]
+  ],
+  "nodes": {
+    "B": ["Where to run it?", "", "git-branch", "choice", "https://en.wikipedia.org/wiki/Deployment_environment"],
+    "C": ["Bare Metal", "Build your own eatery", "hard-drive", "host", "https://en.wikipedia.org/wiki/Bare-metal_server"],
+    "D": ["Virtual Machine", "Rent a private room", "monitor", "host", "https://en.wikipedia.org/wiki/Virtual_machine"],
+    "E": ["Container", "Rent a stall in a food court", "si-docker", "host", "https://en.wikipedia.org/wiki/Operating-system-level_virtualization"],
+    "F": ["PaaS", "Join a ready-to-use franchise", "cloud", "host", "https://en.wikipedia.org/wiki/Platform_as_a_service"],
+    "G": ["Serverless", "Open a stall only when orders come in", "zap", "host", "https://en.wikipedia.org/wiki/Serverless_computing"],
+    "H": ["Edge Computing", "Use a food cart near your customers", "radio", "host", "https://en.wikipedia.org/wiki/Edge_computing"],
+    "I": ["All stack components", "run in one place", "layers", "out", "https://en.wikipedia.org/wiki/Multitier_architecture"]
+  },
+  "edges": [["B", "C"], ["B", "D"], ["B", "E"], ["B", "F"], ["B", "G"], ["B", "H"], ["C", "I"], ["D", "I"], ["E", "I"], ["F", "I"], ["G", "I"], ["H", "I"]]
+}
 ```
 
 Imagine you've gathered your recipe, ingredients, and tools to open an eatery. You must now decide where to operate: build your own premises, rent a space, share facilities with others, or open a temporary stall as needed.

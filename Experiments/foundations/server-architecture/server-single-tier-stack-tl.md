@@ -20,38 +20,25 @@ Ngunit paano nga ba ito gumagana kapag ang isang bisita ay bumisita sa isang web
 
 ## Daloy ng Proseso
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    C(["🧑‍🦱 Customer<br/>Nag-order ng pagkain"]) -->|"1. Nagpadala ng order<br/>bilang HTTP Request"| P["🧑‍🍳 Waiter<br/>Tumatanggap ng order at ipinapasa ito"]
-    P -->|"2. Ipinapasa ang order<br/>sa kusina"| K["👨‍🍳 Kusinero<br/>Naghahanda ng order"]
-    K -->|"3. Kinukuha ang mga sangkap<br/>kung kinakailangan"| G[("🥫 Bodega<br/>Nagtatago ng mga sangkap")]
-    G -->|"4. Ipinapadala ang mga sangkap<br/>sa kusinero"| K
-    K -->|"5. Inihahain ang pagkain<br/>sa waiter"| P
-    P -->|"6. Inihahatid ang pagkain<br/>sa customer<br/>bilang HTTP Response"| C
-
-    subgraph W["Karinderya / Isang Lugar Lamang"]
-        P
-        K
-        G
-    end
-
-    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
-    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
-    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
-    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
-
-    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
-
-    class C actor
-    class P,K role
-    class G store
-    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Daloy ng Proseso",
+  "columns": [["C"], ["P"], ["K"], ["G"]],
+  "nodes": {
+    "C": ["Customer", "Nag-order ng pagkain", "customer", "actor", "https://en.wikipedia.org/wiki/Web_browser"],
+    "P": ["Waiter", "Tumatanggap ng order at ipinapasa ito", "waiter", "process", "https://en.wikipedia.org/wiki/Web_server"],
+    "K": ["Kusinero", "Naghahanda ng order", "cook", "process", "https://en.wikipedia.org/wiki/Runtime_system", "cook"],
+    "G": ["Bodega", "Nagtatago ng mga sangkap", "warehouse", "store", "https://en.wikipedia.org/wiki/Database"]
+  },
+  "edges": [["C", "P", "1"], ["P", "K", "2"], ["K", "G", "3"], ["G", "K", "4", true], ["K", "P", "5", true], ["P", "C", "6", true]],
+  "groups": [["Karinderya / Isang Lugar Lamang", ["P", "K", "G"], "store"]],
+  "legend": {
+    "flow": "Order / hiling",
+    "back": "Sagot / tugon"
+  },
+  "facilities": ["Dito", ["store", "Karinderya"], ["cooking-pot", "Kusina"], ["utensils", "Pook kainan"], ["warehouse", "Imbakan"]]
+}
 ```
 
 Mula sa diagram ng karinderya, malinaw na ang lahat ng gawain ay nagaganap sa iisang lugar lamang. Sa likod ng isang simpleng pagkain, may mga tungkulin, patakaran, at kagamitan na nagtutulungan upang maiproseso nang tama ang order at maibalik ito sa customer.
@@ -81,56 +68,6 @@ Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US
 
 ## Mga Kombinasyon ng Technology Stack
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Technology Stack<br/>= Resipe at mga sangkap"]) --> B{"Pumili ng sangkap batay sa menu"}
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastructure<br/>ELK, Prometheus + Grafana"]
-    C --> L(["🍽️ Web Application / API<br/>ayon sa pangangailangan ng proyekto"])
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
-
-    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
-    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
-    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
-    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
-    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
-    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
-    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
-    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
-    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
-    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
-    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
-    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H,I,J,K tech
-    class L out
-
-
-
-```
-
 Ang technology stack ay katulad ng resipe at mga sangkap nito. Sa larangan ng computing, ang pagpili ng operating system, web server, programming language, framework, at database ay bumubuo ng isang natatanging kaayusan na tinatawag na [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
 
 Ang bawat stack ay may sariling komposisyon at layunin na iniangkop sa pangangailangan ng aplikasyon. Narito ang ilan sa mga pinakakaraniwang ginagamit na technology stack, kasama ang kanilang mga bahagi at paggamit:
@@ -138,6 +75,37 @@ Ang bawat stack ay may sariling komposisyon at layunin na iniangkop sa pangangai
 ### 1. JavaScript & TypeScript Stack
 
 Ang stack na ito ay gumagamit ng JavaScript o TypeScript upang bumuo ng parehong user interface (frontend) at server logic (backend). Sa tulong ng Node.js, Bun, o Deno, ang JavaScript ay maaaring tumakbo sa server, na nagpapahintulot sa isang wika na masakop ang kabuuang stack ng aplikasyon.
+
+```topology
+{
+  "title": "JavaScript & TypeScript",
+  "grid": 4,
+  "columns": [["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"]],
+  "nodes": {
+    "mean": [
+      "MEAN",
+      "MongoDB · Angular",
+      ["si-mongodb", "si-express", "si-angular", "si-nodejs"],
+      "tech",
+      "https://www.mongodb.com/resources/languages/mean-stack"
+    ],
+    "mern": ["MERN", "MongoDB · React", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "MongoDB · Vue", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "pern": [
+      "PERN",
+      "PostgreSQL · React",
+      ["si-postgresql", "si-express", "si-react", "si-nodejs"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
+    ],
+    "nextjs": ["Next.js", "React · Next.js", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "tRPC · Prisma", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "JS · API · Markup", ["si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "Bun · SQLite", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"]
+  },
+  "groups": [["JavaScript & TypeScript", ["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"], "si-javascript"]]
+}
+```
 
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
@@ -154,6 +122,31 @@ Ang stack na ito ay gumagamit ng JavaScript o TypeScript upang bumuo ng parehong
 
 Ang PHP-centric na stack ay karaniwang ginagamit sa web development, kadalasang pinapatakbo sa server kasama ang web server at relational database.
 
+```topology
+{
+  "title": "PHP",
+  "grid": 4,
+  "columns": [["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"]],
+  "nodes": {
+    "laravel": ["Laravel", "PHP · Blade", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "PHP Components", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "Linux · Apache", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
+    "lemp": [
+      "LEMP",
+      "Linux · Nginx",
+      ["si-linux", "si-nginx", "si-mysql", "si-php"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
+    ],
+    "wamp": ["WAMP", "Windows · Apache", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "Windows · IIS", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "FreeBSD · Apache", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "Apache · PHP", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"]
+  },
+  "groups": [["PHP", ["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"], "si-php"]]
+}
+```
+
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
 | [Laravel](https://laravel.com/) | [PHP](https://www.php.net/), [Laravel](https://laravel.com/docs), MySQL o PostgreSQL, Nginx o Apache | Isang modernong PHP framework na nag-aalok ng routing, authentication, Eloquent ORM, Blade templating, at iba pa. Angkop para sa web applications mula sa maliliit na proyekto hanggang sa malalaking sistema, na may malawak na dokumentasyon at organisadong paraan ng pag-develop. |
@@ -169,6 +162,21 @@ Ang PHP-centric na stack ay karaniwang ginagamit sa web development, kadalasang 
 
 Isang Python-based na stack para sa web development, mula sa micro-framework hanggang sa full-stack framework na mayaman sa built-in na functionality.
 
+```topology
+{
+  "title": "Python",
+  "grid": 4,
+  "columns": [["django", "fastapi", "flask", "pyramid"]],
+  "nodes": {
+    "django": ["Django", "Python · ORM", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "Python · Pydantic", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "Python Micro", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "Python Flexible", ["si-python"], "tech", "https://trypyramid.com/"]
+  },
+  "groups": [["Python", ["django", "fastapi", "flask", "pyramid"], "si-python"]]
+}
+```
+
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
 | [Django](https://www.djangoproject.com/) | [Python](https://www.python.org/), [Django](https://www.djangoproject.com/), PostgreSQL o MySQL, Nginx o Apache, Gunicorn | Isang "batteries included" na framework na nag-aalok ng admin panel, authentication, ORM, at matibay na seguridad na feature sa labas ng kahon. Angkop para sa malalaking web applications na nangangailangan ng mabilis na pag-develop at mataas na pamantayan ng seguridad. |
@@ -180,6 +188,19 @@ Isang Python-based na stack para sa web development, mula sa micro-framework han
 
 Binuo sa C# at sa .NET ecosystem, ang stack na ito ay ginagamit upang bumuo ng web applications, APIs, at backend services.
 
+```topology
+{
+  "title": ".NET",
+  "grid": 2,
+  "columns": [["aspnet", "blazor"]],
+  "nodes": {
+    "aspnet": ["ASP.NET Core", "C# · Kestrel", ["si-dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "C# · WASM", ["si-dotnet"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"]
+  },
+  "groups": [[".NET", ["aspnet", "blazor"], "si-dotnet"]]
+}
+```
+
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
 | [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/) | [C#](https://learn.microsoft.com/en-us/dotnet/csharp/), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/), SQL Server o PostgreSQL, IIS o Nginx | Isang high-performance, cross-platform na framework mula sa Microsoft para sa pagbuo ng web apps, REST APIs, at backend services. Tumatakbo sa Windows, Linux, at macOS, kaya angkop ito para sa mga enterprise environment sa loob ng Microsoft ecosystem. |
@@ -188,6 +209,20 @@ Binuo sa C# at sa .NET ecosystem, ang stack na ito ay ginagamit upang bumuo ng w
 ### 5. Java Stack
 
 Isang stack na binuo sa Java, karaniwang ginagamit para sa scalable na backend systems at enterprise-grade na mga aplikasyon.
+
+```topology
+{
+  "title": "Java",
+  "grid": 3,
+  "columns": [["spring", "jakarta", "quarkus"]],
+  "nodes": {
+    "spring": ["Java-Spring", "Java · Boot", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "Java EE", ["si-openjdk"], "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "Java · K8s", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"]
+  },
+  "groups": [["Java", ["spring", "jakarta", "quarkus"], "si-openjdk"]]
+}
+```
 
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
@@ -199,6 +234,19 @@ Isang stack na binuo sa Java, karaniwang ginagamit para sa scalable na backend s
 
 Isang stack na nakasentro sa Ruby, kilala sa matibay na konvensyon at pagbibigay-diin sa mabilis na web development.
 
+```topology
+{
+  "title": "Ruby",
+  "grid": 2,
+  "columns": [["rails", "sinatra"]],
+  "nodes": {
+    "rails": ["Ruby on Rails", "Ruby · Rails", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "Ruby Micro", ["si-ruby"], "tech", "https://sinatrarb.com/"]
+  },
+  "groups": [["Ruby", ["rails", "sinatra"], "si-ruby"]]
+}
+```
+
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
 | [Ruby on Rails](https://rubyonrails.org/) | [Ruby](https://www.ruby-lang.org/), [Rails](https://guides.rubyonrails.org/getting_started.html), PostgreSQL o MySQL, Puma o Unicorn | Isang full-stack na framework na sumusunod sa "Convention over Configuration". Nagbibigay ito ng migrations, scaffolding, asset pipelines, at iba pa sa labas ng kahon. Angkop para sa startups at MVPs na nangangailangan ng pag-develop sa napakataas na bilis. |
@@ -207,6 +255,21 @@ Isang stack na nakasentro sa Ruby, kilala sa matibay na konvensyon at pagbibigay
 ### 7. Go Stack
 
 Isang stack na binuo sa Go (Golang), dinisenyo para sa high-performance na backends, APIs, at microservices.
+
+```topology
+{
+  "title": "Go",
+  "grid": 4,
+  "columns": [["gin", "echo", "fiber", "gostd"]],
+  "nodes": {
+    "gin": ["Gin", "Go · Gin", ["si-go"], "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "Go · Echo", ["si-go"], "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "Go · Fasthttp", ["si-go"], "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "Go · net/http", ["si-go"], "tech", "https://go.dev/"]
+  },
+  "groups": [["Go", ["gin", "echo", "fiber", "gostd"], "si-go"]]
+}
+```
 
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
@@ -219,6 +282,20 @@ Isang stack na binuo sa Go (Golang), dinisenyo para sa high-performance na backe
 
 Isang stack na binuo sa Rust, na binibigyang-priyoridad ang memory safety, concurrency, at system-level na performance.
 
+```topology
+{
+  "title": "Rust",
+  "grid": 3,
+  "columns": [["actix", "axum", "rocket"]],
+  "nodes": {
+    "actix": ["Actix Web", "Rust · Actix", ["si-rust"], "tech", "https://actix.rs/"],
+    "axum": ["Axum", "Rust · Tokio", ["si-rust"], "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "Rust · Rocket", ["si-rust"], "tech", "https://rocket.rs/"]
+  },
+  "groups": [["Rust", ["actix", "axum", "rocket"], "si-rust"]]
+}
+```
+
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
 | [Actix Web](https://actix.rs/) | [Rust](https://www.rust-lang.org/), [Actix Web](https://actix.rs/), iba't ibang database | Isa sa mga pinakamabilis na web framework ng Rust, binuo sa actor model. Angkop para sa mga aplikasyon na nangangailangan ng memory safety, mataas na concurrency, at maximum na performance nang walang garbage collector. |
@@ -228,6 +305,21 @@ Isang stack na binuo sa Rust, na binibigyang-priyoridad ang memory safety, concu
 ### 9. Infrastructure at Observability
 
 Ang mga stack na ito ay nagsasama ng operating system, web server, database, o mga supporting tools para sa infrastructure management at application observability.
+
+```topology
+{
+  "title": "Infrastructure at Observability",
+  "grid": 4,
+  "columns": [["wazuh", "elk", "promgraf", "tick"]],
+  "nodes": {
+    "wazuh": ["Wazuh", "SIEM · XDR", ["si-wazuh"], "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "Elasticsearch · Logstash", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "Metrics · Grafana", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "Telegraf · InfluxDB", ["si-influxdb"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  },
+  "groups": [["Infrastructure at Observability", ["wazuh", "elk", "promgraf", "tick"], "server"]]
+}
+```
 
 | Stack | Mga Pangunahing Bahagi | Paglalarawan |
 | --- | --- | --- |
@@ -244,45 +336,34 @@ Matapos pumili ng technology stack, ang susunod na hakbang ay tukuyin ang **plat
 
 Sa konteksto ng server, ang pagpiling ito ang magtatakda kung paano tatakbo ang aplikasyon, paano ipapamigay ang mga computing resource, at paano pamamahalaan ang imprastruktura. Sanggunian: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Handa na ang stack<br/>resipe + mga sangkap + mga kagamitan"]) --> B{"📍 Saan ito patatakbuhin?"}
-    B --> C["🏠 Bare Metal<br/>Bumuo ng sarili mong karinderya"]
-    B --> D["🛏️ Virtual Machine<br/>Umupa ng pribadong kwarto"]
-    B --> E["🍱 Container<br/>Umupa ng stall sa food court"]
-    B --> F["🏪 PaaS<br/>Sumali sa ready-to-use na franchise"]
-    B --> G["🛒 Serverless<br/>Buksan ang stall lamang kapag may order"]
-    B --> H["🛵 Edge Computing<br/>Gumamit ng food cart malapit sa mga customer"]
-    C --> I(["🧩 Lahat ng bahagi ng stack<br/>tumatakbo sa iisang lugar"])
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-
-    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
-    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
-    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
-    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
-    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
-    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
-    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
-    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
-    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H host
-    class I out
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Pagpili ng Platform para Patakbuhin ang Stack",
+  "legend": {
+    "flow": "Daloy ng data"
+  },
+  "facilities": ["Mga Papel", ["git-branch", "Choice"], ["server", "Platform"], ["layers", "Application"]],
+  "columns": [
+    ["B"],
+    {
+      "nodes": ["C", "D", "E", "F", "G", "H"],
+      "grid": 3
+    },
+    ["I"]
+  ],
+  "nodes": {
+    "B": ["Saan ito patatakbuhin?", "", "git-branch", "choice", "https://en.wikipedia.org/wiki/Deployment_environment"],
+    "C": ["Bare Metal", "Bumuo ng sarili mong karinderya", "hard-drive", "host", "https://en.wikipedia.org/wiki/Bare-metal_server"],
+    "D": ["Virtual Machine", "Umupa ng pribadong kwarto", "monitor", "host", "https://en.wikipedia.org/wiki/Virtual_machine"],
+    "E": ["Container", "Umupa ng stall sa food court", "si-docker", "host", "https://en.wikipedia.org/wiki/Operating-system-level_virtualization"],
+    "F": ["PaaS", "Sumali sa ready-to-use na franchise", "cloud", "host", "https://en.wikipedia.org/wiki/Platform_as_a_service"],
+    "G": ["Serverless", "Buksan ang stall lamang kapag may order", "zap", "host", "https://en.wikipedia.org/wiki/Serverless_computing"],
+    "H": ["Edge Computing", "Gumamit ng food cart malapit sa mga customer", "radio", "host", "https://en.wikipedia.org/wiki/Edge_computing"],
+    "I": ["Lahat ng bahagi ng stack", "tumatakbo sa iisang lugar", "layers", "out", "https://en.wikipedia.org/wiki/Multitier_architecture"]
+  },
+  "edges": [["B", "C"], ["B", "D"], ["B", "E"], ["B", "F"], ["B", "G"], ["B", "H"], ["C", "I"], ["D", "I"], ["E", "I"], ["F", "I"], ["G", "I"], ["H", "I"]]
+}
 ```
 
 Isipin mo na nakakuha ka na ng resipe, mga sangkap, at mga kagamitan upang magbukas ng karinderya. Ngayon, kailangan mong magpasya kung saan ito mag-ooperate: bumuo ng sarili mong lugar, umupa ng puwang, makipag-share ng mga pasilidad sa iba pang mga vendor, o magbukas ng pansamantala lamang ayon sa pangangailangan.

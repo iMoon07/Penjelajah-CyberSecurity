@@ -20,38 +20,25 @@ Namun, bagaimanakah proses ini berlaku apabila pelawat mengakses laman web yang 
 
 ## Aliran Kerja
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    C(["🧑‍🦱 Pelanggan<br/>Membuat pesanan"]) -->|"1. Pesanan dihantar<br/>sebagai Permintaan HTTP"| P["🧑‍🍳 Pelayan<br/>Menerima pesanan dan mengemudikannya"]
-    P -->|"2. Pesanan dihantar<br/>ke dapur"| K["👨‍🍳 Tukang Masak<br/>Menyediakan pesanan"]
-    K -->|"3. Mengambil bahan<br/>jika diperlukan"| G[("🥫 Pantri<br/>Menyimpan bahan-bahan")]
-    G -->|"4. Bahan dihantar<br/>kepada tukang masak"| K
-    K -->|"5. Hidangan dihidangkan<br/>kepada pelayan"| P
-    P -->|"6. Hidangan dihantar<br/>kepada pelanggan<br/>sebagai Respons HTTP"| C
-
-    subgraph W["Gerai Makan / Satu Lokasi"]
-        P
-        K
-        G
-    end
-
-    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
-    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
-    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
-    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
-
-    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
-
-    class C actor
-    class P,K role
-    class G store
-    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Aliran Kerja",
+  "columns": [["C"], ["P"], ["K"], ["G"]],
+  "nodes": {
+    "C": ["Pelanggan", "Membuat pesanan", "customer", "actor", "https://en.wikipedia.org/wiki/Web_browser"],
+    "P": ["Pelayan", "Menerima pesanan dan mengemudikannya", "waiter", "process", "https://en.wikipedia.org/wiki/Web_server"],
+    "K": ["Tukang Masak", "Menyediakan pesanan", "cook", "process", "https://en.wikipedia.org/wiki/Runtime_system", "cook"],
+    "G": ["Pantri", "Menyimpan bahan-bahan", "warehouse", "store", "https://en.wikipedia.org/wiki/Database"]
+  },
+  "edges": [["C", "P", "1"], ["P", "K", "2"], ["K", "G", "3"], ["G", "K", "4", true], ["K", "P", "5", true], ["P", "C", "6", true]],
+  "groups": [["Gerai Makan / Satu Lokasi", ["P", "K", "G"], "store"]],
+  "legend": {
+    "flow": "Pesanan / permintaan",
+    "back": "Balasan / tindak balas"
+  },
+  "facilities": ["Di tempat ini", ["store", "Kedai"], ["cooking-pot", "Dapur"], ["utensils", "Ruang makan"], ["warehouse", "Gudang"]]
+}
 ```
 
 Daripada gambar rajah gerai makan di atas, jelas bahawa semua proses berlaku di satu lokasi yang sama. Di sebalik hidangan yang kelihatan ringkas, terdapat pelbagai peranan, peraturan dan alatan yang bekerjasama untuk memproses pesanan dan menghantarnya semula dengan tepat.
@@ -81,56 +68,6 @@ Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/d
 
 ## Gabungan Tindanan Teknologi
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Tindanan Teknologi<br/>= Resipi dan bahan-bahan"]) --> B{"Pilih bahan mengikut menu"}
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastruktur<br/>ELK, Prometheus + Grafana"]
-    C --> L(["🍽️ Aplikasi Web / API<br/>mengikut keperluan projek"])
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
-
-    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
-    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
-    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
-    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
-    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
-    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
-    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
-    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
-    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
-    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
-    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
-    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H,I,J,K tech
-    class L out
-
-
-
-```
-
 Tindanan teknologi ibarat resipi beserta bahan-bahannya. Dalam bidang pengkomputeran, pilihan sistem pengendalian, pelayan web, bahasa pengaturcaraan, rangka kerja, dan pangkalan data membentuk susunan tersendiri yang dikenali sebagai [tindanan penyelesaian](https://en.wikipedia.org/wiki/Solution_stack).
 
 Setiap tindanan mempunyai komposisi dan tujuan tersendiri, disesuaikan dengan keperluan aplikasi berkenaan. Berikut adalah beberapa tindanan teknologi yang paling lazim digunakan beserta komponen dan kegunaannya.
@@ -138,6 +75,37 @@ Setiap tindanan mempunyai komposisi dan tujuan tersendiri, disesuaikan dengan ke
 ### 1. Tindanan JavaScript & TypeScript
 
 Tindanan ini menggunakan JavaScript atau TypeScript bagi membina antara muka pengguna (bahagian hadapan) dan logik pelayan (bahagian belakang). Dengan Node.js, Bun, atau Deno, JavaScript boleh dijalankan di pelayan, justeru membolehkan satu bahasa merangkumi keseluruhan tindanan aplikasi.
+
+```topology
+{
+  "title": "JavaScript & TypeScript",
+  "grid": 4,
+  "columns": [["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"]],
+  "nodes": {
+    "mean": [
+      "MEAN",
+      "MongoDB · Angular",
+      ["si-mongodb", "si-express", "si-angular", "si-nodejs"],
+      "tech",
+      "https://www.mongodb.com/resources/languages/mean-stack"
+    ],
+    "mern": ["MERN", "MongoDB · React", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "MongoDB · Vue", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "pern": [
+      "PERN",
+      "PostgreSQL · React",
+      ["si-postgresql", "si-express", "si-react", "si-nodejs"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
+    ],
+    "nextjs": ["Next.js", "React · Next.js", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "tRPC · Prisma", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "JS · API · Markup", ["si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "Bun · SQLite", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"]
+  },
+  "groups": [["JavaScript & TypeScript", ["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"], "si-javascript"]]
+}
+```
 
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
@@ -154,6 +122,31 @@ Tindanan ini menggunakan JavaScript atau TypeScript bagi membina antara muka pen
 
 Tindanan berasaskan PHP lazim digunakan untuk pembangunan web, biasanya dijalankan di pelayan bersama pelayan web dan pangkalan data hubungan.
 
+```topology
+{
+  "title": "PHP",
+  "grid": 4,
+  "columns": [["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"]],
+  "nodes": {
+    "laravel": ["Laravel", "PHP · Blade", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "PHP Components", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "Linux · Apache", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
+    "lemp": [
+      "LEMP",
+      "Linux · Nginx",
+      ["si-linux", "si-nginx", "si-mysql", "si-php"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
+    ],
+    "wamp": ["WAMP", "Windows · Apache", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "Windows · IIS", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "FreeBSD · Apache", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "Apache · PHP", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"]
+  },
+  "groups": [["PHP", ["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"], "si-php"]]
+}
+```
+
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
 | [Laravel](https://laravel.com/) | [PHP](https://www.php.net/), [Laravel](https://laravel.com/docs), MySQL atau PostgreSQL, Nginx atau Apache | Rangka kerja PHP moden yang menawarkan penghalaan, pengesahan, Eloquent ORM, templat Blade, dan pelbagai ciri lain. Sesuai untuk aplikasi web berskala kecil hingga besar dengan pembangunan tersusun dan dokumentasi luas. |
@@ -169,6 +162,21 @@ Tindanan berasaskan PHP lazim digunakan untuk pembangunan web, biasanya dijalank
 
 Tindanan berasaskan Python untuk pembangunan web, dari rangka kerja mikro hingga rangka kerja penuh yang kaya dengan ciri terbina.
 
+```topology
+{
+  "title": "Python",
+  "grid": 4,
+  "columns": [["django", "fastapi", "flask", "pyramid"]],
+  "nodes": {
+    "django": ["Django", "Python · ORM", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "Python · Pydantic", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "Python Micro", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "Python Flexible", ["si-python"], "tech", "https://trypyramid.com/"]
+  },
+  "groups": [["Python", ["django", "fastapi", "flask", "pyramid"], "si-python"]]
+}
+```
+
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
 | [Django](https://www.djangoproject.com/) | [Python](https://www.python.org/), [Django](https://www.djangoproject.com/), PostgreSQL atau MySQL, Nginx atau Apache, Gunicorn | Rangka kerja "lengkap terbina" yang menawarkan panel pentadbir, pengesahan, ORM, dan ciri keselamatan kukuh secara lalai. Sesuai untuk aplikasi web berskala besar yang memerlukan pembangunan pantas dan piawaian keselamatan tinggi. |
@@ -180,6 +188,19 @@ Tindanan berasaskan Python untuk pembangunan web, dari rangka kerja mikro hingga
 
 Berasaskan bahasa C# dan ekosistem .NET, tindanan ini digunakan untuk membina aplikasi web, API, dan perkhidmatan bahagian belakang.
 
+```topology
+{
+  "title": ".NET",
+  "grid": 2,
+  "columns": [["aspnet", "blazor"]],
+  "nodes": {
+    "aspnet": ["ASP.NET Core", "C# · Kestrel", ["si-dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "C# · WASM", ["si-dotnet"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"]
+  },
+  "groups": [[".NET", ["aspnet", "blazor"], "si-dotnet"]]
+}
+```
+
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
 | [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/) | [C#](https://learn.microsoft.com/en-us/dotnet/csharp/), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/), SQL Server atau PostgreSQL, IIS atau Nginx | Rangka kerja berprestasi tinggi dan merentas platform dari Microsoft untuk membina aplikasi web, API REST, dan perkhidmatan bahagian belakang. Berjalan pada Windows, Linux, dan macOS, sesuai untuk persekitaran perusahaan dalam ekosistem Microsoft. |
@@ -188,6 +209,20 @@ Berasaskan bahasa C# dan ekosistem .NET, tindanan ini digunakan untuk membina ap
 ### 5. Tindanan Java
 
 Tindanan berasaskan Java, lazim digunakan untuk sistem bahagian belakang berskala dan aplikasi bertaraf perusahaan.
+
+```topology
+{
+  "title": "Java",
+  "grid": 3,
+  "columns": [["spring", "jakarta", "quarkus"]],
+  "nodes": {
+    "spring": ["Java-Spring", "Java · Boot", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "Java EE", ["si-openjdk"], "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "Java · K8s", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"]
+  },
+  "groups": [["Java", ["spring", "jakarta", "quarkus"], "si-openjdk"]]
+}
+```
 
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
@@ -199,6 +234,19 @@ Tindanan berasaskan Java, lazim digunakan untuk sistem bahagian belakang berskal
 
 Tindanan berpusatkan Ruby, dikenali dengan konvensyen kuat dan penekanan terhadap pembangunan web pantas.
 
+```topology
+{
+  "title": "Ruby",
+  "grid": 2,
+  "columns": [["rails", "sinatra"]],
+  "nodes": {
+    "rails": ["Ruby on Rails", "Ruby · Rails", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "Ruby Micro", ["si-ruby"], "tech", "https://sinatrarb.com/"]
+  },
+  "groups": [["Ruby", ["rails", "sinatra"], "si-ruby"]]
+}
+```
+
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
 | [Ruby on Rails](https://rubyonrails.org/) | [Ruby](https://www.ruby-lang.org/), [Rails](https://guides.rubyonrails.org/getting_started.html), PostgreSQL atau MySQL, Puma atau Unicorn | Rangka kerja penuh tindanan yang mengikut prinsip "Konvensyen berbanding Konfigurasi". Menyediakan migrasi pangkalan data, pembinaan rangka, saluran aset, dan pelbagai ciri lain secara lalai. Sesuai untuk syarikat pemula dan MVP yang memerlukan pembangunan pada kelajuan tinggi. |
@@ -207,6 +255,21 @@ Tindanan berpusatkan Ruby, dikenali dengan konvensyen kuat dan penekanan terhada
 ### 7. Tindanan Go
 
 Tindanan berasaskan Go (Golang), direka untuk bahagian belakang, API, dan mikroperkhidmatan berprestasi tinggi.
+
+```topology
+{
+  "title": "Go",
+  "grid": 4,
+  "columns": [["gin", "echo", "fiber", "gostd"]],
+  "nodes": {
+    "gin": ["Gin", "Go · Gin", ["si-go"], "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "Go · Echo", ["si-go"], "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "Go · Fasthttp", ["si-go"], "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "Go · net/http", ["si-go"], "tech", "https://go.dev/"]
+  },
+  "groups": [["Go", ["gin", "echo", "fiber", "gostd"], "si-go"]]
+}
+```
 
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
@@ -219,6 +282,20 @@ Tindanan berasaskan Go (Golang), direka untuk bahagian belakang, API, dan mikrop
 
 Tindanan berasaskan Rust, mengutamakan keselamatan ingatan, keserentakan, dan prestasi peringkat sistem.
 
+```topology
+{
+  "title": "Rust",
+  "grid": 3,
+  "columns": [["actix", "axum", "rocket"]],
+  "nodes": {
+    "actix": ["Actix Web", "Rust · Actix", ["si-rust"], "tech", "https://actix.rs/"],
+    "axum": ["Axum", "Rust · Tokio", ["si-rust"], "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "Rust · Rocket", ["si-rust"], "tech", "https://rocket.rs/"]
+  },
+  "groups": [["Rust", ["actix", "axum", "rocket"], "si-rust"]]
+}
+```
+
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
 | [Actix Web](https://actix.rs/) | [Rust](https://www.rust-lang.org/), [Actix Web](https://actix.rs/), pelbagai pangkalan data | Salah satu rangka kerja web Rust terpantas, dibina berdasarkan model pelakon. Sesuai untuk aplikasi yang memerlukan keselamatan ingatan, keserentakan tinggi, dan prestasi maksimum tanpa pengumpul sampah. |
@@ -228,6 +305,21 @@ Tindanan berasaskan Rust, mengutamakan keselamatan ingatan, keserentakan, dan pr
 ### 9. Infrastruktur dan Kebolehcerapan
 
 Tindanan yang menggabungkan sistem pengendalian, pelayan web, pangkalan data, atau alatan sokongan untuk pengurusan infrastruktur dan kebolehcerapan aplikasi.
+
+```topology
+{
+  "title": "Infrastruktur dan Kebolehcerapan",
+  "grid": 4,
+  "columns": [["wazuh", "elk", "promgraf", "tick"]],
+  "nodes": {
+    "wazuh": ["Wazuh", "SIEM · XDR", ["si-wazuh"], "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "Elasticsearch · Logstash", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "Metrics · Grafana", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "Telegraf · InfluxDB", ["si-influxdb"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  },
+  "groups": [["Infrastruktur dan Kebolehcerapan", ["wazuh", "elk", "promgraf", "tick"], "server"]]
+}
+```
 
 | Tindanan | Komponen Utama | Keterangan |
 | --- | --- | --- |
@@ -244,45 +336,34 @@ Setelah memilih tindanan teknologi, langkah seterusnya ialah menentukan **platfo
 
 Dari sudut pelayan, pilihan ini menentukan cara aplikasi dijalankan, cara sumber komputasi disediakan, dan cara infrastruktur diurus. Rujukan: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
-flowchart TD
-    A(["🍜 Tindanan sedia<br/>resipi + bahan-bahan + alatan"]) --> B{"📍 Di mana untuk dijalankan?"}
-    B --> C["🏠 Logam Kosong (Bare Metal)<br/>Bina gerai sendiri"]
-    B --> D["🛏️ Mesin Maya (VM)<br/>Sewa bilik persendirian"]
-    B --> E["🍱 Bekas (Container)<br/>Sewa gerai di medan selera"]
-    B --> F["🏪 PaaS<br/>Sertai francais sedia guna"]
-    B --> G["🛒 Tanpa Pelayan (Serverless)<br/>Buka gerai hanya apabila ada pesanan"]
-    B --> H["🛵 Pengkomputeran Tepi (Edge)<br/>Gerai makanan berhampiran pelanggan"]
-    C --> I(["🧩 Semua komponen tindanan<br/>berjalan di satu tempat"])
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-
-    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
-    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
-    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
-    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
-    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
-    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
-    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
-    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
-    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
-
-    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
-    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
-    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
-
-    class A root
-    class B choice
-    class C,D,E,F,G,H host
-    class I out
-
-
-
+```topology
+{
+  "vertical": true,
+  "title": "Memilih Platform untuk Menjalankan Tindanan",
+  "legend": {
+    "flow": "Aliran data"
+  },
+  "facilities": ["Peranan", ["git-branch", "Choice"], ["server", "Platform"], ["layers", "Application"]],
+  "columns": [
+    ["B"],
+    {
+      "nodes": ["C", "D", "E", "F", "G", "H"],
+      "grid": 3
+    },
+    ["I"]
+  ],
+  "nodes": {
+    "B": ["Di mana untuk dijalankan?", "", "git-branch", "choice", "https://en.wikipedia.org/wiki/Deployment_environment"],
+    "C": ["Logam Kosong (Bare Metal)", "Bina gerai sendiri", "hard-drive", "host", "https://en.wikipedia.org/wiki/Bare-metal_server"],
+    "D": ["Mesin Maya (VM)", "Sewa bilik persendirian", "monitor", "host", "https://en.wikipedia.org/wiki/Virtual_machine"],
+    "E": ["Bekas (Container)", "Sewa gerai di medan selera", "si-docker", "host", "https://en.wikipedia.org/wiki/Operating-system-level_virtualization"],
+    "F": ["PaaS", "Sertai francais sedia guna", "cloud", "host", "https://en.wikipedia.org/wiki/Platform_as_a_service"],
+    "G": ["Tanpa Pelayan (Serverless)", "Buka gerai hanya apabila ada pesanan", "zap", "host", "https://en.wikipedia.org/wiki/Serverless_computing"],
+    "H": ["Pengkomputeran Tepi (Edge)", "Gerai makanan berhampiran pelanggan", "radio", "host", "https://en.wikipedia.org/wiki/Edge_computing"],
+    "I": ["Semua komponen tindanan", "berjalan di satu tempat", "layers", "out", "https://en.wikipedia.org/wiki/Multitier_architecture"]
+  },
+  "edges": [["B", "C"], ["B", "D"], ["B", "E"], ["B", "F"], ["B", "G"], ["B", "H"], ["C", "I"], ["D", "I"], ["E", "I"], ["F", "I"], ["G", "I"], ["H", "I"]]
+}
 ```
 
 Bayangkan anda telah mengumpul resipi, bahan-bahan, dan alatan untuk membuka gerai makan. Kini anda perlu menentukan lokasi operasi: bina premis sendiri, sewa ruang, kongsi kemudahan bersama peniaga lain, atau buka gerai sementara mengikut keperluan.
