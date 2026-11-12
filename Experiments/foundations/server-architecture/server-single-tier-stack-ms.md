@@ -27,17 +27,44 @@ Namun, bagaimanakah proses ini berlaku apabila pelawat mengakses laman web yang 
   "columns": [["C"], ["P"], ["K"], ["G"]],
   "nodes": {
     "C": ["Pelanggan", "Membuat pesanan", "customer", "actor", "https://en.wikipedia.org/wiki/Web_browser"],
-    "P": ["Pelayan", "Menerima pesanan dan mengemudikannya", "waiter", "process", "https://en.wikipedia.org/wiki/Web_server"],
-    "K": ["Tukang Masak", "Menyediakan pesanan", "cook", "process", "https://en.wikipedia.org/wiki/Runtime_system", "cook"],
+    "P": [
+      "Pelayan",
+      "Menerima pesanan dan mengemudikannya",
+      "waiter",
+      "process",
+      "https://en.wikipedia.org/wiki/Web_server"
+    ],
+    "K": [
+      "Tukang Masak",
+      "Menyediakan pesanan",
+      "cook",
+      "process",
+      "https://en.wikipedia.org/wiki/Runtime_system",
+      "cook"
+    ],
     "G": ["Pantri", "Menyimpan bahan-bahan", "warehouse", "store", "https://en.wikipedia.org/wiki/Database"]
   },
-  "edges": [["C", "P", "1"], ["P", "K", "2"], ["K", "G", "3"], ["G", "K", "4", true], ["K", "P", "5", true], ["P", "C", "6", true]],
+  "edges": [
+    ["C", "P"],
+    ["P", "K"],
+    ["K", "G"],
+    ["G", "K", "", true],
+    ["K", "P", "", true],
+    ["P", "C", "", true]
+  ],
+  "badges": false,
   "groups": [["Gerai Makan / Satu Lokasi", ["P", "K", "G"], "store"]],
   "legend": {
     "flow": "Pesanan / permintaan",
     "back": "Balasan / tindak balas"
   },
-  "facilities": ["Di tempat ini", ["store", "Kedai"], ["cooking-pot", "Dapur"], ["utensils", "Ruang makan"], ["warehouse", "Gudang"]]
+  "facilities": [
+    "Di tempat ini",
+    ["store", "Kedai"],
+    ["cooking-pot", "Dapur"],
+    ["utensils", "Ruang makan"],
+    ["warehouse", "Gudang"]
+  ]
 }
 ```
 
@@ -74,10 +101,72 @@ Setiap tindanan mempunyai komposisi dan tujuan tersendiri, disesuaikan dengan ke
 
 ```topology
 {
-  "caption": "Solution Stack",
-  "captionHref": "https://en.wikipedia.org/wiki/Solution_stack",
   "title": "Solution Stack",
   "dense": true,
+  "components": {
+    "actix": ["Actix Web", "si-actix", "https://actix.rs/"],
+    "angular": ["Angular", "si-angular", "https://angular.dev/"],
+    "apache": ["Apache", "si-apache", "https://httpd.apache.org/"],
+    "axum": ["Axum", "si-axum", "https://github.com/tokio-rs/axum"],
+    "blazor": ["Blazor", "si-blazor", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"],
+    "bun": ["Bun", "si-bun", "https://bun.sh/"],
+    "chronograf": ["Chronograf", "si-chronograf", "https://www.influxdata.com/chronograf/"],
+    "django": ["Django", "si-django", "https://www.djangoproject.com/"],
+    "dotnet": [".NET", "si-dotnet", "https://dotnet.microsoft.com/"],
+    "echo": ["Echo", "si-echo", "https://echo.labstack.com/"],
+    "elasticsearch": ["Elasticsearch", "si-elasticsearch", "https://www.elastic.co/elasticsearch"],
+    "express": ["Express", "si-express", "https://expressjs.com/"],
+    "fastapi": ["FastAPI", "si-fastapi", "https://fastapi.tiangolo.com/"],
+    "fiber": ["Fiber", "si-fiber", "https://gofiber.io/"],
+    "flask": ["Flask", "si-flask", "https://flask.palletsprojects.com/"],
+    "freebsd": ["FreeBSD", "si-freebsd", "https://www.freebsd.org/"],
+    "gin": ["Gin", "si-gin", "https://gin-gonic.com/"],
+    "go": ["Go", "si-go", "https://go.dev/"],
+    "grafana": ["Grafana", "si-grafana", "https://grafana.com/"],
+    "iis": ["IIS", "si-iis", "https://www.iis.net/"],
+    "influxdb": ["InfluxDB", "si-influxdb", "https://www.influxdata.com/"],
+    "jakartaee": ["Jakarta EE", "si-jakartaee", "https://jakarta.ee/"],
+    "jamstack": ["JAMstack", "si-jamstack", "https://jamstack.org/"],
+    "javascript": ["JavaScript", "si-javascript", "https://developer.mozilla.org/en-US/docs/Web/JavaScript"],
+    "kapacitor": ["Kapacitor", "si-kapacitor", "https://www.influxdata.com/kapacitor/"],
+    "kibana": ["Kibana", "si-kibana", "https://www.elastic.co/kibana"],
+    "laravel": ["Laravel", "si-laravel", "https://laravel.com/"],
+    "linux": ["Linux", "si-linux", "https://www.kernel.org/"],
+    "logstash": ["Logstash", "si-logstash", "https://www.elastic.co/logstash"],
+    "mariadb": ["MariaDB", "si-mariadb", "https://mariadb.org/"],
+    "mongodb": ["MongoDB", "si-mongodb", "https://www.mongodb.com/"],
+    "mysql": ["MySQL", "si-mysql", "https://www.mysql.com/"],
+    "nextdotjs": ["Next.js", "si-nextdotjs", "https://nextjs.org/"],
+    "nginx": ["Nginx", "si-nginx", "https://nginx.org/"],
+    "nodejs": ["Node.js", "si-nodejs", "https://nodejs.org/"],
+    "openjdk": ["Java", "si-openjdk", "https://openjdk.org/"],
+    "perl": ["Perl", "si-perl", "https://www.perl.org/"],
+    "php": ["PHP", "si-php", "https://www.php.net/"],
+    "postgresql": ["PostgreSQL", "si-postgresql", "https://www.postgresql.org/"],
+    "prisma": ["Prisma", "si-prisma", "https://www.prisma.io/"],
+    "prometheus": ["Prometheus", "si-prometheus", "https://prometheus.io/"],
+    "pyramid": ["Pyramid", "si-pyramid", "https://trypyramid.com/"],
+    "python": ["Python", "si-python", "https://www.python.org/"],
+    "quarkus": ["Quarkus", "si-quarkus", "https://quarkus.io/"],
+    "react": ["React", "si-react", "https://react.dev/"],
+    "rocket": ["Rocket", "si-rocket", "https://rocket.rs/"],
+    "ruby": ["Ruby", "si-ruby", "https://www.ruby-lang.org/"],
+    "rubyonrails": ["Ruby on Rails", "si-rubyonrails", "https://rubyonrails.org/"],
+    "rust": ["Rust", "si-rust", "https://www.rust-lang.org/"],
+    "sinatra": ["Sinatra", "si-sinatra", "https://sinatrarb.com/"],
+    "spring": ["Spring", "si-spring", "https://spring.io/projects/spring-boot"],
+    "sqlite": ["SQLite", "si-sqlite", "https://www.sqlite.org/"],
+    "symfony": ["Symfony", "si-symfony", "https://symfony.com/"],
+    "tailwindcss": ["Tailwind CSS", "si-tailwindcss", "https://tailwindcss.com/"],
+    "telegraf": ["Telegraf", "si-telegraf", "https://www.influxdata.com/telegraf/"],
+    "trpc": ["tRPC", "si-trpc", "https://trpc.io/"],
+    "typescript": ["TypeScript", "si-typescript", "https://www.typescriptlang.org/"],
+    "vue": ["Vue.js", "si-vue", "https://vuejs.org/"],
+    "wazuh-dashboard": ["Dashboard", "layout-dashboard", "https://documentation.wazuh.com/current/user-manual/wazuh-dashboard/index.html"],
+    "wazuh-indexer": ["Indexer", "si-opensearch", "https://documentation.wazuh.com/current/user-manual/wazuh-indexer/index.html"],
+    "wazuh-manager": ["Manager", "si-wazuh", "https://documentation.wazuh.com/current/user-manual/manager/index.html"],
+    "windows": ["Windows", "si-windows", "https://www.microsoft.com/windows"]
+  },
   "columns": [
     ["js", "mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"],
     ["php", "laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"],
@@ -90,66 +179,55 @@ Setiap tindanan mempunyai komposisi dan tujuan tersendiri, disesuaikan dengan ke
     ["infra", "wazuh", "elk", "promgraf", "tick"]
   ],
   "nodes": {
-    "js": ["JS / TS", "", "si-javascript", "out", "https://en.wikipedia.org/wiki/JavaScript"],
-    "mean": ["MEAN", "", ["si-mongodb", "si-express", "si-angular", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mean-stack"],
-    "mern": ["MERN", "", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
-    "mevn": ["MEVN", "", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
-    "pern": [
-      "PERN",
-      "",
-      ["si-postgresql", "si-express", "si-react", "si-nodejs"],
-      "tech",
-      "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
-    ],
-    "nextjs": ["Next.js", "", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
-    "t3": ["T3", "", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
-    "jamstack": ["JAMstack", "", ["si-javascript", "si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
-    "bun": ["Bun", "", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"],
-    "php": ["PHP", "", "si-php", "out", "https://en.wikipedia.org/wiki/PHP"],
-    "laravel": ["Laravel", "", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
-    "symfony": ["Symfony", "", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
-    "lamp": ["LAMP", "", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
-    "lemp": [
-      "LEMP",
-      "",
-      ["si-linux", "si-nginx", "si-mysql", "si-php"],
-      "tech",
-      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
-    ],
-    "wamp": ["WAMP", "", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
-    "wimp": ["WIMP", "", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
-    "famp": ["FAMP", "", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
-    "xampp": ["XAMPP", "", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"],
-    "python": ["Python", "", "si-python", "out", "https://en.wikipedia.org/wiki/Python_(programming_language)"],
-    "django": ["Django", "", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
-    "fastapi": ["FastAPI", "", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
-    "flask": ["Flask", "", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
-    "pyramid": ["Pyramid", "", "si-python", "tech", "https://trypyramid.com/"],
-    "dotnet": [".NET", "", "si-dotnet", "out", "https://en.wikipedia.org/wiki/.NET"],
-    "aspnet": ["ASP.NET Core", "", "si-dotnet", "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
-    "blazor": ["Blazor", "", "si-dotnet", "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"],
-    "java": ["Java", "", "si-openjdk", "out", "https://en.wikipedia.org/wiki/Java_(programming_language)"],
-    "spring": ["Java-Spring", "", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
-    "jakarta": ["Jakarta EE", "", "si-openjdk", "tech", "https://jakarta.ee/"],
-    "quarkus": ["Quarkus", "", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"],
-    "ruby": ["Ruby", "", "si-ruby", "out", "https://en.wikipedia.org/wiki/Ruby_(programming_language)"],
-    "rails": ["Ruby on Rails", "", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
-    "sinatra": ["Sinatra", "", "si-ruby", "tech", "https://sinatrarb.com/"],
-    "go": ["Go", "", "si-go", "out", "https://en.wikipedia.org/wiki/Go_(programming_language)"],
-    "gin": ["Gin", "", "si-go", "tech", "https://gin-gonic.com/"],
-    "echo": ["Echo", "", "si-go", "tech", "https://echo.labstack.com/"],
-    "fiber": ["Fiber", "", "si-go", "tech", "https://docs.gofiber.io/"],
-    "gostd": ["Go Stdlib", "", "si-go", "tech", "https://go.dev/"],
-    "rust": ["Rust", "", "si-rust", "out", "https://en.wikipedia.org/wiki/Rust_(programming_language)"],
-    "actix": ["Actix Web", "", "si-rust", "tech", "https://actix.rs/"],
-    "axum": ["Axum", "", "si-rust", "tech", "https://github.com/tokio-rs/axum"],
-    "rocket": ["Rocket", "", "si-rust", "tech", "https://rocket.rs/"],
-    "infra": ["Infra", "", "server", "out", "https://en.wikipedia.org/wiki/Infrastructure"],
-    "wazuh": ["Wazuh", "", "si-wazuh", "tech", "https://wazuh.com/"],
-    "elk": ["Elastic Stack (ELK)", "", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
-    "promgraf": ["Prometheus + Grafana", "", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
-    "tick": ["TICK Stack", "", "si-influxdb", "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
-  }
+    "js": ["JS / TS", "", ["javascript", "typescript"], "out", "https://en.wikipedia.org/wiki/JavaScript"],
+    "mean": ["MEAN", "", ["mongodb", "express", "angular", "nodejs"], "tech", "https://www.mongodb.com/resources/languages/mean-stack"],
+    "mern": ["MERN", "", ["mongodb", "express", "react", "nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "", ["mongodb", "express", "vue", "nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "pern": ["PERN", "", ["postgresql", "express", "react", "nodejs"], "tech", "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"],
+    "nextjs": ["Next.js", "", ["react", "nextdotjs", "nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "", ["typescript", "trpc", "prisma", "nextdotjs", "tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "", ["javascript", "jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "", ["bun", "sqlite"], "tech", "https://bun.sh/"],
+    "php": ["PHP", "", ["php"], "out", "https://en.wikipedia.org/wiki/PHP"],
+    "laravel": ["Laravel", "", ["php", "laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "", ["php", "symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "", ["linux", "apache", "mysql", "php"], "tech", "https://en.wikipedia.org/wiki/LAMP_(software_bundle)"],
+    "lemp": ["LEMP", "", ["linux", "nginx", "mysql", "php"], "tech", "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"],
+    "wamp": ["WAMP", "", ["windows", "apache", "mysql", "php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "", ["windows", "iis", "mysql", "php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "", ["freebsd", "apache", "mysql", "php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "", ["apache", "mariadb", "php", "perl"], "tech", "https://www.apachefriends.org/"],
+    "python": ["Python", "", ["python"], "out", "https://en.wikipedia.org/wiki/Python_(programming_language)"],
+    "django": ["Django", "", ["python", "django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "", ["python", "fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "", ["python", "flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "", ["python", "pyramid"], "tech", "https://trypyramid.com/"],
+    "dotnet": [".NET", "", ["dotnet"], "out", "https://en.wikipedia.org/wiki/.NET"],
+    "aspnet": ["ASP.NET Core", "", ["dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "", ["dotnet", "blazor"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"],
+    "java": ["Java", "", ["openjdk"], "out", "https://en.wikipedia.org/wiki/Java_(programming_language)"],
+    "spring": ["Java-Spring", "", ["openjdk", "spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "", ["openjdk", "jakartaee"], "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "", ["openjdk", "quarkus"], "tech", "https://quarkus.io/"],
+    "ruby": ["Ruby", "", ["ruby"], "out", "https://en.wikipedia.org/wiki/Ruby_(programming_language)"],
+    "rails": ["Ruby on Rails", "", ["ruby", "rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "", ["ruby", "sinatra"], "tech", "https://sinatrarb.com/"],
+    "go": ["Go", "", ["go"], "out", "https://en.wikipedia.org/wiki/Go_(programming_language)"],
+    "gin": ["Gin", "", ["go", "gin"], "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "", ["go", "echo"], "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "", ["go", "fiber"], "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "", ["go"], "tech", "https://go.dev/"],
+    "rust": ["Rust", "", ["rust"], "out", "https://en.wikipedia.org/wiki/Rust_(programming_language)"],
+    "actix": ["Actix Web", "", ["rust", "actix"], "tech", "https://actix.rs/"],
+    "axum": ["Axum", "", ["rust", "axum"], "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "", ["rust", "rocket"], "tech", "https://rocket.rs/"],
+    "infra": ["Infra", "", "server", "out", "https://en.wikipedia.org/wiki/IT_infrastructure"],
+    "wazuh": ["Wazuh", "", ["wazuh-manager", "wazuh-indexer", "wazuh-dashboard"], "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "", ["elasticsearch", "logstash", "kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "", ["prometheus", "grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "", ["telegraf", "influxdb", "chronograf", "kapacitor"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  },
+  "root": ["Solution Stack", "", "layers", "out", "https://en.wikipedia.org/wiki/Solution_stack"]
 }
 ```
 
@@ -288,25 +366,100 @@ Dari sudut pelayan, pilihan ini menentukan cara aplikasi dijalankan, cara sumber
     "flow": "Aliran data"
   },
   "facilities": ["Peranan", ["git-branch", "Choice"], ["server", "Platform"], ["layers", "Application"]],
-  "columns": [
-    ["B"],
-    {
-      "nodes": ["C", "D", "E", "F", "G", "H"],
-      "grid": 3
-    },
-    ["I"]
-  ],
+  "columns": [["B"], {"nodes": ["C", "D", "E", "F", "G", "H", "J", "K", "L"], "grid": 3}, ["I"]],
   "nodes": {
-    "B": ["Di mana untuk dijalankan?", "", "git-branch", "choice", "https://en.wikipedia.org/wiki/Deployment_environment"],
-    "C": ["Logam Kosong (Bare Metal)", "Bina gerai sendiri", "hard-drive", "host", "https://en.wikipedia.org/wiki/Bare-metal_server"],
-    "D": ["Mesin Maya (VM)", "Sewa bilik persendirian", "monitor", "host", "https://en.wikipedia.org/wiki/Virtual_machine"],
-    "E": ["Bekas (Container)", "Sewa gerai di medan selera", "si-docker", "host", "https://en.wikipedia.org/wiki/Operating-system-level_virtualization"],
-    "F": ["PaaS", "Sertai francais sedia guna", "cloud", "host", "https://en.wikipedia.org/wiki/Platform_as_a_service"],
-    "G": ["Tanpa Pelayan (Serverless)", "Buka gerai hanya apabila ada pesanan", "zap", "host", "https://en.wikipedia.org/wiki/Serverless_computing"],
-    "H": ["Pengkomputeran Tepi (Edge)", "Gerai makanan berhampiran pelanggan", "radio", "host", "https://en.wikipedia.org/wiki/Edge_computing"],
-    "I": ["Semua komponen tindanan", "berjalan di satu tempat", "layers", "out", "https://en.wikipedia.org/wiki/Multitier_architecture"]
+    "B": [
+      "Di mana untuk dijalankan?",
+      "",
+      "git-branch",
+      "choice",
+      "https://en.wikipedia.org/wiki/Deployment_environment"
+    ],
+    "C": [
+      "Logam Kosong (Bare Metal)",
+      "Bina gerai sendiri",
+      "hard-drive",
+      "host",
+      "https://en.wikipedia.org/wiki/Bare-metal_server"
+    ],
+    "D": [
+      "Mesin Maya (VM)",
+      "Sewa bilik persendirian",
+      "monitor",
+      "host",
+      "https://en.wikipedia.org/wiki/Virtual_machine"
+    ],
+    "E": [
+      "Virtualisasi Pelayan",
+      "Urus banyak bilik dari satu pejabat",
+      "server-cog",
+      "host",
+      "https://en.wikipedia.org/wiki/Server_virtualization"
+    ],
+    "F": [
+      "Bekas (Container)",
+      "Sewa gerai di medan selera",
+      "si-docker",
+      "host",
+      "https://en.wikipedia.org/wiki/Operating-system-level_virtualization"
+    ],
+    "G": ["PaaS", "Sertai francais sedia guna", "cloud", "host", "https://en.wikipedia.org/wiki/Platform_as_a_service"],
+    "H": [
+      "Tanpa Pelayan (Serverless)",
+      "Buka gerai hanya apabila ada pesanan",
+      "zap",
+      "host",
+      "https://en.wikipedia.org/wiki/Serverless_computing"
+    ],
+    "J": [
+      "Perhosian Kongsi (Shared Hosting)",
+      "Gerai tepi jalan dikongsi ramai",
+      "globe",
+      "host",
+      "https://en.wikipedia.org/wiki/Shared_web_hosting_service"
+    ],
+    "K": [
+      "Perhosian Terurus (Managed Hosting)",
+      "Sewa kedai dengan pengurus",
+      "settings",
+      "host",
+      "https://en.wikipedia.org/wiki/Managed_hosting"
+    ],
+    "L": [
+      "Pengkomputeran Tepi (Edge)",
+      "Gerai makanan berhampiran pelanggan",
+      "radio",
+      "host",
+      "https://en.wikipedia.org/wiki/Edge_computing"
+    ],
+    "I": [
+      "Semua komponen tindanan",
+      "berjalan di satu tempat",
+      "layers",
+      "out",
+      "#satu-pelayan-satu-tindanan"
+    ]
   },
-  "edges": [["B", "C"], ["B", "D"], ["B", "E"], ["B", "F"], ["B", "G"], ["B", "H"], ["C", "I"], ["D", "I"], ["E", "I"], ["F", "I"], ["G", "I"], ["H", "I"]]
+  "edges": [
+    ["B", "C"],
+    ["B", "D"],
+    ["B", "E"],
+    ["B", "F"],
+    ["B", "G"],
+    ["B", "H"],
+    ["B", "J"],
+    ["B", "K"],
+    ["B", "L"],
+    ["C", "I"],
+    ["D", "I"],
+    ["E", "I"],
+    ["F", "I"],
+    ["G", "I"],
+    ["H", "I"],
+    ["J", "I"],
+    ["K", "I"],
+    ["L", "I"]
+  ]
 }
 ```
 
