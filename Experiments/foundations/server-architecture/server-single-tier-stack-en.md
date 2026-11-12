@@ -72,40 +72,92 @@ A technology stack is akin to a recipe and its ingredients. In computing, the ch
 
 Each stack carries its own composition and purpose, tailored to the requirements of the application at hand. Below are some of the most widely used technology stacks, along with their components and use cases.
 
-### 1. JavaScript & TypeScript Stack
-
-This stack leverages JavaScript or TypeScript to build both the user interface (frontend) and server logic (backend). With Node.js, Bun, or Deno, JavaScript can run on the server, allowing a single language to cover the entire application stack.
-
 ```topology
 {
-  "title": "JavaScript & TypeScript",
-  "grid": 4,
-  "columns": [["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"]],
+  "caption": "Solution Stack",
+  "captionHref": "https://en.wikipedia.org/wiki/Solution_stack",
+  "title": "Solution Stack",
+  "dense": true,
+  "columns": [
+    ["js", "mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"],
+    ["php", "laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"],
+    ["python", "django", "fastapi", "flask", "pyramid"],
+    ["dotnet", "aspnet", "blazor"],
+    ["java", "spring", "jakarta", "quarkus"],
+    ["ruby", "rails", "sinatra"],
+    ["go", "gin", "echo", "fiber", "gostd"],
+    ["rust", "actix", "axum", "rocket"],
+    ["infra", "wazuh", "elk", "promgraf", "tick"]
+  ],
   "nodes": {
-    "mean": [
-      "MEAN",
-      "MongoDB · Angular",
-      ["si-mongodb", "si-express", "si-angular", "si-nodejs"],
-      "tech",
-      "https://www.mongodb.com/resources/languages/mean-stack"
-    ],
-    "mern": ["MERN", "MongoDB · React", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
-    "mevn": ["MEVN", "MongoDB · Vue", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "js": ["JS / TS", "", "si-javascript", "out", "https://en.wikipedia.org/wiki/JavaScript"],
+    "mean": ["MEAN", "", ["si-mongodb", "si-express", "si-angular", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mean-stack"],
+    "mern": ["MERN", "", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
     "pern": [
       "PERN",
-      "PostgreSQL · React",
+      "",
       ["si-postgresql", "si-express", "si-react", "si-nodejs"],
       "tech",
       "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
     ],
-    "nextjs": ["Next.js", "React · Next.js", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
-    "t3": ["T3", "tRPC · Prisma", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
-    "jamstack": ["JAMstack", "JS · API · Markup", ["si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
-    "bun": ["Bun", "Bun · SQLite", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"]
-  },
-  "groups": [["JavaScript & TypeScript", ["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"], "si-javascript"]]
+    "nextjs": ["Next.js", "", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "", ["si-javascript", "si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"],
+    "php": ["PHP", "", "si-php", "out", "https://en.wikipedia.org/wiki/PHP"],
+    "laravel": ["Laravel", "", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
+    "lemp": [
+      "LEMP",
+      "",
+      ["si-linux", "si-nginx", "si-mysql", "si-php"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
+    ],
+    "wamp": ["WAMP", "", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"],
+    "python": ["Python", "", "si-python", "out", "https://en.wikipedia.org/wiki/Python_(programming_language)"],
+    "django": ["Django", "", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "", "si-python", "tech", "https://trypyramid.com/"],
+    "dotnet": [".NET", "", "si-dotnet", "out", "https://en.wikipedia.org/wiki/.NET"],
+    "aspnet": ["ASP.NET Core", "", "si-dotnet", "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "", "si-dotnet", "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"],
+    "java": ["Java", "", "si-openjdk", "out", "https://en.wikipedia.org/wiki/Java_(programming_language)"],
+    "spring": ["Java-Spring", "", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "", "si-openjdk", "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"],
+    "ruby": ["Ruby", "", "si-ruby", "out", "https://en.wikipedia.org/wiki/Ruby_(programming_language)"],
+    "rails": ["Ruby on Rails", "", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "", "si-ruby", "tech", "https://sinatrarb.com/"],
+    "go": ["Go", "", "si-go", "out", "https://en.wikipedia.org/wiki/Go_(programming_language)"],
+    "gin": ["Gin", "", "si-go", "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "", "si-go", "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "", "si-go", "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "", "si-go", "tech", "https://go.dev/"],
+    "rust": ["Rust", "", "si-rust", "out", "https://en.wikipedia.org/wiki/Rust_(programming_language)"],
+    "actix": ["Actix Web", "", "si-rust", "tech", "https://actix.rs/"],
+    "axum": ["Axum", "", "si-rust", "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "", "si-rust", "tech", "https://rocket.rs/"],
+    "infra": ["Infra", "", "server", "out", "https://en.wikipedia.org/wiki/Infrastructure"],
+    "wazuh": ["Wazuh", "", "si-wazuh", "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "", "si-influxdb", "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  }
 }
 ```
+
+### 1. JavaScript & TypeScript Stack
+
+This stack leverages JavaScript or TypeScript to build both the user interface (frontend) and server logic (backend). With Node.js, Bun, or Deno, JavaScript can run on the server, allowing a single language to cover the entire application stack.
+
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -122,30 +174,7 @@ This stack leverages JavaScript or TypeScript to build both the user interface (
 
 A PHP-centric stack is commonly used for web development, typically run on the server alongside a web server and a relational database.
 
-```topology
-{
-  "title": "PHP",
-  "grid": 4,
-  "columns": [["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"]],
-  "nodes": {
-    "laravel": ["Laravel", "PHP · Blade", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
-    "symfony": ["Symfony", "PHP Components", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
-    "lamp": ["LAMP", "Linux · Apache", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
-    "lemp": [
-      "LEMP",
-      "Linux · Nginx",
-      ["si-linux", "si-nginx", "si-mysql", "si-php"],
-      "tech",
-      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
-    ],
-    "wamp": ["WAMP", "Windows · Apache", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
-    "wimp": ["WIMP", "Windows · IIS", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
-    "famp": ["FAMP", "FreeBSD · Apache", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
-    "xampp": ["XAMPP", "Apache · PHP", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"]
-  },
-  "groups": [["PHP", ["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"], "si-php"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -162,20 +191,7 @@ A PHP-centric stack is commonly used for web development, typically run on the s
 
 A Python-based stack for web development, ranging from micro-frameworks to full-stack frameworks rich with built-in functionality.
 
-```topology
-{
-  "title": "Python",
-  "grid": 4,
-  "columns": [["django", "fastapi", "flask", "pyramid"]],
-  "nodes": {
-    "django": ["Django", "Python · ORM", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
-    "fastapi": ["FastAPI", "Python · Pydantic", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
-    "flask": ["Flask", "Python Micro", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
-    "pyramid": ["Pyramid", "Python Flexible", ["si-python"], "tech", "https://trypyramid.com/"]
-  },
-  "groups": [["Python", ["django", "fastapi", "flask", "pyramid"], "si-python"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -188,18 +204,7 @@ A Python-based stack for web development, ranging from micro-frameworks to full-
 
 Built upon C# and the .NET ecosystem, this stack is used to construct web applications, APIs, and backend services.
 
-```topology
-{
-  "title": ".NET",
-  "grid": 2,
-  "columns": [["aspnet", "blazor"]],
-  "nodes": {
-    "aspnet": ["ASP.NET Core", "C# · Kestrel", ["si-dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
-    "blazor": ["Blazor", "C# · WASM", ["si-dotnet"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"]
-  },
-  "groups": [[".NET", ["aspnet", "blazor"], "si-dotnet"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -210,19 +215,7 @@ Built upon C# and the .NET ecosystem, this stack is used to construct web applic
 
 A stack built on Java, commonly used for scalable backend systems and enterprise-grade applications.
 
-```topology
-{
-  "title": "Java",
-  "grid": 3,
-  "columns": [["spring", "jakarta", "quarkus"]],
-  "nodes": {
-    "spring": ["Java-Spring", "Java · Boot", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
-    "jakarta": ["Jakarta EE", "Java EE", ["si-openjdk"], "tech", "https://jakarta.ee/"],
-    "quarkus": ["Quarkus", "Java · K8s", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"]
-  },
-  "groups": [["Java", ["spring", "jakarta", "quarkus"], "si-openjdk"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -234,18 +227,7 @@ A stack built on Java, commonly used for scalable backend systems and enterprise
 
 A stack centered around Ruby, known for its strong conventions and emphasis on rapid web development.
 
-```topology
-{
-  "title": "Ruby",
-  "grid": 2,
-  "columns": [["rails", "sinatra"]],
-  "nodes": {
-    "rails": ["Ruby on Rails", "Ruby · Rails", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
-    "sinatra": ["Sinatra", "Ruby Micro", ["si-ruby"], "tech", "https://sinatrarb.com/"]
-  },
-  "groups": [["Ruby", ["rails", "sinatra"], "si-ruby"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -256,20 +238,7 @@ A stack centered around Ruby, known for its strong conventions and emphasis on r
 
 A stack built with Go (Golang), designed for high-performance backends, APIs, and microservices.
 
-```topology
-{
-  "title": "Go",
-  "grid": 4,
-  "columns": [["gin", "echo", "fiber", "gostd"]],
-  "nodes": {
-    "gin": ["Gin", "Go · Gin", ["si-go"], "tech", "https://gin-gonic.com/"],
-    "echo": ["Echo", "Go · Echo", ["si-go"], "tech", "https://echo.labstack.com/"],
-    "fiber": ["Fiber", "Go · Fasthttp", ["si-go"], "tech", "https://docs.gofiber.io/"],
-    "gostd": ["Go Stdlib", "Go · net/http", ["si-go"], "tech", "https://go.dev/"]
-  },
-  "groups": [["Go", ["gin", "echo", "fiber", "gostd"], "si-go"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -282,19 +251,7 @@ A stack built with Go (Golang), designed for high-performance backends, APIs, an
 
 A stack built with Rust, prioritizing memory safety, concurrency, and system-level performance.
 
-```topology
-{
-  "title": "Rust",
-  "grid": 3,
-  "columns": [["actix", "axum", "rocket"]],
-  "nodes": {
-    "actix": ["Actix Web", "Rust · Actix", ["si-rust"], "tech", "https://actix.rs/"],
-    "axum": ["Axum", "Rust · Tokio", ["si-rust"], "tech", "https://github.com/tokio-rs/axum"],
-    "rocket": ["Rocket", "Rust · Rocket", ["si-rust"], "tech", "https://rocket.rs/"]
-  },
-  "groups": [["Rust", ["actix", "axum", "rocket"], "si-rust"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -306,20 +263,7 @@ A stack built with Rust, prioritizing memory safety, concurrency, and system-lev
 
 Stacks that combine operating systems, web servers, databases, or supporting tools for infrastructure management and application observability.
 
-```topology
-{
-  "title": "Infrastructure and Observability",
-  "grid": 4,
-  "columns": [["wazuh", "elk", "promgraf", "tick"]],
-  "nodes": {
-    "wazuh": ["Wazuh", "SIEM · XDR", ["si-wazuh"], "tech", "https://wazuh.com/"],
-    "elk": ["Elastic Stack (ELK)", "Elasticsearch · Logstash", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
-    "promgraf": ["Prometheus + Grafana", "Metrics · Grafana", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
-    "tick": ["TICK Stack", "Telegraf · InfluxDB", ["si-influxdb"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
-  },
-  "groups": [["Infrastructure and Observability", ["wazuh", "elk", "promgraf", "tick"], "server"]]
-}
-```
+
 
 | Stack | Core Components | Description |
 | --- | --- | --- |

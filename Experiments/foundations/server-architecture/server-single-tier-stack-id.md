@@ -74,40 +74,92 @@ Setiap stack memiliki susunan teknologi dan tujuan yang berbeda sesuai kebutuhan
 
 Beberapa contoh technology stack beserta komponen dan kegunaannya.
 
-### 1. JavaScript & TypeScript Stack
-
-Stack yang menggunakan JavaScript atau TypeScript untuk membangun antarmuka pengguna (frontend) dan logika server (backend). Dengan Node.js, Bun, atau Deno, JavaScript dapat dijalankan di sisi server sehingga satu bahasa dapat mencakup seluruh tumpukan aplikasi.
-
 ```topology
 {
-  "title": "JavaScript & TypeScript",
-  "grid": 4,
-  "columns": [["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"]],
+  "caption": "Solution Stack",
+  "captionHref": "https://en.wikipedia.org/wiki/Solution_stack",
+  "title": "Solution Stack",
+  "dense": true,
+  "columns": [
+    ["js", "mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"],
+    ["php", "laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"],
+    ["python", "django", "fastapi", "flask", "pyramid"],
+    ["dotnet", "aspnet", "blazor"],
+    ["java", "spring", "jakarta", "quarkus"],
+    ["ruby", "rails", "sinatra"],
+    ["go", "gin", "echo", "fiber", "gostd"],
+    ["rust", "actix", "axum", "rocket"],
+    ["infra", "wazuh", "elk", "promgraf", "tick"]
+  ],
   "nodes": {
-    "mean": [
-      "MEAN",
-      "MongoDB · Angular",
-      ["si-mongodb", "si-express", "si-angular", "si-nodejs"],
-      "tech",
-      "https://www.mongodb.com/resources/languages/mean-stack"
-    ],
-    "mern": ["MERN", "MongoDB · React", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
-    "mevn": ["MEVN", "MongoDB · Vue", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "js": ["JS / TS", "", "si-javascript", "out", "https://en.wikipedia.org/wiki/JavaScript"],
+    "mean": ["MEAN", "", ["si-mongodb", "si-express", "si-angular", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mean-stack"],
+    "mern": ["MERN", "", ["si-mongodb", "si-express", "si-react", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
+    "mevn": ["MEVN", "", ["si-mongodb", "si-express", "si-vue", "si-nodejs"], "tech", "https://www.mongodb.com/resources/languages/mern-stack"],
     "pern": [
       "PERN",
-      "PostgreSQL · React",
+      "",
       ["si-postgresql", "si-express", "si-react", "si-nodejs"],
       "tech",
       "https://www.digitalocean.com/community/tutorials/how-to-build-a-pern-stack-application"
     ],
-    "nextjs": ["Next.js", "React · Next.js", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
-    "t3": ["T3", "tRPC · Prisma", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
-    "jamstack": ["JAMstack", "JS · API · Markup", ["si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
-    "bun": ["Bun", "Bun · SQLite", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"]
-  },
-  "groups": [["JavaScript & TypeScript", ["mean", "mern", "mevn", "pern", "nextjs", "t3", "jamstack", "bun"], "si-javascript"]]
+    "nextjs": ["Next.js", "", ["si-react", "si-nextdotjs", "si-nodejs"], "tech", "https://nextjs.org/"],
+    "t3": ["T3", "", ["si-typescript", "si-prisma", "si-nextdotjs", "si-tailwindcss"], "tech", "https://create.t3.gg/"],
+    "jamstack": ["JAMstack", "", ["si-javascript", "si-jamstack"], "tech", "https://jamstack.org/what-is-jamstack/"],
+    "bun": ["Bun", "", ["si-bun", "si-sqlite"], "tech", "https://bun.sh/"],
+    "php": ["PHP", "", "si-php", "out", "https://en.wikipedia.org/wiki/PHP"],
+    "laravel": ["Laravel", "", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
+    "symfony": ["Symfony", "", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
+    "lamp": ["LAMP", "", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
+    "lemp": [
+      "LEMP",
+      "",
+      ["si-linux", "si-nginx", "si-mysql", "si-php"],
+      "tech",
+      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
+    ],
+    "wamp": ["WAMP", "", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
+    "wimp": ["WIMP", "", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
+    "famp": ["FAMP", "", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
+    "xampp": ["XAMPP", "", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"],
+    "python": ["Python", "", "si-python", "out", "https://en.wikipedia.org/wiki/Python_(programming_language)"],
+    "django": ["Django", "", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
+    "fastapi": ["FastAPI", "", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
+    "flask": ["Flask", "", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
+    "pyramid": ["Pyramid", "", "si-python", "tech", "https://trypyramid.com/"],
+    "dotnet": [".NET", "", "si-dotnet", "out", "https://en.wikipedia.org/wiki/.NET"],
+    "aspnet": ["ASP.NET Core", "", "si-dotnet", "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
+    "blazor": ["Blazor", "", "si-dotnet", "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"],
+    "java": ["Java", "", "si-openjdk", "out", "https://en.wikipedia.org/wiki/Java_(programming_language)"],
+    "spring": ["Java-Spring", "", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
+    "jakarta": ["Jakarta EE", "", "si-openjdk", "tech", "https://jakarta.ee/"],
+    "quarkus": ["Quarkus", "", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"],
+    "ruby": ["Ruby", "", "si-ruby", "out", "https://en.wikipedia.org/wiki/Ruby_(programming_language)"],
+    "rails": ["Ruby on Rails", "", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
+    "sinatra": ["Sinatra", "", "si-ruby", "tech", "https://sinatrarb.com/"],
+    "go": ["Go", "", "si-go", "out", "https://en.wikipedia.org/wiki/Go_(programming_language)"],
+    "gin": ["Gin", "", "si-go", "tech", "https://gin-gonic.com/"],
+    "echo": ["Echo", "", "si-go", "tech", "https://echo.labstack.com/"],
+    "fiber": ["Fiber", "", "si-go", "tech", "https://docs.gofiber.io/"],
+    "gostd": ["Go Stdlib", "", "si-go", "tech", "https://go.dev/"],
+    "rust": ["Rust", "", "si-rust", "out", "https://en.wikipedia.org/wiki/Rust_(programming_language)"],
+    "actix": ["Actix Web", "", "si-rust", "tech", "https://actix.rs/"],
+    "axum": ["Axum", "", "si-rust", "tech", "https://github.com/tokio-rs/axum"],
+    "rocket": ["Rocket", "", "si-rust", "tech", "https://rocket.rs/"],
+    "infra": ["Infra", "", "server", "out", "https://en.wikipedia.org/wiki/Infrastructure"],
+    "wazuh": ["Wazuh", "", "si-wazuh", "tech", "https://wazuh.com/"],
+    "elk": ["Elastic Stack (ELK)", "", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
+    "promgraf": ["Prometheus + Grafana", "", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
+    "tick": ["TICK Stack", "", "si-influxdb", "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
+  }
 }
 ```
+
+### 1. JavaScript & TypeScript Stack
+
+Stack yang menggunakan JavaScript atau TypeScript untuk membangun antarmuka pengguna (frontend) dan logika server (backend). Dengan Node.js, Bun, atau Deno, JavaScript dapat dijalankan di sisi server sehingga satu bahasa dapat mencakup seluruh tumpukan aplikasi.
+
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -124,30 +176,7 @@ Stack yang menggunakan JavaScript atau TypeScript untuk membangun antarmuka peng
 
 Stack yang berpusat pada bahasa PHP untuk pengembangan web, biasanya dijalankan di sisi server dengan web server dan database relasional.
 
-```topology
-{
-  "title": "PHP",
-  "grid": 4,
-  "columns": [["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"]],
-  "nodes": {
-    "laravel": ["Laravel", "PHP · Blade", ["si-php", "si-laravel"], "tech", "https://laravel.com/"],
-    "symfony": ["Symfony", "PHP Components", ["si-php", "si-symfony"], "tech", "https://symfony.com/"],
-    "lamp": ["LAMP", "Linux · Apache", ["si-linux", "si-apache", "si-mysql", "si-php"], "tech", "https://cloud.google.com/mysql/lamp"],
-    "lemp": [
-      "LEMP",
-      "Linux · Nginx",
-      ["si-linux", "si-nginx", "si-mysql", "si-php"],
-      "tech",
-      "https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-ubuntu-22-04"
-    ],
-    "wamp": ["WAMP", "Windows · Apache", ["si-windows", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/WAMP"],
-    "wimp": ["WIMP", "Windows · IIS", ["si-windows", "si-mysql", "si-php"], "tech", "https://learn.microsoft.com/en-us/iis/"],
-    "famp": ["FAMP", "FreeBSD · Apache", ["si-freebsd", "si-apache", "si-mysql", "si-php"], "tech", "https://en.wikipedia.org/wiki/FAMP"],
-    "xampp": ["XAMPP", "Apache · PHP", ["si-apache", "si-mariadb", "si-php", "si-perl"], "tech", "https://www.apachefriends.org/"]
-  },
-  "groups": [["PHP", ["laravel", "symfony", "lamp", "lemp", "wamp", "wimp", "famp", "xampp"], "si-php"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -164,20 +193,7 @@ Stack yang berpusat pada bahasa PHP untuk pengembangan web, biasanya dijalankan 
 
 Stack yang menggunakan bahasa Python untuk pengembangan web, dari mikro framework hingga full-stack framework dengan banyak fitur bawaan.
 
-```topology
-{
-  "title": "Python",
-  "grid": 4,
-  "columns": [["django", "fastapi", "flask", "pyramid"]],
-  "nodes": {
-    "django": ["Django", "Python · ORM", ["si-python", "si-django"], "tech", "https://www.djangoproject.com/"],
-    "fastapi": ["FastAPI", "Python · Pydantic", ["si-python", "si-fastapi"], "tech", "https://fastapi.tiangolo.com/"],
-    "flask": ["Flask", "Python Micro", ["si-python", "si-flask"], "tech", "https://flask.palletsprojects.com/"],
-    "pyramid": ["Pyramid", "Python Flexible", ["si-python"], "tech", "https://trypyramid.com/"]
-  },
-  "groups": [["Python", ["django", "fastapi", "flask", "pyramid"], "si-python"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -190,18 +206,7 @@ Stack yang menggunakan bahasa Python untuk pengembangan web, dari mikro framewor
 
 Stack yang menggunakan bahasa C# dan ekosistem .NET untuk membangun aplikasi web, API, dan layanan backend.
 
-```topology
-{
-  "title": ".NET",
-  "grid": 2,
-  "columns": [["aspnet", "blazor"]],
-  "nodes": {
-    "aspnet": ["ASP.NET Core", "C# · Kestrel", ["si-dotnet"], "tech", "https://learn.microsoft.com/en-us/aspnet/core/"],
-    "blazor": ["Blazor", "C# · WASM", ["si-dotnet"], "tech", "https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor"]
-  },
-  "groups": [[".NET", ["aspnet", "blazor"], "si-dotnet"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -212,19 +217,7 @@ Stack yang menggunakan bahasa C# dan ekosistem .NET untuk membangun aplikasi web
 
 Stack yang menggunakan bahasa Java untuk membangun aplikasi backend dan enterprise yang skalabel.
 
-```topology
-{
-  "title": "Java",
-  "grid": 3,
-  "columns": [["spring", "jakarta", "quarkus"]],
-  "nodes": {
-    "spring": ["Java-Spring", "Java · Boot", ["si-openjdk", "si-spring"], "tech", "https://spring.io/projects/spring-boot"],
-    "jakarta": ["Jakarta EE", "Java EE", ["si-openjdk"], "tech", "https://jakarta.ee/"],
-    "quarkus": ["Quarkus", "Java · K8s", ["si-openjdk", "si-quarkus"], "tech", "https://quarkus.io/"]
-  },
-  "groups": [["Java", ["spring", "jakarta", "quarkus"], "si-openjdk"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -236,18 +229,7 @@ Stack yang menggunakan bahasa Java untuk membangun aplikasi backend dan enterpri
 
 Stack yang menggunakan bahasa Ruby dengan konvensi yang kuat untuk pengembangan web cepat.
 
-```topology
-{
-  "title": "Ruby",
-  "grid": 2,
-  "columns": [["rails", "sinatra"]],
-  "nodes": {
-    "rails": ["Ruby on Rails", "Ruby · Rails", ["si-ruby", "si-rubyonrails"], "tech", "https://rubyonrails.org/"],
-    "sinatra": ["Sinatra", "Ruby Micro", ["si-ruby"], "tech", "https://sinatrarb.com/"]
-  },
-  "groups": [["Ruby", ["rails", "sinatra"], "si-ruby"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -258,20 +240,7 @@ Stack yang menggunakan bahasa Ruby dengan konvensi yang kuat untuk pengembangan 
 
 Stack yang menggunakan bahasa Go (Golang) untuk membangun aplikasi backend, API, dan microservices dengan performa tinggi.
 
-```topology
-{
-  "title": "Go",
-  "grid": 4,
-  "columns": [["gin", "echo", "fiber", "gostd"]],
-  "nodes": {
-    "gin": ["Gin", "Go · Gin", ["si-go"], "tech", "https://gin-gonic.com/"],
-    "echo": ["Echo", "Go · Echo", ["si-go"], "tech", "https://echo.labstack.com/"],
-    "fiber": ["Fiber", "Go · Fasthttp", ["si-go"], "tech", "https://docs.gofiber.io/"],
-    "gostd": ["Go Stdlib", "Go · net/http", ["si-go"], "tech", "https://go.dev/"]
-  },
-  "groups": [["Go", ["gin", "echo", "fiber", "gostd"], "si-go"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -284,19 +253,7 @@ Stack yang menggunakan bahasa Go (Golang) untuk membangun aplikasi backend, API,
 
 Stack yang menggunakan bahasa Rust untuk membangun aplikasi web dengan keamanan memori dan performa tingkat sistem.
 
-```topology
-{
-  "title": "Rust",
-  "grid": 3,
-  "columns": [["actix", "axum", "rocket"]],
-  "nodes": {
-    "actix": ["Actix Web", "Rust · Actix", ["si-rust"], "tech", "https://actix.rs/"],
-    "axum": ["Axum", "Rust · Tokio", ["si-rust"], "tech", "https://github.com/tokio-rs/axum"],
-    "rocket": ["Rocket", "Rust · Rocket", ["si-rust"], "tech", "https://rocket.rs/"]
-  },
-  "groups": [["Rust", ["actix", "axum", "rocket"], "si-rust"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
@@ -308,20 +265,7 @@ Stack yang menggunakan bahasa Rust untuk membangun aplikasi web dengan keamanan 
 
 Stack yang menggabungkan sistem operasi, web server, database, atau teknologi pendukung untuk kebutuhan infrastruktur dan pengamatan aplikasi.
 
-```topology
-{
-  "title": "Infrastruktur dan Observability",
-  "grid": 4,
-  "columns": [["wazuh", "elk", "promgraf", "tick"]],
-  "nodes": {
-    "wazuh": ["Wazuh", "SIEM · XDR", ["si-wazuh"], "tech", "https://wazuh.com/"],
-    "elk": ["Elastic Stack (ELK)", "Elasticsearch · Logstash", ["si-elasticsearch", "si-logstash", "si-kibana"], "tech", "https://www.elastic.co/elastic-stack"],
-    "promgraf": ["Prometheus + Grafana", "Metrics · Grafana", ["si-prometheus", "si-grafana"], "tech", "https://prometheus.io/"],
-    "tick": ["TICK Stack", "Telegraf · InfluxDB", ["si-influxdb"], "tech", "https://docs.influxdata.com/influxdb/v2/get-started/"]
-  },
-  "groups": [["Infrastruktur dan Observability", ["wazuh", "elk", "promgraf", "tick"], "server"]]
-}
-```
+
 
 | Stack | Komponen utama | Keterangan |
 | --- | --- | --- |
