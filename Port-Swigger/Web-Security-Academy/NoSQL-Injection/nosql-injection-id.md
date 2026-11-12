@@ -1,6 +1,6 @@
 # NoSQL Injection — PortSwigger Web Security Academy
 
-[🇮🇩 Baca dalam Bahasa Indonesia](nosql-injection-en.md)
+[🇬🇧 Read in English](nosql-injection-en.md)
 
 ﷽
 
