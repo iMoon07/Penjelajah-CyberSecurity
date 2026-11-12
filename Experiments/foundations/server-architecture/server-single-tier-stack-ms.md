@@ -21,10 +21,11 @@ Namun, bagaimanakah proses ini berlaku apabila pelawat mengakses laman web yang 
 ## Aliran Kerja
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    C["🧑‍🦱 Pelanggan<br/>Membuat pesanan"] -->|"1. Pesanan dihantar<br/>sebagai Permintaan HTTP"| P["🧑‍🍳 Pelayan<br/>Menerima pesanan dan mengemudikannya"]
+    C(["🧑‍🦱 Pelanggan<br/>Membuat pesanan"]) -->|"1. Pesanan dihantar<br/>sebagai Permintaan HTTP"| P["🧑‍🍳 Pelayan<br/>Menerima pesanan dan mengemudikannya"]
     P -->|"2. Pesanan dihantar<br/>ke dapur"| K["👨‍🍳 Tukang Masak<br/>Menyediakan pesanan"]
-    K -->|"3. Mengambil bahan<br/>jika diperlukan"| G["🥫 Pantri<br/>Menyimpan bahan-bahan"]
+    K -->|"3. Mengambil bahan<br/>jika diperlukan"| G[("🥫 Pantri<br/>Menyimpan bahan-bahan")]
     G -->|"4. Bahan dihantar<br/>kepada tukang masak"| K
     K -->|"5. Hidangan dihidangkan<br/>kepada pelayan"| P
     P -->|"6. Hidangan dihantar<br/>kepada pelanggan<br/>sebagai Respons HTTP"| C
@@ -34,6 +35,23 @@ flowchart TD
         K
         G
     end
+
+    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
+    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
+    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
+    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
+
+    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
+
+    class C actor
+    class P,K role
+    class G store
+    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
+
+
+
 ```
 
 Daripada gambar rajah gerai makan di atas, jelas bahawa semua proses berlaku di satu lokasi yang sama. Di sebalik hidangan yang kelihatan ringkas, terdapat pelbagai peranan, peraturan dan alatan yang bekerjasama untuk memproses pesanan dan menghantarnya semula dengan tepat.
@@ -64,8 +82,9 @@ Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/d
 ## Gabungan Tindanan Teknologi
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    A["🍜 Tindanan Teknologi<br/>= Resipi dan bahan-bahan"] --> B{"Pilih bahan mengikut menu"}
+    A(["🍜 Tindanan Teknologi<br/>= Resipi dan bahan-bahan"]) --> B{"Pilih bahan mengikut menu"}
     B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
     B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
     B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
@@ -75,7 +94,7 @@ flowchart TD
     B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
     B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
     B --> K["📊 Infrastruktur<br/>ELK, Prometheus + Grafana"]
-    C --> L["🍽️ Aplikasi Web / API<br/>mengikut keperluan projek"]
+    C --> L(["🍽️ Aplikasi Web / API<br/>mengikut keperluan projek"])
     D --> L
     E --> L
     F --> L
@@ -84,6 +103,32 @@ flowchart TD
     I --> L
     J --> L
     K --> L
+
+    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
+    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
+    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
+    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
+    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
+    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
+    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
+    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
+    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
+    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
+    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
+    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
+
+    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
+    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+
+    class A root
+    class B choice
+    class C,D,E,F,G,H,I,J,K tech
+    class L out
+
+
+
 ```
 
 Tindanan teknologi ibarat resipi beserta bahan-bahannya. Dalam bidang pengkomputeran, pilihan sistem pengendalian, pelayan web, bahasa pengaturcaraan, rangka kerja, dan pangkalan data membentuk susunan tersendiri yang dikenali sebagai [tindanan penyelesaian](https://en.wikipedia.org/wiki/Solution_stack).
@@ -200,20 +245,44 @@ Setelah memilih tindanan teknologi, langkah seterusnya ialah menentukan **platfo
 Dari sudut pelayan, pilihan ini menentukan cara aplikasi dijalankan, cara sumber komputasi disediakan, dan cara infrastruktur diurus. Rujukan: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    A["🍜 Tindanan sedia<br/>resipi + bahan-bahan + alatan"] --> B{"📍 Di mana untuk dijalankan?"}
+    A(["🍜 Tindanan sedia<br/>resipi + bahan-bahan + alatan"]) --> B{"📍 Di mana untuk dijalankan?"}
     B --> C["🏠 Logam Kosong (Bare Metal)<br/>Bina gerai sendiri"]
     B --> D["🛏️ Mesin Maya (VM)<br/>Sewa bilik persendirian"]
     B --> E["🍱 Bekas (Container)<br/>Sewa gerai di medan selera"]
     B --> F["🏪 PaaS<br/>Sertai francais sedia guna"]
     B --> G["🛒 Tanpa Pelayan (Serverless)<br/>Buka gerai hanya apabila ada pesanan"]
     B --> H["🛵 Pengkomputeran Tepi (Edge)<br/>Gerai makanan berhampiran pelanggan"]
-    C --> I["🧩 Semua komponen tindanan<br/>berjalan di satu tempat"]
+    C --> I(["🧩 Semua komponen tindanan<br/>berjalan di satu tempat"])
     D --> I
     E --> I
     F --> I
     G --> I
     H --> I
+
+    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
+    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
+    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
+    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
+    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
+    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
+    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
+    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
+    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
+
+    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
+    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+
+    class A root
+    class B choice
+    class C,D,E,F,G,H host
+    class I out
+
+
+
 ```
 
 Bayangkan anda telah mengumpul resipi, bahan-bahan, dan alatan untuk membuka gerai makan. Kini anda perlu menentukan lokasi operasi: bina premis sendiri, sewa ruang, kongsi kemudahan bersama peniaga lain, atau buka gerai sementara mengikut keperluan.

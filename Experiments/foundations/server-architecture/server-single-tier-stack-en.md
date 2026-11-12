@@ -21,10 +21,11 @@ But how does this work when a visitor accesses a website built on a single-tier 
 ## The Flow
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    C["🧑‍🦱 Customer<br/>Places an order"] -->|"1. Place order<br/>as HTTP Request"| P["🧑‍🍳 Waiter<br/>Takes the order and forwards it"]
+    C(["🧑‍🦱 Customer<br/>Places an order"]) -->|"1. Place order<br/>as HTTP Request"| P["🧑‍🍳 Waiter<br/>Takes the order and forwards it"]
     P -->|"2. Forward order<br/>to the kitchen"| K["👨‍🍳 Chef<br/>Prepares the order"]
-    K -->|"3. Retrieve ingredients<br/>if needed"| G["🥫 Pantry<br/>Stores ingredients"]
+    K -->|"3. Retrieve ingredients<br/>if needed"| G[("🥫 Pantry<br/>Stores ingredients")]
     G -->|"4. Send ingredients<br/>to the chef"| K
     K -->|"5. Serve meal<br/>to the waiter"| P
     P -->|"6. Deliver meal<br/>to the customer<br/>as HTTP Response"| C
@@ -34,6 +35,23 @@ flowchart TD
         K
         G
     end
+
+    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
+    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
+    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
+    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
+
+    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
+
+    class C actor
+    class P,K role
+    class G store
+    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
+
+
+
 ```
 
 Looking at the eatery analogy above, it's clear that everything happens in one place. Behind a simple meal, there are roles, rules, and tools working together to get an order from customer to kitchen and back again.
@@ -64,8 +82,9 @@ Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/
 ## Technology Stack Combinations
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    A["🍜 Technology Stack<br/>= Recipe and ingredients"] --> B{"Choose ingredients based on the menu"}
+    A(["🍜 Technology Stack<br/>= Recipe and ingredients"]) --> B{"Choose ingredients based on the menu"}
     B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
     B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
     B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
@@ -75,7 +94,7 @@ flowchart TD
     B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
     B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
     B --> K["📊 Infrastructure<br/>ELK, Prometheus + Grafana"]
-    C --> L["🍽️ Web Application / API<br/>tailored to project needs"]
+    C --> L(["🍽️ Web Application / API<br/>tailored to project needs"])
     D --> L
     E --> L
     F --> L
@@ -84,6 +103,32 @@ flowchart TD
     I --> L
     J --> L
     K --> L
+
+    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
+    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
+    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
+    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
+    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
+    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
+    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
+    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
+    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
+    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
+    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
+    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
+
+    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
+    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+
+    class A root
+    class B choice
+    class C,D,E,F,G,H,I,J,K tech
+    class L out
+
+
+
 ```
 
 A technology stack is akin to a recipe and its ingredients. In computing, the choice of operating system, web server, programming language, framework, and database forms a distinct arrangement known as a [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
@@ -200,20 +245,44 @@ Once a technology stack has been chosen, the next step is to determine the **pla
 In server terms, this choice affects how the application runs, how computing resources are provisioned, and how the infrastructure is managed. Reference: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    A["🍜 Stack is ready<br/>recipe + ingredients + tools"] --> B{"📍 Where to run it?"}
+    A(["🍜 Stack is ready<br/>recipe + ingredients + tools"]) --> B{"📍 Where to run it?"}
     B --> C["🏠 Bare Metal<br/>Build your own eatery"]
     B --> D["🛏️ Virtual Machine<br/>Rent a private room"]
     B --> E["🍱 Container<br/>Rent a stall in a food court"]
     B --> F["🏪 PaaS<br/>Join a ready-to-use franchise"]
     B --> G["🛒 Serverless<br/>Open a stall only when orders come in"]
     B --> H["🛵 Edge Computing<br/>Use a food cart near your customers"]
-    C --> I["🧩 All stack components<br/>run in one place"]
+    C --> I(["🧩 All stack components<br/>run in one place"])
     D --> I
     E --> I
     F --> I
     G --> I
     H --> I
+
+    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
+    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
+    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
+    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
+    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
+    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
+    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
+    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
+    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
+
+    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
+    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+
+    class A root
+    class B choice
+    class C,D,E,F,G,H host
+    class I out
+
+
+
 ```
 
 Imagine you've gathered your recipe, ingredients, and tools to open an eatery. You must now decide where to operate: build your own premises, rent a space, share facilities with others, or open a temporary stall as needed.

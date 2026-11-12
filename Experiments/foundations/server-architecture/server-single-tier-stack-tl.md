@@ -21,10 +21,11 @@ Ngunit paano nga ba ito gumagana kapag ang isang bisita ay bumisita sa isang web
 ## Daloy ng Proseso
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    C["🧑‍🦱 Customer<br/>Nag-order ng pagkain"] -->|"1. Nagpadala ng order<br/>bilang HTTP Request"| P["🧑‍🍳 Waiter<br/>Tumatanggap ng order at ipinapasa ito"]
+    C(["🧑‍🦱 Customer<br/>Nag-order ng pagkain"]) -->|"1. Nagpadala ng order<br/>bilang HTTP Request"| P["🧑‍🍳 Waiter<br/>Tumatanggap ng order at ipinapasa ito"]
     P -->|"2. Ipinapasa ang order<br/>sa kusina"| K["👨‍🍳 Kusinero<br/>Naghahanda ng order"]
-    K -->|"3. Kinukuha ang mga sangkap<br/>kung kinakailangan"| G["🥫 Bodega<br/>Nagtatago ng mga sangkap"]
+    K -->|"3. Kinukuha ang mga sangkap<br/>kung kinakailangan"| G[("🥫 Bodega<br/>Nagtatago ng mga sangkap")]
     G -->|"4. Ipinapadala ang mga sangkap<br/>sa kusinero"| K
     K -->|"5. Inihahain ang pagkain<br/>sa waiter"| P
     P -->|"6. Inihahatid ang pagkain<br/>sa customer<br/>bilang HTTP Response"| C
@@ -34,6 +35,23 @@ flowchart TD
         K
         G
     end
+
+    click C "https://en.wikipedia.org/wiki/Web_browser" "Web browser" _blank
+    click P "https://en.wikipedia.org/wiki/Web_server" "Web server" _blank
+    click K "https://en.wikipedia.org/wiki/Runtime_system" "Runtime system" _blank
+    click G "https://en.wikipedia.org/wiki/Database" "Database" _blank
+
+    classDef actor fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef role fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef store fill:#1f2937,stroke:#3fb950,color:#e6edf3,stroke-width:1.5px
+
+    class C actor
+    class P,K role
+    class G store
+    style W fill:transparent,stroke:#30363d,stroke-width:1px,color:#8b949e
+
+
+
 ```
 
 Mula sa diagram ng karinderya, malinaw na ang lahat ng gawain ay nagaganap sa iisang lugar lamang. Sa likod ng isang simpleng pagkain, may mga tungkulin, patakaran, at kagamitan na nagtutulungan upang maiproseso nang tama ang order at maibalik ito sa customer.
@@ -64,8 +82,9 @@ Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US
 ## Mga Kombinasyon ng Technology Stack
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    A["🍜 Technology Stack<br/>= Resipe at mga sangkap"] --> B{"Pumili ng sangkap batay sa menu"}
+    A(["🍜 Technology Stack<br/>= Resipe at mga sangkap"]) --> B{"Pumili ng sangkap batay sa menu"}
     B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
     B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
     B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
@@ -75,7 +94,7 @@ flowchart TD
     B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
     B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
     B --> K["📊 Infrastructure<br/>ELK, Prometheus + Grafana"]
-    C --> L["🍽️ Web Application / API<br/>ayon sa pangangailangan ng proyekto"]
+    C --> L(["🍽️ Web Application / API<br/>ayon sa pangangailangan ng proyekto"])
     D --> L
     E --> L
     F --> L
@@ -84,6 +103,32 @@ flowchart TD
     I --> L
     J --> L
     K --> L
+
+    click A "https://en.wikipedia.org/wiki/Solution_stack" "Solution stack" _blank
+    click B "https://en.wikipedia.org/wiki/Software_requirements" "Software requirements" _blank
+    click C "https://en.wikipedia.org/wiki/JavaScript" "JavaScript" _blank
+    click D "https://en.wikipedia.org/wiki/PHP" "PHP" _blank
+    click E "https://en.wikipedia.org/wiki/Python_(programming_language)" "Python" _blank
+    click F "https://en.wikipedia.org/wiki/.NET" ".NET" _blank
+    click G "https://en.wikipedia.org/wiki/Java_(programming_language)" "Java" _blank
+    click H "https://en.wikipedia.org/wiki/Ruby_(programming_language)" "Ruby" _blank
+    click I "https://en.wikipedia.org/wiki/Go_(programming_language)" "Go" _blank
+    click J "https://en.wikipedia.org/wiki/Rust_(programming_language)" "Rust" _blank
+    click K "https://en.wikipedia.org/wiki/Observability_(software)" "Observability" _blank
+    click L "https://en.wikipedia.org/wiki/Web_application" "Web application" _blank
+
+    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
+    classDef tech fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+
+    class A root
+    class B choice
+    class C,D,E,F,G,H,I,J,K tech
+    class L out
+
+
+
 ```
 
 Ang technology stack ay katulad ng resipe at mga sangkap nito. Sa larangan ng computing, ang pagpili ng operating system, web server, programming language, framework, at database ay bumubuo ng isang natatanging kaayusan na tinatawag na [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
@@ -200,20 +245,44 @@ Matapos pumili ng technology stack, ang susunod na hakbang ay tukuyin ang **plat
 Sa konteksto ng server, ang pagpiling ito ang magtatakda kung paano tatakbo ang aplikasyon, paano ipapamigay ang mga computing resource, at paano pamamahalaan ang imprastruktura. Sanggunian: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
 ```mermaid
+%%{init: {"theme": "base", "flowchart": {"curve": "basis", "nodeSpacing": 10, "rankSpacing": 14, "padding": 4}, "themeVariables": {"fontFamily": "Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, sans-serif", "fontSize": "12px", "background": "transparent", "primaryColor": "#1f2937", "primaryTextColor": "#e6edf3", "primaryBorderColor": "#30363d", "lineColor": "#4b5563", "textColor": "#cbd5e1", "mainBkg": "#1f2937", "nodeBorder": "#30363d", "clusterBkg": "transparent", "clusterBorder": "#30363d", "edgeLabelBackground": "#111827"}, "themeCSS": ".node rect, .node polygon, .node circle, .node ellipse { rx: 8px; ry: 8px; } .cluster rect { rx: 12px; ry: 12px; } .edgeLabel rect { fill: #111827; } .edgeLabel span { color: #cbd5e1; }"}}%%
 flowchart TD
-    A["🍜 Handa na ang stack<br/>resipe + mga sangkap + mga kagamitan"] --> B{"📍 Saan ito patatakbuhin?"}
+    A(["🍜 Handa na ang stack<br/>resipe + mga sangkap + mga kagamitan"]) --> B{"📍 Saan ito patatakbuhin?"}
     B --> C["🏠 Bare Metal<br/>Bumuo ng sarili mong karinderya"]
     B --> D["🛏️ Virtual Machine<br/>Umupa ng pribadong kwarto"]
     B --> E["🍱 Container<br/>Umupa ng stall sa food court"]
     B --> F["🏪 PaaS<br/>Sumali sa ready-to-use na franchise"]
     B --> G["🛒 Serverless<br/>Buksan ang stall lamang kapag may order"]
     B --> H["🛵 Edge Computing<br/>Gumamit ng food cart malapit sa mga customer"]
-    C --> I["🧩 Lahat ng bahagi ng stack<br/>tumatakbo sa iisang lugar"]
+    C --> I(["🧩 Lahat ng bahagi ng stack<br/>tumatakbo sa iisang lugar"])
     D --> I
     E --> I
     F --> I
     G --> I
     H --> I
+
+    click A "https://en.wikipedia.org/wiki/Software_deployment" "Software deployment" _blank
+    click B "https://en.wikipedia.org/wiki/Deployment_environment" "Deployment environment" _blank
+    click C "https://en.wikipedia.org/wiki/Bare-metal_server" "Bare-metal server" _blank
+    click D "https://en.wikipedia.org/wiki/Virtual_machine" "Virtual machine" _blank
+    click E "https://en.wikipedia.org/wiki/Operating-system-level_virtualization" "OS-level virtualization" _blank
+    click F "https://en.wikipedia.org/wiki/Platform_as_a_service" "Platform as a service" _blank
+    click G "https://en.wikipedia.org/wiki/Serverless_computing" "Serverless computing" _blank
+    click H "https://en.wikipedia.org/wiki/Edge_computing" "Edge computing" _blank
+    click I "https://en.wikipedia.org/wiki/Multitier_architecture" "Single-tier architecture" _blank
+
+    classDef root fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+    classDef choice fill:#1f2937,stroke:#d29922,color:#e6edf3,stroke-width:1.5px
+    classDef host fill:#1f2937,stroke:#30363d,color:#e6edf3,stroke-width:1.5px
+    classDef out fill:#1f2937,stroke:#58a6ff,color:#e6edf3,stroke-width:1.5px
+
+    class A root
+    class B choice
+    class C,D,E,F,G,H host
+    class I out
+
+
+
 ```
 
 Isipin mo na nakakuha ka na ng resipe, mga sangkap, at mga kagamitan upang magbukas ng karinderya. Ngayon, kailangan mong magpasya kung saan ito mag-ooperate: bumuo ng sarili mong lugar, umupa ng puwang, makipag-share ng mga pasilidad sa iba pang mga vendor, o magbukas ng pansamantala lamang ayon sa pangangailangan.
