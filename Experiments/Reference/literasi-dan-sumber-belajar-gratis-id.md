@@ -1,6 +1,6 @@
 # Daftar Literasi dan Sumber Belajar Gratis
 
-🇬🇧 [Read in English](literasi-dan-sumber-belajar-gratis-en.md)
+[🇬🇧 Read in English](literasi-dan-sumber-belajar-gratis-en.md)
 
 ﷽
 

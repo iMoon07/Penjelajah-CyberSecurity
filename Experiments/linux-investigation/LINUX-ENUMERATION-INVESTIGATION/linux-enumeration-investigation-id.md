@@ -61,19 +61,27 @@ Karena itu, kita tidak bergantung pada satu sumber saja. Beberapa artefak perlu 
 
 # Flow Analysis
 
-```text
-                 Enumeration
-                      │
-          ┌───────────┼───────────┐
-          ▼           ▼           ▼
-      Execution     History    Timeline
-          │           │           │
-          └───────────┼───────────┘
-                      ▼
-                 Correlation
-                      │
-                      ▼
-             Activity Reconstruction
+```mermaid
+flowchart TD
+    A["Enumeration"]
+
+    A --> B["Execution"]
+    A --> C["History"]
+    A --> D["Timeline"]
+
+    B --> E["Correlation"]
+    C --> E
+    D --> E
+
+    E --> F["Activity Reconstruction"]
+
+    classDef source fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef analysis fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef result fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B,C,D source
+    class E analysis
+    class F result
 ```
 
 ---
@@ -178,16 +186,23 @@ Command-command tersebut memberikan indikasi bahwa aktivitas pada server tidak b
 
 Terlihat beberapa pola aktivitas:
 
-```text
-Persistence
-    ↓
-C2 / Reverse Shell
-    ↓
-Network Configuration
-    ↓
-Pivoting
-    ↓
-Lateral Movement
+```mermaid
+flowchart TD
+    A["Persistence"]
+    B["C2 / Reverse Shell"]
+    C["Network Configuration"]
+    D["Pivoting"]
+    E["Lateral Movement"]
+
+    A --> B --> C --> D --> E
+
+    classDef activity fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef network fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef movement fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B activity
+    class C,D network
+    class E movement
 ```
 
 Contohnya:
@@ -275,16 +290,23 @@ moon     pts/0   192.168.15.2
 
 Informasi tersebut dapat digunakan untuk membentuk hubungan waktu:
 
-```text
-Source Address
-      ↓
-User
-      ↓
-Login Time
-      ↓
-Session
-      ↓
-Activity Evidence
+```mermaid
+flowchart TD
+    A["Source Address"]
+    B["User"]
+    C["Login Time"]
+    D["Session"]
+    E["Activity Evidence"]
+
+    A --> B --> C --> D --> E
+
+    classDef source fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef session fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B source
+    class C,D session
+    class E evidence
 ```
 
 Misalnya, jika history menunjukkan aktivitas tertentu pada sekitar `03:08`, session `moon` yang tercatat pada waktu tersebut dapat menjadi salah satu titik yang dibandingkan dengan evidence lainnya.
@@ -328,14 +350,22 @@ Terlihat bahwa user `moon` memiliki beberapa terminal aktif dan seluruh session 
 
 Informasi ini dapat digunakan untuk melihat:
 
-```text
-User
-  ↓
-Terminal
-  ↓
-Login Time
-  ↓
-Source Address
+```mermaid
+flowchart TD
+    A["User"]
+    B["Terminal"]
+    C["Login Time"]
+    D["Source Address"]
+
+    A --> B --> C --> D
+
+    classDef user fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef session fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B user
+    class C session
+    class D evidence
 ```
 
 Jika terdapat aktivitas mencurigakan pada waktu yang sama, session tersebut dapat dibandingkan dengan `history`, `last`, process, dan network connection.
@@ -350,19 +380,26 @@ Setelah melihat `history`, `last`, `who`, dan process information, kita mulai me
 
 Contohnya:
 
-```text
-03:08
-│
-├── Session user moon dimulai
-│
-├── pts/2
-└── pts/3
-        │
-        ▼
-        Aktivitas shell
-        │
-        ├── Command pada history
-        └── Process yang berjalan
+```mermaid
+flowchart TD
+    A["03:08 - User moon Session Started"]
+
+    A --> B["pts/2"]
+    A --> C["pts/3"]
+
+    B --> D["Shell Activity"]
+    C --> D
+
+    D --> E["Commands in History"]
+    D --> F["Running Processes"]
+
+    classDef timestamp fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef session fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A timestamp
+    class B,C session
+    class D,E,F evidence
 ```
 
 Timeline tidak harus langsung lengkap.
@@ -373,14 +410,18 @@ Misalnya terdapat aktivitas pada `history` sekitar `03:08`, sementara `last` men
 
 Hal ini memberikan titik yang dapat diperiksa lebih lanjut.
 
-```text
-Login
-  ↓
-Shell Activity
-  ↓
-Process
-  ↓
-Network / Log
+```mermaid
+flowchart TD
+    A["Login"]
+    B["Shell Activity"]
+    C["Process"]
+    D["Network / Log"]
+
+    A --> B --> C --> D
+
+    classDef stage fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+
+    class A,B,C,D stage
 ```
 
 Timeline membantu menjawab:
@@ -397,24 +438,42 @@ Kita menghubungkannya.
 
 Misalnya:
 
-```text
-last
- │
- └── moon @ 10.10.10.1
-          │
-          ▼
-       history
-          │
-          ├── whoami
-          ├── id
-          ├── uname
-          └── ls
-          │
-          ▼
-       process
-          │
-          ▼
-    network / log
+```mermaid
+flowchart TD
+    A["last"]
+    B["moon @ 10.10.10.1"]
+
+    C["history"]
+    D["whoami"]
+    E["id"]
+    F["uname"]
+    G["ls"]
+
+    H["Process"]
+    I["Network / Log"]
+
+    A --> B
+    B --> C
+
+    C --> D
+    C --> E
+    C --> F
+    C --> G
+
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+
+    H --> I
+
+    classDef login fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef history fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B login
+    class C,D,E,F,G history
+    class H,I evidence
 ```
 
 Dari hubungan tersebut kita dapat membentuk hipotesis:
@@ -517,18 +576,27 @@ Linux Enumeration Analysis bukan sekadar menjalankan command untuk melihat infor
 
 Dengan melihat process, history, login activity, dan timestamp, kita dapat memahami berbagai aktivitas yang terjadi setelah sistem berhasil diakses.
 
-```text
-Execution
-   +
-History
-   +
-Login Activity
-   +
-Timeline
-      ↓
-Correlation
-      ↓
-Activity Reconstruction
+```mermaid
+flowchart TD
+    A["Execution"]
+    B["History"]
+    C["Login Activity"]
+    D["Timeline"]
+
+    A --> E["Correlation"]
+    B --> E
+    C --> E
+    D --> E
+
+    E --> F["Activity Reconstruction"]
+
+    classDef artifact fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef analysis fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef result fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B,C,D artifact
+    class E analysis
+    class F result
 ```
 
 Dari sini kita dapat berpindah dari sekadar **melihat output command** menjadi **memahami hubungan antar-aktivitas pada sistem**.

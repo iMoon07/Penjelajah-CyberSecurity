@@ -20,20 +20,29 @@ Namun, bagaimanakah proses ini berlaku apabila pelawat mengakses laman web yang 
 
 ## Aliran Kerja
 
-```mermaid
-flowchart TD
-    C["🧑‍🦱 Pelanggan<br/>Membuat pesanan"] -->|"1. Pesanan dihantar<br/>sebagai Permintaan HTTP"| P["🧑‍🍳 Pelayan<br/>Menerima pesanan dan mengemudikannya"]
-    P -->|"2. Pesanan dihantar<br/>ke dapur"| K["👨‍🍳 Tukang Masak<br/>Menyediakan pesanan"]
-    K -->|"3. Mengambil bahan<br/>jika diperlukan"| G["🥫 Pantri<br/>Menyimpan bahan-bahan"]
-    G -->|"4. Bahan dihantar<br/>kepada tukang masak"| K
-    K -->|"5. Hidangan dihidangkan<br/>kepada pelayan"| P
-    P -->|"6. Hidangan dihantar<br/>kepada pelanggan<br/>sebagai Respons HTTP"| C
+```text
+🧑‍🦱 Pelanggan
+    │  1. Pesanan diterima (Permintaan HTTP)
+    ▼
+🧑‍🍳 Pelayan
+    │  2. Pesanan dihantar ke dapur
+    ▼
+👨‍🍳 Tukang Masak
+    │  3. Mengambil bahan jika diperlukan
+    ▼
+🥫 Pantri
+    │  4. Menghantar bahan
+    ▼
+👨‍🍳 Tukang Masak
+    │  5. Hidangan siap untuk disajikan
+    ▼
+🧑‍🍳 Pelayan
+    │  6. Hidangan dihantar kepada pelanggan (Respons HTTP)
+    ▼
+🧑‍🦱 Pelanggan
 
-    subgraph W["Gerai Makan / Satu Lokasi"]
-        P
-        K
-        G
-    end
+[ Gerai Makan / Seni Bina Satu Tingkat ]
+    Pelayan  →  Tukang Masak  →  Pantri
 ```
 
 Daripada gambar rajah gerai makan di atas, jelas bahawa semua proses berlaku di satu lokasi yang sama. Di sebalik hidangan yang kelihatan ringkas, terdapat pelbagai peranan, peraturan dan alatan yang bekerjasama untuk memproses pesanan dan menghantarnya semula dengan tepat.
@@ -63,27 +72,24 @@ Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/d
 
 ## Gabungan Tindanan Teknologi
 
-```mermaid
-flowchart TD
-    A["🍜 Tindanan Teknologi<br/>= Resipi dan bahan-bahan"] --> B{"Pilih bahan mengikut menu"}
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastruktur<br/>ELK, Prometheus + Grafana"]
-    C --> L["🍽️ Aplikasi Web / API<br/>mengikut keperluan projek"]
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
+```text
+🍜 Tindanan Teknologi = Resipi dan bahan-bahan
+    │
+    ▼
+Pilih bahan mengikut menu
+    │
+    ├── 🟨 JavaScript / TypeScript  (React, Node.js, MongoDB)
+    ├── 🐘 PHP                      (Laravel, LAMP, LEMP)
+    ├── 🐍 Python                   (Django, FastAPI, Flask)
+    ├── 🔷 .NET                     (ASP.NET Core, Blazor)
+    ├── ☕ Java                      (Spring Boot, Jakarta EE)
+    ├── 💎 Ruby                      (Ruby on Rails)
+    ├── 🐹 Go                        (Gin, Echo, Fiber)
+    ├── 🦀 Rust                      (Actix, Axum, Rocket)
+    └── 📊 Infrastruktur            (ELK, Prometheus + Grafana)
+    │
+    ▼
+🍽️ Aplikasi Web / API (mengikut keperluan projek)
 ```
 
 Tindanan teknologi ibarat resipi beserta bahan-bahannya. Dalam bidang pengkomputeran, pilihan sistem pengendalian, pelayan web, bahasa pengaturcaraan, rangka kerja, dan pangkalan data membentuk susunan tersendiri yang dikenali sebagai [tindanan penyelesaian](https://en.wikipedia.org/wiki/Solution_stack).
@@ -199,21 +205,21 @@ Setelah memilih tindanan teknologi, langkah seterusnya ialah menentukan **platfo
 
 Dari sudut pelayan, pilihan ini menentukan cara aplikasi dijalankan, cara sumber komputasi disediakan, dan cara infrastruktur diurus. Rujukan: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-flowchart TD
-    A["🍜 Tindanan sedia<br/>resipi + bahan-bahan + alatan"] --> B{"📍 Di mana untuk dijalankan?"}
-    B --> C["🏠 Logam Kosong (Bare Metal)<br/>Bina gerai sendiri"]
-    B --> D["🛏️ Mesin Maya (VM)<br/>Sewa bilik persendirian"]
-    B --> E["🍱 Bekas (Container)<br/>Sewa gerai di medan selera"]
-    B --> F["🏪 PaaS<br/>Sertai francais sedia guna"]
-    B --> G["🛒 Tanpa Pelayan (Serverless)<br/>Buka gerai hanya apabila ada pesanan"]
-    B --> H["🛵 Pengkomputeran Tepi (Edge)<br/>Gerai makanan berhampiran pelanggan"]
-    C --> I["🧩 Semua komponen tindanan<br/>berjalan di satu tempat"]
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
+```text
+🍜 Tindanan sedia (resipi + bahan-bahan + alatan)
+    │
+    ▼
+📍 Di mana untuk dijalankan?
+    │
+    ├── 🏠 Logam Kosong (Bare Metal)   → Bina gerai sendiri
+    ├── 🛏️ Mesin Maya (VM)            → Sewa bilik persendirian
+    ├── 🍱 Bekas (Container)           → Sewa gerai di medan selera
+    ├── 🏪 PaaS                        → Sertai francais sedia guna
+    ├── 🛒 Tanpa Pelayan (Serverless)  → Buka gerai hanya apabila ada pesanan
+    └── 🛵 Pengkomputeran Tepi (Edge)  → Gerai makanan berhampiran pelanggan
+    │
+    ▼
+🧩 Semua komponen tindanan berjalan di satu tempat
 ```
 
 Bayangkan anda telah mengumpul resipi, bahan-bahan, dan alatan untuk membuka gerai makan. Kini anda perlu menentukan lokasi operasi: bina premis sendiri, sewa ruang, kongsi kemudahan bersama peniaga lain, atau buka gerai sementara mengikut keperluan.

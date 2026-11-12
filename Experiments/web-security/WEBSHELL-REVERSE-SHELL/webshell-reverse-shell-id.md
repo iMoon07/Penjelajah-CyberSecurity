@@ -150,26 +150,27 @@ Pada demonstrasi kali ini, **Webshell** menjadi akar penyebab (*root cause*) yan
 
 Alur serangan secara sederhana dapat digambarkan sebagai berikut.
 
-```text
-Unsafe File Upload
-        │
-        ▼
-   Webshell Upload
-        │
-        ▼
-  Webshell Execution
-        │
-        ▼
-  Command Execution
-        │
-        ▼
-Reverse Shell Payload
-        │
-        ▼
- Outbound Connection
-        │
-        ▼
-  Interactive Shell
+```mermaid
+flowchart TD
+    A["Unsafe File Upload"]
+    B["Webshell Upload"]
+    C["Webshell Execution"]
+    D["Command Execution"]
+    E["Reverse Shell Payload"]
+    F["Outbound Connection"]
+    G["Interactive Shell"]
+
+    A --> B --> C --> D --> E --> F --> G
+
+    classDef entry fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef upload fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef execution fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+    classDef shell fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+
+    class A entry
+    class B,C upload
+    class D,E,F execution
+    class G shell
 ```
 
 ---
@@ -183,21 +184,23 @@ Pada demonstrasi ini saya menggunakan lingkungan lab sederhana berbasis VMware.
 | **Attacker** | Kali Linux | `10.10.10.149` |
 | **Target Web** | Ubuntu Server (Mutillidae II) | `10.10.10.2` |
 
-```text
-+-------------------------------------------------+
-|              LAB - 10.10.10.0/24                |
-|                                                 |
-|  +---------------+      +-------------------+   |
-|  |  Kali Linux   |      |   Ubuntu Server   |   |
-|  |  [ATTACKER]   |      |   [TARGET WEB]    |   |
-|  |  Listener     | <--- |   Webshell        |   |
-|  | 10.10.10.149  |      |   10.10.10.2      |   |
-|  |   Port 9001   |      |   bWAPP           |   |
-|  +---------------+      +-------------------+   |
-|          ^                      |               |
-|          |                      |               |
-|          +--- Reverse Shell ----+               |
-+-------------------------------------------------+
+```mermaid
+flowchart TB
+    subgraph LAB["LAB / VMware - 10.10.10.0/24"]
+        direction LR
+
+        A["🐉 Kali Linux<br/>ATTACKER<br/><br/>10.10.10.149<br/>Listener: Port 9001"]
+
+        T["🖥️ Ubuntu Server<br/>TARGET WEB<br/><br/>10.10.10.2<br/>bWAPP<br/>Webshell"]
+
+        T -->|"Reverse Shell<br/>Outbound Connection"| A
+    end
+
+    classDef attacker fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef target fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+
+    class A attacker
+    class T target
 ```
 
 ---

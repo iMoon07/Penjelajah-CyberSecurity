@@ -98,24 +98,29 @@ Pada demonstrasi kali ini, SQL Injection menjadi titik masuk akibat kelemahan pa
 
 Alur pengujian:
 
-```text
-SQL Injection
-      ↓
-Manipulate SQL Query
-      ↓
-Interact with Database
-      ↓
-Write Webshell / Execute Command
-      ↓
-Webshell
-      ↓
-OS Command Execution
-      ↓
-Reverse Shell
-      ↓
-Outbound Connection
-      ↓
-Interactive Shell
+```mermaid
+flowchart TD
+    A["SQL Injection"]
+    B["Manipulate SQL Query"]
+    C["Interact with Database"]
+    D["Write Webshell / Execute Command"]
+    E["Webshell"]
+    F["OS Command Execution"]
+    G["Reverse Shell"]
+    H["Outbound Connection"]
+    I["Interactive Shell"]
+
+    A --> B --> C --> D --> E --> F --> G --> H --> I
+
+    classDef entry fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef database fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef execution fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+    classDef shell fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+
+    class A,B entry
+    class C,D database
+    class E,F,G,H execution
+    class I shell
 ```
 
 # Topologi Lab
@@ -127,20 +132,24 @@ Pada demonstrasi ini saya menggunakan lingkungan lab sederhana berbasis VMware.
 | **Attacker**   | Kali Linux                    | `10.10.10.149` |
 | **Target Web** | Ubuntu Server (Mutillidae II) | `10.10.10.2`   |
 
-```text
-┌──────────────────────────────────────────────┐
-│              LAB — 10.10.10.0/24             │
-│                                              │
-│  ┌──────────────┐      ┌──────────────────┐  │
-│  │ Kali Linux   │─────►│ Ubuntu Server    │  │
-│  │ 10.10.10.149 │      │ 10.10.10.2       │  │
-│  │ Listener:3001│◄─────│ Mutillidae II    │  │
-│  └──────────────┘      │ SQLi → Web Shell │  │
-│                        └────────┬─────────┘  │
-│                                 │            │
-│                                 └─ Reverse   │
-│                                    Shell     │
-└──────────────────────────────────────────────┘
+```mermaid
+flowchart TB
+    subgraph LAB["LAB / VMware - 10.10.10.0/24"]
+        direction LR
+
+        A["🐉 Kali Linux<br/>ATTACKER<br/><br/>10.10.10.149<br/>Listener: 3001"]
+
+        T["🖥️ Ubuntu Server<br/>TARGET WEB<br/><br/>10.10.10.2<br/>Mutillidae II<br/>SQLi → Web Shell"]
+
+        T -->|"Reverse Shell<br/>Outbound Connection"| A
+        A -->|"SQL Injection<br/>HTTP Request"| T
+    end
+
+    classDef attacker fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef target fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+
+    class A attacker
+    class T target
 ```
 
 # Demonstrasi

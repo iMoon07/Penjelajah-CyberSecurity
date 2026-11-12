@@ -105,20 +105,23 @@ Pada demonstrasi kali ini, **Command Injection** menjadi akar penyebab (*root ca
 
 Alur serangan secara sederhana dapat digambarkan sebagai berikut.
 
-```text
-Command Injection
-        │
-        ▼
-Command Execution
-        │
-        ▼
-Reverse Shell Payload
-        │
-        ▼
-Outbound Connection
-        │
-        ▼
-Interactive Shell
+```mermaid
+flowchart TD
+    A["Command Injection"]
+    B["Command Execution"]
+    C["Reverse Shell Payload"]
+    D["Outbound Connection"]
+    E["Interactive Shell"]
+
+    A --> B --> C --> D --> E
+
+    classDef entry fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef execution fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef shell fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+
+    class A,B entry
+    class C,D execution
+    class E shell
 ```
 
 ---
@@ -152,18 +155,23 @@ Pada demonstrasi ini saya menggunakan lingkungan lab sederhana berbasis VMware.
 | **Attacker** | Kali Linux | `10.10.10.149` |
 | **Target Web** | Ubuntu Server (Mutillidae II) | `10.10.10.2` |
 
-```text
-+-------------------------------------------------+
-|            VMware - 10.10.10.0/24               |
-|                                                 |
-|  +---------------+      +-------------------+   |
-|  |  Kali Linux   |      |   Ubuntu Server   |   |
-|  |  [ATTACKER]   |      |   [TARGET WEB]    |   |
-|  |  nc Listener  | <--- |   Reverse Shell   |   |
-|  | 10.10.10.149  |      |   10.10.10.2      |   |
-|  |   Port 9001   |      |   Mutillidae II   |   |
-|  +---------------+      +-------------------+   |
-+-------------------------------------------------+
+```mermaid
+flowchart TB
+    subgraph V["VMware - Network 10.10.10.0/24"]
+        direction LR
+
+        A["🐉 Kali Linux<br/>ATTACKER<br/><br/>Netcat Listener<br/>10.10.10.149<br/>Port 9001"]
+
+        T["🖥️ Ubuntu Server<br/>TARGET WEB<br/><br/>Mutillidae II<br/>10.10.10.2"]
+
+        T -->|"Reverse Shell<br/>Outbound Connection"| A
+    end
+
+    classDef attacker fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef target fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+
+    class A attacker
+    class T target
 ```
 
 ---

@@ -1,6 +1,6 @@
 # Linux: Execution, History, and Timeline Analysis
 
-[🇮🇩 Baca dalam Bahasa Indonesia](linux-enumeration-investigation.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](linux-enumeration-investigation-id.md)
 
 ﷽
 
@@ -60,19 +60,27 @@ Therefore, we do not rely on a single source. Multiple artifacts need to be exam
 
 # Analysis Flow
 
-```text
-                 Enumeration
-                      │
-          ┌───────────┼───────────┐
-          ▼           ▼           ▼
-      Execution     History    Timeline
-          │           │           │
-          └───────────┼───────────┘
-                      ▼
-                 Correlation
-                      │
-                      ▼
-             Activity Reconstruction
+```mermaid
+flowchart TD
+    A["Enumeration"]
+
+    A --> B["Execution"]
+    A --> C["History"]
+    A --> D["Timeline"]
+
+    B --> E["Correlation"]
+    C --> E
+    D --> E
+
+    E --> F["Activity Reconstruction"]
+
+    classDef source fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef analysis fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef result fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B,C,D source
+    class E analysis
+    class F result
 ```
 
 ---
@@ -175,16 +183,23 @@ These commands indicate that activity on the server did not stop at the initial 
 
 Several activity patterns can be seen:
 
-```text
-Persistence
-    ↓
-C2 / Reverse Shell
-    ↓
-Network Configuration
-    ↓
-Pivoting
-    ↓
-Lateral Movement
+```mermaid
+flowchart TD
+    A["Persistence"]
+    B["C2 / Reverse Shell"]
+    C["Network Configuration"]
+    D["Pivoting"]
+    E["Lateral Movement"]
+
+    A --> B --> C --> D --> E
+
+    classDef activity fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef network fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef movement fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B activity
+    class C,D network
+    class E movement
 ```
 
 For example:
@@ -272,16 +287,23 @@ moon     pts/0   192.168.15.2
 
 This information can be used to establish a timeline relationship:
 
-```text
-Source Address
-      ↓
-User
-      ↓
-Login Time
-      ↓
-Session
-      ↓
-Activity Evidence
+```mermaid
+flowchart TD
+    A["Source Address"]
+    B["User"]
+    C["Login Time"]
+    D["Session"]
+    E["Activity Evidence"]
+
+    A --> B --> C --> D --> E
+
+    classDef source fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef session fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B source
+    class C,D session
+    class E evidence
 ```
 
 For example, if the history shows a particular activity around `03:08`, the `moon` session recorded at that time can become one of the points to compare with other evidence.
@@ -325,14 +347,22 @@ We can see that the `moon` user has several active terminals and all sessions or
 
 This information can be used to see:
 
-```text
-User
-  ↓
-Terminal
-  ↓
-Login Time
-  ↓
-Source Address
+```mermaid
+flowchart TD
+    A["User"]
+    B["Terminal"]
+    C["Login Time"]
+    D["Source Address"]
+
+    A --> B --> C --> D
+
+    classDef user fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef session fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B user
+    class C session
+    class D evidence
 ```
 
 If suspicious activity occurred around the same time, the session can be compared with `history`, `last`, processes, and network connections.
@@ -347,19 +377,26 @@ After looking at `history`, `last`, `who`, and process information, we begin com
 
 For example:
 
-```text
-03:08
-│
-├── User moon session started
-│
-├── pts/2
-└── pts/3
-        │
-        ▼
-        Shell Activity
-        │
-        ├── Command in history
-        └── Running process
+```mermaid
+flowchart TD
+    A["03:08 - User moon Session Started"]
+
+    A --> B["pts/2"]
+    A --> C["pts/3"]
+
+    B --> D["Shell Activity"]
+    C --> D
+
+    D --> E["Commands in History"]
+    D --> F["Running Processes"]
+
+    classDef timestamp fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef session fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A timestamp
+    class B,C session
+    class D,E,F evidence
 ```
 
 The timeline does not have to be complete immediately.
@@ -370,14 +407,18 @@ For example, there may be activity in `history` around `03:08`, while `last` sho
 
 This provides a point that can be examined further.
 
-```text
-Login
-  ↓
-Shell Activity
-  ↓
-Process
-  ↓
-Network / Log
+```mermaid
+flowchart TD
+    A["Login"]
+    B["Shell Activity"]
+    C["Process"]
+    D["Network / Log"]
+
+    A --> B --> C --> D
+
+    classDef stage fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+
+    class A,B,C,D stage
 ```
 
 Timeline analysis helps answer:
@@ -394,24 +435,42 @@ We connect them.
 
 For example:
 
-```text
-last
- │
- └── moon @ 10.10.10.1
-          │
-          ▼
-       history
-          │
-          ├── whoami
-          ├── id
-          ├── uname
-          └── ls
-          │
-          ▼
-       process
-          │
-          ▼
-    network / log
+```mermaid
+flowchart TD
+    A["last"]
+    B["moon @ 10.10.10.1"]
+
+    C["history"]
+    D["whoami"]
+    E["id"]
+    F["uname"]
+    G["ls"]
+
+    H["Process"]
+    I["Network / Log"]
+
+    A --> B
+    B --> C
+
+    C --> D
+    C --> E
+    C --> F
+    C --> G
+
+    D --> H
+    E --> H
+    F --> H
+    G --> H
+
+    H --> I
+
+    classDef login fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef history fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B login
+    class C,D,E,F,G history
+    class H,I evidence
 ```
 
 From this relationship, we can form a hypothesis:
@@ -514,18 +573,27 @@ Linux Enumeration Analysis is not simply about running commands to view system i
 
 By looking at processes, history, login activity, and timestamps, we can understand various activities that occurred after the system was accessed.
 
-```text
-Execution
-   +
-History
-   +
-Login Activity
-   +
-Timeline
-      ↓
-Correlation
-      ↓
-Activity Reconstruction
+```mermaid
+flowchart TD
+    A["Execution"]
+    B["History"]
+    C["Login Activity"]
+    D["Timeline"]
+
+    A --> E["Correlation"]
+    B --> E
+    C --> E
+    D --> E
+
+    E --> F["Activity Reconstruction"]
+
+    classDef artifact fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef analysis fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef result fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A,B,C,D artifact
+    class E analysis
+    class F result
 ```
 
 From here, we can move from simply **looking at command output** to **understanding the relationships between activities on the system**.

@@ -20,20 +20,29 @@ Lalu, bagaimana prosesnya ketika pengunjung membuka website yang menggunakan Sin
 
 ## Alurnya
 
-```mermaid
-flowchart TD
-    C["🧑‍🦱 Pelanggan<br/>Datang dan memesan makanan"] -->|"1. Pesan makanan<br/>seperti HTTP Request"| P["🧑‍🍳 Pelayan<br/>Menerima pesanan dan meneruskannya"]
-    P -->|"2. Teruskan pesanan<br/>ke dapur"| K["👨‍🍳 Koki<br/>Memasak sesuai pesanan"]
-    K -->|"3. Ambil bahan<br/>jika diperlukan"| G["🥫 Gudang Bahan<br/>Menyimpan bahan makanan"]
-    G -->|"4. Kirim bahan<br/>ke koki"| K
-    K -->|"5. Sajikan makanan<br/>ke pelayan"| P
-    P -->|"6. Antar makanan<br/>ke pelanggan<br/>seperti HTTP Response"| C
+```text
+🧑‍🦱 Pelanggan
+    │  1. Pesanan masuk (HTTP Request)
+    ▼
+🧑‍🍳 Pelayan
+    │  2. Teruskan pesanan
+    ▼
+👨‍🍳 Koki
+    │  3. Ambil bahan jika diperlukan
+    ▼
+🥫 Gudang Bahan
+    │  4. Kirim bahan
+    ▼
+👨‍🍳 Koki
+    │  5. Makanan selesai
+    ▼
+🧑‍🍳 Pelayan
+    │  6. Antar makanan (HTTP Response)
+    ▼
+🧑‍🦱 Pelanggan
 
-    subgraph W["Warung / Satu Lokasi"]
-        P
-        K
-        G
-    end
+[ Warung / Single-Tier Architecture ]
+    Pelayan  →  Koki  →  Gudang Bahan
 ```
 
 Dari diagram warung makan di atas, terlihat bahwa semua proses terjadi di satu lokasi yang sama. Di balik sajian makanan yang tampak sederhana, sebenarnya ada serangkaian peran, aturan, dan alat yang bekerja bersama agar pesanan bisa diproses dan diantar kembali dengan tepat.
@@ -63,29 +72,24 @@ Referensi: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/
 
 ## Kombinasi Stack
 
-```mermaid
-flowchart TD
-    A["🍜 Technology Stack<br/>= Resep dan bahan masakan"] --> B{"Pilih bahan sesuai menu"}
-
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastruktur<br/>ELK, Prometheus + Grafana"]
-
-    C --> L["🍽️ Aplikasi web / API<br/>sesuai kebutuhan proyek"]
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
+```text
+🍜 Technology Stack = Resep dan bahan masakan
+    │
+    ▼
+Pilih bahan sesuai menu
+    │
+    ├── 🟨 JavaScript / TypeScript  (React, Node.js, MongoDB)
+    ├── 🐘 PHP                      (Laravel, LAMP, LEMP)
+    ├── 🐍 Python                   (Django, FastAPI, Flask)
+    ├── 🔷 .NET                     (ASP.NET Core, Blazor)
+    ├── ☕ Java                      (Spring Boot, Jakarta EE)
+    ├── 💎 Ruby                      (Ruby on Rails)
+    ├── 🐹 Go                        (Gin, Echo, Fiber)
+    ├── 🦀 Rust                      (Actix, Axum, Rocket)
+    └── 📊 Infrastruktur            (ELK, Prometheus + Grafana)
+    │
+    ▼
+🍽️ Aplikasi web / API (sesuai kebutuhan proyek)
 ```
 
 Kombinasi stack ini seperti bahan makanan dasar yang digunakan oleh warung tersebut. Dalam konteks teknologi seperti sistem operasi, web server, bahasa pemrograman, framework, dan database, membentuk sebuah variasi yang disebut [solution stack](https://en.wikipedia.org/wiki/Solution_stack). 
@@ -203,23 +207,21 @@ Setelah memilih technology stack yang akan digunakan, langkah berikutnya adalah 
 
 Dalam dunia server, pilihan ini menentukan bagaimana aplikasi dijalankan, sumber daya komputasi disediakan, dan infrastruktur dikelola. Referensi: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-flowchart TD
-    A["🍜 Stack sudah siap<br/>resep + bahan + peralatan"] --> B{"📍 Jalankan di mana?"}
-
-    B --> C["🏠 Bare Metal<br/>Bangun warung sendiri"]
-    B --> D["🛏️ Virtual Machine<br/>Sewa kamar kost"]
-    B --> E["🍱 Container<br/>Sewa gerai food court"]
-    B --> F["🏪 PaaS<br/>Ikut franchise siap pakai"]
-    B --> G["🛒 Serverless<br/>Buka gerai saat ada pesanan"]
-    B --> H["🛵 Edge Computing<br/>Gerobak dekat pelanggan"]
-
-    C --> I["🧩 Semua komponen stack<br/>berjalan di satu tempat"]
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
+```text
+🍜 Stack sudah siap (resep + bahan + peralatan)
+    │
+    ▼
+📍 Jalankan di mana?
+    │
+    ├── 🏠 Bare Metal        → Bangun warung sendiri
+    ├── 🛏️ Virtual Machine   → Sewa kamar kost
+    ├── 🍱 Container         → Sewa gerai food court
+    ├── 🏪 PaaS              → Ikut franchise siap pakai
+    ├── 🛒 Serverless        → Buka gerai saat ada pesanan
+    └── 🛵 Edge Computing    → Gerobak dekat pelanggan
+    │
+    ▼
+🧩 Semua komponen stack berjalan di satu tempat
 ```
 
 Bayangkan kamu sudah punya resep, bahan, dan peralatan untuk membuka warung makan. Sekarang, kamu perlu menentukan tempat untuk menjalankan usaha tersebut. Kamu bisa membangun warung sendiri, menyewa tempat, berbagi fasilitas dengan pedagang lain, atau membuka gerai sementara sesuai kebutuhan.

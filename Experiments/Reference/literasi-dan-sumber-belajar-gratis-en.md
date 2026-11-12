@@ -1,6 +1,6 @@
 # List of Free Literacy and Learning Resources
 
-🇮🇩 [Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)
+[🇮🇩 Baca dalam Bahasa Indonesia](literasi-dan-sumber-belajar-gratis-id.md)
 
 ﷽
 

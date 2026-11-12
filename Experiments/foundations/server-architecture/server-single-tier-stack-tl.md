@@ -20,20 +20,29 @@ Ngunit paano nga ba ito gumagana kapag ang isang bisita ay bumisita sa isang web
 
 ## Daloy ng Proseso
 
-```mermaid
-flowchart TD
-    C["🧑‍🦱 Customer<br/>Nag-order ng pagkain"] -->|"1. Nagpadala ng order<br/>bilang HTTP Request"| P["🧑‍🍳 Waiter<br/>Tumatanggap ng order at ipinapasa ito"]
-    P -->|"2. Ipinapasa ang order<br/>sa kusina"| K["👨‍🍳 Kusinero<br/>Naghahanda ng order"]
-    K -->|"3. Kinukuha ang mga sangkap<br/>kung kinakailangan"| G["🥫 Bodega<br/>Nagtatago ng mga sangkap"]
-    G -->|"4. Ipinapadala ang mga sangkap<br/>sa kusinero"| K
-    K -->|"5. Inihahain ang pagkain<br/>sa waiter"| P
-    P -->|"6. Inihahatid ang pagkain<br/>sa customer<br/>bilang HTTP Response"| C
+```text
+🧑‍🦱 Customer
+    │  1. Nagpapadala ng order (HTTP Request)
+    ▼
+🧑‍🍳 Waiter
+    │  2. Ipinapasa ang order sa kusina
+    ▼
+👨‍🍳 Kusinero
+    │  3. Kinukuha ang mga sangkap kung kinakailangan
+    ▼
+🥫 Bodega
+    │  4. Ipinapadala ang mga sangkap
+    ▼
+👨‍🍳 Kusinero
+    │  5. Handa na ang pagkain para ihain
+    ▼
+🧑‍🍳 Waiter
+    │  6. Inihahatid ang pagkain sa customer (HTTP Response)
+    ▼
+🧑‍🦱 Customer
 
-    subgraph W["Karinderya / Isang Lugar Lamang"]
-        P
-        K
-        G
-    end
+[ Karinderya / Single-Tier Architecture ]
+    Waiter  →  Kusinero  →  Bodega
 ```
 
 Mula sa diagram ng karinderya, malinaw na ang lahat ng gawain ay nagaganap sa iisang lugar lamang. Sa likod ng isang simpleng pagkain, may mga tungkulin, patakaran, at kagamitan na nagtutulungan upang maiproseso nang tama ang order at maibalik ito sa customer.
@@ -63,27 +72,24 @@ Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US
 
 ## Mga Kombinasyon ng Technology Stack
 
-```mermaid
-flowchart TD
-    A["🍜 Technology Stack<br/>= Resipe at mga sangkap"] --> B{"Pumili ng sangkap batay sa menu"}
-    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
-    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
-    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
-    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
-    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
-    B --> H["💎 Ruby<br/>Ruby on Rails"]
-    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
-    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
-    B --> K["📊 Infrastructure<br/>ELK, Prometheus + Grafana"]
-    C --> L["🍽️ Web Application / API<br/>ayon sa pangangailangan ng proyekto"]
-    D --> L
-    E --> L
-    F --> L
-    G --> L
-    H --> L
-    I --> L
-    J --> L
-    K --> L
+```text
+🍜 Technology Stack = Resipe at mga sangkap
+    │
+    ▼
+Pumili ng sangkap batay sa menu
+    │
+    ├── 🟨 JavaScript / TypeScript  (React, Node.js, MongoDB)
+    ├── 🐘 PHP                      (Laravel, LAMP, LEMP)
+    ├── 🐍 Python                   (Django, FastAPI, Flask)
+    ├── 🔷 .NET                     (ASP.NET Core, Blazor)
+    ├── ☕ Java                      (Spring Boot, Jakarta EE)
+    ├── 💎 Ruby                      (Ruby on Rails)
+    ├── 🐹 Go                        (Gin, Echo, Fiber)
+    ├── 🦀 Rust                      (Actix, Axum, Rocket)
+    └── 📊 Infrastructure            (ELK, Prometheus + Grafana)
+    │
+    ▼
+🍽️ Web Application / API (ayon sa pangangailangan ng proyekto)
 ```
 
 Ang technology stack ay katulad ng resipe at mga sangkap nito. Sa larangan ng computing, ang pagpili ng operating system, web server, programming language, framework, at database ay bumubuo ng isang natatanging kaayusan na tinatawag na [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
@@ -199,21 +205,21 @@ Matapos pumili ng technology stack, ang susunod na hakbang ay tukuyin ang **plat
 
 Sa konteksto ng server, ang pagpiling ito ang magtatakda kung paano tatakbo ang aplikasyon, paano ipapamigay ang mga computing resource, at paano pamamahalaan ang imprastruktura. Sanggunian: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```mermaid
-flowchart TD
-    A["🍜 Handa na ang stack<br/>resipe + mga sangkap + mga kagamitan"] --> B{"📍 Saan ito patatakbuhin?"}
-    B --> C["🏠 Bare Metal<br/>Bumuo ng sarili mong karinderya"]
-    B --> D["🛏️ Virtual Machine<br/>Umupa ng pribadong kwarto"]
-    B --> E["🍱 Container<br/>Umupa ng stall sa food court"]
-    B --> F["🏪 PaaS<br/>Sumali sa ready-to-use na franchise"]
-    B --> G["🛒 Serverless<br/>Buksan ang stall lamang kapag may order"]
-    B --> H["🛵 Edge Computing<br/>Gumamit ng food cart malapit sa mga customer"]
-    C --> I["🧩 Lahat ng bahagi ng stack<br/>tumatakbo sa iisang lugar"]
-    D --> I
-    E --> I
-    F --> I
-    G --> I
-    H --> I
+```text
+🍜 Handa na ang stack (resipe + mga sangkap + mga kagamitan)
+    │
+    ▼
+📍 Saan ito patatakbuhin?
+    │
+    ├── 🏠 Bare Metal         → Bumuo ng sarili mong karinderya
+    ├── 🛏️ Virtual Machine    → Umupa ng pribadong kwarto
+    ├── 🍱 Container          → Umupa ng stall sa food court
+    ├── 🏪 PaaS               → Sumali sa ready-to-use na franchise
+    ├── 🛒 Serverless         → Buksan ang stall lamang kapag may order
+    └── 🛵 Edge Computing     → Gumamit ng food cart malapit sa mga customer
+    │
+    ▼
+🧩 Lahat ng bahagi ng stack tumatakbo sa iisang lugar
 ```
 
 Isipin mo na nakakuha ka na ng resipe, mga sangkap, at mga kagamitan upang magbukas ng karinderya. Ngayon, kailangan mong magpasya kung saan ito mag-ooperate: bumuo ng sarili mong lugar, umupa ng puwang, makipag-share ng mga pasilidad sa iba pang mga vendor, o magbukas ng pansamantala lamang ayon sa pangangailangan.

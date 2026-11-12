@@ -43,31 +43,42 @@ Artikel ini merupakan lanjutan dari demonstrasi Reverse Shell sebelumnya.
 
 Pastikan Reverse Shell telah berhasil diperoleh terlebih dahulu melalui kerentanan **Command Injection**.
 
-```text
-Command Injection
-        │
-        ▼
-Command Execution
-        │
-        ▼
-Reverse Shell
+```mermaid
+flowchart TD
+    A[Command Injection]
+    B[Command Execution]
+    C[Reverse Shell]
+
+    A --> B --> C
+
+    classDef source fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef activity fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef result fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+
+    class A source
+    class B activity
+    class C result
 ```
 
 ---
 
 # Flow Analisis
 
-```text
-            Reverse Shell
-                  │
-                  ▼
-        Process Analysis
-                  │
-                  ▼
-          Log Analysis
-                  │
-                  ▼
-       Network Analysis
+```mermaid
+flowchart TD
+    A[Reverse Shell]
+    B[Process Analysis]
+    C[Log Analysis]
+    D[Network Analysis]
+
+    A --> B --> C --> D
+
+    classDef source fill:#e8f1ff,stroke:#2563eb,color:#172554,stroke-width:2px
+    classDef analysis fill:#fff4e5,stroke:#ea580c,color:#7c2d12,stroke-width:2px
+    classDef evidence fill:#ecfdf5,stroke:#059669,color:#064e3b,stroke-width:2px
+
+    class A source
+    class B,C,D analysis
 ```
 
 ---
