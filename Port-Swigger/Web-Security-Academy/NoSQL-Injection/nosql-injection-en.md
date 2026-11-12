@@ -4,6 +4,10 @@
 
 ﷽
 
+## What is that?
+
+![nosql-injection](images/overview/nosql-injection.png)
+
 ## What is NoSQL Injection?
 
 NoSQL injection is a vulnerability where is able to interfere with the queries that an application makes to a NoSQL database. NoSQL injection may enable an attacker to:
