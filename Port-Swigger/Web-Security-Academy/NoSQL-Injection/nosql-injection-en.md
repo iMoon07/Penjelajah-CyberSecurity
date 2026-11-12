@@ -8,6 +8,8 @@
 
 ![nosql-injection](images/overview/nosql-injection.png)
 
+This learning path covers the detection, exploitation, and prevention of NoSQL injection vulnerabilities. You'll explore the differences between NoSQL and SQL injection, learn how to perform NoSQL syntax injection, and how to use NoSQL operators to manipulate queries.
+
 ## What is NoSQL Injection?
 
 NoSQL injection is a vulnerability where is able to interfere with the queries that an application makes to a NoSQL database. NoSQL injection may enable an attacker to:
