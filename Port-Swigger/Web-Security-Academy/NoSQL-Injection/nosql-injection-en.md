@@ -23,6 +23,8 @@ NoSQL databases store and retrieve data in a format other than traditional SQL r
 
 ## Types of NoSQL Injection
 
+
+
 ### NoSQL Syntax Injection
 
 #### Detecting Syntax Injection in MongoDB
