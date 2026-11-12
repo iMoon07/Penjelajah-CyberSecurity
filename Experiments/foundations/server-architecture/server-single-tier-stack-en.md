@@ -20,29 +20,20 @@ But how does this work when a visitor accesses a website built on a single-tier 
 
 ## The Flow
 
-```text
-🧑‍🦱 Customer
-    │  1. Submit order (HTTP Request)
-    ▼
-🧑‍🍳 Waiter
-    │  2. Forward order to the kitchen
-    ▼
-👨‍🍳 Chef
-    │  3. Retrieve ingredients if needed
-    ▼
-🥫 Pantry
-    │  4. Deliver ingredients
-    ▼
-👨‍🍳 Chef
-    │  5. Meal is ready to be served
-    ▼
-🧑‍🍳 Waiter
-    │  6. Deliver meal to the customer (HTTP Response)
-    ▼
-🧑‍🦱 Customer
+```mermaid
+flowchart TD
+    C["🧑‍🦱 Customer<br/>Places an order"] -->|"1. Place order<br/>as HTTP Request"| P["🧑‍🍳 Waiter<br/>Takes the order and forwards it"]
+    P -->|"2. Forward order<br/>to the kitchen"| K["👨‍🍳 Chef<br/>Prepares the order"]
+    K -->|"3. Retrieve ingredients<br/>if needed"| G["🥫 Pantry<br/>Stores ingredients"]
+    G -->|"4. Send ingredients<br/>to the chef"| K
+    K -->|"5. Serve meal<br/>to the waiter"| P
+    P -->|"6. Deliver meal<br/>to the customer<br/>as HTTP Response"| C
 
-[ Eatery / Single-Tier Architecture ]
-    Waiter  →  Chef  →  Pantry
+    subgraph W["Eatery / Single Location"]
+        P
+        K
+        G
+    end
 ```
 
 Looking at the eatery analogy above, it's clear that everything happens in one place. Behind a simple meal, there are roles, rules, and tools working together to get an order from customer to kitchen and back again.
@@ -72,24 +63,27 @@ Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/
 
 ## Technology Stack Combinations
 
-```text
-🍜 Technology Stack = Recipe and ingredients
-    │
-    ▼
-Choose ingredients based on the menu
-    │
-    ├── 🟨 JavaScript / TypeScript  (React, Node.js, MongoDB)
-    ├── 🐘 PHP                      (Laravel, LAMP, LEMP)
-    ├── 🐍 Python                   (Django, FastAPI, Flask)
-    ├── 🔷 .NET                     (ASP.NET Core, Blazor)
-    ├── ☕ Java                      (Spring Boot, Jakarta EE)
-    ├── 💎 Ruby                      (Ruby on Rails)
-    ├── 🐹 Go                        (Gin, Echo, Fiber)
-    ├── 🦀 Rust                      (Actix, Axum, Rocket)
-    └── 📊 Infrastructure            (ELK, Prometheus + Grafana)
-    │
-    ▼
-🍽️ Web Application / API (tailored to project needs)
+```mermaid
+flowchart TD
+    A["🍜 Technology Stack<br/>= Recipe and ingredients"] --> B{"Choose ingredients based on the menu"}
+    B --> C["🟨 JavaScript / TypeScript<br/>React, Node.js, MongoDB"]
+    B --> D["🐘 PHP<br/>Laravel, LAMP, LEMP"]
+    B --> E["🐍 Python<br/>Django, FastAPI, Flask"]
+    B --> F["🔷 .NET<br/>ASP.NET Core, Blazor"]
+    B --> G["☕ Java<br/>Spring Boot, Jakarta EE"]
+    B --> H["💎 Ruby<br/>Ruby on Rails"]
+    B --> I["🐹 Go<br/>Gin, Echo, Fiber"]
+    B --> J["🦀 Rust<br/>Actix, Axum, Rocket"]
+    B --> K["📊 Infrastructure<br/>ELK, Prometheus + Grafana"]
+    C --> L["🍽️ Web Application / API<br/>tailored to project needs"]
+    D --> L
+    E --> L
+    F --> L
+    G --> L
+    H --> L
+    I --> L
+    J --> L
+    K --> L
 ```
 
 A technology stack is akin to a recipe and its ingredients. In computing, the choice of operating system, web server, programming language, framework, and database forms a distinct arrangement known as a [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
@@ -205,21 +199,21 @@ Once a technology stack has been chosen, the next step is to determine the **pla
 
 In server terms, this choice affects how the application runs, how computing resources are provisioned, and how the infrastructure is managed. Reference: [Wikipedia — Computing platform](https://en.wikipedia.org/wiki/Computing_platform).
 
-```text
-🍜 Stack is ready (recipe + ingredients + tools)
-    │
-    ▼
-📍 Where to run it?
-    │
-    ├── 🏠 Bare Metal        → Build your own eatery
-    ├── 🛏️ Virtual Machine   → Rent a private room
-    ├── 🍱 Container         → Rent a stall in a food court
-    ├── 🏪 PaaS              → Join a ready-to-use franchise
-    ├── 🛒 Serverless        → Open a stall only when orders come in
-    └── 🛵 Edge Computing    → Use a food cart near your customers
-    │
-    ▼
-🧩 All stack components run in one place
+```mermaid
+flowchart TD
+    A["🍜 Stack is ready<br/>recipe + ingredients + tools"] --> B{"📍 Where to run it?"}
+    B --> C["🏠 Bare Metal<br/>Build your own eatery"]
+    B --> D["🛏️ Virtual Machine<br/>Rent a private room"]
+    B --> E["🍱 Container<br/>Rent a stall in a food court"]
+    B --> F["🏪 PaaS<br/>Join a ready-to-use franchise"]
+    B --> G["🛒 Serverless<br/>Open a stall only when orders come in"]
+    B --> H["🛵 Edge Computing<br/>Use a food cart near your customers"]
+    C --> I["🧩 All stack components<br/>run in one place"]
+    D --> I
+    E --> I
+    F --> I
+    G --> I
+    H --> I
 ```
 
 Imagine you've gathered your recipe, ingredients, and tools to open an eatery. You must now decide where to operate: build your own premises, rent a space, share facilities with others, or open a temporary stall as needed.
