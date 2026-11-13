@@ -95,8 +95,8 @@ Yang bisa diuji di section 19:
 
 ### Alur — visual explainer
 
-` ```alur ` adalah renderer animasi untuk penjelasan protokol, algoritma, pipeline,
-dan diagram kanvas. Sumbernya `js/alur/`; playground-nya `preview.html`.
+` ```draw ` adalah renderer animasi untuk penjelasan protokol, algoritma, pipeline,
+dan diagram kanvas. Sumbernya `js/alur/`; playground-nya `draw.html`.
 
 Yang diuji di section 18:
 
@@ -121,7 +121,7 @@ Yang diuji di section 18:
   tanpa full rerender setiap event.
 - Scene disimpan ke `localStorage` (dan saat tab/page hide), jadi node/gambar tidak
   hilang setelah refresh.
-- Mode uji lokal tetap ada lewat `preview.html?localLogos=1` setelah logo disalin ke
+- Mode uji lokal tetap ada lewat `draw.html?localLogos=1` setelah logo disalin ke
   `assets/logos/`.
 
 ---
@@ -782,7 +782,7 @@ Ini adalah x^2^.
 
 ## 18 — Alur Visual Lab
 
-> **Note:** Bagian ini adalah uji render langsung untuk engine Alur. Setiap blok di bawah adalah diagram ` ```alur `. Source engine ada di `js/alur/`; playground ada di `preview.html`.
+> **Note:** Bagian ini adalah uji render langsung untuk engine Alur. Setiap blok di bawah adalah diagram ` ```draw `. Source engine ada di `js/alur/`; playground ada di `draw.html`.
 
 ### 18.0 Apa yang diuji
 
@@ -799,14 +799,14 @@ palette dan cable/motion yang sama.
 
 Logo sekarang diambil langsung dari GitHub `iMoon07/logo-svg` lewat
 `raw.githubusercontent.com`; situs tidak menyimpan folder logo. Untuk uji lokal,
-salin/symlink logo ke `assets/logos/` lalu buka `preview.html?localLogos=1`.
+salin/symlink logo ke `assets/logos/` lalu buka `draw.html?localLogos=1`.
 
 ### 18.1 Flow with logos
 
 Request path berlapis. Node memakai logo dari library remote 575 logo
 `iMoon07/logo-svg`, termasuk security tools.
 
-```alur
+```draw
 {
   "module": "flow",
   "title": "Request path with logos",
@@ -879,35 +879,35 @@ Request path berlapis. Node memakai logo dari library remote 575 logo
     }
   },
   "edges": [
-    {
-      "from": "client",
-      "to": "edge",
-      "label": "TLS"
-    },
-    {
-      "from": "edge",
-      "to": "app1"
-    },
-    {
-      "from": "edge",
-      "to": "app2"
-    },
-    {
-      "from": "app1",
-      "to": "db"
-    },
-    {
-      "from": "app2",
-      "to": "db"
-    },
-    {
-      "from": "app1",
-      "to": "sec1"
-    },
-    {
-      "from": "app2",
-      "to": "sec2"
-    }
+    [
+      "client",
+      "edge",
+      "TLS"
+    ],
+    [
+      "edge",
+      "app1"
+    ],
+    [
+      "edge",
+      "app2"
+    ],
+    [
+      "app1",
+      "db"
+    ],
+    [
+      "app2",
+      "db"
+    ],
+    [
+      "app1",
+      "sec1"
+    ],
+    [
+      "app2",
+      "sec2"
+    ]
   ]
 }
 ```
@@ -916,7 +916,7 @@ Request path berlapis. Node memakai logo dari library remote 575 logo
 
 TLS termination, routing, caching, and load-balancing at the edge layer.
 
-```alur
+```draw
 {
   "module": "reverse-proxy",
   "title": "Reverse Proxy: Single Front, Many Backends",
@@ -928,7 +928,7 @@ TLS termination, routing, caching, and load-balancing at the edge layer.
 
 Covers producer/consumer, CPU scheduling, CDN cache layers, and request pipelines.
 
-```alur
+```draw
 {
   "module": "pipeline",
   "title": "Request pipeline",
@@ -959,7 +959,7 @@ Covers producer/consumer, CPU scheduling, CDN cache layers, and request pipeline
 
 Nodes, edges, and an animated frontier. Covers BFS, topological order, and MST-style demos.
 
-```alur
+```draw
 {
   "module": "graph",
   "title": "BFS traversal",
@@ -1078,7 +1078,7 @@ Nodes, edges, and an animated frontier. Covers BFS, topological order, and MST-s
 
 One path, many looks: neon, bundle, relay, ribbon, dashed, circuit. Set `cable` per edge or per diagram.
 
-```alur
+```draw
 {
   "module": "flow",
   "title": "Cable styles",
@@ -1166,7 +1166,7 @@ One path, many looks: neon, bundle, relay, ribbon, dashed, circuit. Set `cable` 
 
 Data movement: comet, packets, flowMany, dash, draw, relay. Set `motion` per edge.
 
-```alur
+```draw
 {
   "module": "flow",
   "title": "Motion effects",
@@ -1250,7 +1250,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.1 Bar
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "bar",
@@ -1275,7 +1275,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.2 Horizontal bar ranking
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "hbar",
@@ -1300,7 +1300,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.3 Multi-series line
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "line",
@@ -1341,7 +1341,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.4 Area
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "area",
@@ -1366,7 +1366,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.5 Stacked bar composition
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "stacked",
@@ -1414,7 +1414,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.6 Donut percent breakdown
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "donut",
@@ -1443,7 +1443,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.7 Single-value percent gauge
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "gauge",
@@ -1460,7 +1460,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.8 Spark line
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "spark",
@@ -1481,7 +1481,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.9 KPI callout
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "kpi",
@@ -1496,7 +1496,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.10 Scatter plot
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "scatter",
@@ -1537,7 +1537,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.11 Waterfall
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "waterfall",
@@ -1562,7 +1562,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.12 Funnel conversion
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "funnel",
@@ -1590,7 +1590,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.13 Bell curve with marker
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "bell",
@@ -1605,7 +1605,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.14 Histogram
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "histogram",
@@ -1631,7 +1631,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.15 Stacked area trend
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "stackedArea",
@@ -1683,7 +1683,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.16 Treemap
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "treemap",
@@ -1714,7 +1714,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.17 Box plot
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "box",
@@ -1750,7 +1750,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.18 Range bar with thresholds
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "range",
@@ -1778,7 +1778,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.19 Density curve
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "density",
@@ -1816,7 +1816,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.20 Slope chart
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "slope",
@@ -1844,7 +1844,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.21 Two-axis combo
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "combo",
@@ -1876,7 +1876,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.22 Annotated timeline
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "timeline",
@@ -1905,7 +1905,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.23 Bubble chart
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "bubble",
@@ -1948,7 +1948,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.24 Dumbbell plot
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "dumbbell",
@@ -1975,7 +1975,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.25 Quadrant matrix
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "quadrant",
@@ -2012,7 +2012,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.26 Process flow steps
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "process",
@@ -2029,7 +2029,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.27 Cycle loop stages
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "cycle",
@@ -2046,7 +2046,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.28 Progress bar stack
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "progress",
@@ -2092,7 +2092,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.29 Comparison table
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "table",
@@ -2129,25 +2129,94 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 ### 18.8 Logo library — security tools
 
-575 logo dari `iMoon07/logo-svg` tersedia untuk setiap node
-(`"logo": "security:nmap"`). Blok ini memakai enam di antaranya; logo dimuat dari
-GitHub, bukan dari folder lokal.
+All 575 logos from `iMoon07/logo-svg` are available to every node (`"logo": "security:nmap"`). This compact chain shows four representative phases; every tool is a node, and its logo is the catalogue entry.
 
-```alur
+```topology
 {
-  "module": "flow",
   "title": "Security toolchain",
-  "cable": "circuit",
-  "motion": "flowMany",
-  "columns": [["recon"], ["exploit"], ["forensics"]],
+  "uniform": true,
+  "columns": [
+    [
+      "recon"
+    ],
+    [
+      "exploit"
+    ],
+    [
+      "post"
+    ],
+    [
+      "forensics"
+    ]
+  ],
   "nodes": {
-    "recon": { "label": "Recon", "logos": ["security:nmap", "security:wireshark"], "color": "cyan" },
-    "exploit": { "label": "Exploit", "logos": ["security:metasploit", "security:burp"], "color": "red" },
-    "forensics": { "label": "Forensics", "logos": ["security:hashcat", "security:ghidra"], "color": "purple" }
+    "recon": [
+      "Recon",
+      "Nmap · Wireshark",
+      [
+        "security:nmap",
+        "security:wireshark"
+      ],
+      "tech"
+    ],
+    "exploit": [
+      "Exploit",
+      "Metasploit · Burp",
+      [
+        "security:metasploit",
+        "security:burp"
+      ],
+      "tech"
+    ],
+    "post": [
+      "Post-exploit",
+      "Mimikatz · Hashcat",
+      [
+        "security:mimikatz",
+        "security:hashcat"
+      ],
+      "tech"
+    ],
+    "forensics": [
+      "Forensics",
+      "Ghidra · Autopsy",
+      [
+        "security:ghidra",
+        "security:autopsy"
+      ],
+      "tech"
+    ]
   },
   "edges": [
-    { "from": "recon", "to": "exploit" },
-    { "from": "exploit", "to": "forensics" }
+    [
+      "recon",
+      "exploit",
+      "1"
+    ],
+    [
+      "exploit",
+      "post",
+      "2"
+    ],
+    [
+      "post",
+      "forensics",
+      "3"
+    ]
+  ],
+  "legend": {
+    "flow": "Attack phase"
+  },
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
   ]
 }
 ```
@@ -2158,7 +2227,7 @@ GitHub, bukan dari folder lokal.
 `canvas` adalah module bebas: node diletakkan manual dengan koordinat scene, tidak
 auto-layout. Setiap node punya posisi, ukuran, bentuk, label, warna, dan logo.
 
-```alur
+```draw
 {
   "module": "canvas",
   "title": "Canvas editor",
@@ -2201,7 +2270,7 @@ align, delete, undo/redo.
 
 ### 18.10 Workspace dan responsive
 
-`preview.html` adalah editor full-viewport. Canvas tidak berubah ukuran ketika panel
+`draw.html` adalah editor full-viewport. Canvas tidak berubah ukuran ketika panel
 dibuka.
 
 - **Top bar** — judul, jumlah node/edge, toggle panel, focus mode.
@@ -2216,7 +2285,7 @@ dibuka.
 - **Stabilitas** — pan/zoom memakai `requestAnimationFrame`, move/resize meng-update
   node/edge/handle secara live, selection tidak full rerender, dan scene disimpan saat
   page hide.
-- **Logo** — remote GitHub; uji lokal `preview.html?localLogos=1` setelah logo
+- **Logo** — remote GitHub; uji lokal `draw.html?localLogos=1` setelah logo
   disalin ke `assets/logos/`.
 
 ## 19 — Topology Visual Lab
@@ -2225,22 +2294,92 @@ dibuka.
 panel, atau zoom. Diagram mengikuti lebar kolom artikel, mengecil dengan proporsional,
 dan menumpuk vertikal ketika layar sempit. Semua isi berasal dari satu JSON.
 
-### 19.1 Anatomy
+### 19.1 Restaurant as a server request
+
+Read left → right. Solid arrows are the order/request path; the dashed arrow is the return/response. The footer repeats the direction legend and the place chips, so the picture is not just a picture.
 
 ```topology
 {
   "title": "The Flow",
-  "columns": [["C"], ["P"], ["K"], ["G"]],
+  "uniform": true,
+  "columns": [
+    [
+      "C"
+    ],
+    [
+      "P"
+    ],
+    [
+      "K"
+    ],
+    [
+      "G"
+    ]
+  ],
   "nodes": {
-    "C": ["Customer", "Places an order", "customer", "actor", "https://…"],
-    "P": ["Waiter", "Takes the order", "waiter", "process"],
-    "K": ["Chef", "Prepares the order", "cook", "process", "https://…", "cook"],
-    "G": ["Pantry", "Stores ingredients", "warehouse", "store"]
+    "C": [
+      "Customer",
+      "Places an order",
+      "stack:github",
+      "actor"
+    ],
+    "P": [
+      "Waiter",
+      "Takes the order",
+      "stack:nginx",
+      "process"
+    ],
+    "K": [
+      "Chef",
+      "Prepares the order",
+      "programming:nodejs",
+      "process"
+    ],
+    "G": [
+      "Pantry",
+      "Stores ingredients",
+      "stack:postgresql",
+      "store"
+    ]
   },
-  "edges": [["C", "P", "1"], ["P", "K", "2"], ["K", "G", "3"], ["G", "K", "4", true]],
-  "groups": [["Eatery", ["P", "K", "G"], "store"]],
-  "legend": { "flow": "Order", "back": "Return" },
-  "facilities": ["In this place", ["store", "Eatery"], ["wifi", "Wi-Fi"]]
+  "edges": [
+    [
+      "C",
+      "P",
+      "1"
+    ],
+    [
+      "P",
+      "K",
+      "2"
+    ],
+    [
+      "K",
+      "G",
+      "3"
+    ],
+    [
+      "G",
+      "K",
+      "4",
+      true
+    ]
+  ],
+  "legend": {
+    "flow": "Order / request",
+    "back": "Return / response"
+  },
+  "facilities": [
+    "In this place",
+    [
+      "store",
+      "Eatery"
+    ],
+    [
+      "wifi",
+      "Wi-Fi"
+    ]
+  ]
 }
 ```
 
@@ -2265,22 +2404,123 @@ Top-level key yang diuji:
 Node compact: `[label, sub, iconOrIcons, kind, href, live]`. Field object: `label`,
 `sub`, `icon`, `icons`, `kind`, `href`, `hidden`, `live`.
 
-### 19.2 Fan-out dan bus
+### 19.2 Hospital platform
 
-Satu sumber ke banyak target. Renderer otomatis membuat satu trunk dan satu stub
-dengan arrowhead per target.
+A hospital platform: WAF and cloud edge, PHP runtime stacks (LAMP, LEMP, WAMP, WIMP, FAMP, FIMP), patient data, and a SOC fed by Wazuh and ELK. Solid arrows are the request path; the dashed arrow is the response.
 
 ```topology
 {
-  "title": "API fan-out",
-  "columns": [["api"], ["web", "worker", "cache"]],
+  "title": "Hospital platform",
+  "uniform": true,
+  "root": [
+    "Hospital",
+    "integrated platform",
+    "building-2",
+    "out"
+  ],
+  "rootWires": false,
+  "columns": [
+    [
+      "edge"
+    ],
+    [
+      "runtime"
+    ],
+    [
+      "data"
+    ],
+    [
+      "soc"
+    ]
+  ],
   "nodes": {
-    "api": ["API", "edge", "server", "process"],
-    "web": ["Web", "HTTP", "globe", "tech"],
-    "worker": ["Worker", "queue", "cpu", "process"],
-    "cache": ["Cache", "memory", "database", "store"]
+    "edge": [
+      "Edge & WAF",
+      "Cloudflare · Nginx · TLS",
+      [
+        "security:wafw00f",
+        "stack:cloudflare",
+        "stack:nginx"
+      ],
+      "network"
+    ],
+    "runtime": [
+      "Runtime stacks",
+      "LAMP · LEMP · WAMP · WIMP · FAMP · FIMP",
+      [
+        "stack:linux",
+        "stack:apache",
+        "stack:mysql",
+        "programming:php"
+      ],
+      "tech"
+    ],
+    "data": [
+      "Patient data",
+      "MariaDB · MySQL · Redis · Postgres",
+      [
+        "stack:mariadb",
+        "stack:mysql",
+        "stack:redis",
+        "stack:postgresql"
+      ],
+      "database"
+    ],
+    "soc": [
+      "SOC / ELK",
+      "Wazuh · Elasticsearch · Logstash · Kibana",
+      [
+        "security:wazuh",
+        "stack:elasticsearch",
+        "stack:logstash",
+        "stack:kibana"
+      ],
+      "process"
+    ]
   },
-  "edges": [["api", "web", "1"], ["api", "worker", "2"], ["api", "cache", "3"]]
+  "edges": [
+    [
+      "__root__",
+      "edge"
+    ],
+    [
+      "edge",
+      "runtime"
+    ],
+    [
+      "runtime",
+      "data"
+    ],
+    [
+      "data",
+      "soc"
+    ],
+    [
+      "data",
+      "runtime",
+      "",
+      true
+    ]
+  ],
+  "legend": {
+    "flow": "Request",
+    "back": "Response"
+  },
+  "facilities": [
+    "Hospital",
+    [
+      "building-2",
+      "Hospital"
+    ],
+    [
+      "shield",
+      "SOC"
+    ],
+    [
+      "cloud",
+      "Cloud"
+    ]
+  ]
 }
 ```
 

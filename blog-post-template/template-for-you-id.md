@@ -728,13 +728,13 @@ Ini adalah x^2^.
 
 ## 18 — Alur Visual Lab
 
-> **Note:** Bagian ini adalah uji render langsung untuk engine Alur. Every block below is a fenced ` ```alur ` diagram. The engine source lives in `imoon07.github.io/js/alur/`; the playground is `preview.html`.
+> **Note:** Bagian ini adalah uji render langsung untuk engine Alur. Every block below is a fenced ` ```draw ` diagram. The engine source lives in `imoon07.github.io/js/alur/`; the playground is `draw.html`.
 
 ### 18.1 Flow with logos
 
 A layered request path. Nodes carry real logos from the full local library (575 logos from `iMoon07/logo-svg`), including security tools.
 
-```alur
+```draw
 {
   "module": "flow",
   "title": "Request path with logos",
@@ -807,35 +807,35 @@ A layered request path. Nodes carry real logos from the full local library (575 
     }
   },
   "edges": [
-    {
-      "from": "client",
-      "to": "edge",
-      "label": "TLS"
-    },
-    {
-      "from": "edge",
-      "to": "app1"
-    },
-    {
-      "from": "edge",
-      "to": "app2"
-    },
-    {
-      "from": "app1",
-      "to": "db"
-    },
-    {
-      "from": "app2",
-      "to": "db"
-    },
-    {
-      "from": "app1",
-      "to": "sec1"
-    },
-    {
-      "from": "app2",
-      "to": "sec2"
-    }
+    [
+      "client",
+      "edge",
+      "TLS"
+    ],
+    [
+      "edge",
+      "app1"
+    ],
+    [
+      "edge",
+      "app2"
+    ],
+    [
+      "app1",
+      "db"
+    ],
+    [
+      "app2",
+      "db"
+    ],
+    [
+      "app1",
+      "sec1"
+    ],
+    [
+      "app2",
+      "sec2"
+    ]
   ]
 }
 ```
@@ -844,7 +844,7 @@ A layered request path. Nodes carry real logos from the full local library (575 
 
 TLS termination, routing, caching, and load-balancing at the edge layer.
 
-```alur
+```draw
 {
   "module": "reverse-proxy",
   "title": "Reverse Proxy: Single Front, Many Backends",
@@ -856,7 +856,7 @@ TLS termination, routing, caching, and load-balancing at the edge layer.
 
 Covers producer/consumer, CPU scheduling, CDN cache layers, and request pipelines.
 
-```alur
+```draw
 {
   "module": "pipeline",
   "title": "Request pipeline",
@@ -887,7 +887,7 @@ Covers producer/consumer, CPU scheduling, CDN cache layers, and request pipeline
 
 Nodes, edges, and an animated frontier. Covers BFS, topological order, and MST-style demos.
 
-```alur
+```draw
 {
   "module": "graph",
   "title": "BFS traversal",
@@ -1006,7 +1006,7 @@ Nodes, edges, and an animated frontier. Covers BFS, topological order, and MST-s
 
 One path, many looks: neon, bundle, relay, ribbon, dashed, circuit. Set `cable` per edge or per diagram.
 
-```alur
+```draw
 {
   "module": "flow",
   "title": "Cable styles",
@@ -1094,7 +1094,7 @@ One path, many looks: neon, bundle, relay, ribbon, dashed, circuit. Set `cable` 
 
 Data movement: comet, packets, flowMany, dash, draw, relay. Set `motion` per edge.
 
-```alur
+```draw
 {
   "module": "flow",
   "title": "Motion effects",
@@ -1178,7 +1178,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.1 Bar
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "bar",
@@ -1203,7 +1203,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.2 Horizontal bar ranking
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "hbar",
@@ -1228,7 +1228,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.3 Multi-series line
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "line",
@@ -1269,7 +1269,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.4 Area
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "area",
@@ -1294,7 +1294,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.5 Stacked bar composition
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "stacked",
@@ -1342,7 +1342,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.6 Donut percent breakdown
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "donut",
@@ -1371,7 +1371,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.7 Single-value percent gauge
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "gauge",
@@ -1388,7 +1388,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.8 Spark line
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "spark",
@@ -1409,7 +1409,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.9 KPI callout
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "kpi",
@@ -1424,7 +1424,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.10 Scatter plot
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "scatter",
@@ -1465,7 +1465,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.11 Waterfall
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "waterfall",
@@ -1490,7 +1490,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.12 Funnel conversion
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "funnel",
@@ -1518,7 +1518,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.13 Bell curve with marker
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "bell",
@@ -1533,7 +1533,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.14 Histogram
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "histogram",
@@ -1559,7 +1559,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.15 Stacked area trend
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "stackedArea",
@@ -1611,7 +1611,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.16 Treemap
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "treemap",
@@ -1642,7 +1642,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.17 Box plot
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "box",
@@ -1678,7 +1678,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.18 Range bar with thresholds
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "range",
@@ -1706,7 +1706,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.19 Density curve
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "density",
@@ -1744,7 +1744,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.20 Slope chart
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "slope",
@@ -1772,7 +1772,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.21 Two-axis combo
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "combo",
@@ -1804,7 +1804,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.22 Annotated timeline
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "timeline",
@@ -1833,7 +1833,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.23 Bubble chart
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "bubble",
@@ -1876,7 +1876,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.24 Dumbbell plot
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "dumbbell",
@@ -1903,7 +1903,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.25 Quadrant matrix
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "quadrant",
@@ -1940,7 +1940,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.26 Process flow steps
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "process",
@@ -1957,7 +1957,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.27 Cycle loop stages
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "cycle",
@@ -1974,7 +1974,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.28 Progress bar stack
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "progress",
@@ -2020,7 +2020,7 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 #### 18.7.29 Comparison table
 
-```alur
+```draw
 {
   "module": "chart",
   "type": "table",
@@ -2055,29 +2055,318 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 ```
 
 
-### 18.8 Logo library — security tools
+### 18.8 Pustaka logo — tools keamanan
 
-All 575 logos from `iMoon07/logo-svg` are available to every node (`"logo": "security:nmap"`). This block uses six of them.
+Semua 575 logo dari `iMoon07/logo-svg` tersedia untuk setiap node (`"logo": "security:nmap"`). Diagram ringkas ini menampilkan empat fase perwakilan; setiap tool adalah node, dan logonya adalah entri katalog.
 
-```alur
+```topology
 {
-  "module": "flow",
   "title": "Security toolchain",
-  "cable": "circuit",
-  "motion": "flowMany",
-  "columns": [["recon"], ["exploit"], ["forensics"]],
+  "uniform": true,
+  "columns": [
+    [
+      "recon"
+    ],
+    [
+      "exploit"
+    ],
+    [
+      "post"
+    ],
+    [
+      "forensics"
+    ]
+  ],
   "nodes": {
-    "recon": { "label": "Recon", "logos": ["security:nmap", "security:wireshark"], "color": "cyan" },
-    "exploit": { "label": "Exploit", "logos": ["security:metasploit", "security:burp"], "color": "red" },
-    "forensics": { "label": "Forensics", "logos": ["security:hashcat", "security:ghidra"], "color": "purple" }
+    "recon": [
+      "Recon",
+      "Nmap · Wireshark",
+      [
+        "security:nmap",
+        "security:wireshark"
+      ],
+      "tech"
+    ],
+    "exploit": [
+      "Exploit",
+      "Metasploit · Burp",
+      [
+        "security:metasploit",
+        "security:burp"
+      ],
+      "tech"
+    ],
+    "post": [
+      "Post-exploit",
+      "Mimikatz · Hashcat",
+      [
+        "security:mimikatz",
+        "security:hashcat"
+      ],
+      "tech"
+    ],
+    "forensics": [
+      "Forensics",
+      "Ghidra · Autopsy",
+      [
+        "security:ghidra",
+        "security:autopsy"
+      ],
+      "tech"
+    ]
   },
   "edges": [
-    { "from": "recon", "to": "exploit" },
-    { "from": "exploit", "to": "forensics" }
+    [
+      "recon",
+      "exploit",
+      "1"
+    ],
+    [
+      "exploit",
+      "post",
+      "2"
+    ],
+    [
+      "post",
+      "forensics",
+      "3"
+    ]
+  ],
+  "legend": {
+    "flow": "Attack phase"
+  },
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
   ]
 }
 ```
 
+Cara membaca: Recon → Exploit → Post-exploit → Forensik. Setiap panah adalah fase berikutnya; footer mengulang konteks keamanan.
+
+## 19 — Lab Visual Topologi
+
+`topology` adalah renderer statis untuk diagram artikel. Tidak ada toolbar, panel, atau zoom: diagram mengikuti lebar kolom artikel dan menumpuk secara vertikal di layar sempit. Logo node dapat memakai katalog Alur lokal (575 logo dari iMoon07/logo-svg), misalnya `"icon": "security:nmap"`.
+
+
+### 19.1 Restoran sebagai permintaan server
+
+Baca dari kiri → kanan. Panah solid adalah jalur order/request; panah putus-putus adalah return/response. Footer mengulang legenda arah dan chip tempat, jadi gambarnya bukan sekadar gambar.
+
+```topology
+{
+  "title": "The Flow",
+  "uniform": true,
+  "columns": [
+    [
+      "C"
+    ],
+    [
+      "P"
+    ],
+    [
+      "K"
+    ],
+    [
+      "G"
+    ]
+  ],
+  "nodes": {
+    "C": [
+      "Customer",
+      "Places an order",
+      "stack:github",
+      "actor"
+    ],
+    "P": [
+      "Waiter",
+      "Takes the order",
+      "stack:nginx",
+      "process"
+    ],
+    "K": [
+      "Chef",
+      "Prepares the order",
+      "programming:nodejs",
+      "process"
+    ],
+    "G": [
+      "Pantry",
+      "Stores ingredients",
+      "stack:postgresql",
+      "store"
+    ]
+  },
+  "edges": [
+    [
+      "C",
+      "P",
+      "1"
+    ],
+    [
+      "P",
+      "K",
+      "2"
+    ],
+    [
+      "K",
+      "G",
+      "3"
+    ],
+    [
+      "G",
+      "K",
+      "4",
+      true
+    ]
+  ],
+  "legend": {
+    "flow": "Order / request",
+    "back": "Return / response"
+  },
+  "facilities": [
+    "In this place",
+    [
+      "store",
+      "Eatery"
+    ],
+    [
+      "wifi",
+      "Wi-Fi"
+    ]
+  ]
+}
+```
+
+Cara membaca: `Customer → Waiter → Chef → Pantry`. Panah balik `Pantry → Chef` adalah jalur response. Warna mengelompokkan sisi dapur; footer mengulang legenda dan chip tempat.
+
+
+### 19.2 Platform rumah sakit
+
+Platform rumah sakit: WAF dan edge cloud, runtime stack PHP (LAMP, LEMP, WAMP, WIMP, FAMP, FIMP), data pasien, dan SOC yang diberi makan oleh Wazuh dan ELK. Panah solid adalah jalur request; panah putus-putus adalah response.
+
+```topology
+{
+  "title": "Hospital platform",
+  "uniform": true,
+  "root": [
+    "Hospital",
+    "integrated platform",
+    "building-2",
+    "out"
+  ],
+  "rootWires": false,
+  "columns": [
+    [
+      "edge"
+    ],
+    [
+      "runtime"
+    ],
+    [
+      "data"
+    ],
+    [
+      "soc"
+    ]
+  ],
+  "nodes": {
+    "edge": [
+      "Edge & WAF",
+      "Cloudflare · Nginx · TLS",
+      [
+        "security:wafw00f",
+        "stack:cloudflare",
+        "stack:nginx"
+      ],
+      "network"
+    ],
+    "runtime": [
+      "Runtime stacks",
+      "LAMP · LEMP · WAMP · WIMP · FAMP · FIMP",
+      [
+        "stack:linux",
+        "stack:apache",
+        "stack:mysql",
+        "programming:php"
+      ],
+      "tech"
+    ],
+    "data": [
+      "Patient data",
+      "MariaDB · MySQL · Redis · Postgres",
+      [
+        "stack:mariadb",
+        "stack:mysql",
+        "stack:redis",
+        "stack:postgresql"
+      ],
+      "database"
+    ],
+    "soc": [
+      "SOC / ELK",
+      "Wazuh · Elasticsearch · Logstash · Kibana",
+      [
+        "security:wazuh",
+        "stack:elasticsearch",
+        "stack:logstash",
+        "stack:kibana"
+      ],
+      "process"
+    ]
+  },
+  "edges": [
+    [
+      "__root__",
+      "edge"
+    ],
+    [
+      "edge",
+      "runtime"
+    ],
+    [
+      "runtime",
+      "data"
+    ],
+    [
+      "data",
+      "soc"
+    ],
+    [
+      "data",
+      "runtime",
+      "",
+      true
+    ]
+  ],
+  "legend": {
+    "flow": "Request",
+    "back": "Response"
+  },
+  "facilities": [
+    "Hospital",
+    [
+      "building-2",
+      "Hospital"
+    ],
+    [
+      "shield",
+      "SOC"
+    ],
+    [
+      "cloud",
+      "Cloud"
+    ]
+  ]
+}
+```
 
 ## Conclusion
 
