@@ -2,6 +2,17 @@
 
 Official documentation, technical guides, standards, and primary sources organized by domain.
 
+## iMoon07 Docs
+
+Source-code documentation from the site repository, mirrored here so it can be
+read next to the other references. Each file starts with a link to its origin;
+the site repo remains the source of truth.
+
+- [Topology Diagrams](imoon-topology-en.md) — ` ```topology ` blocks: JSON schema, layout, theming
+- [Alur Visual Engine & draw.html](imoon-alur-draw-en.md) — ` ```alur ` blocks, modules, cable/motion catalog, canvas editor, 29 chart types
+- [ai-tools Pipeline](imoon-ai-tools-en.md) — local-only scripts: fetch, generators, verify, snapshots
+- [Logo & Icon Library](imoon-logo-svg-en.md) — 2848 assets: SVG/PNG/WebP, motion glyphs, 3D icons, licensing per source
+
 ## Core
 - [Standards & Core Protocols](standards-en.md)
 - [Low-Level, Systems & Toolchain](low-level-systems-en.md)
