@@ -2057,27 +2057,1575 @@ The chart module covers the usual analytics set. Each block is a live SVG.
 
 ### 18.8 Logo library — security tools
 
-All 575 logos from `iMoon07/logo-svg` are available to every node (`"logo": "security:nmap"`). This block uses six of them.
+All 575 logos from `iMoon07/logo-svg` are available to every node (`"logo": "security:nmap"`). This section groups the security catalogue by hacking phase: recon, exploitation, post-exploitation, and forensics. Every node is a tool; the logo is the catalogue entry.
 
-```alur
+#### Recon & enumeration
+
+```topology
 {
-  "module": "flow",
-  "title": "Security toolchain",
-  "cable": "circuit",
-  "motion": "flowMany",
-  "columns": [["recon"], ["exploit"], ["forensics"]],
+  "title": "Recon & enumeration",
+  "columns": [
+    [
+      "nmap",
+      "masscan",
+      "netdiscover",
+      "arping",
+      "unicornscan",
+      "hping3",
+      "thcping6",
+      "nbtscan"
+    ],
+    [
+      "amass",
+      "dnsrecon",
+      "dnsenum",
+      "dnsmap",
+      "fierce",
+      "dmitry",
+      "theharvester"
+    ],
+    [
+      "spiderfoot",
+      "maltego",
+      "recon-ng",
+      "metagoofil",
+      "cewl",
+      "wordlists",
+      "eyewitness",
+      "hashid"
+    ],
+    [
+      "whatweb",
+      "wafw00f",
+      "dirsearch",
+      "gobuster",
+      "ffuf",
+      "wfuzz",
+      "dirb"
+    ]
+  ],
   "nodes": {
-    "recon": { "label": "Recon", "logos": ["security:nmap", "security:wireshark"], "color": "cyan" },
-    "exploit": { "label": "Exploit", "logos": ["security:metasploit", "security:burp"], "color": "red" },
-    "forensics": { "label": "Forensics", "logos": ["security:hashcat", "security:ghidra"], "color": "purple" }
+    "nmap": [
+      "Nmap",
+      "Port scanner",
+      "security:nmap",
+      "tech"
+    ],
+    "masscan": [
+      "Masscan",
+      "Fast scanner",
+      "security:masscan",
+      "tech"
+    ],
+    "netdiscover": [
+      "Netdiscover",
+      "ARP sweep",
+      "security:netdiscover",
+      "tech"
+    ],
+    "arping": [
+      "Arping",
+      "ARP ping",
+      "security:arping",
+      "tech"
+    ],
+    "unicornscan": [
+      "Unicornscan",
+      "Async scanner",
+      "security:unicornscan",
+      "tech"
+    ],
+    "hping3": [
+      "Hping3",
+      "Packet crafter",
+      "security:hping3",
+      "tech"
+    ],
+    "thcping6": [
+      "THC-ping6",
+      "IPv6 ping",
+      "security:thcping6",
+      "tech"
+    ],
+    "nbtscan": [
+      "NBTscan",
+      "NetBIOS scan",
+      "security:nbtscan",
+      "tech"
+    ],
+    "amass": [
+      "Amass",
+      "Subdomain enum",
+      "security:amass",
+      "tech"
+    ],
+    "dnsrecon": [
+      "DNSRecon",
+      "DNS enum",
+      "security:dnsrecon",
+      "tech"
+    ],
+    "dnsenum": [
+      "DNSEnum",
+      "DNS brute",
+      "security:dnsenum",
+      "tech"
+    ],
+    "dnsmap": [
+      "DNSmap",
+      "DNS brute",
+      "security:dnsmap",
+      "tech"
+    ],
+    "fierce": [
+      "Fierce",
+      "DNS recon",
+      "security:fierce",
+      "tech"
+    ],
+    "dmitry": [
+      "Dmitry",
+      "Host info",
+      "security:dmitry",
+      "tech"
+    ],
+    "theharvester": [
+      "theHarvester",
+      "Email OSINT",
+      "security:theharvester",
+      "tech"
+    ],
+    "spiderfoot": [
+      "SpiderFoot",
+      "OSINT automation",
+      "security:spiderfoot",
+      "tech"
+    ],
+    "maltego": [
+      "Maltego",
+      "Link analysis",
+      "security:maltego",
+      "tech"
+    ],
+    "recon-ng": [
+      "recon-ng",
+      "OSINT framework",
+      "security:recon-ng",
+      "tech"
+    ],
+    "metagoofil": [
+      "Metagoofil",
+      "Metadata OSINT",
+      "security:metagoofil",
+      "tech"
+    ],
+    "cewl": [
+      "CeWL",
+      "Wordlist gen",
+      "security:cewl",
+      "tech"
+    ],
+    "wordlists": [
+      "Wordlists",
+      "Payload lists",
+      "security:wordlists",
+      "tech"
+    ],
+    "eyewitness": [
+      "EyeWitness",
+      "Screenshot",
+      "security:eyewitness",
+      "tech"
+    ],
+    "hashid": [
+      "HashID",
+      "Hash ID",
+      "security:hashid",
+      "tech"
+    ],
+    "whatweb": [
+      "WhatWeb",
+      "Web fingerprint",
+      "security:whatweb",
+      "tech"
+    ],
+    "wafw00f": [
+      "WAFW00F",
+      "WAF detect",
+      "security:wafw00f",
+      "tech"
+    ],
+    "dirsearch": [
+      "Dirsearch",
+      "Path brute",
+      "security:dirsearch",
+      "tech"
+    ],
+    "gobuster": [
+      "Gobuster",
+      "Path brute",
+      "security:gobuster",
+      "tech"
+    ],
+    "ffuf": [
+      "FFUF",
+      "Fuzzer",
+      "security:ffuf",
+      "tech"
+    ],
+    "wfuzz": [
+      "WFuzz",
+      "Fuzzer",
+      "security:wfuzz",
+      "tech"
+    ],
+    "dirb": [
+      "DirB",
+      "Path brute",
+      "security:dirb",
+      "tech"
+    ]
   },
-  "edges": [
-    { "from": "recon", "to": "exploit" },
-    { "from": "exploit", "to": "forensics" }
+  "groups": [
+    [
+      "Discovery",
+      [
+        "nmap",
+        "masscan",
+        "netdiscover",
+        "arping",
+        "unicornscan",
+        "hping3",
+        "thcping6",
+        "nbtscan"
+      ],
+      "crosshair"
+    ],
+    [
+      "DNS & OSINT",
+      [
+        "amass",
+        "dnsrecon",
+        "dnsenum",
+        "dnsmap",
+        "fierce",
+        "dmitry",
+        "theharvester"
+      ],
+      "globe"
+    ],
+    [
+      "OSINT & web",
+      [
+        "spiderfoot",
+        "maltego",
+        "recon-ng",
+        "metagoofil",
+        "cewl",
+        "wordlists",
+        "eyewitness",
+        "hashid"
+      ],
+      "scan"
+    ],
+    [
+      "Web enumeration",
+      [
+        "whatweb",
+        "wafw00f",
+        "dirsearch",
+        "gobuster",
+        "ffuf",
+        "wfuzz",
+        "dirb"
+      ],
+      "terminal"
+    ]
+  ],
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
   ]
 }
 ```
 
+How to read: each column is a recon phase. Top to bottom, the tools move from network discovery to DNS/OSINT to web enumeration. Every node is a tool; the logo is from the local security catalogue.
+
+#### Exploitation
+
+```topology
+{
+  "title": "Exploitation",
+  "columns": [
+    [
+      "metasploit",
+      "msfpc",
+      "armitage",
+      "covenant",
+      "havoc",
+      "starkiller",
+      "exploit-db",
+      "setoolkit"
+    ],
+    [
+      "sqlmap",
+      "sqlninja",
+      "sqlsus",
+      "commix",
+      "w3af",
+      "wapiti",
+      "zaproxy",
+      "webscarab"
+    ],
+    [
+      "burp",
+      "burp-suite",
+      "nikto",
+      "skipfish",
+      "wpscan",
+      "jboss-autopwn",
+      "davtest",
+      "parsero"
+    ],
+    [
+      "shellter",
+      "veil",
+      "backdoor-factory",
+      "laudanum",
+      "weevely",
+      "webshells",
+      "nishang",
+      "powersploit",
+      "powershell-empire",
+      "king-phisher-icon",
+      "beef-xss"
+    ]
+  ],
+  "nodes": {
+    "metasploit": [
+      "Metasploit",
+      "Exploit framework",
+      "security:metasploit",
+      "tech"
+    ],
+    "msfpc": [
+      "MSFPC",
+      "Payload maker",
+      "security:msfpc",
+      "tech"
+    ],
+    "armitage": [
+      "Armitage",
+      "GUI framework",
+      "security:armitage",
+      "tech"
+    ],
+    "covenant": [
+      "Covenant",
+      "C2 framework",
+      "security:covenant",
+      "tech"
+    ],
+    "havoc": [
+      "Havoc",
+      "C2 framework",
+      "security:havoc",
+      "tech"
+    ],
+    "starkiller": [
+      "Starkiller",
+      "C2 GUI",
+      "security:starkiller",
+      "tech"
+    ],
+    "exploit-db": [
+      "Exploit-DB",
+      "Exploit index",
+      "security:exploit-db",
+      "tech"
+    ],
+    "setoolkit": [
+      "SET",
+      "Social toolkit",
+      "security:setoolkit",
+      "tech"
+    ],
+    "sqlmap": [
+      "SQLMap",
+      "SQL injection",
+      "security:sqlmap",
+      "tech"
+    ],
+    "sqlninja": [
+      "SQLNinja",
+      "SQL injection",
+      "security:sqlninja",
+      "tech"
+    ],
+    "sqlsus": [
+      "SQLSUS",
+      "SQL injection",
+      "security:sqlsus",
+      "tech"
+    ],
+    "commix": [
+      "Commix",
+      "Command injection",
+      "security:commix",
+      "tech"
+    ],
+    "w3af": [
+      "W3AF",
+      "Web auditor",
+      "security:w3af",
+      "tech"
+    ],
+    "wapiti": [
+      "Wapiti",
+      "Web scanner",
+      "security:wapiti",
+      "tech"
+    ],
+    "zaproxy": [
+      "ZAP",
+      "Web proxy",
+      "security:zaproxy",
+      "tech"
+    ],
+    "webscarab": [
+      "WebScarab",
+      "Web proxy",
+      "security:webscarab",
+      "tech"
+    ],
+    "burp": [
+      "Burp",
+      "Web proxy",
+      "security:burp",
+      "tech"
+    ],
+    "burp-suite": [
+      "Burp Suite",
+      "Web proxy",
+      "security:burp-suite",
+      "tech"
+    ],
+    "nikto": [
+      "Nikto",
+      "Web scanner",
+      "security:nikto",
+      "tech"
+    ],
+    "skipfish": [
+      "Skipfish",
+      "Web scanner",
+      "security:skipfish",
+      "tech"
+    ],
+    "wpscan": [
+      "WPScan",
+      "WordPress scan",
+      "security:wpscan",
+      "tech"
+    ],
+    "jboss-autopwn": [
+      "JBoss Autopwn",
+      "JBoss exploit",
+      "security:jboss-autopwn",
+      "tech"
+    ],
+    "davtest": [
+      "DAVTest",
+      "WebDAV test",
+      "security:davtest",
+      "tech"
+    ],
+    "parsero": [
+      "Parsero",
+      "Robots parser",
+      "security:parsero",
+      "tech"
+    ],
+    "shellter": [
+      "Shellter",
+      "AV evasion",
+      "security:shellter",
+      "tech"
+    ],
+    "veil": [
+      "Veil",
+      "Payload evasion",
+      "security:veil",
+      "tech"
+    ],
+    "backdoor-factory": [
+      "Backdoor Factory",
+      "Backdoor",
+      "security:backdoor-factory",
+      "tech"
+    ],
+    "laudanum": [
+      "Laudanum",
+      "Web shell",
+      "security:laudanum",
+      "tech"
+    ],
+    "weevely": [
+      "Weevely",
+      "Web shell",
+      "security:weevely",
+      "tech"
+    ],
+    "webshells": [
+      "WebShells",
+      "Shell collection",
+      "security:webshells",
+      "tech"
+    ],
+    "nishang": [
+      "Nishang",
+      "PowerShell",
+      "security:nishang",
+      "tech"
+    ],
+    "powersploit": [
+      "PowerSploit",
+      "PowerShell",
+      "security:powersploit",
+      "tech"
+    ],
+    "powershell-empire": [
+      "Empire",
+      "PowerShell C2",
+      "security:powershell-empire",
+      "tech"
+    ],
+    "king-phisher-icon": [
+      "King Phisher",
+      "Phishing",
+      "security:king-phisher-icon",
+      "tech"
+    ],
+    "beef-xss": [
+      "Beef-XSS",
+      "Browser hook",
+      "security:beef-xss",
+      "tech"
+    ]
+  },
+  "groups": [
+    [
+      "Frameworks",
+      [
+        "metasploit",
+        "msfpc",
+        "armitage",
+        "covenant",
+        "havoc",
+        "starkiller",
+        "exploit-db",
+        "setoolkit"
+      ],
+      "bug"
+    ],
+    [
+      "Web attacks",
+      [
+        "sqlmap",
+        "sqlninja",
+        "sqlsus",
+        "commix",
+        "w3af",
+        "wapiti",
+        "zaproxy",
+        "webscarab"
+      ],
+      "globe"
+    ],
+    [
+      "Web scanners",
+      [
+        "burp",
+        "burp-suite",
+        "nikto",
+        "skipfish",
+        "wpscan",
+        "jboss-autopwn",
+        "davtest",
+        "parsero"
+      ],
+      "scan"
+    ],
+    [
+      "Payloads",
+      [
+        "shellter",
+        "veil",
+        "backdoor-factory",
+        "laudanum",
+        "weevely",
+        "webshells",
+        "nishang",
+        "powersploit",
+        "powershell-empire",
+        "king-phisher-icon",
+        "beef-xss"
+      ],
+      "terminal"
+    ]
+  ],
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
+  ]
+}
+```
+
+How to read: each column is an exploitation phase. Frameworks launch, web tools attack web targets, scanners find issues, and payloads deliver. The groups label the phase; the footer repeats the security context.
+
+#### Post-exploitation
+
+```topology
+{
+  "title": "Post-exploitation",
+  "columns": [
+    [
+      "mimikatz",
+      "hashcat",
+      "john",
+      "hydra",
+      "medusa",
+      "ncrack",
+      "patator",
+      "ophcrack"
+    ],
+    [
+      "impacket",
+      "responder",
+      "crackmapexec",
+      "evil-winrm",
+      "bloodhound",
+      "peass",
+      "unix-privesc-check",
+      "chntpw"
+    ],
+    [
+      "rainbowcrack",
+      "rcracki-mt",
+      "pyrit",
+      "cowpatty",
+      "samdump2",
+      "hash-identifier",
+      "hashit"
+    ]
+  ],
+  "nodes": {
+    "mimikatz": [
+      "Mimikatz",
+      "Credential dump",
+      "security:mimikatz",
+      "tech"
+    ],
+    "hashcat": [
+      "Hashcat",
+      "Password cracker",
+      "security:hashcat",
+      "tech"
+    ],
+    "john": [
+      "John",
+      "Password cracker",
+      "security:john",
+      "tech"
+    ],
+    "hydra": [
+      "Hydra",
+      "Login brute",
+      "security:hydra",
+      "tech"
+    ],
+    "medusa": [
+      "Medusa",
+      "Login brute",
+      "security:medusa",
+      "tech"
+    ],
+    "ncrack": [
+      "Ncrack",
+      "Login brute",
+      "security:ncrack",
+      "tech"
+    ],
+    "patator": [
+      "Patator",
+      "Login brute",
+      "security:patator",
+      "tech"
+    ],
+    "ophcrack": [
+      "Ophcrack",
+      "LM cracker",
+      "security:ophcrack",
+      "tech"
+    ],
+    "impacket": [
+      "Impacket",
+      "Protocol toolkit",
+      "security:impacket",
+      "tech"
+    ],
+    "responder": [
+      "Responder",
+      "LLMNR poison",
+      "security:responder",
+      "tech"
+    ],
+    "crackmapexec": [
+      "CrackMapExec",
+      "Network exec",
+      "security:crackmapexec",
+      "tech"
+    ],
+    "evil-winrm": [
+      "Evil-WinRM",
+      "WinRM shell",
+      "security:evil-winrm",
+      "tech"
+    ],
+    "bloodhound": [
+      "BloodHound",
+      "AD graph",
+      "security:bloodhound",
+      "tech"
+    ],
+    "peass": [
+      "PEASS",
+      "Privesc scripts",
+      "security:peass",
+      "tech"
+    ],
+    "unix-privesc-check": [
+      "Unix Privesc",
+      "Privesc check",
+      "security:unix-privesc-check",
+      "tech"
+    ],
+    "chntpw": [
+      "Chntpw",
+      "Windows registry",
+      "security:chntpw",
+      "tech"
+    ],
+    "rainbowcrack": [
+      "RainbowCrack",
+      "Rainbow tables",
+      "security:rainbowcrack",
+      "tech"
+    ],
+    "rcracki-mt": [
+      "Rcracki",
+      "Rainbow tables",
+      "security:rcracki-mt",
+      "tech"
+    ],
+    "pyrit": [
+      "Pyrit",
+      "WPA GPU",
+      "security:pyrit",
+      "tech"
+    ],
+    "cowpatty": [
+      "Cowpatty",
+      "WPA capture",
+      "security:cowpatty",
+      "tech"
+    ],
+    "samdump2": [
+      "Samdump2",
+      "SAM dump",
+      "security:samdump2",
+      "tech"
+    ],
+    "hash-identifier": [
+      "Hash Identifier",
+      "Hash ID",
+      "security:hash-identifier",
+      "tech"
+    ],
+    "hashit": [
+      "Hashit",
+      "Hash tool",
+      "security:hashit",
+      "tech"
+    ]
+  },
+  "groups": [
+    [
+      "Credentials",
+      [
+        "mimikatz",
+        "hashcat",
+        "john",
+        "hydra",
+        "medusa",
+        "ncrack",
+        "patator",
+        "ophcrack"
+      ],
+      "lock-keyhole"
+    ],
+    [
+      "Lateral movement",
+      [
+        "impacket",
+        "responder",
+        "crackmapexec",
+        "evil-winrm",
+        "bloodhound",
+        "peass",
+        "unix-privesc-check",
+        "chntpw"
+      ],
+      "network"
+    ],
+    [
+      "Password attacks",
+      [
+        "rainbowcrack",
+        "rcracki-mt",
+        "pyrit",
+        "cowpatty",
+        "samdump2",
+        "hash-identifier",
+        "hashit"
+      ],
+      "lock-keyhole"
+    ]
+  ],
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
+  ]
+}
+```
+
+How to read: each column is a post-exploitation phase. Credentials first, then lateral movement, password attacks, and wireless/MITM. Follow the group labels to keep the phases straight.
+
+#### Forensics & reverse engineering
+
+```topology
+{
+  "title": "Forensics & reverse engineering",
+  "columns": [
+    [
+      "autopsy",
+      "volatility",
+      "binwalk",
+      "foremost",
+      "scalpel",
+      "bulk-extractor",
+      "guymager",
+      "fls"
+    ],
+    [
+      "icat",
+      "mmls",
+      "mmstat",
+      "fsstat",
+      "blkls",
+      "blkcat",
+      "blkcalc",
+      "istat"
+    ],
+    [
+      "radare2",
+      "cutter",
+      "ghidra",
+      "jadx",
+      "jd-gui",
+      "dex2jar",
+      "bytecode-viewer",
+      "ollydbg",
+      "apktool"
+    ],
+    [
+      "clamav",
+      "chkrootkit",
+      "rkhunter",
+      "yara",
+      "virustotal",
+      "malwarebytes",
+      "snort",
+      "wazuh"
+    ]
+  ],
+  "nodes": {
+    "autopsy": [
+      "Autopsy",
+      "Disk forensics",
+      "security:autopsy",
+      "tech"
+    ],
+    "volatility": [
+      "Volatility",
+      "Memory forensics",
+      "security:volatility",
+      "tech"
+    ],
+    "binwalk": [
+      "Binwalk",
+      "Firmware analysis",
+      "security:binwalk",
+      "tech"
+    ],
+    "foremost": [
+      "Foremost",
+      "File carving",
+      "security:foremost",
+      "tech"
+    ],
+    "scalpel": [
+      "Scalpel",
+      "File carving",
+      "security:scalpel",
+      "tech"
+    ],
+    "bulk-extractor": [
+      "Bulk Extractor",
+      "Artifact scan",
+      "security:bulk-extractor",
+      "tech"
+    ],
+    "guymager": [
+      "Guymager",
+      "Disk imaging",
+      "security:guymager",
+      "tech"
+    ],
+    "fls": [
+      "FLS",
+      "File listing",
+      "security:fls",
+      "tech"
+    ],
+    "icat": [
+      "ICAT",
+      "File extract",
+      "security:icat",
+      "tech"
+    ],
+    "mmls": [
+      "MMLS",
+      "Partition map",
+      "security:mmls",
+      "tech"
+    ],
+    "mmstat": [
+      "MMStat",
+      "Partition stats",
+      "security:mmstat",
+      "tech"
+    ],
+    "fsstat": [
+      "FSStat",
+      "FS stats",
+      "security:fsstat",
+      "tech"
+    ],
+    "blkls": [
+      "BLKLS",
+      "Block listing",
+      "security:blkls",
+      "tech"
+    ],
+    "blkcat": [
+      "BLKCAT",
+      "Block extract",
+      "security:blkcat",
+      "tech"
+    ],
+    "blkcalc": [
+      "BLKCALC",
+      "Block calc",
+      "security:blkcalc",
+      "tech"
+    ],
+    "istat": [
+      "ISTAT",
+      "Inode stats",
+      "security:istat",
+      "tech"
+    ],
+    "radare2": [
+      "Radare2",
+      "RE framework",
+      "security:radare2",
+      "tech"
+    ],
+    "cutter": [
+      "Cutter",
+      "RE GUI",
+      "security:cutter",
+      "tech"
+    ],
+    "ghidra": [
+      "Ghidra",
+      "RE suite",
+      "security:ghidra",
+      "tech"
+    ],
+    "jadx": [
+      "JADX",
+      "APK decompiler",
+      "security:jadx",
+      "tech"
+    ],
+    "jd-gui": [
+      "JD-GUI",
+      "Java decompiler",
+      "security:jd-gui",
+      "tech"
+    ],
+    "dex2jar": [
+      "Dex2Jar",
+      "APK converter",
+      "security:dex2jar",
+      "tech"
+    ],
+    "bytecode-viewer": [
+      "Bytecode Viewer",
+      "APK analysis",
+      "security:bytecode-viewer",
+      "tech"
+    ],
+    "ollydbg": [
+      "OllyDbg",
+      "Debugger",
+      "security:ollydbg",
+      "tech"
+    ],
+    "apktool": [
+      "APKTool",
+      "APK reverse",
+      "security:apktool",
+      "tech"
+    ],
+    "clamav": [
+      "ClamAV",
+      "AV scanner",
+      "security:clamav",
+      "tech"
+    ],
+    "chkrootkit": [
+      "Chkrootkit",
+      "Rootkit check",
+      "security:chkrootkit",
+      "tech"
+    ],
+    "rkhunter": [
+      "RKHunter",
+      "Rootkit check",
+      "security:rkhunter",
+      "tech"
+    ],
+    "yara": [
+      "YARA",
+      "Pattern matching",
+      "security:yara",
+      "tech"
+    ],
+    "virustotal": [
+      "VirusTotal",
+      "Malware scan",
+      "security:virustotal",
+      "tech"
+    ],
+    "malwarebytes": [
+      "Malwarebytes",
+      "Malware scan",
+      "security:malwarebytes",
+      "tech"
+    ],
+    "snort": [
+      "Snort",
+      "Network IDS",
+      "security:snort",
+      "tech"
+    ],
+    "wazuh": [
+      "Wazuh",
+      "Security platform",
+      "security:wazuh",
+      "tech"
+    ]
+  },
+  "groups": [
+    [
+      "Disk & memory",
+      [
+        "autopsy",
+        "volatility",
+        "binwalk",
+        "foremost",
+        "scalpel",
+        "bulk-extractor",
+        "guymager",
+        "fls"
+      ],
+      "hard-drive"
+    ],
+    [
+      "File carving",
+      [
+        "icat",
+        "mmls",
+        "mmstat",
+        "fsstat",
+        "blkls",
+        "blkcat",
+        "blkcalc",
+        "istat"
+      ],
+      "layers"
+    ],
+    [
+      "Reverse engineering",
+      [
+        "radare2",
+        "cutter",
+        "ghidra",
+        "jadx",
+        "jd-gui",
+        "dex2jar",
+        "bytecode-viewer",
+        "ollydbg",
+        "apktool"
+      ],
+      "code"
+    ],
+    [
+      "Malware triage",
+      [
+        "clamav",
+        "chkrootkit",
+        "rkhunter",
+        "yara",
+        "virustotal",
+        "malwarebytes",
+        "snort",
+        "wazuh"
+      ],
+      "bug"
+    ]
+  ],
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
+  ]
+}
+```
+
+How to read: each column is an analysis phase. Disk artifacts, file carving, reverse engineering, and malware triage. Use the group labels to see which phase a tool belongs to.
+
+#### Network & wireless
+
+```topology
+{
+  "title": "Network & wireless",
+  "columns": [
+    [
+      "wireshark",
+      "tcpdump",
+      "ncat",
+      "netcat",
+      "dsniff",
+      "ettercap",
+      "bettercap",
+      "mitmproxy"
+    ],
+    [
+      "sslscan",
+      "sslyze",
+      "sslsplit",
+      "stunnel4",
+      "sslh"
+    ],
+    [
+      "iodine",
+      "dns2tcp",
+      "ptunnel",
+      "udptunnel",
+      "proxychains",
+      "proxytunnel",
+      "tor-browser",
+      "openvpn",
+      "wireguard"
+    ],
+    [
+      "aircrack-ng",
+      "reaver",
+      "pixiewps",
+      "wifite",
+      "fern-wifi-cracker",
+      "bully",
+      "mdk3",
+      "kismet",
+      "sparrow-wifi",
+      "airgeddon"
+    ]
+  ],
+  "nodes": {
+    "wireshark": [
+      "Wireshark",
+      "Packet capture",
+      "security:wireshark",
+      "tech"
+    ],
+    "tcpdump": [
+      "Tcpdump",
+      "Packet capture",
+      "security:tcpdump",
+      "tech"
+    ],
+    "ncat": [
+      "Ncat",
+      "Netcat",
+      "security:ncat",
+      "tech"
+    ],
+    "netcat": [
+      "Netcat",
+      "Netcat",
+      "security:netcat",
+      "tech"
+    ],
+    "dsniff": [
+      "Dsniff",
+      "Sniffing",
+      "security:dsniff",
+      "tech"
+    ],
+    "ettercap": [
+      "Ettercap",
+      "MITM",
+      "security:ettercap",
+      "tech"
+    ],
+    "bettercap": [
+      "Bettercap",
+      "MITM",
+      "security:bettercap",
+      "tech"
+    ],
+    "mitmproxy": [
+      "MITM Proxy",
+      "Intercept",
+      "security:mitmproxy",
+      "tech"
+    ],
+    "sslscan": [
+      "SSLScan",
+      "TLS scan",
+      "security:sslscan",
+      "tech"
+    ],
+    "sslyze": [
+      "SSLyze",
+      "TLS scan",
+      "security:sslyze",
+      "tech"
+    ],
+    "sslsplit": [
+      "Sslsplit",
+      "TLS MITM",
+      "security:sslsplit",
+      "tech"
+    ],
+    "stunnel4": [
+      "Stunnel",
+      "TLS tunnel",
+      "security:stunnel4",
+      "tech"
+    ],
+    "sslh": [
+      "Sslh",
+      "TLS demux",
+      "security:sslh",
+      "tech"
+    ],
+    "iodine": [
+      "Iodine",
+      "DNS tunnel",
+      "security:iodine",
+      "tech"
+    ],
+    "dns2tcp": [
+      "Dns2tcp",
+      "DNS tunnel",
+      "security:dns2tcp",
+      "tech"
+    ],
+    "ptunnel": [
+      "Ptunnel",
+      "ICMP tunnel",
+      "security:ptunnel",
+      "tech"
+    ],
+    "udptunnel": [
+      "UDPTunnel",
+      "UDP tunnel",
+      "security:udptunnel",
+      "tech"
+    ],
+    "proxychains": [
+      "Proxychains",
+      "Proxy chain",
+      "security:proxychains",
+      "tech"
+    ],
+    "proxytunnel": [
+      "Proxytunnel",
+      "Proxy tunnel",
+      "security:proxytunnel",
+      "tech"
+    ],
+    "tor-browser": [
+      "Tor Browser",
+      "Anonymity",
+      "security:tor-browser",
+      "tech"
+    ],
+    "openvpn": [
+      "OpenVPN",
+      "VPN",
+      "security:openvpn",
+      "tech"
+    ],
+    "wireguard": [
+      "WireGuard",
+      "VPN",
+      "security:wireguard",
+      "tech"
+    ],
+    "aircrack-ng": [
+      "Aircrack-ng",
+      "WiFi cracker",
+      "security:aircrack-ng",
+      "tech"
+    ],
+    "reaver": [
+      "Reaver",
+      "WPS attack",
+      "security:reaver",
+      "tech"
+    ],
+    "pixiewps": [
+      "PixieWPS",
+      "WPS attack",
+      "security:pixiewps",
+      "tech"
+    ],
+    "wifite": [
+      "Wifite",
+      "WiFi automation",
+      "security:wifite",
+      "tech"
+    ],
+    "fern-wifi-cracker": [
+      "Fern",
+      "WiFi cracker",
+      "security:fern-wifi-cracker",
+      "tech"
+    ],
+    "bully": [
+      "Bully",
+      "WPS attack",
+      "security:bully",
+      "tech"
+    ],
+    "mdk3": [
+      "MDK3",
+      "WiFi attack",
+      "security:mdk3",
+      "tech"
+    ],
+    "kismet": [
+      "Kismet",
+      "WiFi IDS",
+      "security:kismet",
+      "tech"
+    ],
+    "sparrow-wifi": [
+      "Sparrow WiFi",
+      "WiFi audit",
+      "security:sparrow-wifi",
+      "tech"
+    ],
+    "airgeddon": [
+      "Airgeddon",
+      "WiFi framework",
+      "security:airgeddon",
+      "tech"
+    ]
+  },
+  "groups": [
+    [
+      "Capture & MITM",
+      [
+        "wireshark",
+        "tcpdump",
+        "ncat",
+        "netcat",
+        "dsniff",
+        "ettercap",
+        "bettercap",
+        "mitmproxy"
+      ],
+      "wifi"
+    ],
+    [
+      "TLS",
+      [
+        "sslscan",
+        "sslyze",
+        "sslsplit",
+        "stunnel4",
+        "sslh"
+      ],
+      "lock-keyhole"
+    ],
+    [
+      "Tunnels & anonymity",
+      [
+        "iodine",
+        "dns2tcp",
+        "ptunnel",
+        "udptunnel",
+        "proxychains",
+        "proxytunnel",
+        "tor-browser",
+        "openvpn",
+        "wireguard"
+      ],
+      "network"
+    ],
+    [
+      "Wireless",
+      [
+        "aircrack-ng",
+        "reaver",
+        "pixiewps",
+        "wifite",
+        "fern-wifi-cracker",
+        "bully",
+        "mdk3",
+        "kismet",
+        "sparrow-wifi",
+        "airgeddon"
+      ],
+      "wifi"
+    ]
+  ],
+  "facilities": [
+    "Security",
+    [
+      "shield",
+      "Hacking toolkit"
+    ],
+    [
+      "terminal",
+      "CLI first"
+    ]
+  ]
+}
+```
+
+How to read: each column is a network phase. Capture and MITM first, then TLS, tunnels/anonymity, and wireless. The group labels keep the phases straight.
+
+## 19 — Topology Visual Lab
+
+`topology` is the static renderer for article diagrams. It has no toolbar, panel, or zoom: the diagram follows the article column width and stacks vertically on narrow screens. Node logos can use the local Alur catalogue (575 logos from iMoon07/logo-svg), for example `"icon": "security:nmap"`.
+
+### 19.1 Restaurant as a server request
+
+Read left → right. Solid arrows are the order/request path; the dashed arrow is the return/response. The footer repeats the direction legend and the place chips, so the picture is not just a picture.
+
+```topology
+{
+  "title": "The Flow",
+  "columns": [["C"], ["P"], ["K"], ["G"]],
+  "nodes": {
+    "C": ["Customer", "Places an order", "stack:github", "actor"],
+    "P": ["Waiter", "Takes the order", "stack:nginx", "process"],
+    "K": ["Chef", "Prepares the order", "programming:nodejs", "process"],
+    "G": ["Pantry", "Stores ingredients", "stack:postgresql", "store"]
+  },
+  "edges": [
+    ["C", "P", "1"],
+    ["P", "K", "2"],
+    ["K", "G", "3"],
+    ["G", "K", "4", true]
+  ],
+  "groups": [["Eatery", ["P", "K", "G"], "store"]],
+  "legend": { "flow": "Order / request", "back": "Return / response" },
+  "facilities": ["In this place", ["store", "Eatery"], ["wifi", "Wi-Fi"]]
+}
+```
+
+How to read: `Customer → Waiter → Chef → Pantry`. The return arrow `Pantry → Chef` is the response path. Colors group the kitchen side; the footer repeats the legend and the place chips.
+
+### 19.2 Platform request path
+
+A root node above the columns, with a return edge from the data layer back to the app.
+
+```topology
+{
+  "title": "Platform",
+  "root": ["Platform", "shared runtime", "layers", "out"],
+  "columns": [["edge"], ["app"], ["data"]],
+  "nodes": {
+    "edge": ["Edge", "nginx", "stack:nginx", "network"],
+    "app": ["App", "nodejs", "programming:nodejs", "process"],
+    "data": ["Data", "postgres", "stack:postgresql", "database"]
+  },
+  "edges": [
+    ["edge", "app"],
+    ["app", "data"],
+    ["data", "app", "", true]
+  ],
+  "groups": [["Runtime", ["edge", "app", "data"], "layers"]],
+  "legend": { "flow": "Request", "back": "Response" },
+  "facilities": ["Platform", ["cloud", "Cloud"], ["shield", "Security"]]
+}
+```
 
 ## Conclusion
 
