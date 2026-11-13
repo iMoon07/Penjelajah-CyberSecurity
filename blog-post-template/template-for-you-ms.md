@@ -726,6 +726,1359 @@ Ini ialah x^2^.
 - [ ] Tiada character limit arbitrer yang memotong artikel secara senyap.
 - [ ] Fitur Discuss yang sedia ada kekal berfungsi.
 
+## 18 — Alur Visual Lab
+
+> **Note:** Bahagian ini ialah ujian render langsung untuk enjin Alur. Every block below is a fenced ` ```alur ` diagram. The engine source lives in `imoon07.github.io/js/alur/`; the playground is `preview.html`.
+
+### 18.1 Flow with logos
+
+A layered request path. Nodes carry real logos from the full local library (575 logos from `iMoon07/logo-svg`), including security tools.
+
+```alur
+{
+  "module": "flow",
+  "title": "Request path with logos",
+  "cable": "neon",
+  "motion": "comet",
+  "columns": [
+    [
+      "client"
+    ],
+    [
+      "edge"
+    ],
+    [
+      "app1",
+      "app2"
+    ],
+    [
+      "db"
+    ],
+    [
+      "sec1",
+      "sec2"
+    ]
+  ],
+  "nodes": {
+    "client": {
+      "label": "Client",
+      "sub": "browser",
+      "logo": "stack:github",
+      "color": "blue"
+    },
+    "edge": {
+      "label": "Edge",
+      "sub": "nginx",
+      "logo": "stack:nginx",
+      "color": "cyan"
+    },
+    "app1": {
+      "label": "App A",
+      "sub": "node",
+      "logo": "programming:nodejs",
+      "color": "green"
+    },
+    "app2": {
+      "label": "App B",
+      "sub": "python",
+      "logo": "programming:python",
+      "color": "amber"
+    },
+    "db": {
+      "label": "Data",
+      "sub": "postgres + redis",
+      "logos": [
+        "stack:postgresql",
+        "stack:redis"
+      ],
+      "color": "purple"
+    },
+    "sec1": {
+      "label": "Wireshark",
+      "sub": "capture",
+      "logo": "security:wireshark",
+      "color": "lime"
+    },
+    "sec2": {
+      "label": "Nmap",
+      "sub": "scan",
+      "logo": "security:nmap",
+      "color": "amber"
+    }
+  },
+  "edges": [
+    {
+      "from": "client",
+      "to": "edge",
+      "label": "TLS"
+    },
+    {
+      "from": "edge",
+      "to": "app1"
+    },
+    {
+      "from": "edge",
+      "to": "app2"
+    },
+    {
+      "from": "app1",
+      "to": "db"
+    },
+    {
+      "from": "app2",
+      "to": "db"
+    },
+    {
+      "from": "app1",
+      "to": "sec1"
+    },
+    {
+      "from": "app2",
+      "to": "sec2"
+    }
+  ]
+}
+```
+
+### 18.2 Reverse proxy — one front, many backends
+
+TLS termination, routing, caching, and load-balancing at the edge layer.
+
+```alur
+{
+  "module": "reverse-proxy",
+  "title": "Reverse Proxy: Single Front, Many Backends",
+  "speed": 1
+}
+```
+
+### 18.3 Pipeline — ordered stages with logos
+
+Covers producer/consumer, CPU scheduling, CDN cache layers, and request pipelines.
+
+```alur
+{
+  "module": "pipeline",
+  "title": "Request pipeline",
+  "stages": [
+    {
+      "label": "Client",
+      "logo": "stack:github"
+    },
+    {
+      "label": "Edge",
+      "logo": "stack:nginx"
+    },
+    {
+      "label": "App",
+      "logo": "programming:nodejs"
+    },
+    {
+      "label": "DB",
+      "logo": "stack:postgresql"
+    }
+  ],
+  "color": "cyan",
+  "items": 4
+}
+```
+
+### 18.4 Graph — BFS frontier
+
+Nodes, edges, and an animated frontier. Covers BFS, topological order, and MST-style demos.
+
+```alur
+{
+  "module": "graph",
+  "title": "BFS traversal",
+  "color": "green",
+  "start": "a",
+  "nodes": [
+    {
+      "id": "a",
+      "x": 140,
+      "y": 90,
+      "label": "A",
+      "logo": "stack:docker"
+    },
+    {
+      "id": "b",
+      "x": 330,
+      "y": 60,
+      "label": "B"
+    },
+    {
+      "id": "c",
+      "x": 330,
+      "y": 150,
+      "label": "C"
+    },
+    {
+      "id": "d",
+      "x": 520,
+      "y": 40,
+      "label": "D"
+    },
+    {
+      "id": "e",
+      "x": 520,
+      "y": 120,
+      "label": "E",
+      "logo": "stack:kubernetes"
+    },
+    {
+      "id": "f",
+      "x": 520,
+      "y": 200,
+      "label": "F"
+    },
+    {
+      "id": "g",
+      "x": 710,
+      "y": 80,
+      "label": "G",
+      "logo": "stack:prometheus"
+    },
+    {
+      "id": "h",
+      "x": 710,
+      "y": 170,
+      "label": "H",
+      "logo": "stack:grafana"
+    }
+  ],
+  "edges": [
+    {
+      "from": "a",
+      "to": "b",
+      "w": 4
+    },
+    {
+      "from": "a",
+      "to": "c",
+      "w": 2
+    },
+    {
+      "from": "b",
+      "to": "d",
+      "w": 5
+    },
+    {
+      "from": "b",
+      "to": "e",
+      "w": 3
+    },
+    {
+      "from": "c",
+      "to": "e",
+      "w": 2
+    },
+    {
+      "from": "c",
+      "to": "f",
+      "w": 6
+    },
+    {
+      "from": "d",
+      "to": "g",
+      "w": 4
+    },
+    {
+      "from": "e",
+      "to": "g",
+      "w": 2
+    },
+    {
+      "from": "e",
+      "to": "h",
+      "w": 5
+    },
+    {
+      "from": "f",
+      "to": "h",
+      "w": 3
+    }
+  ]
+}
+```
+
+### 18.5 Cable styles
+
+One path, many looks: neon, bundle, relay, ribbon, dashed, circuit. Set `cable` per edge or per diagram.
+
+```alur
+{
+  "module": "flow",
+  "title": "Cable styles",
+  "cable": "solid",
+  "columns": [
+    [
+      "a",
+      "b",
+      "c"
+    ],
+    [
+      "d",
+      "e",
+      "f"
+    ]
+  ],
+  "nodes": {
+    "a": {
+      "label": "Alpha",
+      "color": "blue"
+    },
+    "b": {
+      "label": "Beta",
+      "color": "green"
+    },
+    "c": {
+      "label": "Gamma",
+      "color": "amber"
+    },
+    "d": {
+      "label": "Delta",
+      "color": "purple"
+    },
+    "e": {
+      "label": "Epsilon",
+      "color": "cyan"
+    },
+    "f": {
+      "label": "Zeta",
+      "color": "pink"
+    }
+  },
+  "edges": [
+    {
+      "from": "a",
+      "to": "d",
+      "cable": "neon",
+      "motion": "none"
+    },
+    {
+      "from": "b",
+      "to": "e",
+      "cable": "bundle",
+      "motion": "none"
+    },
+    {
+      "from": "c",
+      "to": "f",
+      "cable": "relay",
+      "motion": "none"
+    },
+    {
+      "from": "a",
+      "to": "d",
+      "cable": "ribbon",
+      "motion": "none"
+    },
+    {
+      "from": "b",
+      "to": "e",
+      "cable": "dashed",
+      "motion": "none"
+    },
+    {
+      "from": "c",
+      "to": "f",
+      "cable": "circuit",
+      "motion": "none"
+    }
+  ]
+}
+```
+
+### 18.6 Motion effects
+
+Data movement: comet, packets, flowMany, dash, draw, relay. Set `motion` per edge.
+
+```alur
+{
+  "module": "flow",
+  "title": "Motion effects",
+  "cable": "solid",
+  "columns": [
+    [
+      "a",
+      "b",
+      "c"
+    ],
+    [
+      "d",
+      "e",
+      "f"
+    ]
+  ],
+  "nodes": {
+    "a": {
+      "label": "Alpha",
+      "color": "blue"
+    },
+    "b": {
+      "label": "Beta",
+      "color": "green"
+    },
+    "c": {
+      "label": "Gamma",
+      "color": "amber"
+    },
+    "d": {
+      "label": "Delta",
+      "color": "purple"
+    },
+    "e": {
+      "label": "Epsilon",
+      "color": "cyan"
+    },
+    "f": {
+      "label": "Zeta",
+      "color": "pink"
+    }
+  },
+  "edges": [
+    {
+      "from": "a",
+      "to": "d",
+      "motion": "comet"
+    },
+    {
+      "from": "b",
+      "to": "e",
+      "motion": "packets"
+    },
+    {
+      "from": "c",
+      "to": "f",
+      "motion": "flowMany"
+    },
+    {
+      "from": "a",
+      "to": "d",
+      "motion": "dash"
+    },
+    {
+      "from": "b",
+      "to": "e",
+      "motion": "draw"
+    },
+    {
+      "from": "c",
+      "to": "f",
+      "motion": "relay"
+    }
+  ]
+}
+```
+
+### 18.7 Charts
+
+The chart module covers the usual analytics set. Each block is a live SVG.
+
+#### 18.7.1 Bar
+
+```alur
+{
+  "module": "chart",
+  "type": "bar",
+  "title": "Bar",
+  "labels": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May"
+  ],
+  "data": [
+    12,
+    18,
+    15,
+    22,
+    28
+  ],
+  "color": "blue"
+}
+```
+
+#### 18.7.2 Horizontal bar ranking
+
+```alur
+{
+  "module": "chart",
+  "type": "hbar",
+  "title": "Horizontal bar ranking",
+  "labels": [
+    "Nginx",
+    "Postgres",
+    "Redis",
+    "PHP",
+    "Go"
+  ],
+  "data": [
+    42,
+    31,
+    24,
+    18,
+    12
+  ],
+  "color": "cyan"
+}
+```
+
+#### 18.7.3 Multi-series line
+
+```alur
+{
+  "module": "chart",
+  "type": "line",
+  "title": "Multi-series line",
+  "labels": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri"
+  ],
+  "series": [
+    {
+      "name": "web",
+      "data": [
+        12,
+        18,
+        15,
+        22,
+        28
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "api",
+      "data": [
+        8,
+        11,
+        14,
+        12,
+        18
+      ],
+      "color": "green"
+    }
+  ]
+}
+```
+
+#### 18.7.4 Area
+
+```alur
+{
+  "module": "chart",
+  "type": "area",
+  "title": "Area",
+  "labels": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri"
+  ],
+  "data": [
+    8,
+    12,
+    10,
+    16,
+    20
+  ],
+  "color": "cyan"
+}
+```
+
+#### 18.7.5 Stacked bar composition
+
+```alur
+{
+  "module": "chart",
+  "type": "stacked",
+  "title": "Stacked bar composition",
+  "labels": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu"
+  ],
+  "series": [
+    {
+      "name": "web",
+      "data": [
+        12,
+        14,
+        10,
+        16
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "api",
+      "data": [
+        8,
+        9,
+        12,
+        11
+      ],
+      "color": "green"
+    },
+    {
+      "name": "job",
+      "data": [
+        5,
+        6,
+        4,
+        7
+      ],
+      "color": "amber"
+    }
+  ]
+}
+```
+
+#### 18.7.6 Donut percent breakdown
+
+```alur
+{
+  "module": "chart",
+  "type": "donut",
+  "title": "Donut percent breakdown",
+  "labels": [
+    "Web",
+    "API",
+    "DB",
+    "Cache"
+  ],
+  "data": [
+    38,
+    27,
+    21,
+    14
+  ],
+  "colors": [
+    "blue",
+    "green",
+    "amber",
+    "purple"
+  ],
+  "centerLabel": "requests"
+}
+```
+
+#### 18.7.7 Single-value percent gauge
+
+```alur
+{
+  "module": "chart",
+  "type": "gauge",
+  "title": "Single-value percent gauge",
+  "data": [
+    68
+  ],
+  "max": 100,
+  "unit": "%",
+  "label": "cache hit",
+  "color": "cyan"
+}
+```
+
+#### 18.7.8 Spark line
+
+```alur
+{
+  "module": "chart",
+  "type": "spark",
+  "title": "Spark line",
+  "data": [
+    3,
+    5,
+    4,
+    7,
+    6,
+    9,
+    8,
+    11
+  ],
+  "color": "green"
+}
+```
+
+#### 18.7.9 KPI callout
+
+```alur
+{
+  "module": "chart",
+  "type": "kpi",
+  "title": "KPI callout",
+  "data": [
+    128
+  ],
+  "label": "requests / sec",
+  "delta": "+12.4%"
+}
+```
+
+#### 18.7.10 Scatter plot
+
+```alur
+{
+  "module": "chart",
+  "type": "scatter",
+  "title": "Scatter plot",
+  "data": [
+    [
+      3,
+      5
+    ],
+    [
+      5,
+      8
+    ],
+    [
+      8,
+      7
+    ],
+    [
+      11,
+      12
+    ],
+    [
+      14,
+      13
+    ],
+    [
+      17,
+      18
+    ],
+    [
+      20,
+      17
+    ]
+  ],
+  "color": "purple"
+}
+```
+
+#### 18.7.11 Waterfall
+
+```alur
+{
+  "module": "chart",
+  "type": "waterfall",
+  "title": "Waterfall",
+  "labels": [
+    "Start",
+    "Add",
+    "Cache",
+    "Drop",
+    "End"
+  ],
+  "data": [
+    40,
+    18,
+    12,
+    -9,
+    21
+  ],
+  "color": "blue"
+}
+```
+
+#### 18.7.12 Funnel conversion
+
+```alur
+{
+  "module": "chart",
+  "type": "funnel",
+  "title": "Funnel conversion",
+  "labels": [
+    "Visit",
+    "Signup",
+    "Active",
+    "Paid"
+  ],
+  "data": [
+    100,
+    62,
+    38,
+    17
+  ],
+  "colors": [
+    "blue",
+    "cyan",
+    "green",
+    "amber"
+  ]
+}
+```
+
+#### 18.7.13 Bell curve with marker
+
+```alur
+{
+  "module": "chart",
+  "type": "bell",
+  "title": "Bell curve with marker",
+  "mean": 0,
+  "sigma": 1,
+  "marker": 0.6,
+  "markerLabel": "p95",
+  "color": "blue"
+}
+```
+
+#### 18.7.14 Histogram
+
+```alur
+{
+  "module": "chart",
+  "type": "histogram",
+  "title": "Histogram",
+  "bins": 8,
+  "data": [
+    1,
+    2,
+    2,
+    3,
+    3,
+    3,
+    4,
+    4,
+    4,
+    5,
+    5,
+    6
+  ],
+  "color": "cyan"
+}
+```
+
+#### 18.7.15 Stacked area trend
+
+```alur
+{
+  "module": "chart",
+  "type": "stackedArea",
+  "title": "Stacked area trend",
+  "labels": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri"
+  ],
+  "series": [
+    {
+      "name": "web",
+      "data": [
+        8,
+        10,
+        9,
+        12,
+        14
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "api",
+      "data": [
+        5,
+        6,
+        7,
+        6,
+        9
+      ],
+      "color": "green"
+    },
+    {
+      "name": "job",
+      "data": [
+        3,
+        4,
+        3,
+        5,
+        6
+      ],
+      "color": "amber"
+    }
+  ]
+}
+```
+
+#### 18.7.16 Treemap
+
+```alur
+{
+  "module": "chart",
+  "type": "treemap",
+  "title": "Treemap",
+  "labels": [
+    "Web",
+    "API",
+    "DB",
+    "Cache",
+    "Queue"
+  ],
+  "data": [
+    38,
+    27,
+    18,
+    11,
+    6
+  ],
+  "colors": [
+    "blue",
+    "green",
+    "amber",
+    "purple",
+    "pink"
+  ]
+}
+```
+
+#### 18.7.17 Box plot
+
+```alur
+{
+  "module": "chart",
+  "type": "box",
+  "title": "Box plot",
+  "boxes": [
+    {
+      "label": "Web",
+      "min": 2,
+      "q1": 5,
+      "median": 8,
+      "q3": 11,
+      "max": 14
+    },
+    {
+      "label": "API",
+      "min": 3,
+      "q1": 6,
+      "median": 9,
+      "q3": 12,
+      "max": 16
+    },
+    {
+      "label": "DB",
+      "min": 1,
+      "q1": 4,
+      "median": 7,
+      "q3": 10,
+      "max": 13
+    }
+  ]
+}
+```
+
+#### 18.7.18 Range bar with thresholds
+
+```alur
+{
+  "module": "chart",
+  "type": "range",
+  "title": "Range bar with thresholds",
+  "items": [
+    {
+      "label": "p50",
+      "from": 20,
+      "to": 60
+    },
+    {
+      "label": "p95",
+      "from": 70,
+      "to": 140
+    },
+    {
+      "label": "p99",
+      "from": 150,
+      "to": 260
+    }
+  ],
+  "color": "amber"
+}
+```
+
+#### 18.7.19 Density curve
+
+```alur
+{
+  "module": "chart",
+  "type": "density",
+  "title": "Density curve",
+  "series": [
+    {
+      "name": "web",
+      "data": [
+        0.05,
+        0.2,
+        0.6,
+        0.9,
+        0.6,
+        0.2,
+        0.05
+      ],
+      "color": "blue"
+    },
+    {
+      "name": "api",
+      "data": [
+        0.1,
+        0.3,
+        0.5,
+        0.7,
+        0.5,
+        0.3,
+        0.1
+      ],
+      "color": "amber"
+    }
+  ]
+}
+```
+
+#### 18.7.20 Slope chart
+
+```alur
+{
+  "module": "chart",
+  "type": "slope",
+  "title": "Slope chart",
+  "items": [
+    {
+      "label": "Web",
+      "before": 20,
+      "after": 48
+    },
+    {
+      "label": "API",
+      "before": 35,
+      "after": 28
+    },
+    {
+      "label": "DB",
+      "before": 12,
+      "after": 26
+    }
+  ],
+  "color": "cyan"
+}
+```
+
+#### 18.7.21 Two-axis combo
+
+```alur
+{
+  "module": "chart",
+  "type": "combo",
+  "title": "Two-axis combo",
+  "labels": [
+    "Mon",
+    "Tue",
+    "Wed",
+    "Thu",
+    "Fri"
+  ],
+  "bars": [
+    120,
+    140,
+    130,
+    160,
+    180
+  ],
+  "line": [
+    3,
+    4,
+    3.5,
+    5,
+    6
+  ],
+  "color": "blue"
+}
+```
+
+#### 18.7.22 Annotated timeline
+
+```alur
+{
+  "module": "chart",
+  "type": "timeline",
+  "title": "Annotated timeline",
+  "events": [
+    {
+      "label": "deploy",
+      "at": 0.1
+    },
+    {
+      "label": "cache warm",
+      "at": 0.35
+    },
+    {
+      "label": "peak",
+      "at": 0.6
+    },
+    {
+      "label": "rollback drill",
+      "at": 0.85
+    }
+  ],
+  "color": "green"
+}
+```
+
+#### 18.7.23 Bubble chart
+
+```alur
+{
+  "module": "chart",
+  "type": "bubble",
+  "title": "Bubble chart",
+  "data": [
+    [
+      3,
+      4,
+      2
+    ],
+    [
+      5,
+      7,
+      4
+    ],
+    [
+      8,
+      6,
+      3
+    ],
+    [
+      11,
+      9,
+      5
+    ],
+    [
+      14,
+      12,
+      6
+    ],
+    [
+      17,
+      11,
+      4
+    ]
+  ],
+  "color": "purple"
+}
+```
+
+#### 18.7.24 Dumbbell plot
+
+```alur
+{
+  "module": "chart",
+  "type": "dumbbell",
+  "title": "Dumbbell plot",
+  "items": [
+    {
+      "label": "Web",
+      "a": 20,
+      "b": 48
+    },
+    {
+      "label": "API",
+      "a": 35,
+      "b": 28
+    },
+    {
+      "label": "DB",
+      "a": 12,
+      "b": 26
+    }
+  ]
+}
+```
+
+#### 18.7.25 Quadrant matrix
+
+```alur
+{
+  "module": "chart",
+  "type": "quadrant",
+  "title": "Quadrant matrix",
+  "q1": "scale",
+  "q2": "invest",
+  "q3": "fix",
+  "q4": "watch",
+  "data": [
+    [
+      2,
+      8
+    ],
+    [
+      5,
+      6
+    ],
+    [
+      7,
+      3
+    ],
+    [
+      9,
+      7
+    ],
+    [
+      4,
+      4
+    ]
+  ],
+  "color": "cyan"
+}
+```
+
+#### 18.7.26 Process flow steps
+
+```alur
+{
+  "module": "chart",
+  "type": "process",
+  "title": "Process flow steps",
+  "steps": [
+    "plan",
+    "build",
+    "test",
+    "ship"
+  ],
+  "color": "green"
+}
+```
+
+#### 18.7.27 Cycle loop stages
+
+```alur
+{
+  "module": "chart",
+  "type": "cycle",
+  "title": "Cycle loop stages",
+  "steps": [
+    "plan",
+    "build",
+    "test",
+    "ship"
+  ],
+  "color": "purple"
+}
+```
+
+#### 18.7.28 Progress bar stack
+
+```alur
+{
+  "module": "chart",
+  "type": "progress",
+  "title": "Progress bar stack",
+  "items": [
+    {
+      "label": "Web",
+      "parts": [
+        {
+          "value": 60,
+          "color": "blue"
+        },
+        {
+          "value": 25,
+          "color": "green"
+        },
+        {
+          "value": 15,
+          "color": "amber"
+        }
+      ]
+    },
+    {
+      "label": "API",
+      "parts": [
+        {
+          "value": 40,
+          "color": "cyan"
+        },
+        {
+          "value": 35,
+          "color": "purple"
+        },
+        {
+          "value": 25,
+          "color": "pink"
+        }
+      ]
+    }
+  ]
+}
+```
+
+#### 18.7.29 Comparison table
+
+```alur
+{
+  "module": "chart",
+  "type": "table",
+  "title": "Comparison table",
+  "columns": [
+    "Tool",
+    "Speed",
+    "Cost",
+    "Use"
+  ],
+  "rows": [
+    [
+      "Nginx",
+      "fast",
+      "low",
+      "edge"
+    ],
+    [
+      "Postgres",
+      "medium",
+      "medium",
+      "data"
+    ],
+    [
+      "Redis",
+      "fast",
+      "high",
+      "cache"
+    ]
+  ]
+}
+```
+
+
+### 18.8 Logo library — security tools
+
+All 575 logos from `iMoon07/logo-svg` are available to every node (`"logo": "security:nmap"`). This block uses six of them.
+
+```alur
+{
+  "module": "flow",
+  "title": "Security toolchain",
+  "cable": "circuit",
+  "motion": "flowMany",
+  "columns": [["recon"], ["exploit"], ["forensics"]],
+  "nodes": {
+    "recon": { "label": "Recon", "logos": ["security:nmap", "security:wireshark"], "color": "cyan" },
+    "exploit": { "label": "Exploit", "logos": ["security:metasploit", "security:burp"], "color": "red" },
+    "forensics": { "label": "Forensics", "logos": ["security:hashcat", "security:ghidra"], "color": "purple" }
+  },
+  "edges": [
+    { "from": "recon", "to": "exploit" },
+    { "from": "exploit", "to": "forensics" }
+  ]
+}
+```
+
+
 ## Conclusion
 
 Artikel ini tetap satu eksperimen, tetapi matlamatnya ringkas: memastikan blog saya boleh memaparkan Markdown dengan kemas, selesa dibaca, dan tetap menyeronokkan—sama ada untuk tulisan santai atau tulisan teknikal.
