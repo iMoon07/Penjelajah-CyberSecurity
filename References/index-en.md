@@ -12,6 +12,7 @@ the site repo remains the source of truth.
 - [Alur Visual Engine & draw.html](imoon-alur-draw-en.md) — ` ```alur ` blocks, modules, cable/motion catalog, canvas editor, 29 chart types
 - [ai-tools Pipeline](imoon-ai-tools-en.md) — local-only scripts: fetch, generators, verify, snapshots
 - [Logo & Icon Library](imoon-logo-svg-en.md) — 2848 assets: SVG/PNG/WebP, motion glyphs, 3D icons, licensing per source
+- [Blog Post Template](https://imoon07.github.io/read.html?post=blog-post-template) — render-test post (`read.html?post=blog-post-template`): ` ```topology `, ` ```alur `, tables, footnotes; EN/ID/MS/TL via `&lang=`
 
 ## Core
 - [Standards & Core Protocols](standards-en.md)
