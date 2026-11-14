@@ -10,6 +10,62 @@
 
 ![Server Single-Tier Stack: Memahami Komponen, Teknologi, dan Deployment](single-tier-stack.png)
 
+{
+  "module": "canvas",
+  "title": "My canvas",
+  "grid": true,
+  "width": 900,
+  "height": 520,
+  "cable": "solid",
+  "motion": "flow",
+  "speed": 1,
+  "nodes": {
+    "n27": {
+      "id": "n27",
+      "x": 638,
+      "y": 726,
+      "w": 418,
+      "h": 242,
+      "shape": "table",
+      "label": "",
+      "sub": "",
+      "color": "blue",
+      "columns": [
+        "Column 1",
+        "Column 2",
+        "Column 3"
+      ],
+      "rows": [
+        [
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          ""
+        ],
+        [
+          "",
+          "",
+          ""
+        ]
+      ]
+    }
+  },
+  "edges": [],
+  "selected": "n27",
+  "selectedEdge": null,
+  "selectedEdges": [],
+  "selectedDrawing": null,
+  "zoom": 0.6004040650647096,
+  "panX": -434.1886662614942,
+  "panY": 333.76682189009773,
+  "edgeStyle": {},
+  "drawings": []
+}
+
 A **server single-tier stack** refers to an architecture in which the [web server](https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server), [application runtime](https://en.wikipedia.org/wiki/Runtime_system), and [database](https://en.wikipedia.org/wiki/Database) all run on a **single machine**.
 
 Imagine a small eatery where the kitchen, dining area, and storage are all in one place. A customer places an order, the chef prepares it, and the meal is served on the spot. Everything takes place in the same location.
