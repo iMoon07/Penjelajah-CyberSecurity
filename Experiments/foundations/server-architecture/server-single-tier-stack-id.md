@@ -86,6 +86,149 @@ Hal inilah yang juga terjadi pada *server single-tier stack*. Ketika browser men
 
 Referensi: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
+<!-- topology:core-components -->
+
+```topology
+{
+  "vertical": true,
+  "title": "Komponen Inti dan Pelengkap",
+  "legend": {
+    "flow": "Permintaan",
+    "back": "Respons"
+  },
+  "columns": [
+    [
+      "W"
+    ],
+    [
+      "T"
+    ],
+    [
+      "S"
+    ],
+    [
+      "A"
+    ],
+    {
+      "nodes": [
+        "H",
+        "D"
+      ],
+      "grid": 2
+    }
+  ],
+  "nodes": {
+    "W": [
+      "Klien Web",
+      "Sang pelanggan",
+      "customer",
+      "client",
+      "https://en.wikipedia.org/wiki/Web_browser"
+    ],
+    "T": [
+      "TLS & Sertifikat",
+      "Kemasan tersegel & izin usaha",
+      "lock",
+      "security",
+      "https://en.wikipedia.org/wiki/Transport_Layer_Security"
+    ],
+    "S": [
+      "Server Web",
+      "Sang pelayan",
+      "waiter",
+      "server",
+      "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server"
+    ],
+    "A": [
+      "Runtime Aplikasi",
+      "Sang koki",
+      "cook",
+      "process",
+      "https://en.wikipedia.org/wiki/Runtime_system"
+    ],
+    "H": [
+      "Cache",
+      "Hidangan siap saji",
+      "package",
+      "store",
+      "https://en.wikipedia.org/wiki/Cache_(computing)"
+    ],
+    "D": [
+      "Basis Data",
+      "Gudang bahan",
+      "warehouse",
+      "database",
+      "https://en.wikipedia.org/wiki/Database"
+    ]
+  },
+  "edges": [
+    [
+      "W",
+      "T"
+    ],
+    [
+      "T",
+      "S"
+    ],
+    [
+      "S",
+      "A"
+    ],
+    [
+      "A",
+      "H"
+    ],
+    [
+      "A",
+      "D"
+    ],
+    [
+      "D",
+      "A",
+      "",
+      true
+    ],
+    [
+      "A",
+      "S",
+      "",
+      true
+    ],
+    [
+      "S",
+      "T",
+      "",
+      true
+    ],
+    [
+      "T",
+      "W",
+      "",
+      true
+    ]
+  ],
+  "badges": false,
+  "facilities": [
+    "Dalam satu mesin",
+    [
+      "server",
+      "Inti"
+    ],
+    [
+      "security",
+      "Transportasi"
+    ],
+    [
+      "package",
+      "Opsional"
+    ]
+  ]
+}
+```
+
+OS tidak digambar sebagai kotak tersendiri: ia adalah lantai tempat semua yang di atasnya berdiri. Semua komponen pada diagram berjalan di atas sistem operasi yang sama, jadi OS adalah bangunannya, sedangkan server web, runtime, dan basis data adalah ruang-ruang di dalamnya.
+
+<!-- /topology:core-components -->
 ## Kombinasi Stack
 
 Kombinasi stack ini seperti bahan makanan dasar yang digunakan oleh warung tersebut. Dalam konteks teknologi seperti sistem operasi, web server, bahasa pemrograman, framework, dan database, membentuk sebuah variasi yang disebut [solution stack](https://en.wikipedia.org/wiki/Solution_stack). 

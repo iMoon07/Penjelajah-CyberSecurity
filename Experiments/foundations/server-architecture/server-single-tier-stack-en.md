@@ -80,6 +80,149 @@ The same applies to a single-tier stack. When a browser sends a request, several
 
 Reference: [MDN — How the Web Works](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
+<!-- topology:core-components -->
+
+```topology
+{
+  "vertical": true,
+  "title": "Core and Supporting Components",
+  "legend": {
+    "flow": "Request",
+    "back": "Response"
+  },
+  "columns": [
+    [
+      "W"
+    ],
+    [
+      "T"
+    ],
+    [
+      "S"
+    ],
+    [
+      "A"
+    ],
+    {
+      "nodes": [
+        "H",
+        "D"
+      ],
+      "grid": 2
+    }
+  ],
+  "nodes": {
+    "W": [
+      "Web Client",
+      "The customer",
+      "customer",
+      "client",
+      "https://en.wikipedia.org/wiki/Web_browser"
+    ],
+    "T": [
+      "TLS & Certificate",
+      "Sealed packaging & license",
+      "lock",
+      "security",
+      "https://en.wikipedia.org/wiki/Transport_Layer_Security"
+    ],
+    "S": [
+      "Web Server",
+      "The waiter",
+      "waiter",
+      "server",
+      "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server"
+    ],
+    "A": [
+      "Application Runtime",
+      "The chef",
+      "cook",
+      "process",
+      "https://en.wikipedia.org/wiki/Runtime_system"
+    ],
+    "H": [
+      "Cache",
+      "Ready-to-serve items",
+      "package",
+      "store",
+      "https://en.wikipedia.org/wiki/Cache_(computing)"
+    ],
+    "D": [
+      "Database",
+      "The pantry",
+      "warehouse",
+      "database",
+      "https://en.wikipedia.org/wiki/Database"
+    ]
+  },
+  "edges": [
+    [
+      "W",
+      "T"
+    ],
+    [
+      "T",
+      "S"
+    ],
+    [
+      "S",
+      "A"
+    ],
+    [
+      "A",
+      "H"
+    ],
+    [
+      "A",
+      "D"
+    ],
+    [
+      "D",
+      "A",
+      "",
+      true
+    ],
+    [
+      "A",
+      "S",
+      "",
+      true
+    ],
+    [
+      "S",
+      "T",
+      "",
+      true
+    ],
+    [
+      "T",
+      "W",
+      "",
+      true
+    ]
+  ],
+  "badges": false,
+  "facilities": [
+    "On one machine",
+    [
+      "server",
+      "Core"
+    ],
+    [
+      "security",
+      "Transport"
+    ],
+    [
+      "package",
+      "Optional"
+    ]
+  ]
+}
+```
+
+The OS is not drawn as a box of its own: it is the floor everything above stands on. Every component in the diagram runs on the same operating system, so the OS is the building, while the web server, runtime, and database are the rooms inside it.
+
+<!-- /topology:core-components -->
 ## Technology Stack Combinations
 
 A technology stack is akin to a recipe and its ingredients. In computing, the choice of operating system, web server, programming language, framework, and database forms a distinct arrangement known as a [solution stack](https://en.wikipedia.org/wiki/Solution_stack).
@@ -222,8 +365,6 @@ Each stack carries its own composition and purpose, tailored to the requirements
 
 This stack leverages JavaScript or TypeScript to build both the user interface (frontend) and server logic (backend). With Node.js, Bun, or Deno, JavaScript can run on the server, allowing a single language to cover the entire application stack.
 
-
-
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [MEAN](https://www.mongodb.com/resources/languages/mean-stack) | [MongoDB](https://www.mongodb.com/), [Express.js](https://expressjs.com/), [Angular](https://angular.dev/), [Node.js](https://nodejs.org/) | Uses Angular for a SPA frontend, Express.js as the backend framework, Node.js as the runtime, and MongoDB as a NoSQL database. Well-suited for enterprise applications requiring a strong structure and built-in TypeScript support via Angular. |
@@ -238,8 +379,6 @@ This stack leverages JavaScript or TypeScript to build both the user interface (
 ### 2. PHP Stack
 
 A PHP-centric stack is commonly used for web development, typically run on the server alongside a web server and a relational database.
-
-
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -256,8 +395,6 @@ A PHP-centric stack is commonly used for web development, typically run on the s
 
 A Python-based stack for web development, ranging from micro-frameworks to full-stack frameworks rich with built-in functionality.
 
-
-
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Django](https://www.djangoproject.com/) | [Python](https://www.python.org/), [Django](https://www.djangoproject.com/), PostgreSQL or MySQL, Nginx or Apache, Gunicorn | A "batteries included" framework offering an admin panel, authentication, ORM, and robust security features out of the box. Ideal for large-scale web applications requiring rapid development and high security standards. |
@@ -269,8 +406,6 @@ A Python-based stack for web development, ranging from micro-frameworks to full-
 
 Built upon C# and the .NET ecosystem, this stack is used to construct web applications, APIs, and backend services.
 
-
-
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/) | [C#](https://learn.microsoft.com/en-us/dotnet/csharp/), [ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/), SQL Server or PostgreSQL, IIS or Nginx | A high-performance, cross-platform framework from Microsoft for building web apps, REST APIs, and backend services. Runs on Windows, Linux, and macOS, making it ideal for enterprise environments within the Microsoft ecosystem. |
@@ -279,8 +414,6 @@ Built upon C# and the .NET ecosystem, this stack is used to construct web applic
 ### 5. Java Stack
 
 A stack built on Java, commonly used for scalable backend systems and enterprise-grade applications.
-
-
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -292,8 +425,6 @@ A stack built on Java, commonly used for scalable backend systems and enterprise
 
 A stack centered around Ruby, known for its strong conventions and emphasis on rapid web development.
 
-
-
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Ruby on Rails](https://rubyonrails.org/) | [Ruby](https://www.ruby-lang.org/), [Rails](https://guides.rubyonrails.org/getting_started.html), PostgreSQL or MySQL, Puma or Unicorn | A full-stack framework that follows "Convention over Configuration". It provides migrations, scaffolding, asset pipelines, and more out of the box. Ideal for startups and MVPs that require development at high velocity. |
@@ -302,8 +433,6 @@ A stack centered around Ruby, known for its strong conventions and emphasis on r
 ### 7. Go Stack
 
 A stack built with Go (Golang), designed for high-performance backends, APIs, and microservices.
-
-
 
 | Stack | Core Components | Description |
 | --- | --- | --- |
@@ -316,8 +445,6 @@ A stack built with Go (Golang), designed for high-performance backends, APIs, an
 
 A stack built with Rust, prioritizing memory safety, concurrency, and system-level performance.
 
-
-
 | Stack | Core Components | Description |
 | --- | --- | --- |
 | [Actix Web](https://actix.rs/) | [Rust](https://www.rust-lang.org/), [Actix Web](https://actix.rs/), various databases | One of Rust's fastest web frameworks, built on an actor model. Ideal for applications requiring memory safety, high concurrency, and maximum performance without a garbage collector. |
@@ -327,8 +454,6 @@ A stack built with Rust, prioritizing memory safety, concurrency, and system-lev
 ### 9. Infrastructure and Observability
 
 Stacks that combine operating systems, web servers, databases, or supporting tools for infrastructure management and application observability.
-
-
 
 | Stack | Core Components | Description |
 | --- | --- | --- |

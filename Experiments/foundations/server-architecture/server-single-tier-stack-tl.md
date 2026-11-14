@@ -86,6 +86,149 @@ Ganun din ang nangyayari sa *single-tier stack*. Kapag ang browser ay nagpapadal
 
 Sanggunian: [MDN — Paano Gumagana ang Web](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
+<!-- topology:core-components -->
+
+```topology
+{
+  "vertical": true,
+  "title": "Pangunahing Bahagi at mga Pantulong",
+  "legend": {
+    "flow": "Request",
+    "back": "Response"
+  },
+  "columns": [
+    [
+      "W"
+    ],
+    [
+      "T"
+    ],
+    [
+      "S"
+    ],
+    [
+      "A"
+    ],
+    {
+      "nodes": [
+        "H",
+        "D"
+      ],
+      "grid": 2
+    }
+  ],
+  "nodes": {
+    "W": [
+      "Web Client",
+      "Ang customer",
+      "customer",
+      "client",
+      "https://en.wikipedia.org/wiki/Web_browser"
+    ],
+    "T": [
+      "TLS at Certificate",
+      "Selyadong pakete at lisensya",
+      "lock",
+      "security",
+      "https://en.wikipedia.org/wiki/Transport_Layer_Security"
+    ],
+    "S": [
+      "Web Server",
+      "Ang waiter",
+      "waiter",
+      "server",
+      "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server"
+    ],
+    "A": [
+      "Application Runtime",
+      "Ang chef",
+      "cook",
+      "process",
+      "https://en.wikipedia.org/wiki/Runtime_system"
+    ],
+    "H": [
+      "Cache",
+      "Mga pagkaing nakahanda",
+      "package",
+      "store",
+      "https://en.wikipedia.org/wiki/Cache_(computing)"
+    ],
+    "D": [
+      "Database",
+      "Ang pantry",
+      "warehouse",
+      "database",
+      "https://en.wikipedia.org/wiki/Database"
+    ]
+  },
+  "edges": [
+    [
+      "W",
+      "T"
+    ],
+    [
+      "T",
+      "S"
+    ],
+    [
+      "S",
+      "A"
+    ],
+    [
+      "A",
+      "H"
+    ],
+    [
+      "A",
+      "D"
+    ],
+    [
+      "D",
+      "A",
+      "",
+      true
+    ],
+    [
+      "A",
+      "S",
+      "",
+      true
+    ],
+    [
+      "S",
+      "T",
+      "",
+      true
+    ],
+    [
+      "T",
+      "W",
+      "",
+      true
+    ]
+  ],
+  "badges": false,
+  "facilities": [
+    "Isang machine",
+    [
+      "server",
+      "Pangunahing"
+    ],
+    [
+      "security",
+      "Transport"
+    ],
+    [
+      "package",
+      "Opsyonal"
+    ]
+  ]
+}
+```
+
+Hindi iginuhit ang OS bilang sariling kahon: ito ang sahig na kinatatayuan ng lahat ng nasa itaas. Lahat ng komponente sa diyagram ay tumatakbo sa iisang operating system, kaya ang OS ang gusali, at ang web server, runtime, at database ang mga kuwarto sa loob nito.
+
+<!-- /topology:core-components -->
 ## Mga Kombinasyon ng Technology Stack
 
 Ang technology stack ay katulad ng resipe at mga sangkap nito. Sa larangan ng computing, ang pagpili ng operating system, web server, programming language, framework, at database ay bumubuo ng isang natatanging kaayusan na tinatawag na [solution stack](https://en.wikipedia.org/wiki/Solution_stack).

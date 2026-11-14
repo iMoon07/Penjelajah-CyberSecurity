@@ -93,6 +93,149 @@ Begitu juga dengan *tindanan pelayan satu-tingkat*. Apabila pelayar menghantar p
 
 Rujukan: [MDN — Bagaimana Web Berfungsi](https://developer.mozilla.org/en-US/docs/Learn_web_development/Getting_started/Web_standards/How_the_web_works)
 
+<!-- topology:core-components -->
+
+```topology
+{
+  "vertical": true,
+  "title": "Komponen Teras dan Pelengkap",
+  "legend": {
+    "flow": "Permintaan",
+    "back": "Respons"
+  },
+  "columns": [
+    [
+      "W"
+    ],
+    [
+      "T"
+    ],
+    [
+      "S"
+    ],
+    [
+      "A"
+    ],
+    {
+      "nodes": [
+        "H",
+        "D"
+      ],
+      "grid": 2
+    }
+  ],
+  "nodes": {
+    "W": [
+      "Klien Web",
+      "Pelanggan",
+      "customer",
+      "client",
+      "https://en.wikipedia.org/wiki/Web_browser"
+    ],
+    "T": [
+      "TLS & Sijil",
+      "Bungkusan dimeterai & lesen",
+      "lock",
+      "security",
+      "https://en.wikipedia.org/wiki/Transport_Layer_Security"
+    ],
+    "S": [
+      "Pelayan Web",
+      "Pelayan kedai",
+      "waiter",
+      "server",
+      "https://developer.mozilla.org/en-US/docs/Learn_web_development/Howto/Web_mechanics/What_is_a_web_server"
+    ],
+    "A": [
+      "Runtime Aplikasi",
+      "Tukang masak",
+      "cook",
+      "process",
+      "https://en.wikipedia.org/wiki/Runtime_system"
+    ],
+    "H": [
+      "Cache",
+      "Juadah siap hidang",
+      "package",
+      "store",
+      "https://en.wikipedia.org/wiki/Cache_(computing)"
+    ],
+    "D": [
+      "Pangkalan Data",
+      "Ruang simpanan",
+      "warehouse",
+      "database",
+      "https://en.wikipedia.org/wiki/Database"
+    ]
+  },
+  "edges": [
+    [
+      "W",
+      "T"
+    ],
+    [
+      "T",
+      "S"
+    ],
+    [
+      "S",
+      "A"
+    ],
+    [
+      "A",
+      "H"
+    ],
+    [
+      "A",
+      "D"
+    ],
+    [
+      "D",
+      "A",
+      "",
+      true
+    ],
+    [
+      "A",
+      "S",
+      "",
+      true
+    ],
+    [
+      "S",
+      "T",
+      "",
+      true
+    ],
+    [
+      "T",
+      "W",
+      "",
+      true
+    ]
+  ],
+  "badges": false,
+  "facilities": [
+    "Dalam satu mesin",
+    [
+      "server",
+      "Teras"
+    ],
+    [
+      "security",
+      "Pengangkutan"
+    ],
+    [
+      "package",
+      "Pilihan"
+    ]
+  ]
+}
+```
+
+OS tidak dilukis sebagai kotak berasingan: ia ialah lantai yang menjadi tempat semua di atasnya berdiri. Setiap komponen dalam rajah berjalan pada sistem pengendalian yang sama, maka OS ialah bangunannya, manakala pelayan web, runtime, dan pangkalan data ialah bilik-bilik di dalamnya.
+
+<!-- /topology:core-components -->
 ## Gabungan Tindanan Teknologi
 
 Tindanan teknologi ibarat resipi beserta bahan-bahannya. Dalam bidang pengkomputeran, pilihan sistem pengendalian, pelayan web, bahasa pengaturcaraan, rangka kerja, dan pangkalan data membentuk susunan tersendiri yang dikenali sebagai [tindanan penyelesaian](https://en.wikipedia.org/wiki/Solution_stack).
