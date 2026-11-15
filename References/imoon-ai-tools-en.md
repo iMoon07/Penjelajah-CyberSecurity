@@ -1,9 +1,8 @@
 # ai-tools — scripts & asset pipeline
 
-> Mirrored from `/home/moon/Projects/ai-tools/README.md` so the local
-> toolchain is readable next to the other references. `ai-tools/` is not a
-> published repository: only its output (assets in `logo/`, ` ```draw ` /
-> ` ```topology ` blocks in articles) reaches the site.
+> Mirrored from the `ai-tools` repository README so the toolchain is readable next
+> to the other references. Source of truth:
+> <https://github.com/iMoon07/ai-tools>
 
 ---
 
@@ -11,11 +10,27 @@ Scripts, extracted assets, and working artifacts used to reproduce the Alur
 assets (logos, icons, diagrams). Not an application: every folder stands on its
 own and can be run from the repo root.
 
-Location: `/home/moon/Projects/ai-tools` — **local only**, never published. Only
-its output reaches the site: assets in `logo/` and the ` ```draw ` /
-` ```topology ` blocks in articles.
+Only the generated output is published: the logo assets and the ` ```draw ` /
+` ```topology ` blocks in articles. The scripts themselves are the reproducible
+half of that pipeline, so they live here.
+
+The generators expect the site checkout as a sibling directory
+(`../imoon07.github.io`); every other script takes its paths as arguments.
 
 **Total:** 7173 files.
+
+## Requirements
+
+- Python 3.9+
+- `websocket-client` — CDP probes (`verify/`, `browser/`)
+- `selenium`, `playwright` — browser automation (`browser/`, `verify/`)
+- `Pillow` — image comparison (`verify/`, `renders/`)
+- Chromium or Chrome for the headless probes
+
+```bash
+python3 -m pip install websocket-client selenium playwright pillow
+python3 -m playwright install chromium
+```
 
 ## Layout
 
@@ -32,11 +47,11 @@ its output reaches the site: assets in `logo/` and the ` ```draw ` /
 | `renders/` | Render captures kept for visual comparison | PNG, `canvas/` |
 | `renders/canvas/` | Screenshots captured by the `verify/canvas/` probes | `sticky.png`, `hittest*.png` |
 | `snapshots/` | Page, DOM, and per-session note captures | `pages/`, `dom/`, `design/` |
-| `snapshots/kilo-scratch/` | Fixtures, backups, logs, and HTML captures moved out of `/tmp/kilo` | `draw.html.bak`, `spec.json`, `topo_head.html` |
+| `snapshots/kilo-scratch/` | Fixtures, backups, logs, and HTML captures kept from the old scratch dir | `draw.html.bak`, `spec.json`, `topo_head.html` |
 | `test/` | Visual and asset function tests | `test_all_shapes_*.py` |
 | `vendor/` | Third-party libraries, mostly Unicons (line/solid/monochrome) | `unicons/`, `marked.min.js` |
 | `verify/` | Result audits (shapes, lines, arrows, plates, touch gestures) | `verify.py`, `audit-*.html`, `mobile_touch_scroll.py` |
-| `verify/canvas/` | Headless CDP probes for `draw.html` and `topology.html` (canvas, arrows, tables, charts, responsive). 393 scripts, moved here from `/tmp/kilo` | `draw_everywhere.py`, `stickyfill.py`, `tablepanel.py`, `shot.py`, `topo_mobile.py` |
+| `verify/canvas/` | Headless CDP probes for `draw.html` and `topology.html` (canvas, arrows, tables, charts, responsive). 393 scripts | `draw_everywhere.py`, `stickyfill.py`, `tablepanel.py`, `shot.py`, `topo_mobile.py` |
 
 ## Typical workflow
 
@@ -57,6 +72,7 @@ its output reaches the site: assets in `logo/` and the ` ```draw ` /
 | Preview the site and docs over http or https | `python3 serve/serve.py --port 8123` |
 | Test shape/line interleaving | `python3 test/test_all_shapes_line.py` |
 | Check list scrolling on a touch viewport | `python3 verify/mobile_touch_scroll.py --url http://localhost:8000/draw.html --open ".mobile-fab,[data-mobile-panel='assets']" --control` |
+| Run every canvas probe | `for f in verify/canvas/*.py; do python3 "$f"; done` |
 
 ## Notes
 
@@ -69,6 +85,6 @@ its output reaches the site: assets in `logo/` and the ` ```draw ` /
 - Names ending in `~2` are duplicates of an earlier attempt; safe to delete once
   confirmed unused.
 - Probe scripts keep their scratch (Chromium profiles, screenshots) in
-  `/tmp/alur-probes/`; they were moved out of `/tmp/kilo` and the old path was
-  rewritten, so nothing in `verify/canvas/` depends on `/tmp/kilo` any more.
-- `.pyc` files (5) are caches, not sources.
+  `/tmp/alur-probes/`, outside the repo. Override the port in the script when
+  two runs collide.
+- `.pyc` files and `__pycache__/` are caches, not sources; they are ignored.
