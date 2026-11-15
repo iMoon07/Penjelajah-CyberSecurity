@@ -9,7 +9,7 @@ read next to the other references. Each file starts with a link to its origin;
 the site repo remains the source of truth.
 
 - [Topology Diagrams](imoon-topology-en.md) — ` ```topology ` blocks: JSON schema, layout, theming
-- [Alur Visual Engine & draw.html](imoon-alur-draw-en.md) — ` ```alur ` blocks, modules, cable/motion catalog, canvas editor, 29 chart types
+- [Alur Visual Engine & draw.html](imoon-alur-draw-en.md) — ` ```alur ` blocks, modules, cable/motion catalog, canvas editor (Rough.js strokes, sticky notes, tables, links, laser), 29 chart types
 - [ai-tools Pipeline](imoon-ai-tools-en.md) — local-only scripts: fetch, generators, verify, snapshots
 - [Logo & Icon Library](imoon-logo-svg-en.md) — 2848 assets: SVG/PNG/WebP, motion glyphs, 3D icons, licensing per source
 - [Blog Post Template](https://imoon07.github.io/read.html?post=blog-post-template) — render-test post (`read.html?post=blog-post-template`): ` ```topology `, ` ```alur `, tables, footnotes; EN/ID/MS/TL via `&lang=`

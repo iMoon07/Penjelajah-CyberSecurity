@@ -252,5 +252,6 @@ Render through the real pipeline (marked → DOMPurify → `markdown.js` →
 - `vertical` return cables stay parallel,
 - a static grid has no dots or legend.
 
-The old `/tmp/kilo` harness scripts (`gen_harness.py`, `verify.py`,
-`measure.py`) are not part of the site; use them only for local regression runs.
+The local harness scripts (`gen_harness.py`, `verify.py`, `measure.py`, and
+the rest of the CDP probes) now live in `ai-tools/verify/canvas/`, not in
+`/tmp`. They are not part of the site; use them only for local regression runs.
