@@ -1,1 +1,1 @@
-SOON update
+Coming soon
