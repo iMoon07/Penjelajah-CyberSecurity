@@ -1,5 +1,9 @@
 # Hackers: Pahlawan Revolusi Komputer (ID)
 
+[🇬🇧 Read in English](hackers-heroes-of-the-computer-revolution-en.md)
+
+﷽
+
 > Versi Bahasa Indonesia dari `Hackers Heroes of the Computer Revolution.pdf` (~/Ebook) karya Steven Levy. Diekstrak dengan `ai-tools/read_pdf.py` (pypdf, lapisan teks; bukan metadata/OCR), dirapikan, lalu diterjemahkan. Watermark pemindaian dihapus; seluruh 520 halaman disertakan; penanda halaman dan struktur bab dipertahankan (Bahasa Indonesia).
 
 ## Info Ekstraksi
@@ -9,6 +13,8 @@ backend: pypdf
 total_pages: 520
 pages_returned: 520 (with_text: 520)
 ```
+
+![hacker heroes of the computer revolution](hackers-heroes-of-the-computer-revolution.png)
 
 ## Daftar Isi
 

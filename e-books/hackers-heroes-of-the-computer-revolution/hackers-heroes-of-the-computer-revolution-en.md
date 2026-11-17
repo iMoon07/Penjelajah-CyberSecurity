@@ -1,5 +1,9 @@
 # Hackers: Heroes of the Computer Revolution (EN)
 
+[🇮🇩 Read in Bahasa Indonesia](hackers-heroes-of-the-computer-revolution-en.md)
+
+﷽
+
 > Full text extracted from `Hackers Heroes of the Computer Revolution.pdf` (~/Ebook) using `ai-tools/read_pdf.py` (pypdf text layer; not metadata/OCR). Cleaned and restructured: scan watermark removed, all 520 pages included, section headings and page markers preserved.
 
 ## Extraction Info
@@ -9,6 +13,8 @@ backend: pypdf
 total_pages: 520
 pages_returned: 520 (with_text: 520)
 ```
+
+![hacker heroes of the computer revolution](hackers-heroes-of-the-computer-revolution.png)
 
 ## Table of Contents
 
