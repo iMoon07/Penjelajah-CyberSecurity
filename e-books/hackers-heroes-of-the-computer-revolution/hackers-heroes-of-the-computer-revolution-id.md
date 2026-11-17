@@ -1,5 +1,7 @@
 # Hackers: Pahlawan Revolusi Komputer (ID)
 
+![hacker heroes of the computer revolution](hackers-heroes-of-the-computer-revolution.png)
+
 [🇬🇧 Read in English](hackers-heroes-of-the-computer-revolution-en.md)
 
 ﷽

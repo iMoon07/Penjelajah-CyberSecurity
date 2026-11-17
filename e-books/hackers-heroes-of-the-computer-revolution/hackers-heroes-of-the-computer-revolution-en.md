@@ -1,6 +1,8 @@
 # Hackers: Heroes of the Computer Revolution (EN)
 
-[🇮🇩 Read in Bahasa Indonesia](hackers-heroes-of-the-computer-revolution-en.md)
+![hacker heroes of the computer revolution](hackers-heroes-of-the-computer-revolution.png)
+
+[🇮🇩 Read in Bahasa Indonesia](hackers-heroes-of-the-computer-revolution-id.md)
 
 ﷽
 
