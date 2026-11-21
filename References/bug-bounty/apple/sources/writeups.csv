@@ -1,0 +1,15 @@
+date,bounty,title,url,author,author-url,type
+2026-07-10,,"State of the Apple Security Bounty program",https://gergelykalman.com/state-of-the-apple-security-bounty-program.html,Gergely Kalman,https://gergelykalman.com,blog
+2026-03-27,1000,Abusing the Admin Framework for fun and profit,https://rdowd.com/abusing-system-administration-for-fun-and-profit-part-1-of-3/,Ryan Dowd,https://rdowd.com,blog
+2025-09-05,1000,When the Back Button Becomes Dangerous: My Safari Bug Bounty Journey,https://medium.com/@syarifsajjad07/when-the-back-button-becomes-dangerous-my-safari-bug-bounty-journey-8b7dee70debb,Syarif Sajjad,https://medium.com/@syarifsajjad07,blog
+2025-07-31,1000,CVE-2025-30466 UXSS in Safari (RenwaX23),https://www.macworld.com/article/2863434/bounty-hunter-got-1000-from-apple.html,RenwaX23,,blog
+2024-11-28,,"Some Experience In Apple Security Bug Program",https://imlzq.com/experience/2024/11/28/Some-Experience-In-ASB.html,Zhongquan Li,https://imlzq.com,blog
+2024-05-14,60000,"CVE-2024-27834 PAC Bypass in Safari (Pwn2Own)",https://www.bleepingcomputer.com/news/apple/apple-fixes-safari-webkit-zero-day-flaw-exploited-at-pwn2own/,Manfred Paul,,blog
+2022-01-26,100500,Safari UXSS + iCloud ShareBear exploit chain,https://www.ryanpickren.com/safari-uxss, Ryan Pickren,https://www.ryanpickren.com,blog
+2021-04-15,9000,My First Critical Bug in Bug Bounty Hunting: iCloud,https://fernale.blogspot.com/p/an-interesting-xss-exploit-that-i-found.html,Fernale,https://fernale.blogspot.com,blog
+2021-04-08,100000,Safari to Kernel Zero-day at Pwn2Own 2021,https://www.macrumors.com/2021/04/08/pwn2own-safari-exploit-demonstrated/,Jack Dates,,blog
+2020-10-07,288500,"We Hacked Apple for 3 Months: Here's What We Found",https://samcurry.net/hacking-apple,Sam Curry,https://samcurry.net,blog
+2020-05-30,100000,Zero-day in Sign in with Apple,https://bhavukjain.com/blog/2020/05/30/zeroday-signin-with-apple/,Bhavuk Jain,https://bhavukjain.com,blog
+2020-04-03,75000,iPhone Camera Hack - Safari zero-click exploit chain,https://www.ryanpickren.com/webcam-hacking-overview,Ryan Pickren,https://www.ryanpickren.com,blog
+2020-04-03,75000,Bugs that let sites hijack Mac and iPhone cameras,https://arstechnica.com/information-technology/2020/04/bugs-that-let-sites-hijack-mac-and-iphone-cameras-fetches-75k-bounty/,Dan Goodin,,blog
+2021-04-06,100000,Safari to Kernel RCE at Pwn2Own 2021,https://www.youtube.com/watch?v=cfbT1IdAt,Jack Dates,,video

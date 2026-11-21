@@ -1,8 +1,21 @@
 # Mozilla / Firefox — Indeks Writeup Bug Bounty (ID)
 
+![Mozilla / Firefox](thumbnail.png)
+
 [🇬🇧 Read in English](mozilla-firefox-vrp-en.md)
 
 ﷽
+
+<details>
+<summary><b>Details — Mozilla / Firefox</b></summary>
+
+- **Program**: Mozilla Client Bug Bounty (Firefox Desktop, Android, iOS) + Web Bug Bounty.
+- **Reward maksimum**: hingga $20.000 (client, impact tertinggi) + bonus 50% bypass mitigasi.
+- **Hall of Fame**: publik, nama per kuartal.
+- **Submit**: Bugzilla (client) / HackerOne (web).
+- **In scope**: memory corruption, sandbox escape, UXSS, bypass prompt WebExtension.
+
+</details>
 
 > Kumpulan writeup untuk Mozilla / Firefox. Kolom: judul, tanggal publikasi, penulis, reward yang **dilaporkan**, jenis (blog/video), dan tautan langsung ke laporan asli. Nominal adalah yang dilaporkan penulis/kurator, bukan jaminan untuk temuan serupa.
 
@@ -10,7 +23,7 @@
 
 | Item | Nilai |
 |---|---|
-| Total entri unik | 18 |
+| Total entri unik | 17 |
 | Entri dengan reward dilaporkan | 5 |
 | Reward tertinggi | $100,000 |
 | Rentang tanggal | 2024-03-21 s/d 2026-04-28 |
@@ -48,7 +61,6 @@
 | n/a | — | WebGL texture OOB | Oskar Lindberg | blog | [buka](https://bugzilla.mozilla.org/show_bug.cgi?id=1989127) |
 | n/a | — | nsStandardURL Resolve | zx | blog | [buka](https://bugzilla.mozilla.org/show_bug.cgi?id=2041610) |
 | n/a | — | How a single typo led to RCE in Firefox | Erge | blog | [buka](https://kqx.io/post/firefox0day/) |
-| n/a | — | CVE-2026-12294 SystemPrincipal escalation via forged IPDL | Quy Pham | blog | [buka](https://bugzilla.mozilla.org/show_bug.cgi?id=2039873) |
 | n/a | — | CVE-2026-16355 SpiderMonkey iterator-index underflow | External reporter | blog | [buka](https://bugzilla.mozilla.org/show_bug.cgi?id=2052207) |
 | n/a | — | Snapshots for IPC Fuzzing | Mozilla Security | blog | [buka](https://hacks.mozilla.org/2024/06/snapshots-for-ipc-fuzzing/) |
 | n/a | — | Mozilla IPC Security Guide | Mozilla Wiki | blog | [buka](https://wiki.mozilla.org/Security/Sandbox/IPCguide) |

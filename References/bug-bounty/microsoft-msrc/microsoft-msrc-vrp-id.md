@@ -1,8 +1,21 @@
 # Microsoft / MSRC — Indeks Writeup Bug Bounty (ID)
 
+![Microsoft MSRC](thumbnail.png)
+
 [🇬🇧 Read in English](microsoft-msrc-vrp-en.md)
 
 ﷽
+
+<details>
+<summary><b>Details — Microsoft / MSRC</b></summary>
+
+- **Program**: Microsoft Security Response Center bounty programs.
+- **Reward tertinggi**: Hyper-V hingga $250.000; Identity hingga $100.000; Windows Insider hingga $100.000; Azure hingga $60.000.
+- **Hall of Fame**: pengakuan researcher per periode.
+- **Submit**: MSRC Researcher Portal.
+- **In scope**: Azure, Identity/Entra ID, Windows, Edge, Copilot, Hyper-V, M365.
+
+</details>
 
 > Kumpulan writeup untuk Microsoft / MSRC. Kolom: judul, tanggal publikasi, penulis, reward yang **dilaporkan**, jenis (blog/video), dan tautan langsung ke laporan asli. Nominal adalah yang dilaporkan penulis/kurator, bukan jaminan untuk temuan serupa.
 
@@ -10,12 +23,12 @@
 
 | Item | Nilai |
 |---|---|
-| Total entri unik | 92 |
-| Entri dengan reward dilaporkan | 43 |
+| Total entri unik | 89 |
+| Entri dengan reward dilaporkan | 41 |
 | Reward tertinggi | $200,000 |
 | Rentang tanggal | 2017-09-12 s/d 2026-10-28 |
 
-## 2. 20 Reward Tertinggi (Dilaporkan)
+## 2. 19 Reward Tertinggi (Dilaporkan)
 
 | # | Reward | Tulisan | Penulis | Tanggal | Jenis | Tautan |
 |---|---|---|---|---|---|---|
@@ -31,14 +44,13 @@
 | 10 | **$30,000** | Azure Cloud Shell Kubernetes Cluster Takeover | Chen Cohen | 2021-02-15 | blog | [buka](https://hencohen10.medium.com/i-own-your-cloud-shell-taking-over-azure-cloud-shell-kubernetes-cluster-through-unsecured-558621519cf9) |
 | 11 | **$30,000** | Lets Dance in the Cache: Destabilizing Hash Table on IIS | Orange Tsai | 2022-08-18 | blog | [buka](https://blog.orange.tw/posts/2022-08-lets-dance-in-the-cache-destabilizing-hash-table-on-microsoft-iis/) |
 | 12 | **$20,000** | Microsoft Dynamics Container Sandbox RCE via Docker API | Chen Cohen | 2021-06-25 | blog | [buka](https://hencohen10.medium.com/microsoft-dynamics-container-sandbox-rce-via-unauthenticated-docker-remote-api-20-000-bounty-7f726340a93b) |
-| 13 | **$20,000** | Microsoft Dynamics Container Sandbox RCE | Chen Cohen | 2022-06-01 | blog | [buka](https://hencohen10.medium.com/microsoft-dynamics-container-sandbox-rce-via-unauthenticated-docker-remote-api-20-000-bounty-7f726340a93b) |
-| 14 | **$20,000** | Cross-Tenant Access Exploit in Microsoft Entra ID | Bashir Mohamed | 2025-09-16 | blog | [buka](https://medium.com/@bashir69emceeaka5/cross-tenant-access-exploit-in-microsoft-entra-id-breaking-governance-with-a-simple-trick-a06d88fe309e) |
-| 15 | **$20,000** | Agentic 0day Research: Edge VBS Bypass | Alex Bernier | 2026-02-08 | blog | [buka](https://blindcyber.com/2026/02/08/Agentic-0day-Research/) |
-| 16 | **$15,000** | Finding SSRFs in Azure DevOps | Torjus Bryne Retterstol | 2025-01-17 | blog | [buka](https://binarysecurity.no/posts/2025/01/finding-ssrfs-in-devops) |
-| 17 | **$10,000** | 10000 for automatic email confirmation bug in Edge | Karan Chaudhary | 2021-01-22 | blog | [buka](https://0xkaran.medium.com/10-000-for-automatic-email-confirmation-bug-in-microsofts-edge-browser-22f15ceccb4a) |
-| 18 | **$10,000** | Finding SSRFs in Azure DevOps Part 2 | Sofia Lindqvist | 2025-05-30 | blog | [buka](https://www.binarysecurity.no/posts/2025/05/finding-ssrfs-in-devops-part2) |
-| 19 | **$10,000** | How I Found the Worst ASP.NET Vulnerability | Siddhant Kalgutkar | 2025-11-07 | blog | [buka](https://www.praetorian.com/blog/how-i-found-the-worst-asp-net-vulnerability-a-10k-bug-cve-2025-55315/) |
-| 20 | **$8,000** | When Validate Hwnd Isnt a Gate: CVE-2026-54107 | Pravin Choudhary | 2026-07-14 | blog | [buka](https://medium.com/@pravin1214choudhary/when-validate-hwnd-isnt-a-gate-root-causing-cve-2026-54107-ce4eeacb530a) |
+| 13 | **$20,000** | Cross-Tenant Access Exploit in Microsoft Entra ID | Bashir Mohamed | 2025-09-16 | blog | [buka](https://medium.com/@bashir69emceeaka5/cross-tenant-access-exploit-in-microsoft-entra-id-breaking-governance-with-a-simple-trick-a06d88fe309e) |
+| 14 | **$20,000** | Agentic 0day Research: Edge VBS Bypass | Alex Bernier | 2026-02-08 | blog | [buka](https://blindcyber.com/2026/02/08/Agentic-0day-Research/) |
+| 15 | **$15,000** | Finding SSRFs in Azure DevOps | Torjus Bryne Retterstol | 2025-01-17 | blog | [buka](https://binarysecurity.no/posts/2025/01/finding-ssrfs-in-devops) |
+| 16 | **$10,000** | 10000 for automatic email confirmation bug in Edge | Karan Chaudhary | 2021-01-22 | blog | [buka](https://0xkaran.medium.com/10-000-for-automatic-email-confirmation-bug-in-microsofts-edge-browser-22f15ceccb4a) |
+| 17 | **$10,000** | Finding SSRFs in Azure DevOps Part 2 | Sofia Lindqvist | 2025-05-30 | blog | [buka](https://www.binarysecurity.no/posts/2025/05/finding-ssrfs-in-devops-part2) |
+| 18 | **$10,000** | How I Found the Worst ASP.NET Vulnerability | Siddhant Kalgutkar | 2025-11-07 | blog | [buka](https://www.praetorian.com/blog/how-i-found-the-worst-asp-net-vulnerability-a-10k-bug-cve-2025-55315/) |
+| 19 | **$8,000** | When Validate Hwnd Isnt a Gate: CVE-2026-54107 | Pravin Choudhary | 2026-07-14 | blog | [buka](https://medium.com/@pravin1214choudhary/when-validate-hwnd-isnt-a-gate-root-causing-cve-2026-54107-ce4eeacb530a) |
 
 ## 3. Semua Entri (terbaru dulu)
 
@@ -74,7 +86,6 @@
 | 2023-01-21 | $3,000 | Reflected XSS Leads to 3000 Bounty from Microsoft Forms | Supakiad S | blog | [buka](https://infosecwriteups.com/reflected-xss-leads-to-3-000-bug-bounty-rewards-from-microsoft-forms-efe34fc6b261) |
 | 2022-08-18 | $30,000 | Lets Dance in the Cache: Destabilizing Hash Table on IIS | Orange Tsai | blog | [buka](https://blog.orange.tw/posts/2022-08-lets-dance-in-the-cache-destabilizing-hash-table-on-microsoft-iis/) |
 | 2022-07-13 | $6,000 | Microsoft Teams Cross Site Scripting Bypass CSP | numanturle | blog | [buka](https://medium.com/@numanturle/microsoft-teams-stored-xss-bypass-csp-8b4a7f5fccbf) |
-| 2022-06-01 | $20,000 | Microsoft Dynamics Container Sandbox RCE | Chen Cohen | blog | [buka](https://hencohen10.medium.com/microsoft-dynamics-container-sandbox-rce-via-unauthenticated-docker-remote-api-20-000-bounty-7f726340a93b) |
 | 2021-12-10 | $5,000 | Remote Deserialization Bug in Microsoft RDP Client | Valentino Ricotta | blog | [buka](https://blog.thalium.re/posts/deserialization-bug-through-rdp-smart-card-extension/) |
 | 2021-08-26 | $40,000 | Critical Vulnerability in Microsoft Azure Cosmos DB | Wiz | blog | [buka](https://chaosdb.wiz.io/) |
 | 2021-06-25 | $20,000 | Microsoft Dynamics Container Sandbox RCE via Docker API | Chen Cohen | blog | [buka](https://hencohen10.medium.com/microsoft-dynamics-container-sandbox-rce-via-unauthenticated-docker-remote-api-20-000-bounty-7f726340a93b) |
@@ -102,7 +113,6 @@
 | 2026-09-03 | — | Read-Only Is a Lie: An Entra ID Privilege Escalation | Cymulate Research Lab | blog | [buka](https://cymulate.com/blog/entra-id-global-reader-privilege-escalation/) |
 | 2026-08-18 | — | CoSnitch: When Your AI Assistant Becomes Its Own Whistleblower | Lior Adar | blog | [buka](https://www.varonis.com/blog/cosnitch) |
 | 2026-08-12 | — | Nice2Meet: Teams Mobile Meetings Account Takeover | Yanir Tsarimi | blog | [buka](https://enclave.ai/blog/nice2meet-we-turned-teams-mobile-meetings-into-a-silent-account-takeover) |
-| 2026-08-10 | — | CVE-2026-63520: SharePoint RCE | Stephen Fewer | blog | [buka](https://www.rapid7.com/blog/post/etr-cve-2026-63520-microsoft-sharepoint-remote-code-execution-fixed/) |
 | 2026-08-07 | — | Python in Excel: Root Privilege Escalation | Ron Ben Yizhak | blog | [buka](https://www.safebreach.com/blog/python-in-excel-vulnerability-root-escalation-cve-2026-45459/) |
 | 2026-07-30 | — | CosmosEscape: Taking Over Every Azure Cosmos DB | Yuval Avrahami and Lior Maman | blog | [buka](https://www.wiz.io/blog/cosmosescape-taking-over-every-database-in-azure-cosmos-db) |
 | 2026-07-22 | — | Dark Elevator (CVE-2026-50343) | Carlos Roque | blog | [buka](https://calif.io/research/dark-elevator) |

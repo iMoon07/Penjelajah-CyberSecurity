@@ -1,8 +1,21 @@
 # Mozilla / Firefox — Bug Bounty Writeup Index (EN)
 
+![Mozilla / Firefox](thumbnail.png)
+
 [🇮🇩 Read in Bahasa Indonesia](mozilla-firefox-vrp-id.md)
 
 ﷽
+
+<details>
+<summary><b>Details — Mozilla / Firefox</b></summary>
+
+- **Program**: Mozilla Client Bug Bounty (Firefox Desktop, Android, iOS) + Web Bug Bounty.
+- **Max reward**: up to $20,000 (client, highest impact) + 50% mitigation-bypass bonus.
+- **Hall of Fame**: public, names listed per quarter.
+- **Submit**: Bugzilla (client) / HackerOne (web).
+- **In scope**: memory corruption, sandbox escape, UXSS, WebExtension prompt bypass.
+
+</details>
 
 > Curated writeups for Mozilla / Firefox. Fields: title, publication date, author, reported reward, type (blog/video), and a direct link to the original report. Rewards are as reported by the researcher/curator and are not a guarantee for similar findings.
 
@@ -10,7 +23,7 @@
 
 | Item | Value |
 |---|---|
-| Total unique entries | 18 |
+| Total unique entries | 17 |
 | Entries with reported reward | 5 |
 | Highest reported reward | $100,000 |
 | Date range | 2024-03-21 s/d 2026-04-28 |
@@ -48,7 +61,6 @@
 | n/a | — | WebGL texture OOB | Oskar Lindberg | blog | [open](https://bugzilla.mozilla.org/show_bug.cgi?id=1989127) |
 | n/a | — | nsStandardURL Resolve | zx | blog | [open](https://bugzilla.mozilla.org/show_bug.cgi?id=2041610) |
 | n/a | — | How a single typo led to RCE in Firefox | Erge | blog | [open](https://kqx.io/post/firefox0day/) |
-| n/a | — | CVE-2026-12294 SystemPrincipal escalation via forged IPDL | Quy Pham | blog | [open](https://bugzilla.mozilla.org/show_bug.cgi?id=2039873) |
 | n/a | — | CVE-2026-16355 SpiderMonkey iterator-index underflow | External reporter | blog | [open](https://bugzilla.mozilla.org/show_bug.cgi?id=2052207) |
 | n/a | — | Snapshots for IPC Fuzzing | Mozilla Security | blog | [open](https://hacks.mozilla.org/2024/06/snapshots-for-ipc-fuzzing/) |
 | n/a | — | Mozilla IPC Security Guide | Mozilla Wiki | blog | [open](https://wiki.mozilla.org/Security/Sandbox/IPCguide) |

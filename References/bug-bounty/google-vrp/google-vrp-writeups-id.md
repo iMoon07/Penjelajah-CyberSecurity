@@ -1,8 +1,21 @@
 # Google & Alphabet VRP — Indeks Writeup Bug Bounty (ID)
 
+![Google VRP](thumbnail.png)
+
 [🇬🇧 Read in English](google-vrp-writeups-en.md)
 
 ﷽
+
+<details>
+<summary><b>Details — Google &amp; Alphabet VRP</b></summary>
+
+- **Program**: Google and Alphabet Vulnerability Reward Program.
+- **Scope**: properti web Google, Android, Chrome, Cloud, AI/LLM.
+- **Reward**: maksimum per kategori; lihat rules resmi.
+- **Hall of Fame**: leaderboard publik dengan handle.
+- **Submit**: Google Bug Hunters (bughunters.google.com).
+
+</details>
 
 > Kumpulan writeup bug bounty Google (beserta produk/akuisisi terkait) yang dipublikasikan para researcher. Data: judul, tanggal publikasi, penulis, nominal reward yang **dilaporkan**, jenis (blog/video), dan tautan laporan langsung. Nominal bukan jaminan untuk temuan serupa.
 

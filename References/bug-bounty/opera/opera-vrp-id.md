@@ -1,8 +1,21 @@
 # Opera — Indeks Writeup Bug Bounty (ID)
 
+![Opera](thumbnail.png)
+
 [🇬🇧 Read in English](opera-vrp-en.md)
 
 ﷽
+
+<details>
+<summary><b>Details — Opera Bug Bounty</b></summary>
+
+- **Program**: Opera Bug Bounty (Bugcrowd, publik).
+- **Scope**: browser Opera (PC, GX, Neon, Air), Opera Android/iOS, layanan web (auth/akun/flow).
+- **Reward maksimum**: hingga $5.000 untuk critical (P1).
+- **Tidak eligible**: bug upstream Chromium/WebKit.
+- **Submit**: Bugcrowd (security.opera.com).
+
+</details>
 
 > Kumpulan writeup untuk Opera. Kolom: judul, tanggal publikasi, penulis, reward yang **dilaporkan**, jenis (blog/video), dan tautan langsung ke laporan asli. Nominal adalah yang dilaporkan penulis/kurator, bukan jaminan untuk temuan serupa.
 

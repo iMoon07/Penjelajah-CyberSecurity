@@ -9,7 +9,6 @@ date,bounty,title,url,author,author-url,type,note
 ?,?,WebGL texture OOB,https://bugzilla.mozilla.org/show_bug.cgi?id=1989127,Oskar Lindberg,https://bugzilla.mozilla.org,blog,
 ?,?,nsStandardURL Resolve,https://bugzilla.mozilla.org/show_bug.cgi?id=2041610,zx,https://bugzilla.mozilla.org,blog,
 ?,?,How a single typo led to RCE in Firefox,https://kqx.io/post/firefox0day/,Erge,https://kqx.io,blog,
-?,?,CVE-2026-12294 SystemPrincipal escalation via forged IPDL,https://bugzilla.mozilla.org/show_bug.cgi?id=2039873,Quy Pham,https://bugzilla.mozilla.org,blog,
 ?,?,CVE-2026-16355 SpiderMonkey iterator-index underflow,https://bugzilla.mozilla.org/show_bug.cgi?id=2052207,External reporter,https://bugzilla.mozilla.org,blog,
 ?,?,Snapshots for IPC Fuzzing,https://hacks.mozilla.org/2024/06/snapshots-for-ipc-fuzzing/,Mozilla Security,https://hacks.mozilla.org,blog,
 ?,?,Mozilla IPC Security Guide,https://wiki.mozilla.org/Security/Sandbox/IPCguide,Mozilla Wiki,https://wiki.mozilla.org,blog,
