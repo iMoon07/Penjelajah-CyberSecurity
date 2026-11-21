@@ -1,5 +1,9 @@
 # Microsoft / MSRC — Bug Bounty Writeup Index (EN)
 
+[🇮🇩 Read in Bahasa Indonesia](microsoft-msrc-vrp-id.md)
+
+﷽
+
 > Curated writeups for Microsoft / MSRC. Fields: title, publication date, author, reported reward, type (blog/video), and a direct link to the original report. Rewards are as reported by the researcher/curator and are not a guarantee for similar findings.
 
 ## 1. Summary
@@ -41,7 +45,7 @@
 ### 3.1 With reported reward
 
 | Date | Reward | Writeup | Author | Type | Link |
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|
 | 2026-10-28 | $175,000 | The Last Proof of Human Craft: Microsoft Edge Full Chain | Orange Tsai | blog | [open](https://blog.orange.tw/posts/2026-10-the-last-proof-of-human-craft-browser-full-chain/) |
 | 2026-10-02 | $200,000 | Azure's Weakest Link: Five Full Cross-Tenant Compromises | Haakon Wik Gulbrandsrud | blog | [open](https://www.binarysecurity.no/posts/2026/10/one-root-case) |
 | 2026-09-25 | $5,000 | How I Could've Accessed 17 Trillion Microsoft Records | Faav | blog | [open](https://blog.faav.net/how-i-couldve-accessed-17-trillion-microsoft-records) |
@@ -89,7 +93,7 @@
 ### 3.2 Without reported reward
 
 | Date | Reward | Writeup | Author | Type | Link |
-|---|---|---|---|---|---|---|
+|---|---|---|---|---|---|
 | 2026-10-23 | — | AuthMask: Microsoft Authenticator Token Handover | Ofek Levin | blog | [open](https://enclave.ai/blog/authmask-we-made-microsoft-authenticator-hand-over-tokens) |
 | 2026-10-23 | — | Signed Sealed and Relayed: Bypassing LDAP Signing | Raj Patel | blog | [open](https://specterops.io/blog/2026/10/23/ldap-signing-bypass-ntlm-relay/) |
 | 2026-09-30 | — | From SELECT to SYSADMIN with SQL Copilot | Johann Rehberger | blog | [open](https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/) |

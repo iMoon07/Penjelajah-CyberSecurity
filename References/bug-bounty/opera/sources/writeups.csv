@@ -1,0 +1,5 @@
+date,bounty,title,url,author,author-url,type,note
+2022,10000,CVE-2022-0337 system environment variables leak,https://github.com/Puliczek/CVE-2022-0337-PoC-Google-Chrome-Microsoft-Edge-Opera,Maciej Pulikowski,https://twitter.com/pulik_io,blog,payout not confirmed for Opera
+2026-07-03,5000,Opera GX Mods universal CSS injection and XS-Leak,https://blogs.opera.com/security/2026/07/security-fix-gx-mods-vulnerability/,zhero_ and inzo_,https://blogs.opera.com/security/,blog,confirmed by Opera
+2024,?,Opera My Flow MyFlaw,https://thehackernews.com/search/label/Opera,External reporter,https://thehackernews.com,blog,reward not published
+2026-07-03,5000,One Trigram at a Time: XSLeak via Universal CSS Injection and DoS in Opera GX,https://zhero-web-sec.github.io/research-and-things/one-trigram-at-a-time-xsleak-via-universal-css-injection-and-dos-in-opera-(gx),zhero_ and inzo_,https://zhero-web-sec.github.io/,blog,confirmed by Opera advisory

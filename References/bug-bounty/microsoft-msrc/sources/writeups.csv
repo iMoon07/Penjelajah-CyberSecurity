@@ -1,0 +1,93 @@
+date,bounty,title,url,author,author-url,type
+2026-10-02,200000,Azure's Weakest Link: Five Full Cross-Tenant Compromises,https://www.binarysecurity.no/posts/2026/10/one-root-case,Haakon Wik Gulbrandsrud,https://www.binarysecurity.no/,blog
+2026-10-28,175000,The Last Proof of Human Craft: Microsoft Edge Full Chain,https://blog.orange.tw/posts/2026-10-the-last-proof-of-human-craft-browser-full-chain/,Orange Tsai,https://x.com/orange_8361,blog
+2026-09-25,5000,How I Could've Accessed 17 Trillion Microsoft Records,https://blog.faav.net/how-i-couldve-accessed-17-trillion-microsoft-records,Faav,https://x.com/efaav,blog
+2026-08-06,48000,Breaking the M365 Copilot Sandbox with ChatMate,https://zerolabs.rubrik.com/blog/breaking-m365-copilot-sandbox-chatmate,Ori Lahav,https://zerolabs.rubrik.com/,blog
+2025-08-20,40000,Azure's Weakest Link: Full Cross-Tenant Compromise,https://www.binarysecurity.no/posts/2025/08/azures-weakest-link-part2,Haakon Holm Gulbrandsrud,https://www.binarysecurity.no/,blog
+2025-09-16,20000,Cross-Tenant Access Exploit in Microsoft Entra ID,https://medium.com/@bashir69emceeaka5/cross-tenant-access-exploit-in-microsoft-entra-id-breaking-governance-with-a-simple-trick-a06d88fe309e,Bashir Mohamed,https://x.com/Panther82Black,blog
+2025-01-17,15000,Finding SSRFs in Azure DevOps,https://binarysecurity.no/posts/2025/01/finding-ssrfs-in-devops,Torjus Bryne Retterstol,https://www.binarysecurity.no/,blog
+2025-05-30,10000,Finding SSRFs in Azure DevOps Part 2,https://www.binarysecurity.no/posts/2025/05/finding-ssrfs-in-devops-part2,Sofia Lindqvist,https://www.binarysecurity.no/,blog
+2026-05-06,140000,Agentic Vulnerability Reasoning on Windows COM Binaries,https://arxiv.org/abs/2605.05000,Hwiwon Lee et al.,https://arxiv.org/abs/2605.05000,blog
+2021-02-15,30000,Azure Cloud Shell Kubernetes Cluster Takeover,https://hencohen10.medium.com/i-own-your-cloud-shell-taking-over-azure-cloud-shell-kubernetes-cluster-through-unsecured-558621519cf9,Chen Cohen,https://x.com/chencococococo,blog
+2021-03-02,50000,How I Might Have Hacked Any Microsoft Account,https://thezerohack.com/how-i-might-have-hacked-any-microsoft-account,Laxman Muthiyah,https://x.com/laxmanmuthiyah,blog
+2021-08-26,40000,Critical Vulnerability in Microsoft Azure Cosmos DB,https://chaosdb.wiz.io/,Wiz,https://x.com/wiz_io,blog
+2022-08-18,30000,Lets Dance in the Cache: Destabilizing Hash Table on IIS,https://blog.orange.tw/posts/2022-08-lets-dance-in-the-cache-destabilizing-hash-table-on-microsoft-iis/,Orange Tsai,https://x.com/orange_8361,blog
+2023-07-31,150000,How I Hacked Microsoft Teams and got 150000 in Pwn2Own,https://speakerdeck.com/masatokinugawa/how-i-hacked-microsoft-teams-and-got-150000-dollars-in-pwn2own,Masato Kinugawa,https://x.com/kinugawamasato,blog
+2023-03-29,40000,BingBang: AAD misconfiguration led to Bing results manipulation,https://www.wiz.io/blog/azure-active-directory-bing-misconfiguration,Hillai Ben-Sasson,https://x.com/hillai,blog
+2026-02-08,20000,Agentic 0day Research: Edge VBS Bypass,https://blindcyber.com/2026/02/08/Agentic-0day-Research/,Alex Bernier,https://blindcyber.com/,blog
+2022-06-01,20000,Microsoft Dynamics Container Sandbox RCE,https://hencohen10.medium.com/microsoft-dynamics-container-sandbox-rce-via-unauthenticated-docker-remote-api-20-000-bounty-7f726340a93b,Chen Cohen,https://x.com/chencococococo,blog
+2021-06-25,20000,Microsoft Dynamics Container Sandbox RCE via Docker API,https://hencohen10.medium.com/microsoft-dynamics-container-sandbox-rce-via-unauthenticated-docker-remote-api-20-000-bounty-7f726340a93b,Chen Cohen,https://x.com/chencococococo,blog
+2026-08-19,5000,Microsoft Teams Community Invitation Bypass,https://www.kacateknologi.com/en/microsoft-teams-community-invitation-bypass-cve-2025-49731,Muhammad Alqi Fahrezi,https://www.kacateknologi.com/,blog
+2025-07-25,7500,How a Simple Endpoint Earned Me a 7500 Bounty,https://medium.com/@gourisankara357/how-a-simple-endpoint-earned-me-a-7500-bounty-from-microsoft-1891a35d40be,Gouri Sankar A,https://x.com/g0w6y,blog
+2025-08-05,7500,Microsoft Partner Leak: 700M+ Partner Records,https://blog.faav.net/microsoft-partner-leak,Faav,https://x.com/efaav,blog
+2024-10-08,5000,How I got a 5000 Bounty from Microsoft,https://medium.com/@bashir69emceeaka5/how-i-got-a-5000-bounty-from-microsoft-fb2e27fd40f7,Bashir Mohamed,https://x.com/Panther82Black,blog
+2021-01-22,10000,10000 for automatic email confirmation bug in Edge,https://0xkaran.medium.com/10-000-for-automatic-email-confirmation-bug-in-microsofts-edge-browser-22f15ceccb4a,Karan Chaudhary,https://x.com/0xkaran,blog
+2025-11-07,10000,How I Found the Worst ASP.NET Vulnerability,https://www.praetorian.com/blog/how-i-found-the-worst-asp-net-vulnerability-a-10k-bug-cve-2025-55315/,Siddhant Kalgutkar,https://www.praetorian.com/,blog
+2025-08-24,2500,Leaking Microsoft employee secrets through diagnostic data,https://careful.net/blog/powerlift/,careful and Doc,https://careful.net/,blog
+2026-01-02,2500,How Simple Recon Led to a High-Severity Microsoft Vulnerability,https://medium.com/@0xzoro.hack/how-simple-recon-led-to-a-high-severity-microsoft-vulnerability-and-an-msrc-bounty-a9009bac0d3c,Sreejith A R,https://medium.com/@0xzoro.hack,blog
+2026-01-19,5000,Exploiting RCE in Windows Telephony Service,https://ptswarm.com/blog/whos-on-the-line-exploiting-rce-in-windows-telephony-service/,Sergey Bliznyuk,https://twitter.com/justbronzebee,blog
+2026-03-04,5000,Azure DevOps Privilege Escalation via OIDC Abuse,https://dazesecurity.io/blog/azureDevOpsPrivEsc,Cody Burkard,https://dazesecurity.io/,blog
+2025-12-15,5000,Uncovering CVE-2025-64669 in Windows Admin Center,https://cymulate.com/blog/cve-2025-64669-windows-admin-center/,Cymulate Research Lab,https://cymulate.com/,blog
+2026-07-14,8000,When Validate Hwnd Isnt a Gate: CVE-2026-54107,https://medium.com/@pravin1214choudhary/when-validate-hwnd-isnt-a-gate-root-causing-cve-2026-54107-ce4eeacb530a,Pravin Choudhary,https://medium.com/@pravin1214choudhary,blog
+2021-12-10,5000,Remote Deserialization Bug in Microsoft RDP Client,https://blog.thalium.re/posts/deserialization-bug-through-rdp-smart-card-extension/,Valentino Ricotta,https://x.com/face0xff,blog
+2020-06-28,3000,Taking over Azure DevOps Accounts with 1 Click,https://www.assetnote.io/resources/research/taking-over-azure-devops-accounts-with-1-click,Sean Yeoh,https://x.com/seanyeoh,blog
+2020-05-27,3000,iOS Outlook Stored XSS,https://medium.com/kminthein/ios-outlook-stored-xss-write-up-ce34d7da192b,kminthein,https://medium.com/@kminthein,blog
+2024-10-08,3000,From 401 Unauthorized Access to 3000 Bounty,https://medium.com/@bashir69emceeaka5/from-401-unauthorized-access-to-3000-bounty-from-microsoft-53b086379a08,Bashir Mohamed,https://x.com/Panther82Black,blog
+2023-01-21,3000,Reflected XSS Leads to 3000 Bounty from Microsoft Forms,https://infosecwriteups.com/reflected-xss-leads-to-3-000-bug-bounty-rewards-from-microsoft-forms-efe34fc6b261,Supakiad S,https://x.com/Supakiad_Mee,blog
+2021-01-10,2000,Unauthorized Access to OData Entities,https://infosecwriteups.com/unauthorized-access-to-odata-entities-2k-bounty-from-microsoft-e070b2ef88c2,Borna Nematzadeh,https://x.com/LogicalHunter,blog
+2018-04-15,1500,Bypass CSP by Abusing XSS Filter in Edge,https://infosecwriteups.com/bypass-csp-by-abusing-xss-filter-in-edge-43e9106a9754,Xiaoyin Liu,https://x.com/general_nfs,blog
+2018-10-12,500,Microsoft CSRF Vulnerability,https://ad3sh.medium.com/how-i-got-500-from-microsoft-for-csrf-vulnerability-700accaf48b9,Adesh Kolte,https://x.com/AdeshKolte,blog
+2019-04-14,1000,XSS Stored in Outlook.com (iOS browsers),https://omespino.com/write-up-1000-usd-in-5-minutes-xss-stored-in-outlook-com-ios-browsers/,Omar Espino,https://x.com/omespino,blog
+2020-05-14,1000,My Weirdest Bug Bounty: Getting PII from O365,https://omaidfaizyar.medium.com/my-weirdest-bug-bounty-getting-pii-from-o365-b4477f4739e,Omaid Faizyar,https://omaidfaizyar.medium.com/,blog
+2017-09-12,5000,Uncovering a Bug I Found in Outlook,https://cems.fun/2022/12/26/CVE-2017-8758.html,cem,https://x.com/cemonatk,blog
+2022-07-13,6000,Microsoft Teams Cross Site Scripting Bypass CSP,https://medium.com/@numanturle/microsoft-teams-stored-xss-bypass-csp-8b4a7f5fccbf,numanturle,https://x.com/numanturle,blog
+2024-08-07,3000,Persistent XSS on Microsoft Bing.com by poisoning Bingbot,https://infosecwriteups.com/persistent-xss-vulnerability-on-microsoft-bings-video-indexing-system-a46db992ac7b,Supakiad S,https://x.com/Supakiad_Mee,blog
+2025-11-17,?,Deleting the BCD through COM as low privileged user,https://warpnet.nl/blog/deleting-the-bcd-through-com-as-low-privileged-user/,Sarah Dezijn,https://warpnet.nl/,blog
+2026-05-28,?,MapRoot: Two Zero-Days Leading to Cross-Tenant RCE,https://enclave.ai/blog/maproot-two-cross-tenant-rce-on-microsoft-planetary-computer/,Yanir Tsarimi,https://enclave.ai/research,blog
+2026-06-02,?,FlagLeft: Microsoft 365 Apps Silent Account Takeover,https://enclave.ai/blog/flagleft-microsoft-365-android-forgotten-flag-account-takeover,Yanir Tsarimi,https://enclave.ai/research,blog
+2026-06-15,?,SearchLeak: M365 Copilot One-Click Data Exfiltration,https://www.varonis.com/blog/searchleak,Dolev Taler,https://www.varonis.com/blog,blog
+2026-08-12,?,Nice2Meet: Teams Mobile Meetings Account Takeover,https://enclave.ai/blog/nice2meet-we-turned-teams-mobile-meetings-into-a-silent-account-takeover,Yanir Tsarimi,https://enclave.ai/research,blog
+2026-07-30,?,CosmosEscape: Taking Over Every Azure Cosmos DB,https://www.wiz.io/blog/cosmosescape-taking-over-every-database-in-azure-cosmos-db,Yuval Avrahami and Lior Maman,https://www.wiz.io/research,blog
+2026-09-17,?,Bypassing VS Code Workspace Trust with a Single Link,https://remedio.io/research/vulnerability-disclosures/bypassing-vs-code-workspace-trust-with-a-single-link/,Omri Dar,https://remedio.io/research/,blog
+2026-10-23,?,AuthMask: Microsoft Authenticator Token Handover,https://enclave.ai/blog/authmask-we-made-microsoft-authenticator-hand-over-tokens,Ofek Levin,https://enclave.ai/research,blog
+2026-10-23,?,Signed Sealed and Relayed: Bypassing LDAP Signing,https://specterops.io/blog/2026/10/23/ldap-signing-bypass-ntlm-relay/,Raj Patel,https://specterops.io/blog/,blog
+2026-09-21,?,Windows Exploitation: Dangling COM Object Registrations,https://projectzero.google/2026/09/windows-dangling-com.html,James Forshaw,https://projectzero.google/,blog
+2026-01-26,?,Bypassing Windows Administrator Protection,https://projectzero.google/2026/26/windows-administrator-protection.html,James Forshaw,https://projectzero.google/,blog
+2026-02-12,?,Bypassing Administrator Protection by Abusing UI Access,https://projectzero.google/2026/02/windows-administrator-protection.html,James Forshaw,https://projectzero.google/,blog
+2025-08-12,?,Zero Click One NTLM: Microsoft Security Patch Bypass,https://cymulate.com/blog/zero-click-one-ntlm-microsoft-security-patch-bypass-cve-2025-50154/,Ruben Enkaoua,https://cymulate.com/,blog
+2025-08-12,?,GitHub Copilot Remote Code Execution via Prompt Injection,https://embracethered.com/blog/posts/2025/github-copilot-remote-code-execution-via-prompt-injection/,Johann Rehberger,https://x.com/wunderwuzzi,blog
+2026-05-04,?,Copirate 365 at DEF CON: Plundering Microsoft Copilot,https://embracethered.com/blog/posts/2026/defcon-talk-copirate-365/,Johann Rehberger,https://x.com/wunderwuzzi,blog
+2026-09-30,?,From SELECT to SYSADMIN with SQL Copilot,https://embracethered.com/blog/posts/2026/from-select-to-sysadmin-sql-copilot-bluehat-asia/,Johann Rehberger,https://x.com/wunderwuzzi,blog
+2025-01-02,?,Microsoft 365 Copilot Generated Images Accessible Without Auth,https://embracethered.com/blog/posts/2025/m365-copilot-image-generation-without-authentication/,Johann Rehberger,https://x.com/wunderwuzzi,blog
+2026-04-15,?,ShareLeak: Taking the Wheel of Microsoft Copilot Studio,https://www.capsulesecurity.io/blog-post/shareleak-taking-the-wheel-of-microsofts-copilot-studio-cve-2026-21520,Bar Kaduri,https://www.capsulesecurity.io/,blog
+2025-06-11,?,EchoLeak: Zero-Click Prompt Injection in Production LLM,https://www.aim.security/lp/aim-labs-echoleak-blogpost,Aim Labs,https://www.aim.security/,blog
+2026-03-05,?,AST-Filtered eval Is Not a Sandbox: RCE in Semantic Kernel,https://daridor.blog/2026/03/05/ast-filtered-eval-is-not-a-sandbox-remote-code-execution-in-microsoft-semantic-kernel-and-the-ai-infrastructure-pattern-behind-it/,Daridor,https://daridor.blog/,blog
+2026-06-16,?,CVE-2026-20824: UI Redirection Attack Vector,https://www.linkedin.com/pulse/cve-2026-20824-ui-redirection-new-attack-vector-using-hedegaard-iwiue,Allan Hedegaard,https://www.linkedin.com/in/allanhedegaard/,blog
+2026-07-13,?,CVE-2026-63520: Microsoft SharePoint RCE,https://www.rapid7.com/blog/post/etr-cve-2026-63520-microsoft-sharepoint-remote-code-execution-fixed/,Stephen Fewer,https://www.rapid7.com/blog/,blog
+2026-08-10,?,CVE-2026-63520: SharePoint RCE,https://www.rapid7.com/blog/post/etr-cve-2026-63520-microsoft-sharepoint-remote-code-execution-fixed/,Stephen Fewer,https://www.rapid7.com/blog/,blog
+2026-07-13,?,CVE-2026-55040: SharePoint JWT Token Auth Bypass,https://www.rapid7.com/blog/post/ve-cve-2026-55040-microsoft-sharepoint-jwt-token-authentication-bypass-fixed/,Stephen Fewer,https://www.rapid7.com/blog/,blog
+2026-03-24,?,Azure APIM Signup Bypass: 97.9% of Developer Portals Exploitable,https://www.praetorian.com/blog/azure-apim-signup-bypass/,Bernard Yip and Elgin Lee,https://www.praetorian.com/blog/,blog
+2026-01-15,?,MSSQL and SCCM Elevation of Privilege Vulnerabilities,https://specterops.io/blog/2026/01/15/mssql-and-sccm-elevation-of-privilege-vulnerabilities/,Chris Thompson,https://specterops.io/blog/,blog
+2026-02-27,?,Total Recall: Retracing Steps Back to NT AUTHORITY SYSTEM,https://www.mdsec.co.uk/2026/02/total-recall-retracing-your-steps-back-to-nt-authoritysystem/,Filip Dragovic,https://www.mdsec.co.uk/,blog
+2026-04-27,?,Bypassing Windows Authentication Reflection Mitigations Part 1,https://www.synacktiv.com/en/publications/bypassing-windows-authentication-reflection-mitigations-for-system-shells-part-1,Guillaume Andre,https://www.synacktiv.com/,blog
+2026-04-30,?,Bypassing Windows Authentication Reflection Mitigations Part 2,https://www.synacktiv.com/en/publications/bypassing-windows-authentication-reflection-mitigations-for-system-shells-part,Guillaume Andre,https://www.synacktiv.com/,blog
+2026-01-14,?,CVE-2026-20965: Tenant-Wide RCE via Azure Windows Admin Center,https://cymulate.com/blog/cve-2026-20965-azure-windows-admin-center-tenant-wide-rce/,Cymulate Research Lab,https://cymulate.com/,blog
+2026-04-06,?,CVE-2026-26117: Hijacking Azure Arc on Windows,https://cymulate.com/blog/cve-2026-26117-azure-arc-windows-lpe-cloud-identity-takeover/,Cymulate Research Lab,https://cymulate.com/,blog
+2026-09-03,?,Read-Only Is a Lie: An Entra ID Privilege Escalation,https://cymulate.com/blog/entra-id-global-reader-privilege-escalation/,Cymulate Research Lab,https://cymulate.com/,blog
+2025-09-17,?,One Token to Rule Them All: Global Admin in every Entra ID tenant,https://dirkjanm.io/obtaining-global-admin-in-every-entra-id-tenant-with-actor-tokens/,Dirk-jan Mollema,https://x.com/_dirkjan,blog
+2021-06-10,?,Active Directory forest trusts part 2: Trust transitivity,https://dirkjanm.io/active-directory-forest-trusts-part-two-trust-transitivity/,Dirk-jan Mollema,https://x.com/_dirkjan,blog
+2025-05-21,?,BadSuccessor: Abusing dMSA to Escalate Privileges in AD,https://www.akamai.com/blog/security-research/abusing-dmsa-for-privilege-escalation-in-active-directory,Yuval Gordon,https://www.akamai.com/blog/security-research,blog
+2026-02-26,?,Ghosts in the Cloud: Hijacking Orphaned Azure Blob Storage,https://labs.eye.security/ghosts-in-the-cloud-hijacking-orphaned-azure-blob-storage/,Jotte Sonneveld and Jacob Virsilas,https://labs.eye.security/,blog
+2025-07-25,?,How We Rooted Copilot,https://labs.eye.security/how-we-rooted-copilot/,Eye Security,https://labs.eye.security/,blog
+2025-08-07,?,Consent and Compromise: Abusing Entra OAuth,https://labs.eye.security/consent-and-compromise/,Vaisha Bernard,https://labs.eye.security/,blog
+2025-11-20,?,When Updates Backfire: RCE in Windows Update Health Tools,https://labs.eye.security/rce-windows-update-health-tools/,Martin Warmer,https://labs.eye.security/,blog
+2026-06-30,?,Azure Monitor Agent Metrics Extension Vulnerability,https://www.kroll.com/en/publications/cyber/azure-monitor-agent-metrics-extension-vulnerability,Cristhian Parrot,https://www.kroll.com/en/publications,blog
+2026-07-01,?,Extending an EPM Poisoning Technique in Windows,https://www.safebreach.com/blog/an-update-on-you-snooze-you-lose-winning-lpes-by-racing-services-for-rpc-endpoints/,Ron Ben Yizhak,https://www.safebreach.com/blog/,blog
+2026-08-07,?,Python in Excel: Root Privilege Escalation,https://www.safebreach.com/blog/python-in-excel-vulnerability-root-escalation-cve-2026-45459/,Ron Ben Yizhak,https://www.safebreach.com/blog/,blog
+2026-06-02,?,1-Click GitHub Token Stealing via a VSCode Bug,https://blog.ammaraskar.com/github-token-stealing/,Ammar Askar,https://blog.ammaraskar.com/,blog
+2026-05-21,?,Envade: One-Click RCE in VS Code,https://pages.oasis.security/rs/106-PZV-596/images/envade-technical-report.pdf,Elad Luz,https://www.oasis.security/research,blog
+2026-04-20,?,How We Could Watch Your Azure SRE Agent in Real Time,https://enclave.ai/blog/anyone-could-watch-your-azure-ai-agents-conversations-in-real-time,Yanir Tsarimi,https://enclave.ai/research,blog
+2026-05-13,?,AKS RunCommand Vulnerability Enables Cross-Cluster Privilege Escalation,https://cymulate.com/blog/aks-runcommand-token-theft-cross-cluster-lateral-movement/,Ben Zamir,https://cymulate.com/,blog
+2026-07-22,?,Dark Elevator (CVE-2026-50343),https://calif.io/research/dark-elevator,Carlos Roque,https://calif.io/research,blog
+2026-08-18,?,CoSnitch: When Your AI Assistant Becomes Its Own Whistleblower,https://www.varonis.com/blog/cosnitch,Lior Adar,https://www.varonis.com/blog,blog
+2026-01-14,?,Reprompt: Single-Click Microsoft Copilot Data Theft,https://www.varonis.com/blog/reprompt,Dolev Taler,https://www.varonis.com/blog,blog

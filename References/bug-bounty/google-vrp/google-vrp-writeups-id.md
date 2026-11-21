@@ -1,5 +1,9 @@
 # Google & Alphabet VRP — Indeks Writeup Bug Bounty (ID)
 
+[🇬🇧 Read in English](google-vrp-writeups-en.md)
+
+﷽
+
 > Kumpulan writeup bug bounty Google (beserta produk/akuisisi terkait) yang dipublikasikan para researcher. Data: judul, tanggal publikasi, penulis, nominal reward yang **dilaporkan**, jenis (blog/video), dan tautan laporan langsung. Nominal bukan jaminan untuk temuan serupa.
 
 ## 1. Ringkasan

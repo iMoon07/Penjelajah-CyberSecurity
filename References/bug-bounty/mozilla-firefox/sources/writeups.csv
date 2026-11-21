@@ -1,0 +1,19 @@
+date,bounty,title,url,author,author-url,type,note
+2026,20000,PSharedWorker SystemPrincipal escalation via blob:system,https://bugzilla.mozilla.org/show_bug.cgi?id=2039873,Quy Pham,https://www.linkedin.com/in/nikita-markevich,blog,reward ceiling not confirmed payout
+2026,20000,WebRenderBridgeParent RecvStartCaptureSequence,https://bugzilla.mozilla.org/show_bug.cgi?id=2023407,choeseyeong,https://bugzilla.mozilla.org,blog,reward ceiling not confirmed payout
+2024-03-21,100000,Firefox zero-day exploit chain (Pwn2Own Vancouver),https://www.securityweek.com/mozilla-patches-firefox-zero-days-exploited-at-pwn2own/,Manfred Paul,https://twitter.com/manfred_paul,blog,Pwn2Own prize not Mozilla VRP
+?,?,Use-after-free CachedTableAccessible,https://bugzilla.mozilla.org/show_bug.cgi?id=2046416,External reporter,https://bugzilla.mozilla.org,blog,
+?,?,Unsigned Normandy rollout,https://bugzilla.mozilla.org/show_bug.cgi?id=2052306,Quy Pham,https://www.linkedin.com/in/nikita-markevich,blog,declared ineligible duplicate
+?,?,GeckoView EventDispatcher,https://bugzilla.mozilla.org/show_bug.cgi?id=2024086,External reporter,https://bugzilla.mozilla.org,blog,
+?,?,Cairo CFF subsetter,https://bugzilla.mozilla.org/show_bug.cgi?id=2049398,bugmon,https://bugzilla.mozilla.org,blog,
+?,?,WebGL texture OOB,https://bugzilla.mozilla.org/show_bug.cgi?id=1989127,Oskar Lindberg,https://bugzilla.mozilla.org,blog,
+?,?,nsStandardURL Resolve,https://bugzilla.mozilla.org/show_bug.cgi?id=2041610,zx,https://bugzilla.mozilla.org,blog,
+?,?,How a single typo led to RCE in Firefox,https://kqx.io/post/firefox0day/,Erge,https://kqx.io,blog,
+?,?,CVE-2026-12294 SystemPrincipal escalation via forged IPDL,https://bugzilla.mozilla.org/show_bug.cgi?id=2039873,Quy Pham,https://bugzilla.mozilla.org,blog,
+?,?,CVE-2026-16355 SpiderMonkey iterator-index underflow,https://bugzilla.mozilla.org/show_bug.cgi?id=2052207,External reporter,https://bugzilla.mozilla.org,blog,
+?,?,Snapshots for IPC Fuzzing,https://hacks.mozilla.org/2024/06/snapshots-for-ipc-fuzzing/,Mozilla Security,https://hacks.mozilla.org,blog,
+?,?,Mozilla IPC Security Guide,https://wiki.mozilla.org/Security/Sandbox/IPCguide,Mozilla Wiki,https://wiki.mozilla.org,blog,
+?,?,Behind the Scenes Hardening Firefox,https://hacks.mozilla.org/2026/05/behind-the-scenes-hardening-firefox/,Mozilla Security,https://hacks.mozilla.org,blog,
+2026-04-28,2000,How I Got Paid 2000 by Mozilla for Just Prompting an AI,https://medium.com/@rayhanhanaputra/how-i-got-paid-2-000-by-mozilla-for-just-prompting-an-ai-439bf7fc5e05,Rayhan Hanaputra,https://medium.com/@rayhanhanaputra,blog
+2025-06-25,6000,Delete Me Not: IDOR in Firefox Accounts API,https://www.sageknowsit.com/delete-me-not-how-one-api-call-could-wipe-accounts-clean/,z3phyrus,https://hackerone.com/z3phyrus,blog
+2025,?,CVE-2025-14327 Download origin spoofing via malformed data URI,https://bugzilla.mozilla.org/show_bug.cgi?id=1970743,x4nd3r.h1,https://bugzilla.mozilla.org,blog,bounty under consideration
