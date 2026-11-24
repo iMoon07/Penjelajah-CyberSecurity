@@ -1,5 +1,3 @@
-Ini versi ID lengkap, urut sama file EN, semua screenshot lab ikut:
-
 # Authentication Vulnerabilities — PortSwigger Web Security Academy
 
 [🇬🇧 Read in English](authentication-vulnerabilities-en.md)
