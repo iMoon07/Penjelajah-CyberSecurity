@@ -65,15 +65,170 @@ Broken access control vulnerabilities exist when a user can access resources or 
 
 ### Vertical privilege escalation
 
-
+If a user can gain access to functionality that they are not permitted to access then this is vertical privilege escalation. For example, if a non-administrative user can gain access to an admin page where they can delete user accounts, then this is vertical privilege escalation.
 
 #### Unprotected functionality
 
+At its most basic, vertical privilege escalation arises where an application does not enforce any protection for sensitive functionality. For example, adminsitrative functions might be linked from an administrator's welcome page but not from a user's welcome page. However, a user might be able to access the administrative functions by browsing to the relevant admin URL.
+
+For example, a website might host sensitive functionality at the following URL:
+
+```
+https://insecure-website.com/admin
+```
+This might be accessible by any user, not only administrative users who have a link to the functionality in their user interface. In some cases, the administrative URL might be disclosed in other locations, such as the `robots.txt` file:
+
+```
+https://insecure-website.com/robots.txt
+```
+Even if the URL isn't disclosed anywhere, an attacker may be able to use a wordlists to brute-force the location of the sensitive functionality.
+
 ##### Lab: Unprotected admin functionality
+
+This lab has an unprotected admin panel.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.1</summary>
+
+Solve the lab by deleting the user `carlos`.
+
+**Screenshots:**
+
+
+##### Tutorial
+
+1. Open robots.txt
+2. See response and get administrator-panel
+3. Panel open try delete users `carlos`
+4. Success solved labs
+
+##### Reference
+
+<details>
+<summary>1. Broken Access Control - Lab #1 Unprotected admin functionality — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=qJ8mtm_G40E
+Purpose: This lab has an unprotected admin panel. To solve the lab, we exploit the access control vulnerability to access the admin panel and delete the user carlos user.
+
+</details>
+
+<details>
+<summary>2. Portswigger - Access Control - Lab #1 Unprotected admin functionality — Popo Hack</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=XF-SNuSyVNo
+Purpose: Hello Hackers, in this video of Unprotected admin functionality you will see how to exploit, discover and find senstive information based on application logic flow to leak for potential attacks from Burp Suite in a lab from Web Security Academy powered by Portswigger 
+
+</details>
+
+</details>
+
+#### Unprotected functionality - Continue
+
+In some cases, sensitive functionality is concealed by giving it a less predictable URL. This is an example of so-called "security by obscurity". However, hiding sensitive functionality does not provide effective access control because users might discover the obfuscated URL in a number of ways.
+
+Imagine an application that hosts administrative functions at the following URL:
+
+```
+https://insecure-website.com/administrator-panel-yb556
+```
+This might not be directly guessable by an attacker. However, the application might still leak the URL to users. The URL might be disclosed in JavaScript that constructs the user interface based on the user's role:
+
+```html
+<script>
+	var isAdmin = false;
+	if (isAdmin) {
+		...
+		var adminPanelTag = document.createElement('a');
+		adminPanelTag.setAttribute('href', 'https://insecure-website.com/administrator-panel-yb556');
+		adminPanelTag.innerText = 'Admin panel';
+		...
+	}
+</script>
+```
+This script adds a link to the user's UI if they are an admin user. However, the script containing the URL is visible to all users regardless of their role.
 
 ##### Lab: Unprotected admin functionality with unpredictable URL
 
+This lab has an unprotected admin panel. It's located at an unpredictable location, but the location is disclosed somewhere in the application.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.2</summary>
+
+Solve the lab by accessing the admin panel, and using it to delete the user `carlos`.
+
+**Screenshots:**
+
+
+##### Tutorial
+
+1. Open /login view source code
+2. See javascript code
+
+```javascript
+<!--LAB_HEADER_END-->
+        <div theme="">
+            <section class="maincontainer">
+                <div class="container is-page">
+                    <header class="navigation-header">
+                        <section class="top-links">
+                            <a href=/>Home</a><p>|</p>
+                            <script>
+var isAdmin = false;
+if (isAdmin) {
+   var topLinksTag = document.getElementsByClassName("top-links")[0];
+   var adminPanelTag = document.createElement('a');
+   adminPanelTag.setAttribute('href', '/admin-jufne8');
+   adminPanelTag.innerText = 'Admin panel';
+   topLinksTag.append(adminPanelTag);
+   var pTag = document.createElement('p');
+   pTag.innerText = '|';
+   topLinksTag.appendChild(pTag);
+}
+</script>
+```
+3. Open /admin-*
+
+##### Reference
+
+<details>
+<summary>3. Broken Access Control - Lab#2 Unprotected admin functionality with unpredictable URL | Short Version — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=7Jve11VySNU
+Purpose: This lab has an unprotected admin panel. It's located at an unpredictable location, but the location is disclosed somewhere in the application. To solve the lab, we access the admin panel, and use it to delete the user carlos.
+
+</details>
+
+<details>
+<summary>4. Unprotected admin functionality with unpredictable URL — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=mml8SlN2Or4
+Purpose: This video shows the lab solution of "Unprotected admin functionality with unpredictable URL" from Web Security Academy (Portswigger)
+
+</details>
+
+</details>
+
 #### Parameter-based access control methods
+
+Some applications determine the user's access rights or role at login, and then store this information in a user-controllable localtion.
+
+This could be:
+
+- A hidden field.
+- A cookie.
+- A preset query string parameter.
+
+The application makes access control decisions based on the submitted value. For example:
+
+```
+https://insecure-website.com/login/home.jsp?admin=true
+https://insecure-website.com/login/home.jsp?role=1
+```
+This approach is insecure because a user can modify the value and access functionality they're not authorized to, such as administrative functions.
 
 ##### Lab: User role controlled by request parameter
 
