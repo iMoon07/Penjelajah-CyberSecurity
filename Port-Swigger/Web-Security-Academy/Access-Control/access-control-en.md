@@ -94,6 +94,17 @@ Solve the lab by deleting the user `carlos`.
 
 **Screenshots:**
 
+![01-lab-page](images/lab-0.1-unprotected-admin-functionality/01-lab-page.png)
+
+![02-burp-proxy](images/lab-0.1-unprotected-admin-functionality/02-burp-proxy.png)
+
+![03-burp-robots](images/lab-0.1-unprotected-admin-functionality/03-burp-robots.png)
+
+![04-burp-admin-panel](images/lab-0.1-unprotected-admin-functionality/04-burp-admin-panel.png)
+
+![05-burp-delete](images/lab-0.1-unprotected-admin-functionality/05-burp-delete.png)
+
+![06-solved](images/lab-0.1-unprotected-admin-functionality/06-solved.png)
 
 ##### Tutorial
 
@@ -160,6 +171,13 @@ Solve the lab by accessing the admin panel, and using it to delete the user `car
 
 **Screenshots:**
 
+![01-lab-page](images/lab-0.2-unprotected-admin-unpredictable-url/01-lab-page.png)
+
+![02-js-source](images/lab-0.2-unprotected-admin-unpredictable-url/02-js-source.png)
+
+![03-admin-panel](images/lab-0.2-unprotected-admin-unpredictable-url/03-admin-panel.png)
+
+![04-solved](images/lab-0.2-unprotected-admin-unpredictable-url/04-solved.png)
 
 ##### Tutorial
 
