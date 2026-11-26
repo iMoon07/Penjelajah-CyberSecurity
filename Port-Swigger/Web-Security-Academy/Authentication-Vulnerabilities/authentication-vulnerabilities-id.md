@@ -315,13 +315,13 @@ Lab ini secara halus rentan terhadap enumerasi username dan brute-force kata san
 
 **Screenshots:**
 
-![01-invalid-user](images/lab-0.2-username-enumeration-subtly-different-responses/01-invalid-user.png)
+![Username tidak valid — 'Invalid username or password.' (dengan titik)](images/lab-0.2-username-enumeration-subtly-different-responses/01-invalid-user.png)
 
-![02-valid-user](images/lab-0.2-username-enumeration-subtly-different-responses/02-valid-user.png)
+![Username valid — 'Invalid username or password' (tanpa titik)](images/lab-0.2-username-enumeration-subtly-different-responses/02-valid-user.png)
 
-![03-script](images/lab-0.2-username-enumeration-subtly-different-responses/03-script.png)
+![Terminal — menjalankan script enumerasi](images/lab-0.2-username-enumeration-subtly-different-responses/03-script.png)
 
-![04-script](images/lab-0.2-username-enumeration-subtly-different-responses/04-script.png)
+![Output script — user valid ditemukan (mysql)](images/lab-0.2-username-enumeration-subtly-different-responses/04-script.png)
 
 Untuk menyelesaikan lab, enumerasi username valid, brute-force kata sandi pengguna tersebut, lalu akses halaman akunnya.
 
@@ -601,9 +601,9 @@ Lab ini rentan terhadap enumerasi username memakai waktu respons. Untuk menyeles
 
 **Screenshots:**
 
-![01-script](images/lab-0.3-username-enumeration-response-timing/01-script.png)
+![Terminal — menjalankan script response-timing](images/lab-0.3-username-enumeration-response-timing/01-script.png)
 
-![02-script](images/lab-0.3-username-enumeration-response-timing/02-script.png)
+![Output script — respons lambat membocorkan user valid (ansible)](images/lab-0.3-username-enumeration-response-timing/02-script.png)
 
 Untuk menyelesaikan lab, enumerasi username valid, brute-force kata sandi pengguna tersebut, lalu akses halaman akunnya.
 
@@ -898,13 +898,13 @@ Lab ini rentan karena kelemahan logika pada proteksi brute-force kata sandinya. 
 
 **Screenshots:**
 
-![01-login](images/lab-0.4-broken-bruteforce-protection-ip-block/01-login.png)
+![Halaman lab — Broken brute-force protection, IP block](images/lab-0.4-broken-bruteforce-protection-ip-block/01-login.png)
 
-![02-terminal](images/lab-0.4-broken-bruteforce-protection-ip-block/02-terminal.png)
+![Terminal — reset counter via login sendiri lalu tebak carlos](images/lab-0.4-broken-bruteforce-protection-ip-block/02-terminal.png)
 
-![03-solved](images/lab-0.4-broken-bruteforce-protection-ip-block/03-solved.png)
+![Lab solved — Congratulations](images/lab-0.4-broken-bruteforce-protection-ip-block/03-solved.png)
 
-![04-account](images/lab-0.4-broken-bruteforce-protection-ip-block/04-account.png)
+![My Account — login sebagai carlos](images/lab-0.4-broken-bruteforce-protection-ip-block/04-account.png)
 
 ##### Tutorial
 
@@ -1160,11 +1160,11 @@ Lab ini rentan terhadap enumerasi username. Lab memakai account locking, tetapi 
 
 **Screenshots:**
 
-![01-terminal-phase1](images/lab-0.5-username-enumeration-account-lock/01-terminal-phase1.png)
+![Terminal fase 1 — hantam username untuk memicu lock](images/lab-0.5-username-enumeration-account-lock/01-terminal-phase1.png)
 
-![02-terminal-result](images/lab-0.5-username-enumeration-account-lock/02-terminal-result.png)
+![Terminal hasil — username valid via pesan lock](images/lab-0.5-username-enumeration-account-lock/02-terminal-result.png)
 
-![03-solved](images/lab-0.5-username-enumeration-account-lock/03-solved.png)
+![Lab solved — account lock](images/lab-0.5-username-enumeration-account-lock/03-solved.png)
 
 ##### Tutorial
 
@@ -1486,19 +1486,19 @@ Untuk menyelesaikan lab, akses halaman akun Carlos.
 
 **Screenshots:**
 
-![01-login](images/lab-0.6-2fa-simple-bypass/01-login.png)
+![Halaman login — wiener](images/lab-0.6-2fa-simple-bypass/01-login.png)
 
-![02-email-client](images/lab-0.6-2fa-simple-bypass/02-email-client.png)
+![Email client — kode keamanan 2FA](images/lab-0.6-2fa-simple-bypass/02-email-client.png)
 
-![03-account](images/lab-0.6-2fa-simple-bypass/03-account.png)
+![My Account — wiener (setelah faktor pertama)](images/lab-0.6-2fa-simple-bypass/03-account.png)
 
-![04-account](images/lab-0.6-2fa-simple-bypass/04-account.png)
+![My Account — diakses tanpa 2FA (bypass)](images/lab-0.6-2fa-simple-bypass/04-account.png)
 
-![05-code](images/lab-0.6-2fa-simple-bypass/05-code.png)
+![Halaman 2FA — masukkan kode keamanan 4 digit](images/lab-0.6-2fa-simple-bypass/05-code.png)
 
-![06-code](images/lab-0.6-2fa-simple-bypass/06-code.png)
+![Halaman 2FA — isi kode (belum solved)](images/lab-0.6-2fa-simple-bypass/06-code.png)
 
-![07-solved](images/lab-0.6-2fa-simple-bypass/07-solved.png)
+![Lab solved — 2FA dilewati](images/lab-0.6-2fa-simple-bypass/07-solved.png)
 
 ##### Tutorial
 
@@ -1587,23 +1587,23 @@ Untuk menyelesaikan lab, akses halaman akun Carlos.
 
 **Screenshots:**
 
-![01-login-wiener](images/lab-0.7-2fa-broken-logic/01-login-wiener.png)
+![Halaman login — wiener](images/lab-0.7-2fa-broken-logic/01-login-wiener.png)
 
-![02-email-client](images/lab-0.7-2fa-broken-logic/02-email-client.png)
+![Email client exploit server](images/lab-0.7-2fa-broken-logic/02-email-client.png)
 
-![03-account-wiener](images/lab-0.7-2fa-broken-logic/03-account-wiener.png)
+![My Account — wiener login](images/lab-0.7-2fa-broken-logic/03-account-wiener.png)
 
-![04-login-carlos](images/lab-0.7-2fa-broken-logic/04-login-carlos.png)
+![Percobaan login carlos — tidak valid](images/lab-0.7-2fa-broken-logic/04-login-carlos.png)
 
-![05-verify-param](images/lab-0.7-2fa-broken-logic/05-verify-param.png)
+![Burp — POST /login2 dengan cookie verify=carlos](images/lab-0.7-2fa-broken-logic/05-verify-param.png)
 
-![06-burp-window](images/lab-0.7-2fa-broken-logic/06-burp-window.png)
+![Burp Suite — jendela Intruder/Proxy](images/lab-0.7-2fa-broken-logic/06-burp-window.png)
 
-![07-terminal](images/lab-0.7-2fa-broken-logic/07-terminal.png)
+![Terminal — brute-force mfa-code dengan verify=carlos](images/lab-0.7-2fa-broken-logic/07-terminal.png)
 
-![08-response-url](images/lab-0.7-2fa-broken-logic/08-response-url.png)
+![Respons — redirect ke /my-account?id=carlos](images/lab-0.7-2fa-broken-logic/08-response-url.png)
 
-![09-solved](images/lab-0.7-2fa-broken-logic/09-solved.png)
+![Lab solved — 2FA broken logic](images/lab-0.7-2fa-broken-logic/09-solved.png)
 
 ##### Tutorial
 
@@ -1802,15 +1802,15 @@ Untuk menyelesaikan lab, brute-force cookie Carlos untuk mendapatkan akses ke ha
 
 **Screenshots:**
 
-![01-login-wiener](images/lab-0.8-bruteforcing-stay-logged-in-cookie/01-login-wiener.png)
+![Halaman login — wiener](images/lab-0.8-bruteforcing-stay-logged-in-cookie/01-login-wiener.png)
 
-![02-cookie-value](images/lab-0.8-bruteforcing-stay-logged-in-cookie/02-cookie-value.png)
+![Burp HTTP history — nilai cookie stay-logged-in](images/lab-0.8-bruteforcing-stay-logged-in-cookie/02-cookie-value.png)
 
-![03-terminal-bruteforce](images/lab-0.8-bruteforcing-stay-logged-in-cookie/03-terminal-bruteforce.png)
+![Terminal — brute-force cookie stay-logged-in](images/lab-0.8-bruteforcing-stay-logged-in-cookie/03-terminal-bruteforce.png)
 
-![04-found-password](images/lab-0.8-bruteforcing-stay-logged-in-cookie/04-found-password.png)
+![Burp Decoder — decode cookie base64](images/lab-0.8-bruteforcing-stay-logged-in-cookie/04-found-password.png)
 
-![05-solved](images/lab-0.8-bruteforcing-stay-logged-in-cookie/05-solved.png)
+![Lab solved — cookie carlos berhasil dipecahkan](images/lab-0.8-bruteforcing-stay-logged-in-cookie/05-solved.png)
 
 ##### Tutorial
 
@@ -1976,33 +1976,33 @@ Lab ini menyimpan hash kata sandi pengguna dalam cookie. Lab juga mengandung ker
 
 **Screenshots:**
 
-![01-lab-page](images/lab-0.9-offline-password-cracking/01-lab-page.png)
+![Halaman lab — Offline password cracking](images/lab-0.9-offline-password-cracking/01-lab-page.png)
 
-![02-burp-proxy](images/lab-0.9-offline-password-cracking/02-burp-proxy.png)
+![Burp HTTP history — login & my-account](images/lab-0.9-offline-password-cracking/02-burp-proxy.png)
 
-![03-cookie](images/lab-0.9-offline-password-cracking/03-cookie.png)
+![Cookie stay-logged-in (base64 wiener:md5)](images/lab-0.9-offline-password-cracking/03-cookie.png)
 
-![04-crack-wiener](images/lab-0.9-offline-password-cracking/04-crack-wiener.png)
+![Burp — hash wiener:51dc30dd...](images/lab-0.9-offline-password-cracking/04-crack-wiener.png)
 
-![05-crack-wiener](images/lab-0.9-offline-password-cracking/05-crack-wiener.png)
+![CrackStation — pecahkan hash MD5 wiener](images/lab-0.9-offline-password-cracking/05-crack-wiener.png)
 
-![06-xss-payload](images/lab-0.9-offline-password-cracking/06-xss-payload.png)
+![URL exploit server untuk eksfil XSS](images/lab-0.9-offline-password-cracking/06-xss-payload.png)
 
-![07-blog-comment](images/lab-0.9-offline-password-cracking/07-blog-comment.png)
+![Komentar blog — payload XSS (document.location)](images/lab-0.9-offline-password-cracking/07-blog-comment.png)
 
-![08-comment-posted](images/lab-0.9-offline-password-cracking/08-comment-posted.png)
+![Blog — 'Thank you for your comment!'](images/lab-0.9-offline-password-cracking/08-comment-posted.png)
 
-![09-exploit-server](images/lab-0.9-offline-password-cracking/09-exploit-server.png)
+![Access log exploit server — GET /exploit 200](images/lab-0.9-offline-password-cracking/09-exploit-server.png)
 
-![10-crack-carlos](images/lab-0.9-offline-password-cracking/10-crack-carlos.png)
+![Burp — hash carlos:26323c16...](images/lab-0.9-offline-password-cracking/10-crack-carlos.png)
 
-![11-crack-carlos](images/lab-0.9-offline-password-cracking/11-crack-carlos.png)
+![CrackStation — pecahkan hash MD5 carlos](images/lab-0.9-offline-password-cracking/11-crack-carlos.png)
 
-![12-login-carlos](images/lab-0.9-offline-password-cracking/12-login-carlos.png)
+![Halaman login — carlos](images/lab-0.9-offline-password-cracking/12-login-carlos.png)
 
-![13-account](images/lab-0.9-offline-password-cracking/13-account.png)
+![My Account — carlos login](images/lab-0.9-offline-password-cracking/13-account.png)
 
-![14-delete-confirm](images/lab-0.9-offline-password-cracking/14-delete-confirm.png)
+![Konfirmasi hapus akun — 'Delete account!'](images/lab-0.9-offline-password-cracking/14-delete-confirm.png)
 
 ##### Tutorial
 
@@ -2072,25 +2072,25 @@ Fungsi reset kata sandi lab ini rentan. Untuk menyelesaikan lab, reset kata sand
 
 **Screenshots:**
 
-![01-login](images/lab-0.10-password-reset-broken-logic/01-login.png)
+![Halaman login](images/lab-0.10-password-reset-broken-logic/01-login.png)
 
-![02-forgot-user](images/lab-0.10-password-reset-broken-logic/02-forgot-user.png)
+![Lupa password — masukkan wiener](images/lab-0.10-password-reset-broken-logic/02-forgot-user.png)
 
-![03-reset-confirm](images/lab-0.10-password-reset-broken-logic/03-reset-confirm.png)
+!['Please check your email for a reset password link'](images/lab-0.10-password-reset-broken-logic/03-reset-confirm.png)
 
-![04-email-detail](images/lab-0.10-password-reset-broken-logic/04-email-detail.png)
+![Email client — email reset wiener](images/lab-0.10-password-reset-broken-logic/04-email-detail.png)
 
-![05-email-detail](images/lab-0.10-password-reset-broken-logic/05-email-detail.png)
+![Email — tautan reset 'Account recovery'](images/lab-0.10-password-reset-broken-logic/05-email-detail.png)
 
-![06-burp-proxy](images/lab-0.10-password-reset-broken-logic/06-burp-proxy.png)
+![Burp HTTP history — token forgot-password](images/lab-0.10-password-reset-broken-logic/06-burp-proxy.png)
 
-![07-reset-form](images/lab-0.10-password-reset-broken-logic/07-reset-form.png)
+![Form reset — password baru](images/lab-0.10-password-reset-broken-logic/07-reset-form.png)
 
-![08-burp-repeater](images/lab-0.10-password-reset-broken-logic/08-burp-repeater.png)
+![Burp Repeater — POST forgot-password tanpa token](images/lab-0.10-password-reset-broken-logic/08-burp-repeater.png)
 
-![09-login-carlos](images/lab-0.10-password-reset-broken-logic/09-login-carlos.png)
+![Halaman login — carlos](images/lab-0.10-password-reset-broken-logic/09-login-carlos.png)
 
-![10-solved](images/lab-0.10-password-reset-broken-logic/10-solved.png)
+![Lab solved](images/lab-0.10-password-reset-broken-logic/10-solved.png)
 
 ##### Tutorial
 
@@ -2133,29 +2133,29 @@ Fungsi reset kata sandi lab ini rentan terhadap password reset poisoning. Penggu
 
 **Screenshots:**
 
-![01-forgot-user](images/lab-0.11-password-reset-poisoning-via-middleware/01-forgot-user.png)
+![Lupa password — masukkan wiener](images/lab-0.11-password-reset-poisoning-via-middleware/01-forgot-user.png)
 
-![02-burp-request](images/lab-0.11-password-reset-poisoning-via-middleware/02-burp-request.png)
+![Burp — POST /forgot-password](images/lab-0.11-password-reset-poisoning-via-middleware/02-burp-request.png)
 
-![03-reset-confirm](images/lab-0.11-password-reset-poisoning-via-middleware/03-reset-confirm.png)
+!['Please check your email for a reset password link'](images/lab-0.11-password-reset-poisoning-via-middleware/03-reset-confirm.png)
 
-![04-burp-token](images/lab-0.11-password-reset-poisoning-via-middleware/04-burp-token.png)
+![Burp — GET forgot-password?temp-forgot-password-token=](images/lab-0.11-password-reset-poisoning-via-middleware/04-burp-token.png)
 
-![05-burp-history](images/lab-0.11-password-reset-poisoning-via-middleware/05-burp-history.png)
+![Burp HTTP history](images/lab-0.11-password-reset-poisoning-via-middleware/05-burp-history.png)
 
-![06-burp-forwarded](images/lab-0.11-password-reset-poisoning-via-middleware/06-burp-forwarded.png)
+![Burp — X-Forwarded-Host: exploit-server (racun)](images/lab-0.11-password-reset-poisoning-via-middleware/06-burp-forwarded.png)
 
-![07-access-log](images/lab-0.11-password-reset-poisoning-via-middleware/07-access-log.png)
+![Access log exploit server](images/lab-0.11-password-reset-poisoning-via-middleware/07-access-log.png)
 
-![08-email-client](images/lab-0.11-password-reset-poisoning-via-middleware/08-email-client.png)
+![Email client — account recovery](images/lab-0.11-password-reset-poisoning-via-middleware/08-email-client.png)
 
-![09-reset-form](images/lab-0.11-password-reset-poisoning-via-middleware/09-reset-form.png)
+![Form reset — password baru](images/lab-0.11-password-reset-poisoning-via-middleware/09-reset-form.png)
 
-![10-access-log-2](images/lab-0.11-password-reset-poisoning-via-middleware/10-access-log-2.png)
+![Access log + request Burp setelah reset](images/lab-0.11-password-reset-poisoning-via-middleware/10-access-log-2.png)
 
-![11-login-carlos](images/lab-0.11-password-reset-poisoning-via-middleware/11-login-carlos.png)
+![Halaman login — carlos](images/lab-0.11-password-reset-poisoning-via-middleware/11-login-carlos.png)
 
-![12-solved](images/lab-0.11-password-reset-poisoning-via-middleware/12-solved.png)
+![Lab solved — Congratulations](images/lab-0.11-password-reset-poisoning-via-middleware/12-solved.png)
 
 ##### Tutorial
 
@@ -2205,29 +2205,29 @@ Fungsi ganti kata sandi lab ini membuatnya rentan terhadap brute-force. Untuk me
 
 **Screenshots:**
 
-![01-login-wiener](images/lab-0.12-password-brute-force-via-password-change/01-login-wiener.png)
+![Halaman login — wiener](images/lab-0.12-password-brute-force-via-password-change/01-login-wiener.png)
 
-![02-my-account](images/lab-0.12-password-brute-force-via-password-change/02-my-account.png)
+![My Account — form ganti password](images/lab-0.12-password-brute-force-via-password-change/02-my-account.png)
 
-![03-burp-proxy](images/lab-0.12-password-brute-force-via-password-change/03-burp-proxy.png)
+![Burp HTTP history — change-password](images/lab-0.12-password-brute-force-via-password-change/03-burp-proxy.png)
 
-![04-burp-repeater](images/lab-0.12-password-brute-force-via-password-change/04-burp-repeater.png)
+![Burp Repeater — request change-password](images/lab-0.12-password-brute-force-via-password-change/04-burp-repeater.png)
 
-![05-burp-repeater-2](images/lab-0.12-password-brute-force-via-password-change/05-burp-repeater-2.png)
+![Burp Repeater — new-password tidak cocok](images/lab-0.12-password-brute-force-via-password-change/05-burp-repeater-2.png)
 
-![06-burp-repeater-3](images/lab-0.12-password-brute-force-via-password-change/06-burp-repeater-3.png)
+![Burp Repeater — amati perbedaan error](images/lab-0.12-password-brute-force-via-password-change/06-burp-repeater-3.png)
 
-![07-wordlist](images/lab-0.12-password-brute-force-via-password-change/07-wordlist.png)
+![Daftar kandidat password PortSwigger](images/lab-0.12-password-brute-force-via-password-change/07-wordlist.png)
 
-![08-intruder](images/lab-0.12-password-brute-force-via-password-change/08-intruder.png)
+![Burp Intruder — Sniper pada current-password](images/lab-0.12-password-brute-force-via-password-change/08-intruder.png)
 
-![09-intruder-results](images/lab-0.12-password-brute-force-via-password-change/09-intruder-results.png)
+![Hasil Intruder — panjang respons outlier](images/lab-0.12-password-brute-force-via-password-change/09-intruder-results.png)
 
-![10-intruder-results-2](images/lab-0.12-password-brute-force-via-password-change/10-intruder-results-2.png)
+![Hasil Intruder — konfirmasi temuan](images/lab-0.12-password-brute-force-via-password-change/10-intruder-results-2.png)
 
-![11-login-carlos](images/lab-0.12-password-brute-force-via-password-change/11-login-carlos.png)
+![Halaman login — carlos](images/lab-0.12-password-brute-force-via-password-change/11-login-carlos.png)
 
-![12-solved](images/lab-0.12-password-brute-force-via-password-change/12-solved.png)
+![Lab solved](images/lab-0.12-password-brute-force-via-password-change/12-solved.png)
 
 ##### Tutorial
 

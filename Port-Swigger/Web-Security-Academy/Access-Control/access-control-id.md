@@ -94,17 +94,17 @@ Selesaikan lab dengan menghapus pengguna `carlos`.
 
 **Screenshots:**
 
-![01-lab-page](images/lab-0.1-unprotected-admin-functionality/01-lab-page.png)
+![Halaman lab — Unprotected admin functionality (belum solved)](images/lab-0.1-unprotected-admin-functionality/01-lab-page.png)
 
-![02-burp-proxy](images/lab-0.1-unprotected-admin-functionality/02-burp-proxy.png)
+![Burp HTTP history — GET /robots.txt](images/lab-0.1-unprotected-admin-functionality/02-burp-proxy.png)
 
-![03-burp-robots](images/lab-0.1-unprotected-admin-functionality/03-burp-robots.png)
+![Burp Repeater — robots.txt membocorkan /administrator-panel](images/lab-0.1-unprotected-admin-functionality/03-burp-robots.png)
 
-![04-burp-admin-panel](images/lab-0.1-unprotected-admin-functionality/04-burp-admin-panel.png)
+![Burp Repeater — GET /administrator-panel menampilkan Users](images/lab-0.1-unprotected-admin-functionality/04-burp-admin-panel.png)
 
-![05-burp-delete](images/lab-0.1-unprotected-admin-functionality/05-burp-delete.png)
+![Burp Repeater — GET /administrator-panel/delete?username=carlos](images/lab-0.1-unprotected-admin-functionality/05-burp-delete.png)
 
-![06-solved](images/lab-0.1-unprotected-admin-functionality/06-solved.png)
+![Lab solved — 'User deleted successfully!'](images/lab-0.1-unprotected-admin-functionality/06-solved.png)
 
 ##### Tutorial
 
@@ -171,13 +171,13 @@ Selesaikan lab dengan mengakses admin panel, lalu menggunakannya untuk menghapus
 
 **Screenshots:**
 
-![01-lab-page](images/lab-0.2-unprotected-admin-unpredictable-url/01-lab-page.png)
+![Halaman lab — admin panel dengan URL tak dapat diprediksi](images/lab-0.2-unprotected-admin-unpredictable-url/01-lab-page.png)
 
-![02-js-source](images/lab-0.2-unprotected-admin-unpredictable-url/02-js-source.png)
+![View source — JS membocorkan URL admin panel (var isAdmin)](images/lab-0.2-unprotected-admin-unpredictable-url/02-js-source.png)
 
-![03-admin-panel](images/lab-0.2-unprotected-admin-unpredictable-url/03-admin-panel.png)
+![Admin panel — Users wiener & carlos](images/lab-0.2-unprotected-admin-unpredictable-url/03-admin-panel.png)
 
-![04-solved](images/lab-0.2-unprotected-admin-unpredictable-url/04-solved.png)
+![Lab solved — 'User deleted successfully!'](images/lab-0.2-unprotected-admin-unpredictable-url/04-solved.png)
 
 ##### Tutorial
 
@@ -250,11 +250,191 @@ Pendekatan ini tidak aman karena pengguna bisa memodifikasi nilai dan mengakses 
 
 ##### Lab: User role controlled by request parameter
 
+Lab ini punya admin panel di /admin, yang mengidentifikasi administrator memakai cookie yang bisa dipalsukan.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.3</summary>
+
+Selesaikan lab dengan mengakses admin panel dan menggunakannya untuk menghapus pengguna `carlos`.
+
+Kamu bisa login ke akun sendiri memakai kredensial berikut:
+`wiener:peter`
+
+**Screenshots:**
+
+![Halaman login — login sebagai wiener](images/lab-0.3-user-role-request-parameter/01-login.png)
+
+![Burp HTTP history — my-account dengan cookie Admin=false](images/lab-0.3-user-role-request-parameter/02-burp-proxy.png)
+
+![GET /admin dengan Admin=false — 'Admin interface only available'](images/lab-0.3-user-role-request-parameter/03-admin-denied.png)
+
+![Burp Repeater — ubah cookie jadi Admin=true](images/lab-0.3-user-role-request-parameter/04-burp-repeater.png)
+
+![Burp Repeater — kirim ulang request dengan Admin=true](images/lab-0.3-user-role-request-parameter/05-burp-repeater-2.png)
+
+![Burp — dialog 'Show response in browser'](images/lab-0.3-user-role-request-parameter/06-response-browser.png)
+
+![Browser — 'Admin interface only available if logged in as an administrator'](images/lab-0.3-user-role-request-parameter/07-admin-denied-2.png)
+
+![Admin panel — GET /admin 200, daftar Users](images/lab-0.3-user-role-request-parameter/08-admin-panel.png)
+
+![Percobaan hapus carlos — Admin=false 401](images/lab-0.3-user-role-request-parameter/09-burp-request.png)
+
+![Lab solved — hapus carlos dengan Admin=true](images/lab-0.3-user-role-request-parameter/10-solved.png)
+
+##### Tutorial
+
+1. Login sebagai `wiener:peter`
+2. Coba lihat parameter `admin=false`
+3. Ubah nilai jadi `admin=true`
+4. Buka admin panel
+5. Hapus pengguna `carlos`
+6. Berhasil, lab solved
+
+##### Reference
+
+<details>
+<summary>5. Broken Access Control - Lab #3 User role controlled by request parameter — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=e_jsPdEeSto
+Purpose: Lab ini punya admin panel di /admin, yang mengidentifikasi administrator memakai cookie yang bisa dipalsukan. Untuk menyelesaikan lab, kami mengakses admin panel dan menggunakannya untuk menghapus pengguna carlos.
+
+</details>
+
+</details>
+
 ##### Lab: User role can be modified in user profile
+
+Lab ini punya admin panel di `/admin`. Hanya bisa diakses pengguna yang login dengan `roleid` 2.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.4</summary>
+
+Selesaikan lab dengan mengakses admin panel dan menggunakannya untuk menghapus pengguna `carlos`.
+Kamu bisa login ke akun sendiri memakai kredensial berikut:
+`wiener:peter`
+
+**Screenshots:**
+
+![Halaman login — login sebagai wiener](images/lab-0.4-user-role-modifiable-profile/01-login.png)
+
+![Burp HTTP history — GET /admin mengembalikan 401](images/lab-0.4-user-role-modifiable-profile/02-burp-proxy.png)
+
+![Burp HTTP history — alur login & my-account](images/lab-0.4-user-role-modifiable-profile/03-burp-history.png)
+
+![Burp Repeater — POST /my-account/change-email dengan roleid:1](images/lab-0.4-user-role-modifiable-profile/04-change-email.png)
+
+![Admin panel — Users wiener & carlos](images/lab-0.4-user-role-modifiable-profile/05-admin-panel.png)
+
+![Lab solved — 'User deleted successfully!'](images/lab-0.4-user-role-modifiable-profile/06-solved.png)
+
+![Burp Repeater — change-email dengan roleid:2 (privilege escalation)](images/lab-0.4-user-role-modifiable-profile/07-burp-request.png)
+
+##### Tutorial
+
+1. Login sebagai `wiener:peter`
+2. Coba cari my-account
+3. Ubah email untuk melihat parameter
+4. Coba buka parameter json di profil my-account
+5. Lihat respons dan tambahkan `roleId=1` lalu ubah roleId administratif jadi `roleId=2`
+6. Buka admin panel
+7. Hapus pengguna carlos
+8. Berhasil, lab solved
+
+##### Reference
+
+<details>
+<summary>6. Broken Access Control - Lab #4 User role can be modified in user profile — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=jjfe7WRN76o
+Purpose: Lab ini punya admin panel di /admin. Hanya bisa diakses pengguna yang login dengan roleid 2. Untuk menyelesaikan lab, kami mengakses admin panel dan menggunakannya untuk menghapus pengguna carlos.
+
+</details>
+
+<details>
+<summary>7. User role can be modified in user profile — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=4AXJpx7F9YY
+Purpose: Video ini menunjukkan solusi lab "User role can be modified in user profile" dari Web Security Academy (Portswigger)
+
+</details>
+
+</details>
 
 #### Broken access control resulting from platform misconfiguration
 
+Sebagian aplikasi menerapkan access control di layer platform. Mereka melakukannya dengan membatasi akses ke URL dan metode HTTP tertentu berdasarkan role pengguna. Contohnya, aplikasi mungkin mengonfigurasi aturan sebagai berikut:
+
+```
+DENY: POST, /admin/deleteUser, managers
+```
+Aturan ini menolak akses ke metode `POST` pada URL `/admin/deleteUser`, untuk pengguna di grup managers. Berbagai hal bisa salah dalam situasi ini, yang mengarah ke bypass access control.
+
+Sebagian framework aplikasi mendukung berbagai header HTTP non-standar yang bisa dipakai untuk menimpa URL di request asli, seperti `X-Original-URL` dan `X-Rewrite-URL`. Jika situs memakai kontrol front-end yang ketat untuk membatasi akses berdasarkan URL, tetapi aplikasi mengizinkan URL ditimpa via header request, maka mungkin bisa melewati access control memakai request seperti berikut:
+
+```
+POST / HTTP/1.1
+X-Original-URL: /admin/deleteUser
+```
+
 ##### Lab: URL-based access control can be circumvented
+
+Situs ini punya admin panel tanpa autentikasi di `/admin`, tetapi sistem front-end dikonfigurasi untuk memblokir akses eksternal ke path itu. Namun, aplikasi back-end dibangun di atas framework yang mendukung header `X-Original-URL`.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.5</summary>
+
+Untuk menyelesaikan lab, akses admin panel dan hapus pengguna `carlos`.
+
+**Screenshots:**
+
+![Burp Repeater — bypass X-Original-URL: /admin](images/lab-0.5-url-based-access-control-bypass/01-burp-repeater.png)
+
+![Body respons — 'access denied'](images/lab-0.5-url-based-access-control-bypass/02-access-denied.png)
+
+![Body respons — 'access denied' (ulangan)](images/lab-0.5-url-based-access-control-bypass/03-access-denied-2.png)
+
+![Admin panel — Users wiener & carlos (bypass berhasil)](images/lab-0.5-url-based-access-control-bypass/04-admin-panel.png)
+
+![Lab solved — 'Congratulations, you solved the lab!'](images/lab-0.5-url-based-access-control-bypass/05-solved.png)
+
+##### Tutorial
+
+1. Buka admin panel
+2. Pasang `X-Original-Url: /admin`
+3. Jika berhasil, coba hapus pengguna `carlos`.
+
+```
+GET /?username=carlos
+X-Original-Url: /admin/delete
+```
+4. Pengguna berhasil dihapus
+5. Berhasil, lab solved.
+
+##### Reference
+
+<details>
+<summary>7. Broken Access Control - Lab #5 URL-based access control can be circumvented — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=AwvQrdE1Wtc
+Purpose: Di video ini, kami membahas Lab #5 pada modul Access Control Vulnerabilities dari Web Security Academy. Situs ini punya admin panel tanpa autentikasi di /admin, tetapi sistem front-end dikonfigurasi untuk memblokir akses eksternal ke path itu. Namun, aplikasi back-end dibangun di atas framework yang mendukung header X-Original-URL. Untuk menyelesaikan lab, kami mengakses admin panel dan menghapus pengguna carlos.
+
+</details>
+
+<details>
+<summary>8. URL based access control can be circumvented — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=Rj0B12Vsh_E
+Purpose: Video ini menunjukkan solusi lab "URL based access control can be circumvented" dari Web Security Academy (Portswigger)
+
+</details>
+
+</details>
 
 ##### Lab: Method-based access control can be circumvented
 

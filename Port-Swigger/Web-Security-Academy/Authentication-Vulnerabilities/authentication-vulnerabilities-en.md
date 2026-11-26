@@ -315,13 +315,13 @@ This lab is subtly vulnerable to username enumeration and password brute-force a
 
 **Screenshots:**
 
-![01-invalid-user](images/lab-0.2-username-enumeration-subtly-different-responses/01-invalid-user.png)
+![Invalid username — 'Invalid username or password.' (with dot)](images/lab-0.2-username-enumeration-subtly-different-responses/01-invalid-user.png)
 
-![02-valid-user](images/lab-0.2-username-enumeration-subtly-different-responses/02-valid-user.png)
+![Valid username — 'Invalid username or password' (no dot)](images/lab-0.2-username-enumeration-subtly-different-responses/02-valid-user.png)
 
-![03-script](images/lab-0.2-username-enumeration-subtly-different-responses/03-script.png)
+![Terminal — running the enumeration script](images/lab-0.2-username-enumeration-subtly-different-responses/03-script.png)
 
-![04-script](images/lab-0.2-username-enumeration-subtly-different-responses/04-script.png)
+![Script output — valid user found (mysql)](images/lab-0.2-username-enumeration-subtly-different-responses/04-script.png)
 
 
 To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page.
@@ -603,9 +603,9 @@ This lab is vulnerable to username enumeration using its response times. To solv
 
 **Screenshots:**
 
-![01-script](images/lab-0.3-username-enumeration-response-timing/01-script.png)
+![Terminal — running response-timing script](images/lab-0.3-username-enumeration-response-timing/01-script.png)
 
-![02-script](images/lab-0.3-username-enumeration-response-timing/02-script.png)
+![Script output — slow response reveals valid user (ansible)](images/lab-0.3-username-enumeration-response-timing/02-script.png)
 
 
 To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page.
@@ -903,13 +903,13 @@ This lab is vulnerable due to a logic flaw in its password brute-force protectio
 
 **Screenshots:**
 
-![01-login](images/lab-0.4-broken-bruteforce-protection-ip-block/01-login.png)
+![Lab page — Broken brute-force protection, IP block](images/lab-0.4-broken-bruteforce-protection-ip-block/01-login.png)
 
-![02-terminal](images/lab-0.4-broken-bruteforce-protection-ip-block/02-terminal.png)
+![Terminal — reset counter via own login then guess carlos](images/lab-0.4-broken-bruteforce-protection-ip-block/02-terminal.png)
 
-![03-solved](images/lab-0.4-broken-bruteforce-protection-ip-block/03-solved.png)
+![Lab solved — Congratulations](images/lab-0.4-broken-bruteforce-protection-ip-block/03-solved.png)
 
-![04-account](images/lab-0.4-broken-bruteforce-protection-ip-block/04-account.png)
+![My Account — logged in as carlos](images/lab-0.4-broken-bruteforce-protection-ip-block/04-account.png)
 
 ##### Tutorial
 
@@ -1165,11 +1165,11 @@ This lab is vulnerable to username enumeration. It uses account locking, but thi
 
 **Screenshots:**
 
-![01-terminal-phase1](images/lab-0.5-username-enumeration-account-lock/01-terminal-phase1.png)
+![Terminal phase 1 — hammer usernames to trigger lock](images/lab-0.5-username-enumeration-account-lock/01-terminal-phase1.png)
 
-![02-terminal-result](images/lab-0.5-username-enumeration-account-lock/02-terminal-result.png)
+![Terminal result — valid username via lock message](images/lab-0.5-username-enumeration-account-lock/02-terminal-result.png)
 
-![03-solved](images/lab-0.5-username-enumeration-account-lock/03-solved.png)
+![Lab solved — account lock](images/lab-0.5-username-enumeration-account-lock/03-solved.png)
 
 ##### Tutorial
 
@@ -1491,19 +1491,19 @@ To solve the lab, access Carlos's account page.
 
 **Screenshots:**
 
-![01-login](images/lab-0.6-2fa-simple-bypass/01-login.png)
+![Login page — wiener](images/lab-0.6-2fa-simple-bypass/01-login.png)
 
-![02-email-client](images/lab-0.6-2fa-simple-bypass/02-email-client.png)
+![Email client — 2FA security code](images/lab-0.6-2fa-simple-bypass/02-email-client.png)
 
-![03-account](images/lab-0.6-2fa-simple-bypass/03-account.png)
+![My Account — wiener (after first factor)](images/lab-0.6-2fa-simple-bypass/03-account.png)
 
-![04-account](images/lab-0.6-2fa-simple-bypass/04-account.png)
+![My Account — accessed without 2FA (bypass)](images/lab-0.6-2fa-simple-bypass/04-account.png)
 
-![05-code](images/lab-0.6-2fa-simple-bypass/05-code.png)
+![2FA page — enter 4-digit security code](images/lab-0.6-2fa-simple-bypass/05-code.png)
 
-![06-code](images/lab-0.6-2fa-simple-bypass/06-code.png)
+![2FA page — code entry (not solved)](images/lab-0.6-2fa-simple-bypass/06-code.png)
 
-![07-solved](images/lab-0.6-2fa-simple-bypass/07-solved.png)
+![Lab solved — 2FA bypassed](images/lab-0.6-2fa-simple-bypass/07-solved.png)
 
 ##### Tutorial
 
@@ -1588,23 +1588,23 @@ To solve the lab, access Carlos's account page.
 
 **Screenshots:**
 
-![01-login-wiener](images/lab-0.7-2fa-broken-logic/01-login-wiener.png)
+![Login page — wiener](images/lab-0.7-2fa-broken-logic/01-login-wiener.png)
 
-![02-email-client](images/lab-0.7-2fa-broken-logic/02-email-client.png)
+![Exploit server email client](images/lab-0.7-2fa-broken-logic/02-email-client.png)
 
-![03-account-wiener](images/lab-0.7-2fa-broken-logic/03-account-wiener.png)
+![My Account — wiener logged in](images/lab-0.7-2fa-broken-logic/03-account-wiener.png)
 
-![04-login-carlos](images/lab-0.7-2fa-broken-logic/04-login-carlos.png)
+![Login attempt carlos — invalid](images/lab-0.7-2fa-broken-logic/04-login-carlos.png)
 
-![05-verify-param](images/lab-0.7-2fa-broken-logic/05-verify-param.png)
+![Burp — POST /login2 with verify=carlos cookie](images/lab-0.7-2fa-broken-logic/05-verify-param.png)
 
-![06-burp-window](images/lab-0.7-2fa-broken-logic/06-burp-window.png)
+![Burp Suite — Intruder/Proxy window](images/lab-0.7-2fa-broken-logic/06-burp-window.png)
 
-![07-terminal](images/lab-0.7-2fa-broken-logic/07-terminal.png)
+![Terminal — brute-force mfa-code with verify=carlos](images/lab-0.7-2fa-broken-logic/07-terminal.png)
 
-![08-response-url](images/lab-0.7-2fa-broken-logic/08-response-url.png)
+![Response — redirect to /my-account?id=carlos](images/lab-0.7-2fa-broken-logic/08-response-url.png)
 
-![09-solved](images/lab-0.7-2fa-broken-logic/09-solved.png)
+![Lab solved — 2FA broken logic](images/lab-0.7-2fa-broken-logic/09-solved.png)
 
 ##### Tutorial
 
@@ -1803,15 +1803,15 @@ To solve the lab, brute-force Carlos's cookie to gain access to his *My account*
 
 **Screenshots:**
 
-![01-login-wiener](images/lab-0.8-bruteforcing-stay-logged-in-cookie/01-login-wiener.png)
+![Login page — wiener](images/lab-0.8-bruteforcing-stay-logged-in-cookie/01-login-wiener.png)
 
-![02-cookie-value](images/lab-0.8-bruteforcing-stay-logged-in-cookie/02-cookie-value.png)
+![Burp HTTP history — stay-logged-in cookie value](images/lab-0.8-bruteforcing-stay-logged-in-cookie/02-cookie-value.png)
 
-![03-terminal-bruteforce](images/lab-0.8-bruteforcing-stay-logged-in-cookie/03-terminal-bruteforce.png)
+![Terminal — brute-force stay-logged-in cookie](images/lab-0.8-bruteforcing-stay-logged-in-cookie/03-terminal-bruteforce.png)
 
-![04-found-password](images/lab-0.8-bruteforcing-stay-logged-in-cookie/04-found-password.png)
+![Burp Decoder — decode base64 cookie](images/lab-0.8-bruteforcing-stay-logged-in-cookie/04-found-password.png)
 
-![05-solved](images/lab-0.8-bruteforcing-stay-logged-in-cookie/05-solved.png)
+![Lab solved — carlos cookie cracked](images/lab-0.8-bruteforcing-stay-logged-in-cookie/05-solved.png)
 
 ##### Tutorial
 
@@ -1977,33 +1977,33 @@ This lab stores the user's password hash in a cookie. The lab also contains an X
 
 **Screenshots:**
 
-![01-lab-page](images/lab-0.9-offline-password-cracking/01-lab-page.png)
+![Lab page — Offline password cracking](images/lab-0.9-offline-password-cracking/01-lab-page.png)
 
-![02-burp-proxy](images/lab-0.9-offline-password-cracking/02-burp-proxy.png)
+![Burp HTTP history — login & my-account](images/lab-0.9-offline-password-cracking/02-burp-proxy.png)
 
-![03-cookie](images/lab-0.9-offline-password-cracking/03-cookie.png)
+![stay-logged-in cookie (base64 wiener:md5)](images/lab-0.9-offline-password-cracking/03-cookie.png)
 
-![04-crack-wiener](images/lab-0.9-offline-password-cracking/04-crack-wiener.png)
+![Burp — wiener:51dc30dd... hash](images/lab-0.9-offline-password-cracking/04-crack-wiener.png)
 
-![05-crack-wiener](images/lab-0.9-offline-password-cracking/05-crack-wiener.png)
+![CrackStation — crack wiener MD5 hash](images/lab-0.9-offline-password-cracking/05-crack-wiener.png)
 
-![06-xss-payload](images/lab-0.9-offline-password-cracking/06-xss-payload.png)
+![Exploit server URL for XSS exfil](images/lab-0.9-offline-password-cracking/06-xss-payload.png)
 
-![07-blog-comment](images/lab-0.9-offline-password-cracking/07-blog-comment.png)
+![Blog comment — XSS payload (document.location)](images/lab-0.9-offline-password-cracking/07-blog-comment.png)
 
-![08-comment-posted](images/lab-0.9-offline-password-cracking/08-comment-posted.png)
+![Blog — 'Thank you for your comment!'](images/lab-0.9-offline-password-cracking/08-comment-posted.png)
 
-![09-exploit-server](images/lab-0.9-offline-password-cracking/09-exploit-server.png)
+![Exploit server access log — GET /exploit 200](images/lab-0.9-offline-password-cracking/09-exploit-server.png)
 
-![10-crack-carlos](images/lab-0.9-offline-password-cracking/10-crack-carlos.png)
+![Burp — carlos:26323c16... hash](images/lab-0.9-offline-password-cracking/10-crack-carlos.png)
 
-![11-crack-carlos](images/lab-0.9-offline-password-cracking/11-crack-carlos.png)
+![CrackStation — crack carlos MD5 hash](images/lab-0.9-offline-password-cracking/11-crack-carlos.png)
 
-![12-login-carlos](images/lab-0.9-offline-password-cracking/12-login-carlos.png)
+![Login page — carlos](images/lab-0.9-offline-password-cracking/12-login-carlos.png)
 
-![13-account](images/lab-0.9-offline-password-cracking/13-account.png)
+![My Account — carlos logged in](images/lab-0.9-offline-password-cracking/13-account.png)
 
-![14-delete-confirm](images/lab-0.9-offline-password-cracking/14-delete-confirm.png)
+![Delete account confirmation — 'Delete account!'](images/lab-0.9-offline-password-cracking/14-delete-confirm.png)
 
 ##### Tutorial
 
@@ -2071,25 +2071,25 @@ This lab's password reset functionality is vulnerable. To solve the lab, reset C
 
 **Screenshots:**
 
-![01-login](images/lab-0.10-password-reset-broken-logic/01-login.png)
+![Login page](images/lab-0.10-password-reset-broken-logic/01-login.png)
 
-![02-forgot-user](images/lab-0.10-password-reset-broken-logic/02-forgot-user.png)
+![Forgot password — enter wiener](images/lab-0.10-password-reset-broken-logic/02-forgot-user.png)
 
-![03-reset-confirm](images/lab-0.10-password-reset-broken-logic/03-reset-confirm.png)
+!['Please check your email for a reset password link'](images/lab-0.10-password-reset-broken-logic/03-reset-confirm.png)
 
-![04-email-detail](images/lab-0.10-password-reset-broken-logic/04-email-detail.png)
+![Email client — wiener reset email](images/lab-0.10-password-reset-broken-logic/04-email-detail.png)
 
-![05-email-detail](images/lab-0.10-password-reset-broken-logic/05-email-detail.png)
+![Email — 'Account recovery' reset link](images/lab-0.10-password-reset-broken-logic/05-email-detail.png)
 
-![06-burp-proxy](images/lab-0.10-password-reset-broken-logic/06-burp-proxy.png)
+![Burp HTTP history — forgot-password token](images/lab-0.10-password-reset-broken-logic/06-burp-proxy.png)
 
-![07-reset-form](images/lab-0.10-password-reset-broken-logic/07-reset-form.png)
+![Reset form — new password](images/lab-0.10-password-reset-broken-logic/07-reset-form.png)
 
-![08-burp-repeater](images/lab-0.10-password-reset-broken-logic/08-burp-repeater.png)
+![Burp Repeater — POST forgot-password without token](images/lab-0.10-password-reset-broken-logic/08-burp-repeater.png)
 
-![09-login-carlos](images/lab-0.10-password-reset-broken-logic/09-login-carlos.png)
+![Login page — carlos](images/lab-0.10-password-reset-broken-logic/09-login-carlos.png)
 
-![10-solved](images/lab-0.10-password-reset-broken-logic/10-solved.png)
+![Lab solved](images/lab-0.10-password-reset-broken-logic/10-solved.png)
 
 ##### Tutorial
 
@@ -2136,29 +2136,29 @@ This lab's password reset functionality is vulnerable to password reset poisonin
 
 **Screenshots:**
 
-![01-forgot-user](images/lab-0.11-password-reset-poisoning-via-middleware/01-forgot-user.png)
+![Forgot password — enter wiener](images/lab-0.11-password-reset-poisoning-via-middleware/01-forgot-user.png)
 
-![02-burp-request](images/lab-0.11-password-reset-poisoning-via-middleware/02-burp-request.png)
+![Burp — POST /forgot-password](images/lab-0.11-password-reset-poisoning-via-middleware/02-burp-request.png)
 
-![03-reset-confirm](images/lab-0.11-password-reset-poisoning-via-middleware/03-reset-confirm.png)
+!['Please check your email for a reset password link'](images/lab-0.11-password-reset-poisoning-via-middleware/03-reset-confirm.png)
 
-![04-burp-token](images/lab-0.11-password-reset-poisoning-via-middleware/04-burp-token.png)
+![Burp — GET forgot-password?temp-forgot-password-token=](images/lab-0.11-password-reset-poisoning-via-middleware/04-burp-token.png)
 
-![05-burp-history](images/lab-0.11-password-reset-poisoning-via-middleware/05-burp-history.png)
+![Burp HTTP history](images/lab-0.11-password-reset-poisoning-via-middleware/05-burp-history.png)
 
-![06-burp-forwarded](images/lab-0.11-password-reset-poisoning-via-middleware/06-burp-forwarded.png)
+![Burp — X-Forwarded-Host: exploit-server (poison)](images/lab-0.11-password-reset-poisoning-via-middleware/06-burp-forwarded.png)
 
-![07-access-log](images/lab-0.11-password-reset-poisoning-via-middleware/07-access-log.png)
+![Exploit server access log](images/lab-0.11-password-reset-poisoning-via-middleware/07-access-log.png)
 
-![08-email-client](images/lab-0.11-password-reset-poisoning-via-middleware/08-email-client.png)
+![Email client — account recovery](images/lab-0.11-password-reset-poisoning-via-middleware/08-email-client.png)
 
-![09-reset-form](images/lab-0.11-password-reset-poisoning-via-middleware/09-reset-form.png)
+![Reset form — new password](images/lab-0.11-password-reset-poisoning-via-middleware/09-reset-form.png)
 
-![10-access-log-2](images/lab-0.11-password-reset-poisoning-via-middleware/10-access-log-2.png)
+![Access log + Burp request after reset](images/lab-0.11-password-reset-poisoning-via-middleware/10-access-log-2.png)
 
-![11-login-carlos](images/lab-0.11-password-reset-poisoning-via-middleware/11-login-carlos.png)
+![Login page — carlos](images/lab-0.11-password-reset-poisoning-via-middleware/11-login-carlos.png)
 
-![12-solved](images/lab-0.11-password-reset-poisoning-via-middleware/12-solved.png)
+![Lab solved — Congratulations](images/lab-0.11-password-reset-poisoning-via-middleware/12-solved.png)
 
 ##### Tutorial
 
@@ -2207,29 +2207,29 @@ This lab's password change functionality makes it vulnerable to brute-force atta
 
 **Screenshots:**
 
-![01-login-wiener](images/lab-0.12-password-brute-force-via-password-change/01-login-wiener.png)
+![Login page — wiener](images/lab-0.12-password-brute-force-via-password-change/01-login-wiener.png)
 
-![02-my-account](images/lab-0.12-password-brute-force-via-password-change/02-my-account.png)
+![My Account — change password form](images/lab-0.12-password-brute-force-via-password-change/02-my-account.png)
 
-![03-burp-proxy](images/lab-0.12-password-brute-force-via-password-change/03-burp-proxy.png)
+![Burp HTTP history — change-password](images/lab-0.12-password-brute-force-via-password-change/03-burp-proxy.png)
 
-![04-burp-repeater](images/lab-0.12-password-brute-force-via-password-change/04-burp-repeater.png)
+![Burp Repeater — change-password request](images/lab-0.12-password-brute-force-via-password-change/04-burp-repeater.png)
 
-![05-burp-repeater-2](images/lab-0.12-password-brute-force-via-password-change/05-burp-repeater-2.png)
+![Burp Repeater — new-password mismatch](images/lab-0.12-password-brute-force-via-password-change/05-burp-repeater-2.png)
 
-![06-burp-repeater-3](images/lab-0.12-password-brute-force-via-password-change/06-burp-repeater-3.png)
+![Burp Repeater — observe error difference](images/lab-0.12-password-brute-force-via-password-change/06-burp-repeater-3.png)
 
-![07-wordlist](images/lab-0.12-password-brute-force-via-password-change/07-wordlist.png)
+![PortSwigger candidate passwords list](images/lab-0.12-password-brute-force-via-password-change/07-wordlist.png)
 
-![08-intruder](images/lab-0.12-password-brute-force-via-password-change/08-intruder.png)
+![Burp Intruder — Sniper on current-password](images/lab-0.12-password-brute-force-via-password-change/08-intruder.png)
 
-![09-intruder-results](images/lab-0.12-password-brute-force-via-password-change/09-intruder-results.png)
+![Intruder results — outlier response length](images/lab-0.12-password-brute-force-via-password-change/09-intruder-results.png)
 
-![10-intruder-results-2](images/lab-0.12-password-brute-force-via-password-change/10-intruder-results-2.png)
+![Intruder results — confirm hit](images/lab-0.12-password-brute-force-via-password-change/10-intruder-results-2.png)
 
-![11-login-carlos](images/lab-0.12-password-brute-force-via-password-change/11-login-carlos.png)
+![Login page — carlos](images/lab-0.12-password-brute-force-via-password-change/11-login-carlos.png)
 
-![12-solved](images/lab-0.12-password-brute-force-via-password-change/12-solved.png)
+![Lab solved](images/lab-0.12-password-brute-force-via-password-change/12-solved.png)
 
 ##### Tutorial
 

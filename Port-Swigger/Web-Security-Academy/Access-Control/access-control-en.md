@@ -94,17 +94,17 @@ Solve the lab by deleting the user `carlos`.
 
 **Screenshots:**
 
-![01-lab-page](images/lab-0.1-unprotected-admin-functionality/01-lab-page.png)
+![Lab page — Unprotected admin functionality (not solved)](images/lab-0.1-unprotected-admin-functionality/01-lab-page.png)
 
-![02-burp-proxy](images/lab-0.1-unprotected-admin-functionality/02-burp-proxy.png)
+![Burp HTTP history — GET /robots.txt](images/lab-0.1-unprotected-admin-functionality/02-burp-proxy.png)
 
-![03-burp-robots](images/lab-0.1-unprotected-admin-functionality/03-burp-robots.png)
+![Burp Repeater — robots.txt reveals /administrator-panel](images/lab-0.1-unprotected-admin-functionality/03-burp-robots.png)
 
-![04-burp-admin-panel](images/lab-0.1-unprotected-admin-functionality/04-burp-admin-panel.png)
+![Burp Repeater — GET /administrator-panel shows Users](images/lab-0.1-unprotected-admin-functionality/04-burp-admin-panel.png)
 
-![05-burp-delete](images/lab-0.1-unprotected-admin-functionality/05-burp-delete.png)
+![Burp Repeater — GET /administrator-panel/delete?username=carlos](images/lab-0.1-unprotected-admin-functionality/05-burp-delete.png)
 
-![06-solved](images/lab-0.1-unprotected-admin-functionality/06-solved.png)
+![Lab solved — 'User deleted successfully!'](images/lab-0.1-unprotected-admin-functionality/06-solved.png)
 
 ##### Tutorial
 
@@ -171,13 +171,13 @@ Solve the lab by accessing the admin panel, and using it to delete the user `car
 
 **Screenshots:**
 
-![01-lab-page](images/lab-0.2-unprotected-admin-unpredictable-url/01-lab-page.png)
+![Lab page — admin panel with unpredictable URL](images/lab-0.2-unprotected-admin-unpredictable-url/01-lab-page.png)
 
-![02-js-source](images/lab-0.2-unprotected-admin-unpredictable-url/02-js-source.png)
+![View source — JS leaks admin panel URL (var isAdmin)](images/lab-0.2-unprotected-admin-unpredictable-url/02-js-source.png)
 
-![03-admin-panel](images/lab-0.2-unprotected-admin-unpredictable-url/03-admin-panel.png)
+![Admin panel — Users wiener & carlos](images/lab-0.2-unprotected-admin-unpredictable-url/03-admin-panel.png)
 
-![04-solved](images/lab-0.2-unprotected-admin-unpredictable-url/04-solved.png)
+![Lab solved — 'User deleted successfully!'](images/lab-0.2-unprotected-admin-unpredictable-url/04-solved.png)
 
 ##### Tutorial
 
@@ -262,6 +262,26 @@ You can log in to your own account using the following credentials:
 
 **Screenshots:**
 
+![Login page — login as wiener](images/lab-0.3-user-role-request-parameter/01-login.png)
+
+![Burp HTTP history — my-account with Admin=false cookie](images/lab-0.3-user-role-request-parameter/02-burp-proxy.png)
+
+![GET /admin with Admin=false — 'Admin interface only available'](images/lab-0.3-user-role-request-parameter/03-admin-denied.png)
+
+![Burp Repeater — change cookie to Admin=true](images/lab-0.3-user-role-request-parameter/04-burp-repeater.png)
+
+![Burp Repeater — resend request with Admin=true](images/lab-0.3-user-role-request-parameter/05-burp-repeater-2.png)
+
+![Burp — 'Show response in browser' dialog](images/lab-0.3-user-role-request-parameter/06-response-browser.png)
+
+![Browser — 'Admin interface only available if logged in as an administrator'](images/lab-0.3-user-role-request-parameter/07-admin-denied-2.png)
+
+![Admin panel — GET /admin returns 200, Users list](images/lab-0.3-user-role-request-parameter/08-admin-panel.png)
+
+![Delete carlos attempt — Admin=false returns 401 Unauthorized](images/lab-0.3-user-role-request-parameter/09-burp-request.png)
+
+![Lab solved — delete carlos with Admin=true](images/lab-0.3-user-role-request-parameter/10-solved.png)
+
 ##### Tutorial
 
 1. Login users as `wiener:peter`
@@ -295,6 +315,20 @@ You can log in to your own account using the following credentials:
 `wiener:peter`
 
 **Screenshots:**
+
+![Login page — login as wiener](images/lab-0.4-user-role-modifiable-profile/01-login.png)
+
+![Burp HTTP history — GET /admin returns 401](images/lab-0.4-user-role-modifiable-profile/02-burp-proxy.png)
+
+![Burp HTTP history — login & my-account flow](images/lab-0.4-user-role-modifiable-profile/03-burp-history.png)
+
+![Burp Repeater — POST /my-account/change-email with roleid:1](images/lab-0.4-user-role-modifiable-profile/04-change-email.png)
+
+![Burp Repeater — change-email with roleid:2 (privilege escalation)](images/lab-0.4-user-role-modifiable-profile/07-burp-request.png)
+
+![Admin panel — Users wiener & carlos](images/lab-0.4-user-role-modifiable-profile/05-admin-panel.png)
+
+![Lab solved — 'User deleted successfully!'](images/lab-0.4-user-role-modifiable-profile/06-solved.png)
 
 ##### Tutorial
 
@@ -350,6 +384,18 @@ This website has an unauthentication admin panel at `/admin`, but a front-end sy
 <summary>Lab details, screenshots & walkthrough 0.5</summary>
 
 To solve the lab, access the admin panel and delete the user `carlos`.
+
+**Screenshots:**
+
+![Burp Repeater — X-Original-URL: /admin bypass](images/lab-0.5-url-based-access-control-bypass/01-burp-repeater.png)
+
+![Response body — 'access denied'](images/lab-0.5-url-based-access-control-bypass/02-access-denied.png)
+
+![Response body — 'access denied' (retry)](images/lab-0.5-url-based-access-control-bypass/03-access-denied-2.png)
+
+![Admin panel — Users wiener & carlos (bypass berhasil)](images/lab-0.5-url-based-access-control-bypass/04-admin-panel.png)
+
+![Lab solved — 'Congratulations, you solved the lab!'](images/lab-0.5-url-based-access-control-bypass/05-solved.png)
 
 ##### Tutorial
 
