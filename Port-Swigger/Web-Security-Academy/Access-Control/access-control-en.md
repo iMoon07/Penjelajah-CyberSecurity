@@ -250,13 +250,158 @@ This approach is insecure because a user can modify the value and access functio
 
 ##### Lab: User role controlled by request parameter
 
+This lab has an admins panel at /admin, which identifies administrators using a forgeable cookie.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.3</summary>
+
+Solve the lab by accessing the admin panel and using it to delete the user `carlos`.
+
+You can log in to your own account using the following credentials:
+`wiener:peter`
+
+**Screenshots:**
+
+##### Tutorial
+
+1. Login users as `wiener:peter`
+2. Try see parameter `admin=false`
+3. Change value in `admin=true`
+4. Open admin panel
+5. Delete users `carlos`
+6. Success solve lab
+
+##### Reference
+
+<details>
+<summary>5. Broken Access Control - Lab #3 User role controlled by request parameter — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=e_jsPdEeSto
+Purpose: This lab has an admin panel at /admin, which identifies administrators using a forgeable cookie. To solve the lab, we access the admin panel and use it to delete the user carlos.
+</details>
+
+</details>
+
 ##### Lab: User role can be modified in user profile
+
+This lab has an admin panel at `/admin`. It's only accessible to logged-in users with a `roleid` of 2.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.4</summary>
+
+Solve the lab by accessing the admin panel and using it to delete the user `carlos`.
+You can log in to your own account using the following credentials:
+`wiener:peter`
+
+**Screenshots:**
+
+##### Tutorial
+
+1. Login users as `wiener:peter`
+2. Try find my-account
+4. Change email to see parameter
+3. Try Open parameter json in my-account profiles
+4. see response and add `roleId=1` and change administrative `roleId=2`
+5. Open admin panel
+6. Delete carlos users
+7. Success solve Labs
+
+##### Reference
+
+<details>
+<summary>6. Broken Access Control - Lab #4 User role can be modified in user profile — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=jjfe7WRN76o
+Purpose: This lab has an admin panel at /admin. It's only accessible to logged-in users with a roleid of 2. To solve the lab, we access the admin panel and use it to delete the user carlos.
+</details>
+
+<details>
+<summary>7. User role can be modified in user profile — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=4AXJpx7F9YY
+Purpose: This video shows the lab solution of "User role can be modified in user profile" from Web Security Academy (Portswigger)
+</details>
+
+</details>
 
 #### Broken access control resulting from platform misconfiguration
 
+Some applications enforce access controls at the platform layer. they do this by restricting access to specific URLs and HTTP methods based on the user's role. For example, an application might configure a rule as follows:
+
+```
+DENY: POST, /admin/deleteUser, managers
+```
+This rule denies access to the `POST` method on the URL `/admin/deleteUser`, for users in the managers group. Various things can go wrong in this situation, leading to access control bypasses.
+
+Some application frameworks support various non-standard HTTP headers that can be used to override the URL in the original request, such as `X-Original-URL` and `X-Rewrite-URL`. If a website uses rigorous front-end controls to restrict access based on the URL, but the application allows the URL to be overriden via a request header, then it might be possible to bypass the access controls using a request like the following:
+
+```
+POST / HTTP/1.1
+X-Original-URL: /admin/deleteUser
+```
 ##### Lab: URL-based access control can be circumvented
 
+This website has an unauthentication admin panel at `/admin`, but a front-end system has been configured to block external access to that path. However, the back-end application is built on a framework that supports the `X-Original-URL` header.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.5</summary>
+
+To solve the lab, access the admin panel and delete the user `carlos`.
+
+##### Tutorial
+
+1. Open admin panel
+2. Put `X-Original-Url: /admin
+3. If success try delete `carlos` users. 
+
+```
+GET /?username=carlos
+X-Original-Url= /admin/delete
+```
+4. Users success delete
+5. Success solve labs. 
+
+##### Reference
+
+<details>
+<summary>7. Broken Access Control - Lab #5 URL-based access control can be circumvented — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=AwvQrdE1Wtc
+Purpose: In this video, we cover Lab #5 in the Access Control Vulnerabilities module of the Web Security Academy. This website has an unauthenticated admin panel at /admin, but a front-end system has been configured to block external access to that path. However, the back-end application is built on a framework that supports the X-Original-URL header. To solve the lab, we access the admin panel and delete the user carlos.
+</details>
+
+<details>
+<summary>8. URL based access control can be circumvented  — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=Rj0B12Vsh_E
+Purpose: This video shows the lab solution of "URL based access control can be circumvented" from Web Security Academy (Portswigger)
+</details>
+
+</details>
+
+#### Broken access control resulting from platform misconfiguration- Continued
+
+An alternative attack relates to the HTTP method used in the request. The front-end controls described in the previous sections restrict access based on the URL and HTTP method. Some websites tolerate different HTTP request methods when performing an action. If an attacker can use the `GET` (or another) method to perform actions on a restricted URL, they can bypass the access control that is implemented at the platform layer.
+
 ##### Lab: Method-based access control can be circumvented
+
+This lab implements access controls based partly on the HTTP method of requests. You can familiarize yourself with the admin panel by logging in using the credentials `administrator:admin`.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.6</summary>
+
+To solve the lab, log in using the credentials `wiener:peter` and exploit the flawed access controls to promote yourself to become an administrator.
+
+##### Tutorial
+
+##### Reference
+
+</details>
 
 #### Broken access control resulting from URL-matching discrepancies
 
