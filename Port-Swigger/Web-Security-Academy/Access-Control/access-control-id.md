@@ -438,13 +438,132 @@ Purpose: Video ini menunjukkan solusi lab "URL based access control can be circu
 
 ##### Lab: Method-based access control can be circumvented
 
+Lab ini menerapkan access control yang sebagian berdasarkan metode HTTP request. Kamu bisa berkenalan dengan admin panel dengan login memakai kredensial `administrator:admin`.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.6</summary>
+
+Untuk menyelesaikan lab, login memakai kredensial `wiener:peter` dan eksploitasi access control yang cacat untuk mempromosikan diri jadi administrator.
+
+**Screenshots:**
+
+![Halaman login — login sebagai administrator](images/lab-0.6-method-based-access-control-bypass/01-login-administrator.png)
+![My Account — administrator login](images/lab-0.6-method-based-access-control-bypass/02-account-administrator.png)
+![Burp HTTP history — GET /admin & POST /admin-roles](images/lab-0.6-method-based-access-control-bypass/03-burp-proxy.png)
+![Halaman login — login sebagai wiener](images/lab-0.6-method-based-access-control-bypass/04-login-wiener.png)
+![My Account — wiener dengan cookie sesi](images/lab-0.6-method-based-access-control-bypass/05-account-wiener.png)
+![Burp Repeater — request POST /admin-roles](images/lab-0.6-method-based-access-control-bypass/06-burp-repeater.png)
+![Burp Repeater — GET /admin-roles?username=wiener&action=upgrade → 302](images/lab-0.6-method-based-access-control-bypass/07-burp-upgrade.png)
+![Lab solved — wiener dipromosikan jadi admin (My Account)](images/lab-0.6-method-based-access-control-bypass/08-solved.png)
+![Lab solved — admin panel bisa diakses](images/lab-0.6-method-based-access-control-bypass/09-solved-admin-panel.png)
+
+##### Tutorial
+
+1. Login sebagai administrator
+2. Coba upgrade user carlos dan kirim ke repeater
+3. Logout lalu login sebagai user kedua wiener
+4. Ambil session cookie wiener
+5. Coba ubah metode `/admin/roles?username=wiener&action=upgrade`
+6. Kirim request dan dapat sukses mengubah wiener jadi role admin
+7. Berhasil, lab solved
+
+##### Reference
+
+<details>
+<summary>9. Broken Access Control - Lab #6 Method-based access control can be circumvented — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=0mWVYM_dqIg
+Purpose: Di video ini, kami membahas Lab #6 pada modul Access Control Vulnerabilities dari Web Security Academy. Lab ini menerapkan access control yang sebagian berdasarkan metode HTTP request. Kamu bisa berkenalan dengan admin panel dengan login memakai kredensial administrator:admin. Untuk menyelesaikan lab, kami login memakai kredensial wiener:peter dan mengeksploitasi access control yang cacat untuk mempromosikan diri jadi administrator.
+
+</details>
+
+<details>
+<summary>10. Method based access control can be circumvented — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=H_xREdOq1yk
+Purpose: Video ini menunjukkan solusi lab "Method based access control can be circumvented" dari Web Security Academy (Portswigger)
+
+</details>
+
+</details>
+
 #### Broken access control resulting from URL-matching discrepancies
+
+Situs bisa berbeda dalam seberapa ketat mereka mencocokkan path request masuk ke endpoint yang didefinisikan. Contohnya, mereka mungkin mentoleransi kapitalisasi tidak konsisten, jadi request ke `/ADMIN/DELETEUSER` masih dipetakan ke endpoint `/admin/deleteUser`. Jika mekanisme access control kurang toleran, ia mungkin menganggap keduanya sebagai dua endpoint berbeda dan gagal menerapkan pembatasan yang benar.
+
+Discrepancy serupa bisa muncul jika developer memakai framework Spring dan mengaktifkan opsi `useSuffixPatternMatch`. Ini memungkinkan path dengan ekstensi file arbitrer dipetakan ke endpoint setara tanpa ekstensi. Artinya, request ke `/admin/deleteUser.anything` masih cocok dengan pola `/admin/deleteUser`. Sebelum Spring 5.3, opsi ini aktif secara default.
+
+Di sistem lain, kamu mungkin menemui discrepancy apakah `/admin/deleteUser` dan `/admin/deleteUser/` diperlakukan sebagai endpoint berbeda. Dalam kasus ini, kamu mungkin bisa melewati access control dengan menambahkan trailing slash di path.
 
 ### Horizontal privilege escalation
 
+Horizontal privilege escalation terjadi jika pengguna bisa mendapatkan akses ke sumber daya milik pengguna lain, bukan sumber daya mereka sendiri dari tipe itu. Contohnya, jika karyawan bisa mengakses catatan karyawan lain serta catatannya sendiri, maka ini horizontal privilege escalation.
+
+Serangan horizontal privilege escalation mungkin memakai metode eksploitasi serupa dengan vertical privilege escalation. Contohnya, pengguna mungkin mengakses halaman akun sendiri memakai URL berikut:
+
+```
+https://insecure-website.com/myaccount?id=123
+```
+Jika penyerang memodifikasi nilai parameter `id` ke milik pengguna lain, mereka mungkin mendapat akses ke halaman akun pengguna lain, beserta data dan fungsi terkait.
+
+> Catatan: Ini contoh kerentanan insecure direct object reference (IDOR).
+
 ##### Lab: User ID controlled by request parameter
 
+Lab ini punya kerentanan horizontal privilege escalation di halaman akun pengguna. Untuk menyelesaikan lab, dapatkan API key pengguna `carlos` dan kirim sebagai solusi. Kamu bisa login ke akun sendiri memakai kredensial: `wiener:peter`.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.7</summary>
+
+**Screenshots:**
+
+![Halaman login — login sebagai wiener](images/lab-0.7-user-id-request-parameter/01-login.png)
+![My Account — API key wiener sendiri (baseline)](images/lab-0.7-user-id-request-parameter/02-my-account-wiener.png)
+![Burp Repeater — GET /my-account?id=carlos mengembalikan carlos](images/lab-0.7-user-id-request-parameter/03-burp-idor.png)
+![My Account — halaman akun wiener (form email)](images/lab-0.7-user-id-request-parameter/04-my-account.png)
+![Lab solved — API key carlos didapat](images/lab-0.7-user-id-request-parameter/05-solved.png)
+
+##### Tutorial
+
+1. Login sebagai wiener
+2. Kirim request my-account wiener ke repeater
+3. Ubah parameter id jadi user carlos
+4. Kirim API key carlos
+5. Berhasil, lab solved
+
+##### Reference
+
+<details>
+<summary>11. Broken Access Control - Lab #7 User ID controlled by request parameter — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=-VaKuNDMkR8
+Purpose: Di video ini, kami membahas Lab #7 pada modul Access Control Vulnerabilities dari Web Security Academy. Lab ini punya kerentanan horizontal privilege escalation di halaman akun pengguna. Untuk menyelesaikan lab, kami mendapatkan API key pengguna carlos dan mengirimnya sebagai solusi.
+
+</details>
+
+<details>
+<summary>12. User ID controlled by request parameter — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=pv5PfMbe_7k
+Purpose: Video ini menunjukkan solusi lab "User ID controlled by request parameter" dari Web Security Academy (Portswigger)
+
+</details>
+
+</details>
+
 ##### Lab: User ID controlled by request parameter, with unpredictable user IDs
+
+### Horizontal privilege escalation - Continued 1
+
+Dalam sebagian aplikasi, parameter yang bisa dieksploitasi tidak punya nilai yang dapat diprediksi. Contohnya, alih-alih angka yang bertambah, aplikasi mungkin memakai globally unique identifier (GUID) untuk mengidentifikasi pengguna. Ini bisa mencegah penyerang menebak atau memprediksi identifier pengguna lain. Namun, GUID milik pengguna lain mungkin diungkap di tempat lain dalam aplikasi di mana pengguna direferensikan, seperti pesan atau ulasan pengguna.
+
+##### Lab: User ID controlled by request parameter, with unpredictable user IDs
+
+### Horizontal privilege escalation - Continued 2
 
 ##### Lab: User ID controlled by request parameter with data leakage in redirect
 

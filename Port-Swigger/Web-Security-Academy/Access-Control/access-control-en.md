@@ -324,11 +324,11 @@ You can log in to your own account using the following credentials:
 
 ![Burp Repeater — POST /my-account/change-email with roleid:1](images/lab-0.4-user-role-modifiable-profile/04-change-email.png)
 
-![Burp Repeater — change-email with roleid:2 (privilege escalation)](images/lab-0.4-user-role-modifiable-profile/07-burp-request.png)
-
 ![Admin panel — Users wiener & carlos](images/lab-0.4-user-role-modifiable-profile/05-admin-panel.png)
 
 ![Lab solved — 'User deleted successfully!'](images/lab-0.4-user-role-modifiable-profile/06-solved.png)
+
+![Burp Repeater — change-email with roleid:2 (privilege escalation)](images/lab-0.4-user-role-modifiable-profile/07-burp-request.png)
 
 ##### Tutorial
 
@@ -443,21 +443,137 @@ This lab implements access controls based partly on the HTTP method of requests.
 
 To solve the lab, log in using the credentials `wiener:peter` and exploit the flawed access controls to promote yourself to become an administrator.
 
+**Screenshots:**
+
+![Login page — login as administrator](images/lab-0.6-method-based-access-control-bypass/01-login-administrator.png)
+
+![My Account — administrator logged in](images/lab-0.6-method-based-access-control-bypass/02-account-administrator.png)
+
+![Burp HTTP history — GET /admin & POST /admin-roles](images/lab-0.6-method-based-access-control-bypass/03-burp-proxy.png)
+
+![Login page — login as wiener](images/lab-0.6-method-based-access-control-bypass/04-login-wiener.png)
+
+![My Account — wiener with session cookie](images/lab-0.6-method-based-access-control-bypass/05-account-wiener.png)
+
+![Burp Repeater — POST /admin-roles request](images/lab-0.6-method-based-access-control-bypass/06-burp-repeater.png)
+
+![Burp Repeater — GET /admin-roles?username=wiener&action=upgrade → 302](images/lab-0.6-method-based-access-control-bypass/07-burp-upgrade.png)
+
+![Lab solved — wiener promoted to admin (My Account)](images/lab-0.6-method-based-access-control-bypass/08-solved.png)
+
+![Lab solved — admin panel accessible](images/lab-0.6-method-based-access-control-bypass/09-solved-admin-panel.png)
+
+
 ##### Tutorial
 
+1. Login as administrator
+2. Try upgrade user carlos and send to repeater
+3. Try logout and login second users wiener
+4. collect session cookie wiener
+5. try change method `/admin/roles?username=wiener&action=upgrade`
+6. send request and get success changes wiener as role admin
+7. success solve labs
+
 ##### Reference
+
+<details>
+<summary>9. Broken Access Control - Lab #6 Method-based access control can be circumvented — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=0mWVYM_dqIg
+Purpose: In this video, we cover Lab #6 in the Access Control Vulnerabilities module of the Web Security Academy. This lab implements access control based partly on the HTTP method of requests. You can familiarize yourself with the admin panel by logging in using the credentials administrator:admin. To solve the lab, we log in using the credentials wiener:peter and exploit the flawed access controls to promote ourselves to become an administrator.
+</details>
+
+<details>
+<summary>10. Method based access control can be circumvented — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=H_xREdOq1yk
+Purpose: This video shows the lab solution of "Method based access control can be circumvented" from Web Security Academy (Portswigger)
+</details>
 
 </details>
 
 #### Broken access control resulting from URL-matching discrepancies
 
+Websites can vary in how stricly they match the path of an incoming request to a defined endpoint. For example, they may tolerate inconsistent capitalization, so a request to `/ADMIN/DELETEUSER` may still be mapped to the `/admin/deleteUser` endpoint. If the access control mechanism is less tolerant, it may threat these as two different endpoints and fail to enforce the correct restrictions as a result.
+
+Similar discrepancies can arise if developers using the Spring framework have enabled the `useSuffixPatternMatch` option. This allows paths with an arbitary file extension to be mapped to an equivalent endpoint with no file extension. In other words, a request to `/admin/deleteUser.anything` would still match the /admin/deleteUser` pattern. Prior to spring 5.3, this option is enabled by default.
+
+On other systems, you may encounter discrepancies in whether `/admin/deleteUser` and `/admin/deleteUser/` are treated as distinct endpoints. In this case, you may be able to bypass access controls by appending a trailing slash to the path.
+
 ### Horizontal privilege escalation
+
+Horizontal privilege escalation occurs if a user is able to gain access to resources belonging to another user, instead of their own resources of that type. For example, if an employee can access the records of other employees as well as their own, then this is horizontal privilege escalation.
+
+Horizontal privilege escalation attacks may use similar types of exploit methods to vertical privilege escalation. For example, a user might access their own account page using the following URL:
+
+```
+https://insecure-website.com/myaccount?id=123
+```
+If an attacker modifies the `id` parameter value to that of another user, they might gain access to another user's account page, and the associated data and functions.
+
+>Note: This is an example of an insecure direct object reference (IDOR) vulnerability.
 
 ##### Lab: User ID controlled by request parameter
 
+This lab has a horizontal privilege escalation vulnerability on the user account page. To solve the lab, obtain the API key for the user `carlos` and submit it as the solution. You can log in to your own account using the following credentials: `wiener:peter`.
+
+<details>
+<summary>Lab details, screenshots & walkthrough 0.7</summary>
+
+**Screenshots:**
+
+![Login page — login as wiener](images/lab-0.7-user-id-request-parameter/01-login.png)
+
+![My Account — wiener's own API key (baseline)](images/lab-0.7-user-id-request-parameter/02-my-account-wiener.png)
+
+![Burp Repeater — GET /my-account?id=carlos returns carlos](images/lab-0.7-user-id-request-parameter/03-burp-idor.png)
+
+![My Account — wiener account page (email form)](images/lab-0.7-user-id-request-parameter/04-my-account.png)
+
+![Lab solved — carlos API key obtained](images/lab-0.7-user-id-request-parameter/05-solved.png)
+
+##### Tutorial
+
+1. Login users as wiener
+2. send to repeater request my-account wiener
+3. change parameter id as users carlos
+4. submit API key carlos
+5. Success solve labs
+
+##### Reference
+
+<details>
+<summary>11. Broken Access Control - Lab #7 User ID controlled by request parameter — Rana Khalil</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=-VaKuNDMkR8
+Purpose: In this video, we cover Lab # 7 the Access Control Vulnerabilities module of the Web Security Academy. This lab has a horizontal privilege escalation vulnerability on the user account page. To solve the lab, we obtain the API key for the user carlos and submit it as the solution.
+</details>
+
+<details>
+<summary>12. Method based access control can be circumvented — Michael Sommer</summary>
+
+Platform: YouTube
+Video: https://www.youtube.com/watch?v=pv5PfMbe_7k
+Purpose: This video shows the lab solution of "User ID controlled by request parameter" from Web Security Academy (Portswigger)
+</details>
+
+</details>
+
+### Horizontal privilege escalation - Continued 1
+
+In some applications, the exploitable parameter does not have a predictable value. For example, instead of an incrementing number, an application might use globally unique identifiers (GUIDs) to identify users. This may prevent an attacker from guessing or predicting another user's identifier. However, the GUIDs belonging to other users might be disclosed elsewhere in the application where users are referenced, such as user messages or reviews.
+
 ##### Lab: User ID controlled by request parameter, with unpredictable user IDs
 
+
+### Horizontal privilege escalation - Continued 2
+
 ##### Lab: User ID controlled by request parameter with data leakage in redirect
+
+### Horizontal privilege escalation - Continued 3
 
 #### Horizontal to vertical privilege escalation
 
